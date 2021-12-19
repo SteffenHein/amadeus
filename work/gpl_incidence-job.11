@@ -1,0 +1,13 @@
+set title 'Incidence'
+set xlabel 'transmission cycles'
+set xrange [ 0.000000e+00 : 6.600000e+01 ]
+set ylabel ' '
+set format y '%10.1e'
+set yrange [ 7.525098e-06 : 1.100000e-05 ]
+set grid
+set border
+set key box
+set pointsize 0.2
+plot \
+'u(t)_R0=1.000' with lines
+pause -1 '[ hit return to continue ]'

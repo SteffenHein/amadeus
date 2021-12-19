@@ -1,0 +1,90 @@
+#[File: amadeus-1.0r1/makefile.gnu]
+#------------------------------------------------------------------------------#
+#                                                                              #
+#  Makefile of the AMADEUS program package on a GNU/Linux operating system     #
+#  using a GCC/EGC compiler                                                    #
+#                                                                              #
+#  (C) SHEIN; Munich, December 2021                      Steffen Hein          #
+#  [ Update: December 07, 2021 ]                      <contact@sfenx.de>       #
+#                                                                              #
+#------------------------------------------------------------------------------#
+# executable program name: covid                                               #
+#                                                                              #
+# Version required:	v1.0r1                                                  #
+# Date created:		December 07, 2021                                      #
+# Whom:			Steffen Hein <contact@sfenx.de>                        #
+#                                                                              #
+# $Id: Makefile,v 1.0. 12-07-2021 18:50:40 amadeus Exp $                       #
+#                                                                              #
+#------------------------------------------------------------------------------#
+DISTNAME=	amadeus-${RELEASE}
+RELEASE=	v1.0r1
+#CATEGORIES=	cad
+#MASTER_SITES=	ftp://steffen-hein.org/pub/cad/
+
+#MAINTAINER=	info@steffen-hein.org
+
+#MAKEFILE=	makefile.gnu
+#NO_PACKAGE=	"must provide without modifications"
+#------------------------------------------------------------------------------#
+# The executable program name [modify, if wanted]:
+AMD_EXEC=	amadeus.do
+#------------------------------------------------------------------------------#
+# The executable program will be installed into ${AMD_RESD}bin
+AMD_RESD=	${HOME}/
+#AMD_RESD=	/usr/local/
+#------------------------------------------------------------------------------#
+#
+# Compiler flags:
+#	-ansi		-- stick to ANSI C
+#	-g		-- debugging mode
+#	-Wall		-- low level warnings 
+#	-O		-- optimization level 1
+#	-O3		-- optimization level 3
+#       -ffast-math	-- fast floating point operations [ can pose problems
+#                          in conjunction with other optimizations ]
+#
+#------------------------------------------------------------------------------#
+#
+# The C compiler
+#CCOMPILER=	/usr/local/bin/egcc
+#CCOMPILER=	/usr/local/bin/gcc
+CCOMPILER=	/usr/bin/gcc
+#CCOMPILER=	cc
+#
+# Compiler options [ please modify ]:
+AMD_CC=${CCOMPILER} -ansi -std=c99 -pedantic -Wall -pipe
+#
+#
+# using flags [ please modify ]:
+# AMD_CFLG=
+# AMD_CFLG=	-ffast-math # tentative [ don't use together with O, O2, O3 ]
+AMD_CFLG=	-D_Debian -D_CCBUG -D_Forced
+# AMD_CFLG=	-O -D_Debian -D_CCBUG -D_Forced
+# AMD_CFLG=	-O2 -D_Debian -D_CCBUG -D_Forced
+#
+#
+# Find sources in directory: [Define path]
+AMD_SRC=	./src/
+AMD_CONF=	./
+AMD_MATH=	./math/
+AMD_OBJ=	./objects/
+AMD_TOOLS=	./tools/
+AMD_DEFLT=	./default/
+#
+# Compile into directory: [Define path]
+AMD_BIN=	./bin/
+#
+# Install into directory: [Define path]
+AMD_INST=	${AMD_RESD}bin/
+#
+# libraries: 
+# [ lincurses_g: the debugging version of the ncurses library ]
+# AMD_LIB=	-lm # -lncurses_g
+AMD_LIB=	-lm -lncurses
+# AMD_LIB=	-lm 
+#------------------------------------------------------------------------------#
+#.SILENT:
+#------------------------------------------------------------------------------#
+include mk.gnu
+#------------------------------------------------------------------------------#

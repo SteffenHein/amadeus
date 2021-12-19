@@ -1,0 +1,89 @@
+set title 'Incidence ( 7 days )'
+set xlabel 'days'
+set xrange [ 0.000000e+00 : 3.650000e+02 ]
+set ylabel 'per 100000'
+set format y '%10.1e'
+set logscale y 10
+set yrange [ 1.000000e-01 : 3.700000e+04 ]
+set grid
+set border
+set key box
+set pointsize 0.2
+plot \
+'7_days_incidence_R0=3.000' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=2.900' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=2.800' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=2.700' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=2.600' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=2.500' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=2.400' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=2.300' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=2.200' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=2.100' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=2.000' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=1.900' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=1.800' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=1.700' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=1.600' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=1.500' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=1.400' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=1.300' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=1.200' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=1.100' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=1.000' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=.9000' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=.8000' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=.7000' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=.6000' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=.5000' with lines
+pause -1 '[ hit return to continue ]'

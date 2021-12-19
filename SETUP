@@ -1,0 +1,3 @@
+#!/bin/sh
+make clean
+make setup 2> cc-messages

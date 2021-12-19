@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 20 -f par.log20
+./gnuplot20

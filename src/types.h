@@ -1,0 +1,262 @@
+/* [ file: types.h ] */
+/* [ Update: December 11, 2021 ] */
+/*----------------------------------------------------------------------------*/
+/* typedef header of program AMADEUS */
+/*----------------------------------------------------------------------------*/
+/* the computation modes [ operations ] structure type: */
+/*----------------------------------------------------------------------------*/
+# ifndef OPERATIONS
+   # define OPERATIONS 20
+# endif
+/*----------------------------------------------------------------------------*/
+# define TP_OPERTNS 1
+typedef struct
+{
+   signed char
+      rtn;
+
+   char
+      opt[SHS_SIZE];
+
+   char
+      ntx[OPERATIONS+ONE][STS_SIZE];
+
+   long
+      n[OPERATIONS+ONE];
+
+} OPERTNS;
+/*----------------------------------------------------------------------------*/
+/* the parameter structure type: */
+/*----------------------------------------------------------------------------*/
+# ifndef PARAMETERS
+   # define PARAMETERS 100
+# endif
+/*----------------------------------------------------------------------------*/
+# define TP_PARMTRS
+/*----------------------------------------------------------------------------*/
+typedef struct
+{
+/*
+   static struct PARMTRS
+     *ppt;
+*/   
+   char 
+      xscale,
+      yscale,
+      yunits,
+      npstop, 
+      titles,
+      rtn;
+
+   char
+     *ntx[PARAMETERS+ONE],
+     *stx[PARAMETERS+ONE];
+
+   double
+      s[100+ONE];
+
+   long
+      ii,
+      kk,
+      kend,
+      kinc,
+      kicb,
+      knif,
+      ktrm,
+
+      nout,      /* outer iteration index */ 
+      ninn,      /* inner iteration index */
+      
+      maxout,    /* the maximum number of outer iterations */
+      maxinn,    /* the maximum number of inner iterations */
+      mxictm,    /* maximum ( kinc, ktrm ) */
+      formula;   /* the immunity differential formula */
+
+   double
+      yy,      
+      dy,      
+      tt,        /* time [ Ttrm scale ] */
+      dt,        /* internal time step [ Ttrm scale ] */
+      DltT,      /* time increment [ days ] */
+
+      Ncom,      /* number of members in the community */
+      Nifc,      /* initial number of infected persons */
+      Nimn,      /* initial number immune persons */
+      Ninf,      /* initial number infective [sick] persons */
+      Nlty,      /* initial number of dead persons */
+      Nthr,      /* incidence "threshold" [ stop computation when incidence  */
+                                      /* lower than that number of persons ] */
+      Immc,      /* immunisation coefficient [ 0 < Immc <= 1 ] */
+      Repr,      /* initial reproduction number */
+      Slnt,      /* percentage of "silent" (asymptomatic) cases */
+      Ltlt,      /* lethality [ percent ] */
+      
+      rifc,      /* initial group infecion [ ratio ] */
+      rimn,      /* initial group immunity [ ratio ] */
+      rinf,      /* initial group infectivity [ ratio ] */
+      rlty,      /* initial group lethality [ ratio ] */
+      repr,      /* reproduction rate [ log(Nrpd)/Tinf ] */
+      rthr,      /* incidence threshold [ Nthr/Tinf ] */
+
+      wght_ifc,  /* infection weight: 100/( 100-Slnt ) */
+      wght_imm,  /* immunisation weight: ( 100+Ltlt )/( 100-Slnt ) */
+      wght_lty,  /* lethality weight: Ltlt/( 100-Slnt ) */
+      nobody,    /* < 0.5/Ncom; incidence limit [ no persons remain... ] */
+      threshold, /* < 0.5/Ncom; incidence limit [ no persons remain... ] */
+      
+      Ttrm,      /* mean transmission time [ Tinc+Till, e.g. ] */
+      Ticb,      /* Incubation time */
+      Tnif,      /* not yet infective time [ not necessarily Tinc ] */
+      Tacu,      /* N [=Tacu] days incidence */
+      Tend,      /* time intervall [ length ] */
+
+      Timmun,    /* time of attained group immunity */
+      Tmxinc,    /* time of maximum incidence */
+      Tmxacu,    /* time of maximum N days incidence integral */
+      Tmximn,    /* time of maximum immunity */
+      Tmxrpd,    /* time of maximum reproduction number */
+      Tmxifc,    /* time of maximum infections */
+      Tmxicr,    /* time of maximum increase */
+      Tmmicr,    /* time of maximum decrease */
+
+      minacu,    /* minimum acute cases */
+      maxacu,    /* maximum acute cases */
+      maxifc,    /* maximum infection */
+      maximn,    /* maximum immunity */
+      mininc,    /* minimum incidence */
+      maxinc,    /* maximum incidence */
+      maxlty,    /* maximum lethal cases */
+      minrpd,    /* minimum reproduction number */
+      maxrpd;    /* maximum reproduction number */
+
+   double
+      dudt[10000+ONE];
+
+} PARMTRS;
+/*----------------------------------------------------------------------------*/
+# define TP_DSPLAY
+/* The running pointer function dsplay(*) structure type */
+/*----------------------------------------------------------------------------*/
+typedef struct
+{
+   char 
+      rtn;
+
+   char 
+      option,
+      messge[LGS_SIZE];
+
+   short
+      rcsps; /* relative curser position */
+   
+   long
+      fleps, /* file position pointer [ fleps = ftell(*) etc. ] */
+      state,
+      range;
+
+   FILE 
+     *display;
+
+} DSPLAY;
+/*----------------------------------------------------------------------------*/
+# define TP_TXCNSL 1
+
+# define CNS_ITEMS 10 /* maximum number of menu items                         */
+# define CNS_LNLEN 79 /* number of characters in menu line                    */
+# define CNS_LNINT  1 /* number of characters in menu line                    */
+# define CNS_POSIT 67 /* position of menu items [labels] in line              */
+/*----------------------------------------------------------------------------*/
+/* structure type definition header of text console input function txcnsl(*) */
+
+typedef struct
+{
+   signed char 
+      clscr,
+      rtn; 
+
+   int
+      items, dfopt, dflnf,
+      lnlen, posit, lnint,
+      lglen, dblen, stlen,
+      option;
+
+   char
+      title[LGS_SIZE],
+      rqfrm[SHS_SIZE],
+      tasks[CNS_LNLEN],
+      flags[CNS_LNLEN],
+      cmmnt[CNS_LNLEN],
+      envmt[CNS_LNLEN],
+      escpe[CNS_LNLEN],
+      cnfrm[CNS_LNLEN],
+      instr[CNS_LNLEN],
+      dfstr[CNS_LNLEN],
+      rqdbl[CNS_LNLEN],
+      rqlng[CNS_LNLEN],
+      rqstr[CNS_LNLEN],
+      mflag[CNS_ITEMS],
+      mflin[CNS_ITEMS],
+      mline[CNS_ITEMS][CNS_LNLEN];
+
+   long
+      dflng, inlng;
+
+   double
+      dfdbl, indbl;
+   
+} TXCNSL;
+/*----------------------------------------------------------------------------*/
+/* driver function amddrv(*) state structure */
+/* [ reflects actually charged topology, parameter, boundary conditions, ..., */
+/*   file names, file labels etc.]: */
+/*----------------------------------------------------------------------------*/
+# define AMDTP_AMDSTATE 1
+typedef struct
+{
+   signed char
+      onerr,
+      rtn;
+
+/* if 'skp[N] = S'or's': skip message <N> next time [ debugging purposes ] */
+   char
+      ctl, /* control parameter, set to null during initialization */
+      amd_skp[VSS_SIZE],
+      wrk_skp[VSS_SIZE],
+      ini_skp[VSS_SIZE];
+
+   unsigned char
+      uif, /* user interface [ 'g'raphical, or 't'ext console, e.g. ] */
+      act; /* actual program stage */
+
+   char
+      name[STS_SIZE],
+      text[STS_SIZE],
+      logfle[STS_SIZE],
+      errfle[STS_SIZE];
+
+   short
+      job,   /* running job index */
+      fstjob;/* initial job index */
+
+   long
+      fleps; /* file position pointer */
+
+   double
+      upd, /* update coefficient [ transferred to any function ] */
+      uexp, /* initial update coefficient */
+      scale;
+
+   FILE 
+     *display;
+
+   TXCNSL
+     *cns;
+
+   OPERTNS
+     *opr;
+
+   PARMTRS
+     *par;
+
+} AMDSTATE;
+/*************************** end of file types.h ******************************/

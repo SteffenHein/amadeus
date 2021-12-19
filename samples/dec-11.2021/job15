@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 15 -f par.log15
+./gnuplot15
