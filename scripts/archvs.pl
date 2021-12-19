@@ -58,8 +58,9 @@ $dirtree[ $i++ ] = $distname . "/work";
 # the list of files stored in $tgzarch
 #
 $i = 0;
-$tgzlist[ $i++ ] = $distname . "/INSTALL";
+$tgzlist[ $i++ ] = $distname . "/LICENSE";
 $tgzlist[ $i++ ] = $distname . "/README";
+$tgzlist[ $i++ ] = $distname . "/INSTALL";
 $tgzlist[ $i++ ] = $distname . "/CONFIG.H";
 $tgzlist[ $i++ ] = $distname . "/bin";
 $tgzlist[ $i++ ] = $distname . "/default";
@@ -81,8 +82,9 @@ $tgzlist[ $i++ ] = $distname . "/SETUP";
 # The Z-compressed archive of the following [ essential ] sources; $tararch:
 #
 $i = 0;
-$ziplist[ $i++ ] = $distname . "/INSTALL";
+$ziplist[ $i++ ] = $distname . "/LICENSE";
 $ziplist[ $i++ ] = $distname . "/README";
+$ziplist[ $i++ ] = $distname . "/INSTALL";
 $ziplist[ $i++ ] = $distname . "/CONFIG.H";
 $ziplist[ $i++ ] = $distname . "/bin";
 $ziplist[ $i++ ] = $distname . "/default";
