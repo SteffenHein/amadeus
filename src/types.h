@@ -1,9 +1,18 @@
 /* [ file: types.h ] */
-/* [ Update: December 11, 2021 ] */
-/*----------------------------------------------------------------------------*/
-/* typedef header of program AMADEUS */
-/*----------------------------------------------------------------------------*/
-/* the computation modes [ operations ] structure type: */
+/*******************************************************************************
+*                                                                              *
+*  AMADEUS, release v1.0r1                                                     *
+*                                                                              *
+*  A simple numerical Model Approximating the Development of Epidemics         *
+*  Under varied conditions if Spread                                           *
+*                                                                              *
+*  The typedef header of program AMADEUS                                       *
+*                                                                              *
+*  (C) SHEIN; Munich, December 2021                         Steffen Hein       *
+*  [ Update: December 20, 2021 ]                         <contact@sfenx.de>    *
+*                                                                              *
+*******************************************************************************/
+/* The type definition structure of the operation modes transfer functions    */
 /*----------------------------------------------------------------------------*/
 # ifndef OPERATIONS
    # define OPERATIONS 20
@@ -26,7 +35,7 @@ typedef struct
 
 } OPERTNS;
 /*----------------------------------------------------------------------------*/
-/* the parameter structure type: */
+/* The type definition structure of the parameter transfer functions          */
 /*----------------------------------------------------------------------------*/
 # ifndef PARAMETERS
    # define PARAMETERS 100
@@ -135,7 +144,7 @@ typedef struct
 } PARMTRS;
 /*----------------------------------------------------------------------------*/
 # define TP_DSPLAY
-/* The running pointer function dsplay(*) structure type */
+/* The type definition structure of the running pointer function dsplay(*)    */
 /*----------------------------------------------------------------------------*/
 typedef struct
 {
@@ -166,7 +175,7 @@ typedef struct
 # define CNS_LNINT  1 /* number of characters in menu line                    */
 # define CNS_POSIT 67 /* position of menu items [labels] in line              */
 /*----------------------------------------------------------------------------*/
-/* structure type definition header of text console input function txcnsl(*) */
+/* The type definition structure of the text console function txcnsl(*)       */
 
 typedef struct
 {

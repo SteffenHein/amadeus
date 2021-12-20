@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 36 -f par.log36
-./gnuplot36

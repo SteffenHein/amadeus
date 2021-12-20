@@ -1,15 +1,14 @@
 #!/usr/bin/perl
 #------------------------------------------------------------------------------#
 #                                                                              #
-#  new-arch.pl                                                                 #
-#  elfe archive creation perl script                                           #
+#  AMADEUS archive creation perl script                                        #
 #                                                                              #
 #  (C) SHEIN; Munich, December 2021                          Steffen Hein      #
 #  [ Update: December 19, 2021 ]                          <contact@sfenx.de>   #
 #                                                                              #
 #------------------------------------------------------------------------------#
-use warnings 'all';
 BEGIN { push @INC, './'}
+use warnings 'all';
 use Env;
 use strict;
 use cksmd5;
@@ -35,7 +34,7 @@ $outfile  = "CHECKSUM.MD5";
 # $md5=0/1/2: [ don't use / use only / use also ]
 # FreeBSD's implementation of checksum function md5 for OSTYPE=freebsd
 # GNU/Linux implementation of checksum function md5sum else
-$md5=2;
+$md5=0;
 
 #------------------------------------------------------------------------------#
 # the directory tree of $distname 
@@ -47,6 +46,7 @@ $dirtree[ $i++ ] = $distname . "/default";
 $dirtree[ $i++ ] = $distname . "/doc";
 $dirtree[ $i++ ] = $distname . "/math";
 $dirtree[ $i++ ] = $distname . "/objects";
+$dirtree[ $i++ ] = $distname . "/ports";
 $dirtree[ $i++ ] = $distname . "/prv";
 $dirtree[ $i++ ] = $distname . "/samples";
 $dirtree[ $i++ ] = $distname . "/scripts";
@@ -67,6 +67,7 @@ $tgzlist[ $i++ ] = $distname . "/default";
 $tgzlist[ $i++ ] = $distname . "/doc";
 $tgzlist[ $i++ ] = $distname . "/math";
 $tgzlist[ $i++ ] = $distname . "/objects/.directory";
+$tgzlist[ $i++ ] = $distname . "/ports";
 $tgzlist[ $i++ ] = $distname . "/prv";
 $tgzlist[ $i++ ] = $distname . "/samples";
 $tgzlist[ $i++ ] = $distname . "/scripts";
@@ -91,6 +92,7 @@ $ziplist[ $i++ ] = $distname . "/default";
 $ziplist[ $i++ ] = $distname . "/doc";
 $ziplist[ $i++ ] = $distname . "/math";
 $ziplist[ $i++ ] = $distname . "/objects/.directory";
+$ziplist[ $i++ ] = $distname . "/ports";
 $ziplist[ $i++ ] = $distname . "/prv";
 $ziplist[ $i++ ] = $distname . "/samples";
 $ziplist[ $i++ ] = $distname . "/scripts";
@@ -120,7 +122,7 @@ if ( $md5 ) {
     $outfile = "CHECKSUM.MD5";
 
     if ( ($md5) && ( $ENV{OSTYPE} =~ m/freebsd/ ) ) {
-       @args = ("./cksmd5.sh $outfile");
+       @args = ("./cksmd5.pl $outfile");
     } else {
        @args = ("./md5sum.sh $outfile");
     }

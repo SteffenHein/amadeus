@@ -1,12 +1,12 @@
 /* [ file: CONFIG.H ] */
 /*----------------------------------------------------------------------------*/
-/* AMADEUS, release v1.0r1                                                     */
+/* AMADEUS, release v1.0r1                                                    */
 /*                                                                            */
-/* A numerical Model Approximating the Dynamic evolution of Epidemics         */
+/* A simple numerical Model Approximating the Development of Epidemics        */
 /* Under different conditions of Spread                                       */
 /*                                                                            */
 /* (C) SHEIN; Bad Aibling, December 2021                     Steffen Hein     */
-/* [ Update: december 07, 2021 ]                          <contact@sfenx.de>  */
+/* [ Update: december 20, 2021 ]                          <contact@sfenx.de>  */
 /*----------------------------------------------------------------------------*/
 # ifndef AMD_PAGER
    # define AMD_PAGER "more" 

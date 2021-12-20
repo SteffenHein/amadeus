@@ -1,5 +1,5 @@
 [file: math.md5]
-created: Sun Dec 19 22:12:23 2021
+created: Mon Dec 20 22:50:44 2021
 -------------------------------------------------------------------------------
 MD5( .directory ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( consts.h ) = 4d7db105da394a176e6549535fac1d05
@@ -8,7 +8,7 @@ MD5( dsplay.c ) = 35d2c8ebce233e216d4dc38a51d076d9
 MD5( dsplay.h ) = 3ab8f4f667410fc72af5d34c83ccd635
 MD5( dsptyp.h ) = 93340e8d228ecea24ad2c810610a568d
 MD5( lotos.c ) = 057afd5c2a85f531d9a3e7e50a913b3a
-MD5( maths.h ) = cd3183de9e507bed39680e9cac7c535b
+MD5( maths.h ) = 93051be30c30b28145f8213cc23f1e88
 MD5( rndoff.c ) = 8f9becd205a44d341619d0fd2a05f5a3
 MD5( txcnsl.c ) = 299a2360597dca2b47eaf1801925b025
 MD5( txcnsl.h ) = 99607018dcadd5a482b532f3c86f0ac2

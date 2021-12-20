@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 9 -f par.log9
-./gnuplot9

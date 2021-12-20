@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 7 -f par.log7
-./gnuplot7

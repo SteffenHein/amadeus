@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 31 -f par.log31
-./gnuplot31

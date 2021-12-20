@@ -1,2 +1,0 @@
-#!/bin/sh
-gnuplot l_t_log.gpl

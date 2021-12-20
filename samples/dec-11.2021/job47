@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 47 -f par.log47
-./gnuplot47

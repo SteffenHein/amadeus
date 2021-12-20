@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 42 -f par.log42
-./gnuplot42

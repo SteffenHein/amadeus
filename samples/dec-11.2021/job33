@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 33 -f par.log33
-./gnuplot33

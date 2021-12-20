@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 14 -f par.log14
-./gnuplot14

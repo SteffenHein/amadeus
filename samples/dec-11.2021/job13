@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 13 -f par.log13
-./gnuplot13

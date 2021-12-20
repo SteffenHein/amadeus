@@ -4,11 +4,11 @@ README
 --------------------------------------------------------------------------------
 AMADEUS, release v1.0r1
 
-A numerical Model Approximating the Dynamic evolution of Epidemics
-Under different conditions of Spread 
+A simple numerical Model Approximating the Development of Epidemics 
+Under varied conditions of Spread
 
 (C) SHEIN; Bad Aibling, December 2021                       Steffen Hein
-[ Update: December 11, 2021 ]                            <contact@sfenx.de>
+[ Update: December 19, 2021 ]                            <contact@sfenx.de>
 --------------------------------------------------------------------------------
 Installation instructions
 
@@ -74,6 +74,9 @@ Installation instructions
         amadeus.do
 
    If your installation is OK, a text console opens asking your running options
+--------------------------------------------------------------------------------
+9. Note that the numerical output is saved in GNUPLOT compatible format.
+
 --------------------------------------------------------------------------------
 Thanks for using AMADEUS
 						Steffen Hein

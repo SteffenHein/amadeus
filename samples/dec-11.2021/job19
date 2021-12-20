@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 19 -f par.log19
-./gnuplot19

@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 56 -f par.log56
-./gnuplot56

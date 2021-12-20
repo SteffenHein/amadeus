@@ -1,8 +1,7 @@
 #!/usr/bin/perl
 #------------------------------------------------------------------------------#
 #                                                                              #
-#  cksmd5.pm                                                                   #
-#  directory checksum perl script                                              #
+#  Directory checksum perl script                                              #
 #                                                                              #
 #  (C) SHEIN; Munich, December 2021                          Steffen Hein      #
 #  [ Update: December 19, 2021 ]                          <contact@sfenx.de>   #
@@ -11,10 +10,12 @@
 Cksmd5::cksum;
 
 #------------------------------------------------------------------------------#
-#use warnings 'all';
+BEGIN { push @INC, './'}
+use warnings 'all';
 use Env;
 use strict;
-
+use cksmd5;
+$ENV{OSTYPE}="linux";
 #use Digest::MD5 qw( md5_hex );		# declaration (1) [ option (1) ]
 use Digest::MD5;    			# declaration (2) [ option (2) ]
 

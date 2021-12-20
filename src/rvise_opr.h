@@ -3,8 +3,8 @@
 *                                                                              *
 *  AMADEUS, release v1.0r1                                                     *
 *                                                                              *
-*  A numerical Model Approximating the Dynamic evolution of Epidemics          *
-*  Under different conditions of Spread                                        *
+*  A simple numerical Model Approximating the Development of Epidemics         *
+*  Under varied conditions if Spread                                           *
 *                                                                              *
 *  Function rvise_opr(*)                                                       *
 *                                                                              *

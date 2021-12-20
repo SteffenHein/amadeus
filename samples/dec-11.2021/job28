@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 28 -f par.log28
-./gnuplot28

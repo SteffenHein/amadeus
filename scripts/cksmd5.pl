@@ -1,17 +1,18 @@
 #!/usr/bin/perl
 #------------------------------------------------------------------------------#
 #                                                                              #
-#  cksmd5.pl                                                                   #
-#  directory checksum computation perl script                                  #
+#  Directory checksum computation perl script                                  #
 #                                                                              #
 #  (C) SHEIN; Munich, December 2021                          Steffen Hein      #
 #  [ Update: December 19, 2021 ]                          <contact@sfenx.de>   #
 #                                                                              #
 #------------------------------------------------------------------------------#
-#use warnings 'all';
+BEGIN { push @INC, './'}
+use warnings 'all';
 use Env;
 use strict;
 use cksmd5;
+$ENV{OSTYPE}="linux";
 
 #------------------------------------------------------------------------------#
 my ( @files, @args, $directory, $string, $i );

@@ -1,8 +1,0 @@
-#!/bin/sh
-gnuplot gpl_n_days_incidence-job.54
-gnuplot gpl_incidence-job.54
-gnuplot gpl_immunity-job.54
-gnuplot gpl_reproduction-job.54
-gnuplot gpl_infection-job.54
-gnuplot gpl_lethality-job.54
-#gnuplot covid.compare

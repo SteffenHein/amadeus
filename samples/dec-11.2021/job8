@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 8 -f par.log8
-./gnuplot8

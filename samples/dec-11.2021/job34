@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 34 -f par.log34
-./gnuplot34

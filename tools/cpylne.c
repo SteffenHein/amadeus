@@ -3,12 +3,12 @@
 *                                                                              *
 *  Function cpylne(*)                                                          *
 *                                                                              *
-*  This function copies a text string together with a comment into a text      *
-*  line of fixed length nn, the comment appearing in brackets at the line      *
-*  end.                                                                        *
+*  This function copies a text string and a comment into a line of fixed       *
+*  length nn, the comment appearing in brackets ( and separated from the       *
+*  text by points ) at the line end.                                           *
 *                                                                              *
 *  (C) SHEIN; Munich, December 2021                        Steffen Hein        *
-*  [ Update: December 19, 2021 ]                        <contact@sfenx.de>     *
+*  [ Update: December 20, 2021 ]                        <contact@sfenx.de>     *
 *                                                                              *
 *******************************************************************************/
 # include <stdio.h>

@@ -9,7 +9,6 @@ cd ../../
 # Create archive of specially selected sources:
 #echo "tar -czf spcf-${RELEASE}.tgz"
 tar -czf spcf-${RELEASE}.tgz \
-${DISTNAME}/CVS \
 ${DISTNAME}/bin \
 ${DISTNAME}/default \
 ${DISTNAME}/doc \
@@ -24,8 +23,8 @@ ${DISTNAME}/tools \
 ${DISTNAME}/work \
 ${DISTNAME}/CONFIG.H \
 ${DISTNAME}/INSTALL \
-${DISTNAME}/Makefile \
 ${DISTNAME}/README \
 ${DISTNAME}/SETUP \
+${DISTNAME}/Makefile \
 ${DISTNAME}/makefile.gnu \
 ${DISTNAME}/mk.gnu \

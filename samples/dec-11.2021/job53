@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 53 -f par.log53
-./gnuplot53

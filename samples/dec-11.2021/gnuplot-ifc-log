@@ -1,2 +1,0 @@
-#!/bin/sh
-gnuplot h_t_log.gpl
