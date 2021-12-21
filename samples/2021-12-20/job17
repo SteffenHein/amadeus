@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 17 -f par.log17
+./gnuplot17

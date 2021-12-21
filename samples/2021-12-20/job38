@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 38 -f par.log38
+./gnuplot38

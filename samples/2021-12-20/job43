@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 43 -f par.log43
+./gnuplot43

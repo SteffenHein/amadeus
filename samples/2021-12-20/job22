@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 22 -f par.log22
+./gnuplot22

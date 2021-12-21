@@ -1,0 +1,4 @@
+#!/bin/sh
+rm *_R0=*
+rm gpl_*
+rm parameters*

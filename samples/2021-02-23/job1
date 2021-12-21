@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 1 -f par.init1
+./gnuplot1

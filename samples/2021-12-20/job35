@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 35 -f par.log35
+./gnuplot35

@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 49 -f par.log49
+./gnuplot49

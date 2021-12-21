@@ -1,0 +1,2 @@
+#!/bin/sh
+amadeus -n 0 -f par.log0

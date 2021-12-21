@@ -1,0 +1,26 @@
+[file: amadeus-v1.0r1.md5]
+created: Mon Dec 20 22:50:44 2021
+-------------------------------------------------------------------------------
+MD5( .git ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( .gitignore ) = c2e414713f532ada787c43dbb7e96b6f
+MD5( CONFIG.H ) = f0684ad67c57eff04a573b5ff02fabe6
+MD5( INSTALL ) = b26e511dc0b5ddadb4d0b6f9a1da2ec2
+MD5( LICENSE ) = f8f2ebb09f29450e7b4f2c8eca1450fd
+MD5( Makefile ) = 6b0bc37a219920f01cb596f0641490f7
+MD5( README ) = 518afad126c8642c040b910fa8eafcc3
+MD5( SETUP ) = 174f54e8b9041ac6ec177ad55a919c64
+MD5( bin ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( cc-messages ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( default ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( doc ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( makefile.gnu ) = 6b0bc37a219920f01cb596f0641490f7
+MD5( math ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( mk.gnu ) = 30c31390a834790cb86c5400531ea258
+MD5( objects ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( ports ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( prv ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( samples ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( scripts ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( src ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( tools ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( work ) = d41d8cd98f00b204e9800998ecf8427e

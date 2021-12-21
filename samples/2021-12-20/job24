@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 24 -f par.log24
+./gnuplot24

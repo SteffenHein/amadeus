@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 18 -f par.log18
+./gnuplot18
