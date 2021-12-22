@@ -1,20 +1,21 @@
-#[File: amadeus-1.0r1/makefile.gnu]
+#[File: amadeus-v1.0r1/makefile.gnu]
 #------------------------------------------------------------------------------#
 #                                                                              #
-#  Makefile of the AMADEUS program package on a GNU/Linux operating system     #
-#  using a GCC/EGC compiler                                                    #
+#  Makefile for the amadeus program package on a [ Debian ] GNU/Linux          #
+#  operating system using a GCC/EGC compiler                                   #
 #                                                                              #
 #  (C) SHEIN; Munich, April 2020                               Steffen Hein    #
-#  [ Update: December 07, 2021 ]                            <contact@sfenx.de> #
+#  [ Update: December 22, 2021 ]                            <contact@sfenx.de> #
 #                                                                              #
 #------------------------------------------------------------------------------#
-# executable program name: covid                                               #
+# executable program name: helios                                              #
 #                                                                              #
 # Version required:	v1.0r1                                                 #
-# Last updated:		December 07, 2021                                      #
-# Whom:			Steffen Hein <contact@sfenx.de>                        #
+# Date created:		April 11, 2020                                         #
+# Updated:		December 22, 2021                                      #
+# Whom:			Steffen Hein <info@sfenx.de>                           #
 #                                                                              #
-# $Id: Makefile,v 1.0. 12-07-2021 18:50:40 amadeus Exp $                       #
+# $Id: Makefile,v 1.0. 04/11/2020 18:50:40 amadeus Exp $                       #
 #                                                                              #
 #------------------------------------------------------------------------------#
 DISTNAME=	amadeus-${RELEASE}
@@ -22,7 +23,7 @@ RELEASE=	v1.0r1
 #CATEGORIES=	cad
 #MASTER_SITES=	ftp://steffen-hein.org/pub/cad/
 
-#MAINTAINER=	info@steffen-hein.org
+#MAINTAINER=	contact@sfenx.de
 
 #MAKEFILE=	makefile.gnu
 #NO_PACKAGE=	"must provide without modifications"
