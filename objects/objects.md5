@@ -1,4 +1,11 @@
 [file: objects.md5]
-created: Wed Dec 22 14:22:52 2021
+created: Wed Dec 22 19:49:41 2021
 -------------------------------------------------------------------------------
 MD5( .directory ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( amadeus.o ) = 93f3aac759d2d1054d1bcfa35a1baacd
+MD5( amddrv.o ) = b422f9c3288733da620eac8b1ceeb4c0
+MD5( amdwrk.o ) = 35240cac3b5cb1442400675f64013d31
+MD5( cpylne.o ) = 3a85a0f13d9a2bc160717c74fcf8da49
+MD5( dotos.o ) = 32329be804592ab6c0be6bd1df61fc78
+MD5( lotos.o ) = 086f38436c2e1116b84b0857320ee953
+MD5( txcnsl.o ) = 90589c9532bac139cc892ea47d7cc747
