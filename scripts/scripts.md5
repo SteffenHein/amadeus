@@ -1,11 +1,11 @@
 [file: scripts.md5]
-created: Mon Dec 20 22:50:44 2021
+created: Wed Dec 22 14:22:52 2021
 -------------------------------------------------------------------------------
 MD5( .directory ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( amadeus.csh ) = 92fc20a19a912dce1efaa0c33b211960
-MD5( archvs.pl ) = 35b532b033d837d4d04bcd914e3bc62d
-MD5( cksmd5.pl ) = 7b823deee158387969ba91aeb3683ba5
-MD5( cksmd5.pm ) = 909860cdd095ed70a70988909a199f49
+MD5( archvs.pl ) = a8dc03b0fbdc017e2c2e4d6981423e6f
+MD5( cksmd5.pl ) = 7d8470621e95352cacf979e2f0eecb50
+MD5( cksmd5.pm ) = bc602a3565a5ab222855cd88d25fae28
 MD5( distinfo ) = 4a043166ae0ade07203e76f690970526
 MD5( dplct.csh ) = d6cecadb61cb4628cef11df1a9756b65
 MD5( log2init.csh ) = d9a28a1b1e7fc8cc20a3d0a8d7a2079e

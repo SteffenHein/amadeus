@@ -1,19 +1,19 @@
 [file: amadeus-v1.0r1.md5]
-created: Mon Dec 20 22:50:44 2021
+created: Wed Dec 22 14:22:52 2021
 -------------------------------------------------------------------------------
 MD5( .git ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( .gitignore ) = c2e414713f532ada787c43dbb7e96b6f
-MD5( CONFIG.H ) = f0684ad67c57eff04a573b5ff02fabe6
-MD5( INSTALL ) = b26e511dc0b5ddadb4d0b6f9a1da2ec2
-MD5( LICENSE ) = f8f2ebb09f29450e7b4f2c8eca1450fd
-MD5( Makefile ) = 6b0bc37a219920f01cb596f0641490f7
-MD5( README ) = 518afad126c8642c040b910fa8eafcc3
+MD5( .gitignore ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( CONFIG.H ) = e772255e5c7aa1f68d3e601f3684eb80
+MD5( INSTALL ) = 4b642dd3d5ed59f40d6c7fa2c4f4ddb7
+MD5( LICENSE ) = 9a8ef6b9e05c5ef97be82d5138252bed
+MD5( Makefile ) = 65708d95cb43473f6a426601a89c195d
+MD5( README ) = 6fbf5ae27aa97cbd28d7d7949ec2646f
 MD5( SETUP ) = 174f54e8b9041ac6ec177ad55a919c64
 MD5( bin ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( cc-messages ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( default ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( doc ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( makefile.gnu ) = 6b0bc37a219920f01cb596f0641490f7
+MD5( makefile.gnu ) = 65708d95cb43473f6a426601a89c195d
 MD5( math ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( mk.gnu ) = 30c31390a834790cb86c5400531ea258
 MD5( objects ) = d41d8cd98f00b204e9800998ecf8427e
