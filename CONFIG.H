@@ -5,8 +5,8 @@
 /* A simple numerical Model Approximating the Development of Epidemics        */
 /* Under different conditions of Spread                                       */
 /*                                                                            */
-/* (C) SHEIN; Bad Aibling, December 2021                     Steffen Hein     */
-/* [ Update: december 20, 2021 ]                          <contact@sfenx.de>  */
+/* (C) SHEIN; Munich, April 2020                             Steffen Hein     */
+/* [ Update: December 20, 2021 ]                          <contact@sfenx.de>  */
 /*----------------------------------------------------------------------------*/
 # ifndef AMD_PAGER
    # define AMD_PAGER "more" 

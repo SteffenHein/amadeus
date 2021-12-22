@@ -11,7 +11,7 @@
 *  Coordinates all parameter input, corrections and computational steps        *
 *  by subsequently calling the respective functions                            *
 *                                                                              *
-*  (C) SHEIN; Munich, December 2021                            Steffen Hein    *
+*  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
 *  [ Update: December 20, 2021 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/

@@ -6,7 +6,7 @@
 *   = 'f' ] or floating point [ *format = 'e', 'E' ] ASCII character string,   *
 *   pointed to by char *dblstr, which is returned to the calling program.      *
 *                                                                              *
-*   (C) SHEIN; Munich, December 2021                          Steffen Hein     *
+*   (C) SHEIN; Munich, April 2020                             Steffen Hein     *
 *   [ Update: December 19, 2021 ]                          <contact@sfenx.de>  *
 *                                                                              *
 *******************************************************************************/

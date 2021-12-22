@@ -6,8 +6,8 @@
 *  This function copies a parameter string [ along with a bracketed text ]     *
 *  into the parameter structure *.par                                          *
 *                                                                              *
-*  (C) SHEIN; Munich, December 2021                         Steffen Hein       *
-*  [ Update: December 19, 2021 ]                         <contact@sfenx.de>    *
+*  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
+*  [ Update: December 20, 2021 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # define LLENGTH 56

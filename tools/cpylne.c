@@ -7,8 +7,8 @@
 *  length nn, the comment appearing in brackets ( and separated from the       *
 *  text by points ) at the line end.                                           *
 *                                                                              *
-*  (C) SHEIN; Munich, December 2021                        Steffen Hein        *
-*  [ Update: December 20, 2021 ]                        <contact@sfenx.de>     *
+*  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
+*  [ Update: December 20, 2021 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # include <stdio.h>

@@ -9,8 +9,8 @@
 *  Function store_opr(*)                                                       *
 *  Stores final operation modes                                                *
 *                                                                              *
-*  (C) SHEIN; Munich, December 2021                         Steffen Hein       *
-*  [ Update: December 19, 2021 ]                         <contact@sfenx.de>    *
+*  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
+*  [ Update: December 19, 2021 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # include "./STOREOPR.M"

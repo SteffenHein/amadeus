@@ -4,14 +4,14 @@
 #  Makefile of the AMADEUS program package on a GNU/Linux operating system     #
 #  using a GCC/EGC compiler                                                    #
 #                                                                              #
-#  (C) SHEIN; Munich, December 2021                      Steffen Hein          #
-#  [ Update: December 07, 2021 ]                      <contact@sfenx.de>       #
+#  (C) SHEIN; Munich, April 2020                               Steffen Hein    #
+#  [ Update: December 07, 2021 ]                            <contact@sfenx.de> #
 #                                                                              #
 #------------------------------------------------------------------------------#
 # executable program name: covid                                               #
 #                                                                              #
-# Version required:	v1.0r1                                                  #
-# Date created:		December 07, 2021                                      #
+# Version required:	v1.0r1                                                 #
+# Last updated:		December 07, 2021                                      #
 # Whom:			Steffen Hein <contact@sfenx.de>                        #
 #                                                                              #
 # $Id: Makefile,v 1.0. 12-07-2021 18:50:40 amadeus Exp $                       #

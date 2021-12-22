@@ -9,7 +9,7 @@
 *  Function amdwrk(*)                                                          *
 *  Here, the computational work is done                                        *
 *                                                                              *
-*  (C) SHEIN; Munich, December 2021                            Steffen Hein    *
+*  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
 *  [ Update: December 20, 2021 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/

@@ -3,7 +3,7 @@
 *                                                                              *
 *   User defined computing environment header maths.h                          *
 *                                                                              *
-*   (C) SHEIN; Munich, December 2021                          Steffen Hein     *
+*   (C) SHEIN; Munich, April 2020                             Steffen Hein     *
 *   [ Update: December 19, 2021 ]                          <contact@sfenx.de>  *
 *                                                                              *
 *******************************************************************************/

@@ -8,8 +8,8 @@
 *                                                                              *
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
-*  (C) SHEIN; Munich, December 2021                         Steffen Hein       *
-*  [ Update: December 20, 2021 ]                         <contact@sfenx.de>    *
+*  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
+*  [ Update: December 19, 2021 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
