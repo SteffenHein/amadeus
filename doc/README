@@ -8,11 +8,11 @@ A simple numerical Model Approximating the Development of Epidemics
 Under varied conditions of Spread
 
 [ Numerical solver of equation (A.9) in the appendix of Hein's article 
-  « Exponential derivatives and generalize reproduction numbers », 
+  « Exponential derivatives and generalized reproduction factors », 
   cf. https://archive.org/details/shein_20210223/exponential_derivatives/ ]
 
 (C) SHEIN; Munich, April 2020                               Steffen Hein
-[ Update: December 19, 2021 ]                            <contact@sfenx.de>
+[ Update: December 26, 2021 ]                            <contact@sfenx.de>
 --------------------------------------------------------------------------------
 Installation instructions
 
