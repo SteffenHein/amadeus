@@ -474,7 +474,6 @@ short input ( char *option )
          PRBLDCLR( "" );
          printf( "\r%*s", 79, "INPUT" );
          PRNORMAL( "" );
-	 
          return -ONE;
         break;
       }; /* end switch(*) */
@@ -538,7 +537,7 @@ short input ( char *option )
 # endif
 /*............................................................................*/
       store_params( tmpfle, 't' );          /* store prmtrs on temporary file */
-/*...........................................*/
+/*........................................*/
 
 # if IPT_PARDEF == 1
       strcpy( ptr, AMD_PAGER );
@@ -703,7 +702,8 @@ short input ( char *option )
          printf( "\r%*s", 79, "INPUT" );
          PRNORMAL( "" );
          return -ONE;
-         break;
+
+        break;
       }; /* end switch(*) */
 /*............................................................................*/
       remove( tmpfle );

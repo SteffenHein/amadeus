@@ -10,7 +10,7 @@
 *  Reads parameter file [ type par.log<N> ]                                    *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 19, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: December 28, 2021 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -55,7 +55,7 @@ short rread_params( char *filename, char mode )
       {
          if (( state->uif ) == 't' )
          {
-            printf( "\n parameter file %s not found "
+            printf( "\n parameter input file %s not found "
                "in present directory:\n", fleptr );
             printf( "\n please re-enter filename [ Escape: "
                "enter null ] >----> " );
@@ -66,7 +66,7 @@ short rread_params( char *filename, char mode )
          }
          else
          {
-            fprintf( stderr, "\nparameter file %s not found "
+            fprintf( stderr, "\nparameter input file %s not found "
                "in working directory !\n", fleptr );
             exit( EXIT_FAILURE );
          };

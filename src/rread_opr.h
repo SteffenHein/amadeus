@@ -10,7 +10,7 @@
 *  Reads operation modes from a file [ type opr.log<N> ]                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 19, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: December 28, 2021 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -54,7 +54,7 @@ short rread_operts( char *filename, char mode )
       {
          if (( state->uif ) == 't' )
          {
-            printf( "\n operations file %s not found "
+            printf( "\n operation parameters file %s not found "
                "in present directory:\n", fleptr );
             printf( "\n please re-enter filename [ Escape: "
                "enter null ] >----> " );
@@ -66,7 +66,7 @@ short rread_operts( char *filename, char mode )
          }
 	 else
          {
-            fprintf( stderr, "\noperations file %s not found "
+            fprintf( stderr, "\noperation parameters file %s not found "
 	       "in working directory\n", fleptr );
             exit( EXIT_FAILURE );
          };

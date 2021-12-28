@@ -10,7 +10,7 @@
 *  Here, the computational work is done                                        *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 20, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: December 28, 2021 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 1 /* some headers of the POSIX.1 standard will be used */
@@ -158,7 +158,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* append job number to filenames */
 
-   strcpy( longstr, "-job." );
+   strcpy( longstr, "_job." );
    strcat( longstr, lotos(( state->job ), null, " " ));
    strcat( paramt_fle, longstr );
 

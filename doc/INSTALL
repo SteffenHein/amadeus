@@ -8,13 +8,14 @@ A simple numerical Model Approximating the Development of Epidemics
 Under varied conditions of Spread
 
 (C) SHEIN; Munich, April 2020                               Steffen Hein
-[ Update: December 19, 2021 ]                            <contact@sfenx.de>
+[ Update: December 28, 2021 ]                            <contact@sfenx.de>
 --------------------------------------------------------------------------------
 1. Copy the package file amadeus-1.0.tgz into your home directory [ or where- 
    ever you want to create the initial installation directory ~/amadeus ].
    In the following that directory is referred to as 'build directory'.
 --------------------------------------------------------------------------------
 2. Unpack the amadeus package, using the tar command
+
 	tar -xvzf amadeus-v1.0r1.tgz
 --------------------------------------------------------------------------------
 3. Edit your [ operating system dependent ] makefile and define your  
@@ -31,7 +32,11 @@ Under varied conditions of Spread
    Copy your configured makefile into the file named 'Makefile' or
    set a symbolic link, for instance [ if your makefile is makefile.unx in a 
    UNIX type operating system ], by entering the command:
+
          ln -s makefile.unx Makefile
+
+   Note that the pre-configured makefiles [ makefile.gnu, makefile.unx ]
+   added to this package use GNU Make [ or CMake ] syntax.
 --------------------------------------------------------------------------------
 4. Edit the CONFIG.H header file and reconfigure, if necessary or wanted, the
    pertinent array dimensions [ macros ], always complying with the needs of

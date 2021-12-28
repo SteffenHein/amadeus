@@ -11,7 +11,7 @@
 *  by subsequently calling the respective functions                            *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 20, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: December 28, 2021 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -237,7 +237,7 @@ short amddrv( int argn, char **args )
 
       ( csp->option ) = 3; do
       {
-         strcpy(( csp->cmmnt ), "Welcome to AMADEUS Program !" );
+         strcpy(( csp->cmmnt ), "Welcome to AMADEUS !" );
          strcpy(( csp->cnfrm ), "Nothing done! Do you really want to quit ?" );
 
          ( csp->dfopt ) = 2; /* the initial default menu option */
@@ -277,7 +277,7 @@ short amddrv( int argn, char **args )
 
    if (( state->uif ) == 't' ) /* text console input */
    {
-      strcpy(( csp->cmmnt ), "Welcome back to AMADEUS Program !" );
+      strcpy(( csp->cmmnt ), "Welcome back to AMADEUS !" );
       strcpy(( csp->cnfrm ), "Nothing done! Do you really want to quit ?" );
 
       ( csp->dfopt ) = 4; /* the initial default menu option */
@@ -370,7 +370,7 @@ short amddrv( int argn, char **args )
       if (( null < item )
         &&( item != 4 ))
       {
-         strcpy(( csp->cmmnt ), "Welcome back to AMADEUS Program !" );
+         strcpy(( csp->cmmnt ), "Welcome back to AMADEUS !" );
          goto text_menu;
       }
       else if ( item == 4 )

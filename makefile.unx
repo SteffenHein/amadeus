@@ -1,4 +1,4 @@
-#[File: amadeus-v1.0r1/makefile.gnu]
+#[File: amadeus-v1.0r1/makefile.unx]
 #------------------------------------------------------------------------------#
 #                                                                              #
 #  Makefile for the amadeus program package on a [ Debian ] GNU/Linux          #
@@ -26,7 +26,7 @@ RELEASE=	v1.0r1
 
 #MAINTAINER=	contact@sfenx.de
 
-#MAKEFILE=	makefile.gnu
+#MAKEFILE=	makefile.unx
 #NO_PACKAGE=	"must provide without modifications"
 #------------------------------------------------------------------------------#
 # The executable program name [modify, if wanted]:
@@ -88,5 +88,5 @@ AMD_LIB=	-lm -lncurses
 #------------------------------------------------------------------------------#
 #.SILENT:
 #------------------------------------------------------------------------------#
-include mk.gnu
+include mk.unx
 #------------------------------------------------------------------------------#
