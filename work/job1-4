@@ -1,5 +1,5 @@
 #!/bin/sh
-amadeus -n 0 -f par.log0
-amadeus -n 1 -f par.log1
-amadeus -n 2 -f par.log2
-amadeus -n 3 -f par.log3
+amadeus -n 1 -f par.init1
+amadeus -n 2 -f par.init2
+amadeus -n 3 -f par.init3
+amadeus -n 4 -f par.init4

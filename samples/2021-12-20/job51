@@ -1,3 +1,3 @@
 #!/bin/sh
-amadeus -n 51 -f par.log51
+amadeus -n 51 -f par.init51
 ./gnuplot51

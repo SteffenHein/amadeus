@@ -1,3 +1,3 @@
 #!/bin/sh
-amadeus -n 21 -f par.log21
+amadeus -n 21 -f par.init21
 ./gnuplot21

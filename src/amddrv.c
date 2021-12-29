@@ -12,7 +12,7 @@
 *  by subsequently calling the respective functions                            *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 20, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: December 29, 2021 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 1 /* some headers of the POSIX.1 standard will be used */
@@ -102,7 +102,7 @@ static char /* temporary file name */
 # include "./amddrv.h" 
 /*============================================================================*/
 # undef DO_AMDDRV
-/********************** end of function 'amdddrv(*)' **************************/
+/********************** end of function 'amddrv(*)' ***************************/
 /*
    Es ist gleichermassen toedlich fuer den Geist, ein System zu haben - und
    keines zu haben. Daher muss man sich dazu entschließen, beides miteinander

@@ -1,3 +1,3 @@
 #!/bin/sh
-amadeus -n 29 -f par.log29
+amadeus -n 29 -f par.init29
 ./gnuplot29

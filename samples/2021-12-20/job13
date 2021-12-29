@@ -1,3 +1,3 @@
 #!/bin/sh
-amadeus -n 13 -f par.log13
+amadeus -n 13 -f par.init13
 ./gnuplot13

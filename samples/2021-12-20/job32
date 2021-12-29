@@ -1,3 +1,3 @@
 #!/bin/sh
-amadeus -n 32 -f par.log32
+amadeus -n 32 -f par.init32
 ./gnuplot32

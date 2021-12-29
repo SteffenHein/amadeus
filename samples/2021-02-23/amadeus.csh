@@ -11,8 +11,8 @@ while ( $i <= ${final} )
 	if (-f ./${INIT_FILE}$i) then
 		echo "calling amadeus ""$i"
 		amadeus -n $i -f ${INIT_FILE}$i
- 		cp ${LOG_FILE}$i ${INIT_FILE}$i
-#	endif
+# 		cp ${LOG_FILE}$i ${INIT_FILE}$i
+	endif
 	@ i ++
 end
 #

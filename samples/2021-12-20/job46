@@ -1,3 +1,3 @@
 #!/bin/sh
-amadeus -n 46 -f par.log46
+amadeus -n 46 -f par.init46
 ./gnuplot46

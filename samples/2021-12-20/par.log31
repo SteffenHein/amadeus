@@ -11,7 +11,7 @@ s003=The_initially_infected_members______________[Nifc>=Ninf]:   1.00000e+00
 s004=The_initially_immune_members___________________[Nimn>=0]:   1.00000e+00
 s005=The_already_deceased_members___________________[Nlty>=0]:   1.00000e+00
 s006=The_reproduction_number_________________________[Repr>0]:   3.00000e+00
-s007=The_incidence_threshold_[stop_below_that_No>=0_of_cases]:   1.00000e-02
+s007=The_incidence_threshold_[stop_below_that_No>=0_of_cases]:   0.00000e+00
 s008=The_immunization_coefficient___________________[0<=C<=1]:   1.00000e+00
 s009=The_percentage_of_asymptomatic_cases__________[0<=P<100]:   2.00000e+01
 s010=The_percentage_of_lethal_cases________________[0<=P<100]:   3.00000e-01
@@ -40,5 +40,5 @@ y-units___[normalized_(herd_size=1):1_|_conventional_units:2]:            2
 [0]_1:_[don't]_stop_when_no_sick_persons_remain_________[0/1]:            1
 
 PANDEMIA input parameter file par.log31 created:
-Mon Dec 20 19:49:30 2021
+Wed Dec 29 20:45:14 2021
 ÿ

@@ -11,8 +11,8 @@ x-scale________________________[transmission_time:1_|_days:2]:            1
 y-scale____________________________[linear:1_|_logarithmic:2]:            1
 y-units___[normalized_(herd_size=1):1_|_conventional_units:2]:            1
 [0]_1:_[don't]_write_titels_on_graphics_________________[0/1]:            1
-[0]_1:_[don't]_stop_when_no_sick_persons_remain_________[0/1]:            0
+[0]_1:_[don't]_stop_when_no_sick_persons_remain_________[0/1]:            1
 
 AMADEUS operations logfile opr.log4 created:
-Tue Dec 14 22:26:01 2021
+Wed Dec 29 20:09:39 2021
 ÿ
