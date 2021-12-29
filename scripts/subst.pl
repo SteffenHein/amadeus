@@ -4,8 +4,8 @@
 #  subst.pl                                                                    #
 #  A handy string substitution perl script                                     #
 #                                                                              #
-#  (C) SHEIN; Bad Aibling, February 2002                     Steffen Hein      #
-#  [ Update: 01 March 2002 ]                              <s.hein@spinner.de>  #
+#  (C) SHEIN; Munich, December 2021                            Steffen Hein    #
+#  [ Update: December 29, 2021 ]                            <contact@sfenx.de> #
 #                                                                              #
 #------------------------------------------------------------------------------#
 use strict;
