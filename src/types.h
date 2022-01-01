@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 19, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: January 01, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -53,7 +53,7 @@ typedef struct
       xscale,
       yscale,
       yunits,
-      npstop, 
+      nostop, 
       titles,
       rtn;
 
@@ -110,13 +110,15 @@ typedef struct
       wght_ifc,  /* infection weight: 100/( 100-Slnt ) */
       wght_imm,  /* immunisation weight: ( 100+Ltlt )/( 100-Slnt ) */
       wght_lty,  /* lethality weight: Ltlt/( 100-Slnt ) */
-      nobody,    /* < 0.5/Ncom; incidence limit [ no persons remain... ] */
-      threshold, /* < 0.5/Ncom; incidence limit [ no persons remain... ] */
+      thrshld,   /* immunity threshold [ no persons remain... ] */
       
       Ttrm,      /* mean transmission time [ Tinc+Till, e.g. ] */
-      Ticb,      /* Incubation time */
+      Timu,      /* mean immunity duration [ days ] */
+      timn,      /* Timu in natural units [ Ttrm scale ] */
+      Ticb,      /* mean incubation time */
       Tnif,      /* not yet infective time [ not necessarily Tinc ] */
       Tacu,      /* N [=Tacu] days incidence */
+      tacn,      /* Tacu in natural units [ Ttrm scale ] */
       Tend,      /* time intervall [ length ] */
 
       Timmun,    /* time of attained group immunity */
@@ -139,7 +141,7 @@ typedef struct
       maxrpd;    /* maximum reproduction number */
 
    double
-      dudt[10000+ONE];
+      dudt[100000+ONE];
 
 } PARMTRS;
 /*----------------------------------------------------------------------------*/

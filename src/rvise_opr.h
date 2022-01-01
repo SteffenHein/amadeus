@@ -20,7 +20,7 @@
 *  option "operation" whenever such dependencies exist.                        *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 19, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: January 01, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef OPR_SSTRNG
@@ -37,12 +37,13 @@ short rvise_operts( void )
 /* declarations: */
 
    AMDSTATE 
-      *state = &amdstat;
+     *state = &amdstat;
 
    static OPERTNS
      *opr = &opertns;
 
    static short
+      ii = null,  
       ll = LINLEN;
 
 /* prototypes: */
@@ -79,24 +80,30 @@ short rvise_operts( void )
 
    cpylne( opr->ntx[4],
               "x-scale",
-    	         "transmission_time:1_|_days:2", ll );
+    	         "transmission_time:0_|_days:1", ll );
 
    cpylne( opr->ntx[5],
               "y-scale",
-    	         "linear:1_|_logarithmic:2", ll );
+    	         "linear:0_|_logarithmic:1", ll );
 
    cpylne( opr->ntx[6],
               "y-units",
-    	         "normalized_(herd_size=1):1_|_conventional_units:2", ll );
+    	         "normalized_(herd_size=1):0_|_conventional_units:1", ll );
 
    cpylne( opr->ntx[7],
              "[0]_1:_[don't]_write_titels_on_graphics",
     	        "0/1", ll );
 
    cpylne( opr->ntx[8],
-             "[0]_1:_[don't]_stop_when_no_sick_persons_remain",
+             "[0]_1:_[don't]_stop_when_no_sick_individuals_remain",
     	        "0/1", ll );
 /*............................................................................*/
+   ii = 4; do
+   {
+      if ( opr->n[ii] != null )
+         opr->n[ii] = ONE;
+      ii++;
+   } while ( ii < 9 );
 
    return null;
 }

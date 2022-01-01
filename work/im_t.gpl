@@ -12,6 +12,9 @@ plot \
 'im(t)_R0=3.000' with lines
 pause -1 '[ hit return to continue ]'
 replot \
+'im(t)_R0=2.875' with lines
+pause -1 '[ hit return to continue ]'
+replot \
 'im(t)_R0=2.750' with lines
 pause -1 '[ hit return to continue ]'
 replot \

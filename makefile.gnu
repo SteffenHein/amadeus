@@ -51,8 +51,8 @@ AMD_RESD=	${HOME}/
 # The C compiler
 #CCOMPILER=	/usr/local/bin/egcc
 #CCOMPILER=	/usr/local/bin/gcc
-CCOMPILER=	/usr/bin/gcc
-#CCOMPILER=	cc
+#CCOMPILER=	/usr/bin/gcc
+CCOMPILER=	cc
 #
 # Compiler options [ please modify ]:
 AMD_CC=${CCOMPILER} -ansi -std=c99 -pedantic -Wall -pipe
@@ -67,11 +67,11 @@ AMD_CFLG=	-D_Debian -D_CCBUG -D_Forced
 #
 #
 # Find sources in directory: [Define path]
-AMD_SRC=	./src/
 AMD_CONF=	./
+AMD_SRC=	./src/
 AMD_MATH=	./math/
-AMD_OBJ=	./objects/
 AMD_TOOLS=	./tools/
+AMD_OBJ=	./objects/
 AMD_DEFLT=	./default/
 #
 # Compile into directory: [Define path]

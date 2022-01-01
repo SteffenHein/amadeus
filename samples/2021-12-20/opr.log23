@@ -7,12 +7,12 @@ computation_modes
 maximum_number_of_outer_iterations_________________[<=100000]:       100000
 number_of_inner_iterations____________________________[1-100]:            3
 formula_0,1,2__[_0:_input_is_BASIC/_else:_CURRENT/_repr._no.]:            0
-x-scale________________________[transmission_time:1_|_days:2]:            2
-y-scale____________________________[linear:1_|_logarithmic:2]:            1
-y-units___[normalized_(herd_size=1):1_|_conventional_units:2]:            2
+x-scale________________________[transmission_time:0_|_days:1]:            1
+y-scale____________________________[linear:0_|_logarithmic:1]:            1
+y-units___[normalized_(herd_size=1):0_|_conventional_units:1]:            1
 [0]_1:_[don't]_write_titels_on_graphics_________________[0/1]:            1
-[0]_1:_[don't]_stop_when_no_sick_persons_remain_________[0/1]:            1
+[0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:            1
 
 AMADEUS operations logfile opr.log23 created:
-Wed Dec 29 20:45:14 2021
+Sat Jan  1 17:56:29 2022
 ÿ

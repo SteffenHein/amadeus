@@ -1,4 +1,4 @@
-/* Update: December 19, 2021 */
+/* Update: January 01, 2022 */
 # define GNUPLOT( STREAM, FLNAME, PLTFLE, OPTION, XUNIT, YUNIT, YMIN, YMAX ) \
 { \
 /* gnuplot headers */ \
@@ -18,7 +18,7 @@
    fprintf( STREAM, "%s", longstr ); \
    fprintf( STREAM, "%s", " : " ); \
  \
-   if ( ppt->xscale == 1 ) \
+   if ( ppt->xscale == 0 ) \
       strcpy( longstr, dotos( 1.1*ppt->tt, 7, "e" )); \
    else \
       strcpy( longstr, dotos( 1.1*ppt->tt*ppt->Ttrm, 7, "e" )); \
@@ -31,7 +31,7 @@
    fprintf( STREAM, "%s", "'\n" ); \
    fprintf( STREAM, "%s", "set format y '%10.1e'\n" ); \
  \
-   if ( ppt->yscale == 2 ) /* y scale: logarithmic */ \
+   if ( ppt->yscale == 1 ) /* y scale: logarithmic */ \
       fprintf( STREAM, "%s", "set logscale y 10\n" ); \
  \
    fprintf( STREAM, "%s", "set yrange [ " ); \

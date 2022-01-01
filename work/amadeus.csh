@@ -1,5 +1,5 @@
 #!/bin/csh
-set init=1
+set init=0
 set final=15
 
 set LOG_FILE="par.log"
@@ -11,7 +11,7 @@ while ( $i <= ${final} )
 	if (-f ./${INIT_FILE}$i) then
 		echo "calling amadeus ""$i"
 		amadeus -n $i -f ${INIT_FILE}$i
-# 		cp ${LOG_FILE}$i ${INIT_FILE}$i
+ 		cp ${LOG_FILE}$i ${INIT_FILE}$i
 	endif
 	@ i ++
 end

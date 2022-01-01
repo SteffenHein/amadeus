@@ -4,13 +4,16 @@ set xrange [ 0.000000e+00 : 6.000000e+01 ]
 set ylabel ' '
 set format y '%10.1e'
 set logscale y 10
-set yrange [ 1.000000e-06 : 4.000000e-01 ]
+set yrange [ 1.000000e-06 : 3.500000e-01 ]
 set grid
 set border
 set key box
 set pointsize 0.2
 plot \
 '7_days_incidence_R0=3.000' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'7_days_incidence_R0=2.875' with lines
 pause -1 '[ hit return to continue ]'
 replot \
 '7_days_incidence_R0=2.750' with lines

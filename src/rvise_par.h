@@ -20,7 +20,7 @@
 *  option "parameters" whenever such dependencies exist.                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 19, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: December 31, 2021 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -51,7 +51,7 @@ short rvise_params( void )
 /*............................................................................*/
 /* number of parameters */
 
-   ( prp->s[null] )  = 16;
+   ( prp->s[null] )  = 17;
 /*............................................................................*/
    strcpy( par->stx[0] , "parameters\n" );
    strcat( par->stx[0] , "[do_not_change_file_topology:"\
@@ -72,30 +72,34 @@ short rvise_params( void )
    cpypar( 7, \
       "The_incidence_threshold", "stop_below_that_No>=0_of_cases" );
    cpypar( 8, \
-      "The_immunization_coefficient", "0<=C<=1" );
+      "The_immunization_coefficient_in_percent", "0<C<=1" );
    cpypar( 9, \
-      "The_percentage_of_asymptomatic_cases", "0<=P<100" );
+      "The_percentage_of_asymptomatic_cases", "0<=P<=100" );
    cpypar( 10, \
-      "The_percentage_of_lethal_cases", "0<=P<100" );
+      "The_percentage_of_lethal_cases", "0<=P<=100" );
    cpypar( 11, \
-      "The_mean_transmissive_time", "0<=days" );
-   cpypar( 12, \
       "The_mean_incubation_time", "0<=days" );
+   cpypar( 12, \
+      "The_mean_transmissive_time", "0<=days" );
    cpypar( 13, \
-      "The_mean_duration_of_acute_sickness", "0<days" );
-   cpypar( 14, \
       "The_non_portability_delay_[after_infection]", "0<=days" );
+   cpypar( 14, \
+      "The_mean_duration_of_acute_sickness", "0<days" );
    cpypar( 15, \
-      "The_time_interval", "0<days" );
+      "The_mean_duration_of_immunity", "0<days" );
    cpypar( 16, \
+      "The_time_interval", "0<days" );
+   cpypar( 17, \
       "The_time_step", "0<days" );
 /*............................................................................*/
    if ( prp->s[3] < prp->s[2] )
       prp->s[3] = prp->s[2]; 
-/*
-   if ( prp->s[4] < prp->s[3] )
-      prp->s[4] = prp->s[3]; 
-*/
+
+   if ( 1. < prp->s[8] )
+      prp->s[8] = 1.; 
+   else if ( prp->s[8] <= 0. )
+      prp->s[8] = 1.; 
+
    return null;
 }
 /*============================================================================*/
