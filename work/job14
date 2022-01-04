@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 14 -f par.init14
-./gnuplot14

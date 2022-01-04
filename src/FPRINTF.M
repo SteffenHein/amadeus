@@ -36,7 +36,7 @@
       fprintf( pltptr_ifc, \
          "%12s\n", longstr ); \
  \
-      if ( ppt->kinc <= ppt->kk ) \
+      if ( ppt->kacu <= ppt->kk ) \
       { \
          fprintf( pltptr_acu, \
             "%12s     ", timestr ); \

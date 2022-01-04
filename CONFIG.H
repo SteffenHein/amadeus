@@ -2,7 +2,7 @@
 /*----------------------------------------------------------------------------*/
 /* AMADEUS, release v1.0r1                                                    */
 /*                                                                            */
-/* A simple numerical Model Approximating the Development of Epidemics        */
+/* A plain numerical Model Approximating the Development of Epidemics         */
 /* Under different conditions of Spread                                       */
 /*                                                                            */
 /* (C) SHEIN; Munich, April 2020                             Steffen Hein     */

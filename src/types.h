@@ -3,13 +3,13 @@
 *                                                                              *
 *  AMADEUS, release v1.0r1                                                     *
 *                                                                              *
-*  A simple numerical Model Approximating the Development of Epidemics         *
+*  A plain numerical Model Approximating the Development of Epidemics          *
 *  Under varied conditions if Spread                                           *
 *                                                                              *
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 01, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 04, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -53,7 +53,7 @@ typedef struct
       xscale,
       yscale,
       yunits,
-      nostop, 
+      nmstop, 
       titles,
       rtn;
 
@@ -68,7 +68,7 @@ typedef struct
       ii,
       kk,
       kend,
-      kinc,
+      kacu,
       kicb,
       knif,
       ktrm,
@@ -110,7 +110,6 @@ typedef struct
       wght_ifc,  /* infection weight: 100/( 100-Slnt ) */
       wght_imm,  /* immunisation weight: ( 100+Ltlt )/( 100-Slnt ) */
       wght_lty,  /* lethality weight: Ltlt/( 100-Slnt ) */
-      thrshld,   /* immunity threshold [ no persons remain... ] */
       
       Ttrm,      /* mean transmission time [ Tinc+Till, e.g. ] */
       Timu,      /* mean immunity duration [ days ] */

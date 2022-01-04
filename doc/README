@@ -4,7 +4,7 @@ README
 --------------------------------------------------------------------------------
 AMADEUS, release v1.0r1
 
-A simple numerical Model Approximating the Development of Epidemics 
+A plain numerical Model Approximating the Development of Epidemics 
 Under varied conditions of Spread
 
 [ Numerical solver of equation (A.9) in the appendix of Hein's article 
@@ -12,7 +12,7 @@ Under varied conditions of Spread
   cf. https://archive.org/details/shein_20210223/exponential_derivatives/ ]
 
 (C) SHEIN; Munich, April 2020                               Steffen Hein
-[ Update: December 26, 2021 ]                            <contact@sfenx.de>
+[ Update: January 04, 2021 ]                            <contact@sfenx.de>
 --------------------------------------------------------------------------------
 Installation instructions
 

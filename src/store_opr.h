@@ -3,7 +3,7 @@
 *                                                                              *
 *  AMADEUS, release v1.0r1                                                     *
 *                                                                              *
-*  A simple numerical Model Approximating the Development of Epidemics         *
+*  A plain numerical Model Approximating the Development of Epidemics          *
 *  Under varied conditions if Spread                                           *
 *                                                                              *
 *  Function store_opr(*)                                                       *

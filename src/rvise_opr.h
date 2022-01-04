@@ -3,7 +3,7 @@
 *                                                                              *
 *  AMADEUS, release v1.0r1                                                     *
 *                                                                              *
-*  A simple numerical Model Approximating the Development of Epidemics         *
+*  A plain numerical Model Approximating the Development of Epidemics          *
 *  Under varied conditions if Spread                                           *
 *                                                                              *
 *  Function rvise_opr(*)                                                       *
@@ -20,7 +20,7 @@
 *  option "operation" whenever such dependencies exist.                        *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 01, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 04, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef OPR_SSTRNG
@@ -98,12 +98,36 @@ short rvise_operts( void )
              "[0]_1:_[don't]_stop_when_no_sick_individuals_remain",
     	        "0/1", ll );
 /*............................................................................*/
-   ii = 4; do
+   if ( 100000 < opr->n[1] )
+      opr->n[1] = 100000;
+   else if ( opr->n[1] < ONE )
+      opr->n[1] = 100000;
+
+   if ( 100 < opr->n[2] )
+      opr->n[2] = 100;
+   else if ( opr->n[2] < ONE )
+      opr->n[2] = ONE;
+
+   ii = opr->n[3];
+   switch( ii )
+   { 
+     default:
+      opr->n[3] = null;
+      break;
+     
+     case 1 :
+      break;
+
+     case 2 :
+      break;
+   };
+     
+   ii = 3; do
    {
+      ii++;
       if ( opr->n[ii] != null )
          opr->n[ii] = ONE;
-      ii++;
-   } while ( ii < 9 );
+   } while ( ii < ( short )( opr->n[null] ));
 
    return null;
 }

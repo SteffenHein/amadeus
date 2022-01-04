@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 10 -f par.init10
-./gnuplot10
