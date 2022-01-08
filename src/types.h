@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 04, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 08, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -65,8 +65,6 @@ typedef struct
       s[100+ONE];
 
    long
-      ii,
-      kk,
       kend,
       kacu,
       kicb,

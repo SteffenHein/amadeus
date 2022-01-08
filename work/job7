@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 7 -f par.init7
+./gnuplot7

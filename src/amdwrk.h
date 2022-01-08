@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 04, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 08, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -29,7 +29,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    char *strcat( char *dest, const char *src );
    char *strncpy( char *dest, const char *src, size_t N );
 
-/*--- user function prototypes -------------------------------------------->*/
+/*--- user function prototypes ---------------------------------------------->*/
 
    double exp( double x );
    double log( double x );
@@ -86,7 +86,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       pltfle_lty[50] = AMD_RESULTS,
       pltfle_rpd[50] = AMD_RESULTS,
 
-      paramt_fle[50] = AMD_RESULTS;
+      parmtr_fle[50] = AMD_RESULTS;
 
    char
       plot_acu[50] = AMD_RESULTS,
@@ -95,6 +95,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       plot_inc[50] = AMD_RESULTS,
       plot_lty[50] = AMD_RESULTS,
       plot_rpd[50] = AMD_RESULTS;
+
+   long
+     ii = null,
+     kk = null;
 
    static double
       hh0 = ZERO,
@@ -108,14 +112,15 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       lethal_upd = ZERO,
       reprod_upd = ZERO, /* updated reproduction number, inner loop */
       integral_incidence = ZERO;
-/*--------------------------- end of declaration part -----------------------*/
+
+/*----------------------------- end declarations -----------------------------*/
 /* assign structure pointers */
 
    stp = state;
    ppt = stp->par;
    opr = stp->opr;
 /*............................................................................*/
-   strcat( paramt_fle, "parameters" );
+   strcat( parmtr_fle, "parameters" );
 
    strcat( plot_acu, "gpl_n_days_incidence" );
    strcat( plot_ifc, "gpl_infection" );
@@ -128,7 +133,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    strcpy( longstr, "_job." );
    strcat( longstr, lotos(( state->job ), null, " " ));
-   strcat( paramt_fle, longstr );
+   strcat( parmtr_fle, longstr );
 
    strcat( plot_acu, longstr );
    strcat( plot_ifc, longstr );
@@ -236,9 +241,9 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    ppt->repr = ppt->Repr;
 /*............................................................................*/
-/* print initial parameters into file */
+/* store initial parameters in file <parmtr_fle> */
 
-   fleptr_par = fopen( paramt_fle, "w+" ); 
+   fleptr_par = fopen( parmtr_fle, "w+" ); 
 
    fprintf( fleptr_par,
       "Total number of community members: %10.5e\n", ppt->Ncom );
@@ -433,13 +438,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    lnrpt= log( reprod_upd ); 
    ppt->dudt[null] = incidence_upd;
    
-   ppt->ii = null;
-   while( ppt->ii < ppt->mxictm )
+   ii = null;
+   while( ii < ppt->mxictm )
    {
-      ppt->ii++;
-      ppt->dudt[ppt->ii] = ZERO;
+      ii++;
+      ppt->dudt[ii] = ZERO;
    };
 
+   kk = null;
    ppt->tt = ZERO;
    integral_incidence = ZERO;
 /*...........................................................................*/
@@ -471,8 +477,6 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          hh0 = immune_upd + lethal_upd;
          suscpt_upd = ( 1. - hh0 ); 
 
-/* immunity decrease */
-         immune_upd *= ( exp( - ppt->dt / ppt->timn ));
 
          if ( ppt->nmstop == ONE ) /* stop if no sick members remain */
 	 {
@@ -483,7 +487,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
 	       ppt->dudt[null] = ZERO;
        	       ppt->Timmun = ppt->tt;
-	       ppt->kend = ppt->kk;
+	       ppt->kend = kk;
 
                goto finish;
 	    };
@@ -501,7 +505,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 	       reprod_upd = suscpt_upd*ppt->repr;
                lnrpt = log( reprod_upd );
 	    
-               if ( ppt->kk < ppt->knif ) {;}
+               if ( kk < ppt->knif ) {;}
                else
                   incidence_upd *= \
                      exp( ppt->dt*lnrpt );
@@ -515,7 +519,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 	       reprod_upd = suscpt_upd*ppt->repr;
                lnrpt = log( reprod_upd );
 	    
-               if ( ppt->kk < ppt->knif ) {;}
+               if ( kk < ppt->knif ) {;}
                else
                   incidence_upd *= \
                      exp( ppt->dt*lnrpt );
@@ -524,7 +528,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*...........................................................................*/
               case 2: /* R(t) = R(0) [ constant ] */
 
-               if ( ppt->kk < ppt->knif ) {;}
+               if ( kk < ppt->knif ) {;}
                else
                   incidence_upd *= exp( ppt->dt*lnrpt );
 		  
@@ -550,41 +554,47 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 	 else /* suscpt_upd <= ppt->rthr */
             incidence_upd = ZERO;
 
-/*...........................................................................*/
-/* shift dudt from k to k+1 */    
-
          ppt->dudt[null] = incidence_upd;
 
-	 if ( ppt->kk < ppt->knif )
+/*...........................................................................*/
+/* the immune fraction */
+	 
+	 if ( kk < ppt->knif )
+         {
+            ppt->rimn *= ( exp( - ppt->dt / ppt->timn ));
             immune_upd = ppt->rimn;
-         else            
+         }
+         else       
+         {
+            immune_upd *= ( exp( - ppt->dt / ppt->timn ));
             immune_upd +=\
                ( ppt->dt * ppt->wght_imm * ppt->dudt[ppt->knif] );
+         };
 
 /*...........................................................................*/
 /* mean n days incidence */
+/* and shift dudt from k to k+1 */    
 
          acute_upd = ZERO;
-         ppt->ii = ppt->mxictm;
-	 while( null < ppt->ii )
-	 {
-            ppt->dudt[ppt->ii] = ppt->dudt[ppt->ii-ONE];
+         ii = ppt->mxictm;
+	 while( null < ii )
+         {
+            ppt->dudt[ii] = ppt->dudt[ii-ONE];
 	    
-	    if ( ppt->ii < ppt->kacu )
+	    if ( ii < ppt->kacu )
                acute_upd += \
-                  ( ppt->dt*ppt->dudt[ppt->ii] );
+                  ( ppt->dt*ppt->dudt[ii] );
 
-	    ppt->ii--;
+	    ii--;
          };
          acute_upd /= ppt->tacn;
 
          ppt->tt += ppt->dt;
          ppt->ninn++ ;
-	 ppt->kk++;
-
+	 kk++;
       }; /* while ( ppt->ninn < ppt->maxinn ) */
 
-/*............................end of inner loop ..............................*/
+/*......................end inner loop .........................*/
       ppt->nout++;
 
    }; /* while ( ppt->nout < ppt->maxout) */
@@ -603,7 +613,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /* form the plot headers
    Format: 
    GNUPLOT( STREAM, FILENAME, PLOTFILE, "OPTION", "XUNIT", "YUNIT", YMIN, YMAX )
-   yscale = 1: y scale  logarithmic, else: linear
+   yscale: 0 linear, 1 logarithmic
 */
 /*............................................................................*/
    if ( ppt->xscale == null )
@@ -706,11 +716,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
    GNUPLOT( gnuptr_rpd, plot_rpd, flname_rpd, optnstr, timestr, \
-      "reprod. no", ( .99*ppt->minrpd ), ( 1.10*ppt->maxrpd ));
+      "reprod. no", ( .77*ppt->minrpd ), ( 1.10*ppt->maxrpd ));
 /*............................................................................*/
 /* store maxima: */ 
       
-   fleptr_par = fopen( paramt_fle, "a+" );
+   fleptr_par = fopen( parmtr_fle, "a+" );
       
    fprintf( fleptr_par,
       "\nIncidence maximum at %10.5e-th day: ", ppt->Tmxinc );

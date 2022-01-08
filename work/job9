@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 9 -f par.init9
+./gnuplot9

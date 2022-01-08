@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 11 -f par.init11
+./gnuplot11

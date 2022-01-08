@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 4 -f par.init4
+./gnuplot4

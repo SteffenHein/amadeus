@@ -19,9 +19,9 @@
    fprintf( STREAM, "%s", " : " ); \
  \
    if ( ppt->xscale == null ) \
-      strcpy( longstr, dotos( 1.1*ppt->tt, 7, "e" )); \
+      strcpy( longstr, dotos( 1.0000*ppt->tt, 7, "e" )); \
    else \
-      strcpy( longstr, dotos( 1.1*ppt->tt*ppt->Ttrm, 7, "e" )); \
+      strcpy( longstr, dotos( 1.0000*ppt->tt*ppt->Ttrm, 7, "e" )); \
  \
    fprintf( STREAM, "%s", longstr ); \
    fprintf( STREAM, "%s", " ]\n" ); \

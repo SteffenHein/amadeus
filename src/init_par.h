@@ -1,5 +1,5 @@
 # ifndef PARAMETERS
-   # define PARAMETERS 100
+   # define PARAMETERS 50
 # endif
 /*============================================================================*/
 void init_params( void )

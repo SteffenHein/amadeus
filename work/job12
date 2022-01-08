@@ -1,0 +1,3 @@
+#!/bin/sh
+amadeus -n 12 -f par.init12
+./gnuplot12

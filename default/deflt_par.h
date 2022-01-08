@@ -1,5 +1,5 @@
 /* [ file: deflt_par.h ] */
-/* Update: December 30, 2021 */
+/* Update: January 08, 2022 */
 /*----------------------------------------------------------------------------*/
 # ifndef LINLEN
    # define LINLEN 61
@@ -20,8 +20,8 @@ void deflt_params( void ) /* default model parameters */
 /* [ 2nd. argument       | ] */
 /*                       V   */
 /*............................................................................*/
-   strcpy( par->stx[0] , "parameters\n" );
-   strcat( par->stx[0] , "[do_not_change_file_topology:"\
+   strcpy( par->stx[0], "parameters\n" );
+   strcat( par->stx[0], "[do_not_change_file_topology:"\
      "_connected_strings_must_remain_connected!]" );
 
    cpypar( 1, \
@@ -63,21 +63,21 @@ void deflt_params( void ) /* default model parameters */
                                                                                
    par->s[1]  = 1.000e+05; /* Ncom; total herd size [number of members]  */
    par->s[2]  = 1.000e+00; /* Ninf; Initially transmissive members [number] */ 
-   par->s[3]  = 0.000e+00; /* Nifc; Initially infected members [number] */
-   par->s[4]  = 0.000e+00; /* Nimn; Initially immune members [number] */
-   par->s[5]  = 0.000e+00; /* Nlty; Initially dead members [number] */
-   par->s[6]  = 2.000e+00; /* Nrpd; The reproduction number */
-   par->s[7]  = 1.000e-02; /* Nthr; The incidence threshold */
+   par->s[3]  = 1.000e+00; /* Nifc; Initially infected members [number] */
+   par->s[4]  = 1.000e+00; /* Nimn; Initially immune members [number] */
+   par->s[5]  = 0.000e+00; /* Nlty; Init. already deceased members [number] */
+   par->s[6]  = 3.000e+00; /* Nrpd; The reproduction number */
+   par->s[7]  = 0.000e+00; /* Nthr; The incidence threshold */
    par->s[8]  = 1.000e+00; /* Nthr; The immunization coefficient */
    par->s[9]  = 2.000e+01; /* Percentage of asymptomatic ('silent') cases */
-   par->s[10] = 3.000e-01; /* Percentage of lethal cases */
+   par->s[10] = 2.000e-02; /* Percentage of lethal cases */
    par->s[11] = 2.000e+00; /* Ticb; The mean incubation time [days] */
    par->s[12] = 7.000e+00; /* Tinf; The mean tansmissive time [days] */
-   par->s[13] = 2.000e+00; /* Tnif; Non-portability after infection [days] */
+   par->s[13] = 0.000e+00; /* Tnif; Non-portability after infection [days] */
    par->s[14] = 7.000e+00; /* Tinc; The mean duration of acute sickness [days]*/
-   par->s[15] = 1.200e+02; /* Timu; The mean duration of immunity [days] */
-   par->s[16] = 7.650e+02; /* Tend; End of the time interval [days] */
-   par->s[17] = 2.500e-01; /* DltT; The time step [days] */
+   par->s[15] = 9.000e+01; /* Timu; The mean duration of immunity [days] */
+   par->s[16] = 7.300e+02; /* Tend; End of the time interval [days] */
+   par->s[17] = 1.000e-01; /* DltT; The time step [days] */
 
    return;
 }
