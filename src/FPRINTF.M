@@ -36,19 +36,19 @@
       fprintf( pltptr_ifc, \
          "%12s\n", longstr ); \
  \
-      if ( ppt->kacu <= kk ) \
+      if ( ppt->kinc <= kk ) \
       { \
-         fprintf( pltptr_acu, \
+         fprintf( pltptr_ica, \
             "%12s     ", timestr ); \
  \
          if( ppt->yunits == 0 ) \
             strcpy( longstr, \
-               dotos( acute_upd, 7, "e" )); \
+               dotos( ndays_inc_upd, 7, "e" )); \
          else \
             strcpy( longstr, \
-               dotos(( 1.0e+5 )*( acute_upd ), 7, "e" )); \
+               dotos(( 1.0e+5 )*( ndays_inc_upd ), 7, "e" )); \
  \
-         fprintf( pltptr_acu, \
+         fprintf( pltptr_ica, \
             "%12s\n", longstr ); \
  \
       }; \
@@ -66,21 +66,18 @@
       fprintf( pltptr_lty, \
          "%12s\n", longstr ); \
  \
-      if ( ppt->knif <= kk ) \
-      { \
-         fprintf( pltptr_inc, \
-            "%12s     ", timestr ); \
+      fprintf( pltptr_inc, \
+         "%12s     ", timestr ); \
  \
-         if( ppt->yunits == 0 ) \
-            strcpy( longstr, \
-               dotos( incidence_upd, 7, "e" )); \
-         else \
-            strcpy( longstr, \
-               dotos(( 1.0e+5 )*( incidence_upd ), 7, "e" )); \
+      if( ppt->yunits == 0 ) \
+         strcpy( longstr, \
+            dotos( incidence_upd, 7, "e" )); \
+      else \
+         strcpy( longstr, \
+            dotos(( 1.0e+5 )*( incidence_upd ), 7, "e" )); \
  \
-         fprintf( pltptr_inc, \
+      fprintf( pltptr_inc, \
             "%12s\n", longstr ); \
-      }; \
  \
       fprintf( pltptr_rpd, \
          "%12s     ", timestr ); \

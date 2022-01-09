@@ -10,7 +10,7 @@
 *  Reads parameter file [ type par.log<N> ]                                    *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 28, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: January 09, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 

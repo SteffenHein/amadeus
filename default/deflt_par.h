@@ -1,5 +1,5 @@
 /* [ file: deflt_par.h ] */
-/* Update: January 08, 2022 */
+/* Update: January 09, 2022 */
 /*----------------------------------------------------------------------------*/
 # ifndef LINLEN
    # define LINLEN 61
@@ -14,7 +14,7 @@ void deflt_params( void ) /* default model parameters */
 /* parameter strings: */
 /* number of parameters */
    
-   par->s[0]  = 17;
+   par->s[0]  = 15;
 
 /* write only connected (!) strings into the string copy function strcpy(*) */
 /* [ 2nd. argument       | ] */
@@ -45,18 +45,14 @@ void deflt_params( void ) /* default model parameters */
    cpypar( 10, \
       "The_percentage_of_lethal_cases", "P<100" );
    cpypar( 11, \
-      "The_mean_incubation_time", "Ticb/days" );
-   cpypar( 12, \
       "The_mean_transmissive_time", "Ttrm/days" );
-   cpypar( 13, \
-      "The_non_portability_delay_[after_infection]", "Tnif/days" );
-   cpypar( 14, \
-      "The_mean_duration_of_acute_sickness", "Tacu/days" );
-   cpypar( 15, \
+   cpypar( 12, \
       "The_mean_duration_of_immunity", "Timu/days" );
-   cpypar( 16, \
+   cpypar( 13, \
+      "Incidence_averaged_over_time", "Tinc/days" );
+   cpypar( 14, \
       "The_time_interval", "Tend/days" );
-   cpypar( 17, \
+   cpypar( 15, \
       "The_time_step", "DltT/days" );
 /*............................................................................*/
 /* parameters: */
@@ -71,13 +67,11 @@ void deflt_params( void ) /* default model parameters */
    par->s[8]  = 1.000e+00; /* Nthr; The immunization coefficient */
    par->s[9]  = 2.000e+01; /* Percentage of asymptomatic ('silent') cases */
    par->s[10] = 2.000e-02; /* Percentage of lethal cases */
-   par->s[11] = 2.000e+00; /* Ticb; The mean incubation time [days] */
-   par->s[12] = 7.000e+00; /* Tinf; The mean tansmissive time [days] */
-   par->s[13] = 0.000e+00; /* Tnif; Non-portability after infection [days] */
-   par->s[14] = 7.000e+00; /* Tinc; The mean duration of acute sickness [days]*/
-   par->s[15] = 9.000e+01; /* Timu; The mean duration of immunity [days] */
-   par->s[16] = 7.300e+02; /* Tend; End of the time interval [days] */
-   par->s[17] = 1.000e-01; /* DltT; The time step [days] */
+   par->s[11] = 7.000e+00; /* Ttrm; The mean tansmissive time [days] */
+   par->s[12] = 9.000e+01; /* Timu; The mean duration of immunity [days] */
+   par->s[13] = 7.000e+00; /* Tinc; The incidence averaging time [days] */
+   par->s[14] = 7.300e+02; /* Tend; End of the time interval [days] */
+   par->s[15] = 1.000e-01; /* DltT; The time step [days] */
 
    return;
 }

@@ -16,18 +16,18 @@
       if ( incidence_upd < ppt->mininc ) \
          ppt->mininc = incidence_upd; \
  \
-      if ( ppt->maxacu < acute_upd ) \
+      if ( ppt->maxica < ndays_inc_upd ) \
       { \
-         ppt->maxacu = acute_upd; \
+         ppt->maxica = ndays_inc_upd; \
  \
          if ( ppt->xscale == 0 ) \
-            ppt->Tmxacu = ppt->tt; \
+            ppt->Tmxica = ppt->tt; \
          else \
-            ppt->Tmxacu = ppt->tt*ppt->Ttrm; \
+            ppt->Tmxica = ppt->tt*ppt->Ttrm; \
       }; \
  \
-      if ( acute_upd < ppt->minacu ) \
-         ppt->minacu = acute_upd; \
+      if ( ndays_inc_upd < ppt->minica ) \
+         ppt->minica = ndays_inc_upd; \
  \
       if ( ppt->maximn < immune_upd ) \
       { \

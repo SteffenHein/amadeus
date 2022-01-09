@@ -20,7 +20,7 @@
 *  option "parameters" whenever such dependencies exist.                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 31, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: January 09, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -51,7 +51,7 @@ short rvise_params( void )
 /*............................................................................*/
 /* number of parameters */
 
-   ( prp->s[null] )  = 17;
+   ( prp->s[null] )  = 15;
 /*............................................................................*/
    strcpy( par->stx[0] , "parameters\n" );
    strcat( par->stx[0] , "[do_not_change_file_topology:"\
@@ -78,18 +78,14 @@ short rvise_params( void )
    cpypar( 10, \
       "The_percentage_of_lethal_cases", "0<=P<=100" );
    cpypar( 11, \
-      "The_mean_incubation_time", "0<=days" );
-   cpypar( 12, \
       "The_mean_transmissive_time", "0<=days" );
-   cpypar( 13, \
-      "The_non_portability_delay_[after_infection]", "0<=days" );
-   cpypar( 14, \
-      "The_mean_duration_of_acute_sickness", "0<days" );
-   cpypar( 15, \
+   cpypar( 12, \
       "The_mean_duration_of_immunity", "0<days" );
-   cpypar( 16, \
+   cpypar( 13, \
+      "Incidence_averaged_over_time", "0<days" );
+   cpypar( 14, \
       "The_time_interval", "0<days" );
-   cpypar( 17, \
+   cpypar( 15, \
       "The_time_step", "0<days" );
 /*............................................................................*/
    if ( prp->s[3] < prp->s[2] )

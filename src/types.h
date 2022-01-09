@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 08, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 09, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -66,9 +66,7 @@ typedef struct
 
    long
       kend,
-      kacu,
-      kicb,
-      knif,
+      kinc,
       ktrm,
 
       nout,      /* outer iteration index */ 
@@ -112,23 +110,21 @@ typedef struct
       Ttrm,      /* mean transmission time [ Tinc+Till, e.g. ] */
       Timu,      /* mean immunity duration [ days ] */
       timn,      /* Timu in natural units [ Ttrm scale ] */
-      Ticb,      /* mean incubation time */
-      Tnif,      /* not yet infective time [ not necessarily Tinc ] */
-      Tacu,      /* N [=Tacu] days incidence */
-      tacn,      /* Tacu in natural units [ Ttrm scale ] */
+      Tinc,      /* N [=Tacu] days incidence */
+      ticn,      /* Tinc in natural units [ Ttrm scale ] */
       Tend,      /* time intervall [ length ] */
 
       Timmun,    /* time of attained group immunity */
       Tmxinc,    /* time of maximum incidence */
-      Tmxacu,    /* time of maximum N days incidence integral */
+      Tmxica,    /* time of maximum N days incidence */
       Tmximn,    /* time of maximum immunity */
       Tmxrpd,    /* time of maximum reproduction number */
       Tmxifc,    /* time of maximum infections */
       Tmxicr,    /* time of maximum increase */
       Tmmicr,    /* time of maximum decrease */
 
-      minacu,    /* minimum acute cases */
-      maxacu,    /* maximum acute cases */
+      minica,    /* minimum averaged incidence */
+      maxica,    /* maximum averaged incidence */
       maxifc,    /* maximum infection */
       maximn,    /* maximum immunity */
       mininc,    /* minimum incidence */

@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 08, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 09, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -51,7 +51,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
      *opr = null;
 
    static FILE
-     *pltptr_acu = null,
+     *pltptr_ica = null,
      *pltptr_ifc = null,
      *pltptr_imn = null,
      *pltptr_inc = null,
@@ -60,7 +60,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
      *fleptr_par = null;
 
    static FILE
-     *gnuptr_acu = null,
+     *gnuptr_ica = null,
      *gnuptr_ifc = null,
      *gnuptr_imn = null,
      *gnuptr_inc = null,
@@ -72,14 +72,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       timestr[50] = {'\0'},
       longstr[50] = {'\0'},
 
-      flname_acu[50] = {'\0'},
+      flname_ica[50] = {'\0'},
       flname_ifc[50] = {'\0'},
       flname_imn[50] = {'\0'},
       flname_inc[50] = {'\0'},
       flname_lty[50] = {'\0'},
       flname_rpd[50] = {'\0'},
 
-      pltfle_acu[50] = AMD_RESULTS,
+      pltfle_ica[50] = AMD_RESULTS,
       pltfle_ifc[50] = AMD_RESULTS,
       pltfle_imn[50] = AMD_RESULTS,
       pltfle_inc[50] = AMD_RESULTS,
@@ -89,7 +89,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       parmtr_fle[50] = AMD_RESULTS;
 
    char
-      plot_acu[50] = AMD_RESULTS,
+      plot_ica[50] = AMD_RESULTS,
       plot_ifc[50] = AMD_RESULTS,
       plot_imn[50] = AMD_RESULTS,
       plot_inc[50] = AMD_RESULTS,
@@ -104,7 +104,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       hh0 = ZERO,
       scpt0 = ZERO,
       lnrpt = ZERO,   /* log( Repr(t)/Ttrm ) */
-      acute_upd = ZERO,
+      ndays_inc_upd = ZERO,
       suscpt_upd = ZERO,   /* 1. - h(t) */
       infected_upd = ZERO,
       immune_upd = ZERO, /* updated immunity, inner loop */
@@ -122,7 +122,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
    strcat( parmtr_fle, "parameters" );
 
-   strcat( plot_acu, "gpl_n_days_incidence" );
+   strcat( plot_ica, "gpl_n_days_incidence" );
    strcat( plot_ifc, "gpl_infection" );
    strcat( plot_imn, "gpl_immunity" );
    strcat( plot_inc, "gpl_incidence" );
@@ -135,7 +135,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( longstr, lotos(( state->job ), null, " " ));
    strcat( parmtr_fle, longstr );
 
-   strcat( plot_acu, longstr );
+   strcat( plot_ica, longstr );
    strcat( plot_ifc, longstr );
    strcat( plot_imn, longstr );
    strcat( plot_inc, longstr );
@@ -157,12 +157,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* desease features [example values]: */
 
-/* Repr = 1.000;  the initial reproduction number */
+/* Repr = 1.000;  initial reproduction number */
 /* Tend = 365.0;  computed time intervall [ days ] */
-/* Tacu =   14.;  mean duration of acute sickness [ days ] */
-/* Ticb =    3.;  mean incubation time [ days ] */
-/* Tnif =    5.;  mean infected but not yet transmissive time [ days ] */
-/* Ttrm = Ticb+Tacu;  mean transmissive time [ days ] */
+/* Tinc =   14.;  incidence average time [ days ] */
+/* Ttrm =    7.;  mean transmissive time [ days ] */
 /*............................................................................*/
 /* LnRp = log( Repr )/Ttrm;  i.e. exp( LnRp ) = Repr[0]^(1./Ttrm) */ 
 /* rrpd = exp( LnRp ); = Repr[0]^(1./Ttrm), base of init. exp. incr.  */
@@ -179,32 +177,26 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->Immc = ppt->s[8];
    ppt->Slnt = ppt->s[9];
    ppt->Ltlt = ppt->s[10];
-   ppt->Ticb = ppt->s[11];
-   ppt->Ttrm = ppt->s[12];
-   ppt->Tnif = ppt->s[13];
-   ppt->Tacu = ppt->s[14];
-   ppt->Timu = ppt->s[15];
-   ppt->Tend = ppt->s[16];
-   ppt->DltT = ppt->s[17];
+   ppt->Ttrm = ppt->s[11];
+   ppt->Timu = ppt->s[12];
+   ppt->Tinc = ppt->s[13];
+   ppt->Tend = ppt->s[14];
+   ppt->DltT = ppt->s[15];
 /*............................................................................*/
 /* normalized parameters: */
 
    ppt->dt = ppt->DltT/ppt->Ttrm;
-   ppt->timn = ppt->Timu/ppt->Ttrm;
-   ppt->tacn = ppt->Tacu/ppt->Ttrm;
+   ppt->timn = ppt->Timu/ppt->Ttrm; /* timn: Timu in natural units */
+   ppt->ticn = ppt->Tinc/ppt->Ttrm; /* ticn: Tinc in natural units */
 
    ppt->kend = ( long )( ppt->Tend/ppt->DltT );
-   ppt->kicb = ( long )( ppt->Ticb/ppt->DltT );
-   ppt->kacu = ( long )( ppt->Tacu/ppt->DltT );
-   ppt->knif = ( long )( ppt->Tnif/ppt->DltT );
+   ppt->kinc = ( long )( ppt->Tinc/ppt->DltT );
    ppt->ktrm = ( long )( ppt->Ttrm/ppt->DltT );
 
    ppt->mxictm = ppt->ktrm;
 
-   if ( ppt->mxictm < ppt->kacu )
-      ppt->mxictm = ppt->kacu;
-   if ( ppt->mxictm < ppt->knif )
-      ppt->mxictm = ppt->knif;
+   if ( ppt->mxictm < ppt->kinc )
+      ppt->mxictm = ppt->kinc;
 
    ppt->rifc = ppt->Nifc/ppt->Ncom;
    ppt->rimn = ppt->Nimn/ppt->Ncom;
@@ -255,19 +247,13 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "Initial group immunity: %10.5e %%\n", 100.*( ppt->rimn ));
 
    fprintf( fleptr_par,
-      "Mean incubation time: %f days\n", ppt->Ticb );
-
-   fprintf( fleptr_par,
       "Mean transmission time: %f days\n", ppt->Ttrm );
 
    fprintf( fleptr_par,
-      "Mean non-portability delay after infection: %f days\n", ppt->Tnif );
+      "Incidence averaged over %f days\n", ppt->Tinc );
 
    fprintf( fleptr_par,
-      "Mean duration of acute sickness: %f days\n", ppt->Tacu );
-
-   fprintf( fleptr_par,
-      "Mean duration of mmunity: %f days\n", ppt->Timu );
+      "Mean duration of immunity: %f days\n", ppt->Timu );
 
    fprintf( fleptr_par,
       "Initial reproduction number\n"\
@@ -288,10 +274,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "Total number of iterations: [ Tend/Dt ] = %ld\n", ppt->kend );
 
    fprintf( fleptr_par,
-      "Iterations, incubation time: [ Ticb/Dt ] = %ld\n", ppt->kicb );
-
-   fprintf( fleptr_par,
-      "Iterations, acute incidence period: [ Tacu/Dt ] = %ld\n", ppt->kacu );
+      "Incidence averaged over iterations: [ Tinc/Dt ] = %ld\n", ppt->kinc );
 
    fprintf( fleptr_par,
       "Base of initial exponential increase: %10.5e\n", ppt->repr );
@@ -305,10 +288,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( longstr, "=" );
    strcat( longstr, dotos( ppt->Repr, 4, "f" ));
 
-   strcat( flname_acu, lotos(( short ) ppt->Tacu, null, " " ));
-   strcat( flname_acu, "_days_incidence_" );
-   strcat( flname_acu, longstr );
-   strcat( pltfle_acu, flname_acu );
+   strcat( flname_ica, lotos(( short ) ppt->Tinc, null, " " ));
+   strcat( flname_ica, "_days_incidence_" );
+   strcat( flname_ica, longstr );
+   strcat( pltfle_ica, flname_ica );
 
    strcat( flname_ifc, "h(t)_" );
    strcat( flname_ifc, longstr );
@@ -330,7 +313,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( flname_rpd, longstr );
    strcat( pltfle_rpd, flname_rpd );
 
-   pltptr_acu = fopen( pltfle_acu, "w+" );
+   pltptr_ica = fopen( pltfle_ica, "w+" );
    pltptr_ifc = fopen( pltfle_ifc, "w+" );
    pltptr_imn = fopen( pltfle_imn, "w+" );
    pltptr_inc = fopen( pltfle_inc, "w+" );
@@ -342,26 +325,26 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    else
       strcpy ( timestr, "days" );
 /* 
-   fprintf( pltptr_acu, "%s",\
+   fprintf( pltptr_ica, "%s",\
       "# Epidemic | " );
 */
-   fprintf( pltptr_acu, "%s",\
+   fprintf( pltptr_ica, "%s",\
       "# Epidemic " );
     
    strcpy( optnstr, "Incidence," );
-   strcat( optnstr, lotos(( long ) ppt->Tacu, 2, " " ));
+   strcat( optnstr, lotos(( long ) ppt->Tinc, 2, " " ));
    strcat( optnstr, " days " );
 
-   fprintf( pltptr_acu, "%s", optnstr );
+   fprintf( pltptr_ica, "%s", optnstr );
 
-   fprintf( pltptr_acu, "%s",\
+   fprintf( pltptr_ica, "%s",\
       "[ x-unit: " );
-   fprintf( pltptr_acu, "%s", timestr );
+   fprintf( pltptr_ica, "%s", timestr );
 
    if ( ppt->yunits == null )
-      fprintf( pltptr_acu, "%s", " | y-unit: ]\n" );
+      fprintf( pltptr_ica, "%s", " | y-unit: ]\n" );
    else
-      fprintf( pltptr_acu, "%s", " | y-unit: per 100000 ]\n" );
+      fprintf( pltptr_ica, "%s", " | y-unit: per 100000 ]\n" );
 
    fprintf( pltptr_ifc, "%s",\
       "# Epidemic | infected members [ x-unit: " );
@@ -409,8 +392,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* initialize iteration */
 
-   ppt->minacu =  1.00e+27;
-   ppt->maxacu = -1.00e+27;
+   ppt->minica =  1.00e+27;
+   ppt->maxica = -1.00e+27;
    ppt->mininc =  1.00e+27;
    ppt->maxinc = -1.00e+27;
    ppt->maxifc = -1.00e+27;
@@ -504,11 +487,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
 	       reprod_upd = suscpt_upd*ppt->repr;
                lnrpt = log( reprod_upd );
-	    
-               if ( kk < ppt->knif ) {;}
-               else
-                  incidence_upd *= \
-                     exp( ppt->dt*lnrpt );
+               incidence_upd *= \
+                  exp( ppt->dt*lnrpt );
 
               break;
 /*...........................................................................*/
@@ -518,19 +498,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
 	       reprod_upd = suscpt_upd*ppt->repr;
                lnrpt = log( reprod_upd );
-	    
-               if ( kk < ppt->knif ) {;}
-               else
-                  incidence_upd *= \
-                     exp( ppt->dt*lnrpt );
+               incidence_upd *= \
+                  exp( ppt->dt*lnrpt );
 
               break;
 /*...........................................................................*/
               case 2: /* R(t) = R(0) [ constant ] */
 
-               if ( kk < ppt->knif ) {;}
-               else
-                  incidence_upd *= exp( ppt->dt*lnrpt );
+               incidence_upd *= exp( ppt->dt*lnrpt );
 		  
               break;
             };
@@ -559,35 +534,27 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*...........................................................................*/
 /* the immune fraction */
 	 
-	 if ( kk < ppt->knif )
-         {
-            ppt->rimn *= ( exp( - ppt->dt / ppt->timn ));
-            immune_upd = ppt->rimn;
-         }
-         else       
-         {
-            immune_upd *= ( exp( - ppt->dt / ppt->timn ));
-            immune_upd +=\
-               ( ppt->dt * ppt->wght_imm * ppt->dudt[ppt->knif] );
-         };
+         immune_upd *= ( exp( - ppt->dt / ppt->timn ));
+         immune_upd +=\
+            ( ppt->dt * ppt->wght_imm * ppt->dudt[null] );
 
 /*...........................................................................*/
 /* mean n days incidence */
 /* and shift dudt from k to k+1 */    
 
-         acute_upd = ZERO;
+         ndays_inc_upd = ZERO;
          ii = ppt->mxictm;
 	 while( null < ii )
          {
             ppt->dudt[ii] = ppt->dudt[ii-ONE];
 	    
-	    if ( ii < ppt->kacu )
-               acute_upd += \
+	    if ( ii < ppt->kinc )
+               ndays_inc_upd += \
                   ( ppt->dt*ppt->dudt[ii] );
 
 	    ii--;
          };
-         acute_upd /= ppt->tacn;
+         ndays_inc_upd /= ppt->ticn;
 
          ppt->tt += ppt->dt;
          ppt->ninn++ ;
@@ -602,7 +569,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................end of outer loop ..............................*/
   finish:
 
-   fclose( pltptr_acu );
+   fclose( pltptr_ica );
    fclose( pltptr_ifc );
    fclose( pltptr_imn );
    fclose( pltptr_inc );
@@ -624,7 +591,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    if ( ppt->titles == ONE )
    {
       strcpy( optnstr, "Incidence (" );
-      strcat( optnstr, lotos(( long ) ppt->Tacu, 2, " " ));
+      strcat( optnstr, lotos(( long ) ppt->Tinc, 2, " " ));
       strcat( optnstr, " days )" );
    }
    else
@@ -632,8 +599,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    if ( ppt->yunits == null ) /* normalized y-units [ herd size = 1 ] */
    {
-      GNUPLOT( gnuptr_acu, plot_acu, flname_acu, optnstr, timestr, \
-         " ", ( .77*1.0e+0*ppt->minacu ), ( 1.10e+0*ppt->maxacu ));
+      GNUPLOT( gnuptr_ica, plot_ica, flname_ica, optnstr, timestr, \
+         " ", ( .77*1.0e+0*ppt->minica ), ( 1.10e+0*ppt->maxica ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr,
@@ -671,8 +638,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    }
    else /* conventional units */
    {
-      GNUPLOT( gnuptr_acu, plot_acu, flname_acu, optnstr, timestr, \
-         "per 100000", ( .77*1.0e+5*ppt->minacu ), ( 1.10e+5*ppt->maxacu ));
+      GNUPLOT( gnuptr_ica, plot_ica, flname_ica, optnstr, timestr, \
+         "per 100000", ( .77*1.0e+5*ppt->minica ), ( 1.10e+5*ppt->maxica ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, \

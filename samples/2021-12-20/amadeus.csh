@@ -1,5 +1,5 @@
 #!/bin/csh
-set init=0
+set init=1
 set final=100
 
 set LOG_FILE="par.log"
