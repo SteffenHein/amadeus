@@ -1,4 +1,4 @@
-/* [ file: cpylne.h ] */
+/* [ file: cpylne.c ] */
 /*******************************************************************************
 *                                                                              *
 *  Function cpylne(*)                                                          *
@@ -11,11 +11,11 @@
 *  [ Update: December 20, 2021 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
-/*
+# include <stdio.h>
 # include <string.h>
+/*----------------------------------------------------------------------------*/
 # include "../math/maths.h"
 # include "../math/consts.h"
-*/
 /*----------------------------------------------------------------------------*/
 # ifndef LINLEN
    # define LINLEN 50
@@ -28,11 +28,10 @@ void cpylne( char txlne[], const char *ltext, const char *bracket, short ll )
       ii = null,
       jj = null,
       nn = null;
-/*
+
    size_t strlen ( const char *ptr );  
    char *strcpy( char *tgt, const char *src );
    char *strcat( char *tgt, const char *src );
-*/
 /*----------------------------------------------------------------------------*/
    if ( ll <= null )
       nn = LINLEN;

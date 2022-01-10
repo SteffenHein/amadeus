@@ -10,7 +10,7 @@
 *  Reads operation modes from a file [ type opr.log<N> ]                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 28, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: January 10, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -93,7 +93,8 @@ short rread_operts( char *filename, char mode )
                   fscanf( operatns, scformat, ptr ); /* parameter [string] */
                   opr->n[jj] = strtod( ptr, endp );  /* a number */
                   fscanf( operatns, scformat, ptr ); /* string "<---", e.g. */
-                  fscanf( operatns, scformat, ptr ); /* parameter name: opr->ntx[jj]*/
+                  fscanf( operatns, scformat, ptr ); 
+		                             /* parameter name: opr->ntx[jj]*/
                };
             }
 	    else /* parameter log file, e.g. */
@@ -102,7 +103,7 @@ short rread_operts( char *filename, char mode )
                {
                   fscanf( operatns, scformat, ptr ); /* parameter name */
                   fscanf( operatns, scformat, ptr ); /* parameter */
-                  opr->n[jj] = strtod( ptr, endp ); /* option */
+                  opr->n[jj] = strtod( ptr, endp );  /* option */
                };
             };
 

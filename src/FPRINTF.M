@@ -1,4 +1,4 @@
-/* Update: January 01, 2022 */
+/* Update: January 10, 2022 */
 # define FPRINTF( XX )\
 { \
    if ( XX == 1 ) \
@@ -13,7 +13,7 @@
       fprintf( pltptr_imn, \
          "%12s     ", timestr ); \
  \
-      if( ppt->yunits == 0 ) \
+      if(( ppt->yunits == 0 )||( ppt->yunits == 2 )) \
          strcpy( longstr, \
             dotos( immune_upd, 7, "e" )); \
       else \
@@ -26,7 +26,7 @@
       fprintf( pltptr_ifc, \
          "%12s     ", timestr ); \
  \
-      if( ppt->yunits == 0 ) \
+      if(( ppt->yunits == 0 )||( ppt->yunits == 2 )) \
          strcpy( longstr, \
             dotos( infected_upd, 7, "e" )); \
       else \
@@ -41,12 +41,12 @@
          fprintf( pltptr_ica, \
             "%12s     ", timestr ); \
  \
-         if( ppt->yunits == 0 ) \
+         if(( ppt->yunits == 0 )||( ppt->yunits == 2 )) \
             strcpy( longstr, \
-               dotos( ndays_inc_upd, 7, "e" )); \
+               dotos( ppt->ffct*ndays_inc_upd, 7, "e" )); \
          else \
             strcpy( longstr, \
-               dotos(( 1.0e+5 )*( ndays_inc_upd ), 7, "e" )); \
+               dotos(( 1.0e+5 )*( ppt->ffct*ndays_inc_upd ), 7, "e" )); \
  \
          fprintf( pltptr_ica, \
             "%12s\n", longstr ); \
@@ -56,12 +56,12 @@
       fprintf( pltptr_lty, \
          "%12s     ", timestr ); \
  \
-      if( ppt->yunits == 0 ) \
+      if(( ppt->yunits == 0 )||( ppt->yunits == 2 )) \
          strcpy( longstr, \
             dotos( lethal_upd, 7, "e" )); \
       else \
          strcpy( longstr, \
-            dotos( ppt->Ncom*( lethal_upd ), 7, "e" )); \
+            dotos( ppt->Nhrd*( lethal_upd ), 7, "e" )); \
  \
       fprintf( pltptr_lty, \
          "%12s\n", longstr ); \
@@ -69,12 +69,12 @@
       fprintf( pltptr_inc, \
          "%12s     ", timestr ); \
  \
-      if( ppt->yunits == 0 ) \
+      if(( ppt->yunits == 0 )||( ppt->yunits == 2 )) \
          strcpy( longstr, \
-            dotos( incidence_upd, 7, "e" )); \
+            dotos( ppt->ffct*incidence_upd, 7, "e" )); \
       else \
          strcpy( longstr, \
-            dotos(( 1.0e+5 )*( incidence_upd ), 7, "e" )); \
+            dotos(( 1.0e+5 )*( ppt->ffct*incidence_upd ), 7, "e" )); \
  \
       fprintf( pltptr_inc, \
             "%12s\n", longstr ); \

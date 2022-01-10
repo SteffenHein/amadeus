@@ -1,5 +1,5 @@
 /* [ file: OPRSTRNGS.M ] */
-/* Update: January 01, 2022 */
+/* Update: January 10, 2022 */
 /*---------------------------------------------------------------------------*/
 # define OPRSTRNGS( ) \
 { \
@@ -24,5 +24,5 @@
    cpylne( opr->ntx[6], \
     	  "y-scale", "linear:0_|_logarithmic:1", ll ); \
    cpylne( opr->ntx[7], \
-    	  "y-units", "conventional:0_|_normalized:1", ll ); \
+    	  "y-units", "conventional:0/2_|_normalized:1/3", ll ); \
 }

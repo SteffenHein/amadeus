@@ -1,14 +1,15 @@
 [file: amadeus-v1.0r1.md5]
-created: Sun Jan  9 17:34:37 2022
+created: Mon Jan 10 21:27:40 2022
 -------------------------------------------------------------------------------
 MD5( .git ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( .gitignore ) = 4aab3620c3bc2146c508c504e81a1fac
+MD5( .gitignore ) = 345f5bed3b3787bb8e517ed62ded3507
 MD5( CONFIG.H ) = f62b9a787f5e3a1ec40f6ff5c148dc6e
 MD5( INSTALL ) = 696a6a5134f1fd40fe35c0b80c4e6a36
 MD5( LICENSE ) = b82d8854373b210cb70b93450243eb29
 MD5( Makefile ) = 0ef45c0bb55fdfe7cb1fd2424f719042
 MD5( README ) = 4dc5344479a351537bc10046db27aa29
 MD5( SETUP ) = 174f54e8b9041ac6ec177ad55a919c64
+MD5( amd.log ) = 65ed04680a43f24d6c3f55964a3bff02
 MD5( bin ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( cc-messages ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( default ) = d41d8cd98f00b204e9800998ecf8427e

@@ -20,7 +20,7 @@
 *  option "operation" whenever such dependencies exist.                        *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 04, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 10, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef OPR_SSTRNG
@@ -67,36 +67,36 @@ short rvise_operts( void )
 /*............................................................................*/
 
    cpylne( opr->ntx[1],
-              "maximum_number_of_outer_iterations",
-    	         "<=100000", ll );
+      "maximum_number_of_outer_iterations",
+         "<=100000", ll );
 		  
    cpylne( opr->ntx[2],
-              "number_of_inner_iterations", 
-	         "1-100", ll );
+      "number_of_inner_iterations", 
+         "1-100", ll );
 		  
    cpylne( opr->ntx[3],
-              "formula_0,1,2",
-                 "_0:_input_is_BASIC/_else:_CURRENT/_repr._no.", ll );
+      "formula_0,1,2",
+         "_0:_input_is_BASIC/_else:_CURRENT/_repr._no.", ll );
 
    cpylne( opr->ntx[4],
-              "x-scale",
-    	         "transmission_time:0_|_days:1", ll );
+      "x-scale",
+         "transmission_cycles:0_|_days:1", ll );
 
    cpylne( opr->ntx[5],
-              "y-scale",
-    	         "linear:0_|_logarithmic:1", ll );
+      "y-scale",
+         "linear:0_|_logarithmic:1", ll );
 
    cpylne( opr->ntx[6],
-              "y-units",
-    	         "normalized_(herd_size=1):0_|_conventional_units:1", ll );
+      "y-units",
+         "herd_size_normalized:_0,2|conventional_units:_1,3", ll );
 
    cpylne( opr->ntx[7],
-             "[0]_1:_[don't]_write_titels_on_graphics",
-    	        "0/1", ll );
+      "[0]_1:_[don't]_write_titels_on_graphics",
+         "0/1", ll );
 
    cpylne( opr->ntx[8],
-             "[0]_1:_[don't]_stop_when_no_sick_individuals_remain",
-    	        "0/1", ll );
+      "[0]_1:_[don't]_stop_when_no_sick_individuals_remain",
+         "0/1", ll );
 /*............................................................................*/
    if ( 100000 < opr->n[1] )
       opr->n[1] = 100000;
@@ -115,10 +115,10 @@ short rvise_operts( void )
       opr->n[3] = null;
       break;
      
-     case 1 :
+     case 1:
       break;
 
-     case 2 :
+     case 2:
       break;
    };
      
@@ -127,7 +127,31 @@ short rvise_operts( void )
       ii++;
       if ( opr->n[ii] != null )
          opr->n[ii] = ONE;
-   } while ( ii < ( short )( opr->n[null] ));
+   } while ( ii < 5 );
+
+   ii = opr->n[6];
+   switch( ii )
+   { 
+     default:
+      opr->n[6] = null;
+      break;
+
+     case 1:
+      break;
+
+     case 2:
+      break;
+
+     case 3:
+      break;
+   };
+
+   ii = 6; do
+   {
+      ii++;
+      if ( opr->n[ii] != null )
+         opr->n[ii] = ONE;
+   } while ( ii < 8 );
 
    return null;
 }

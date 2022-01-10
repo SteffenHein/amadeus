@@ -1,4 +1,4 @@
-/* Update: January 01, 2022 */
+/* Update: January 10, 2022 */
 # define EXTREMA(XX)\
 { \
    if ( XX == 1 ) \
@@ -6,11 +6,7 @@
       if ( ppt->maxinc < incidence_upd ) \
       { \
          ppt->maxinc = incidence_upd; \
- \
-         if ( ppt->xscale == 0 ) \
-            ppt->Tmxinc = ppt->tt; \
-         else \
-            ppt->Tmxinc = ppt->tt*ppt->Ttrm; \
+         ppt->tmxinc = ppt->tt; \
       }; \
  \
       if ( incidence_upd < ppt->mininc ) \
@@ -19,11 +15,7 @@
       if ( ppt->maxica < ndays_inc_upd ) \
       { \
          ppt->maxica = ndays_inc_upd; \
- \
-         if ( ppt->xscale == 0 ) \
-            ppt->Tmxica = ppt->tt; \
-         else \
-            ppt->Tmxica = ppt->tt*ppt->Ttrm; \
+         ppt->tmxica = ppt->tt; \
       }; \
  \
       if ( ndays_inc_upd < ppt->minica ) \
@@ -32,41 +24,25 @@
       if ( ppt->maximn < immune_upd ) \
       { \
          ppt->maximn = immune_upd; \
- \
-         if ( ppt->xscale == 0 ) \
-            ppt->Tmximn = ppt->tt; \
-         else \
-            ppt->Tmximn = ppt->tt*ppt->Ttrm; \
+         ppt->tmximn = ppt->tt; \
       }; \
  \
       if ( ppt->maxrpd < reprod_upd ) \
       { \
          ppt->maxrpd = reprod_upd; \
- \
-         if ( ppt->xscale == 0 ) \
-            ppt->Tmxrpd = ppt->tt; \
-         else \
-            ppt->Tmxrpd = ppt->tt*ppt->Ttrm; \
+         ppt->tmxrpd = ppt->tt; \
       }; \
  \
       if ( ppt->minrpd > reprod_upd ) \
-      { \
          ppt->minrpd = reprod_upd; \
-      }; \
  \
       if ( ppt->maxifc < infected_upd ) \
       { \
          ppt->maxifc = infected_upd; \
- \
-         if ( ppt->xscale == 0 ) \
-            ppt->Tmxifc = ppt->tt; \
-         else \
-            ppt->Tmxifc = ppt->tt*ppt->Ttrm; \
+         ppt->tmxifc = ppt->tt; \
       }; \
  \
       if ( ppt->maxlty < lethal_upd ) \
-      { \
          ppt->maxlty = lethal_upd; \
-      }; \
    }; \
 }

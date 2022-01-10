@@ -1,4 +1,4 @@
-/*[ file: amdwrk.h ] */
+/* [ file: amdwrk.h ] */
 /*******************************************************************************
 *                                                                              *
 *  AMADEUS, release v1.0r1                                                     *
@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 09, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 10, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -48,7 +48,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
      *ppt = null;
 
    static OPERTNS
-     *opr = null;
+     *opt = null;
 
    static FILE
      *pltptr_ica = null,
@@ -118,7 +118,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    stp = state;
    ppt = stp->par;
-   opr = stp->opr;
+   opt = stp->opr;
 /*............................................................................*/
    strcat( parmtr_fle, "parameters" );
 
@@ -144,16 +144,17 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* dictionary: */
       
-/* Ncom = 8.20e+07;  herd size [ number of members ] */
+/* Ncom = 8.20e+07;  community size [ number of members ] */
+/* Nhrd = 8.20e+07;  herd size [ number of members ] */
 /* Nifc = 1.60e+05;  number of initially infected members [sum] */
 /* Nimn = Nifc;      initial number immune members [ usually ~ Nifc ] */
 /* Ninf = 3.40e+04;  initial number of infective [sick] members */
 /* Nlty = 2.40e+03;  initial number of deceased members */
 
-/* rifc = Nifc/Ncom; initial ratio of infected members */
-/* rimn = Nimn/Ncom; initial herd immunity [ ratio ] */
-/* rinf = Ninf/Ncom; initial ratio of infective members */
-/* rlty = Nlty/Ncom; initial ratio of deceased members */
+/* rifc = Nifc/Nhrd; initial ratio of infected members */
+/* rimn = Nimn/Nhrd; initial herd immunity [ ratio ] */
+/* rinf = Ninf/Nhrd; initial ratio of infective members */
+/* rlty = Nlty/Nhrd; initial ratio of deceased members */
 /*............................................................................*/
 /* desease features [example values]: */
 
@@ -168,20 +169,21 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /* copy the input parameters */
 
    ppt->Ncom = ppt->s[1];
-   ppt->Ninf = ppt->s[2];
-   ppt->Nifc = ppt->s[3];
-   ppt->Nimn = ppt->s[4];
-   ppt->Nlty = ppt->s[5];
-   ppt->Repr = ppt->s[6];
-   ppt->Nthr = ppt->s[7];
-   ppt->Immc = ppt->s[8];
-   ppt->Slnt = ppt->s[9];
-   ppt->Ltlt = ppt->s[10];
-   ppt->Ttrm = ppt->s[11];
-   ppt->Timu = ppt->s[12];
-   ppt->Tinc = ppt->s[13];
-   ppt->Tend = ppt->s[14];
-   ppt->DltT = ppt->s[15];
+   ppt->Nhrd = ppt->s[2];
+   ppt->Ninf = ppt->s[3];
+   ppt->Nifc = ppt->s[4];
+   ppt->Nimn = ppt->s[5];
+   ppt->Nlty = ppt->s[6];
+   ppt->Repr = ppt->s[7];
+   ppt->Nthr = ppt->s[8];
+   ppt->Immc = ppt->s[9];
+   ppt->Slnt = ppt->s[10];
+   ppt->Ltlt = ppt->s[11];
+   ppt->Ttrm = ppt->s[12];
+   ppt->Timu = ppt->s[13];
+   ppt->Tinc = ppt->s[14];
+   ppt->Tend = ppt->s[15];
+   ppt->DltT = ppt->s[16];
 /*............................................................................*/
 /* normalized parameters: */
 
@@ -198,20 +200,26 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    if ( ppt->mxictm < ppt->kinc )
       ppt->mxictm = ppt->kinc;
 
-   ppt->rifc = ppt->Nifc/ppt->Ncom;
-   ppt->rimn = ppt->Nimn/ppt->Ncom;
-   ppt->rinf = ppt->Ninf/ppt->Ncom;
-   ppt->rlty = ppt->Nlty/ppt->Ncom;
-   ppt->rthr = ppt->Nthr/ppt->Ncom;
+   ppt->rifc = ppt->Nifc/ppt->Nhrd;
+   ppt->rimn = ppt->Nimn/ppt->Nhrd;
+   ppt->rinf = ppt->Ninf/ppt->Nhrd;
+   ppt->rlty = ppt->Nlty/ppt->Nhrd;
+   ppt->rthr = ppt->Nthr/ppt->Nhrd;
    
    ppt->wght_imm = ( 100.*ppt->Immc - ppt->Ltlt )/( 100. - ppt->Slnt );
    ppt->wght_ifc = ( 100./( 100. - ppt->Slnt ));
    ppt->wght_lty = ppt->Ltlt/( 100. - ppt->Slnt );
+
+   if ( 1 < opt->n[6] )
+      ppt->ffct = ppt->Nhrd/ppt->Ncom;
+   else
+      ppt->ffct = 1.;
+
 /*............................................................................*/
 /* limits: */
 
-   ppt->maxout = ( long ) opr->n[1]; /* null < maxout <= 10000 !!! */
-   ppt->maxinn = ( long ) opr->n[2]; /* null < maxinn <= 10000 !!! */
+   ppt->maxout = ( long ) opt->n[1]; /* null < maxout <= 10000 !!! */
+   ppt->maxinn = ( long ) opt->n[2]; /* null < maxinn <= 10000 !!! */
 
    if ( 100000 < ppt->maxinn )
       ppt->maxinn = 100000;
@@ -221,12 +229,12 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->maxout = \
    ( long ) fminl(( ppt->kend/ppt->maxinn ), 100000. );
 
-   ppt->formula = ( char ) ( opr->n[3] );
-   ppt->xscale = ( char ) ( opr->n[4] );
-   ppt->yscale = ( char ) ( opr->n[5] );
-   ppt->yunits = ( char ) ( opr->n[6] );
-   ppt->titles = ( char ) ( opr->n[7] );
-   ppt->nmstop = ( char ) ( opr->n[8] );
+   ppt->formula = ( char ) ( opt->n[3] );
+   ppt->xscale = ( char ) ( opt->n[4] );
+   ppt->yscale = ( char ) ( opt->n[5] );
+   ppt->yunits = ( char ) ( opt->n[6] );
+   ppt->titles = ( char ) ( opt->n[7] );
+   ppt->nmstop = ( char ) ( opt->n[8] );
 /*............................................................................*/
 /* Repr^(1./Ttrm), base of initial exponential increase */
 /* exp( LnRp ) = Repr^(1./Ttrm) */ 
@@ -238,13 +246,16 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fleptr_par = fopen( parmtr_fle, "w+" ); 
 
    fprintf( fleptr_par,
-      "Total number of community members: %10.5e\n", ppt->Ncom );
+      "Community size [ members ]: %10.5e\n", ppt->Ncom );
+
+   fprintf( fleptr_par,
+      "Herd size [ members ]: %10.5e\n", ppt->Nhrd );
 
    fprintf( fleptr_par,
       "Number of initially infected members: %10.5e\n\n", ppt->Nifc );
 
    fprintf( fleptr_par,
-      "Initial group immunity: %10.5e %%\n", 100.*( ppt->rimn ));
+      "Initial herd immunity: %10.5e %%\n", 100.*( ppt->rimn ));
 
    fprintf( fleptr_par,
       "Mean transmission time: %f days\n", ppt->Ttrm );
@@ -263,12 +274,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( fleptr_par,
       "Time limit: T = %10.5e days\n", ppt->Tend );
 
-   if ( ppt->xscale == null )
-      fprintf( fleptr_par,
-         "Internal time step: dt = %10.5e transmission periods\n", ppt->dt );
-   else
-      fprintf( fleptr_par,
-         "Time step: Dt = %10.5e days\n", ppt->DltT );
+   fprintf( fleptr_par,
+      "Time step: Dt = %10.5e days\n", ppt->DltT );
+
+   fprintf( fleptr_par,
+      "Internal time step: dt = %10.5e transmission cycles\n", ppt->dt );
 
    fprintf( fleptr_par,
       "Total number of iterations: [ Tend/Dt ] = %ld\n", ppt->kend );
@@ -329,11 +339,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "# Epidemic | " );
 */
    fprintf( pltptr_ica, "%s",\
-      "# Epidemic " );
+      "# Epidemic | " );
     
-   strcpy( optnstr, "Incidence," );
+   strcpy( optnstr, "total " );
    strcat( optnstr, lotos(( long ) ppt->Tinc, 2, " " ));
-   strcat( optnstr, " days " );
+   strcat( optnstr, " days incidence " );
 
    fprintf( pltptr_ica, "%s", optnstr );
 
@@ -341,7 +351,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "[ x-unit: " );
    fprintf( pltptr_ica, "%s", timestr );
 
-   if ( ppt->yunits == null )
+   if (( ppt->yunits == null )||( ppt->yunits == 2))
       fprintf( pltptr_ica, "%s", " | y-unit: ]\n" );
    else
       fprintf( pltptr_ica, "%s", " | y-unit: per 100000 ]\n" );
@@ -350,7 +360,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "# Epidemic | infected members [ x-unit: " );
    fprintf( pltptr_ifc, "%s", timestr );
 
-   if ( ppt->yunits == null )
+   if (( ppt->yunits == null )||( ppt->yunits == 2))
       fprintf( pltptr_ifc, "%s", " | y-unit: ]\n" );
    else
       fprintf( pltptr_ifc, "%s", " | y-unit: % ]\n" );
@@ -359,16 +369,16 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "# Epidemic | immune members [ x-unit: " );
    fprintf( pltptr_imn, "%s", timestr );
 
-   if ( ppt->yunits == null )
+   if (( ppt->yunits == null )||( ppt->yunits == 2))
       fprintf( pltptr_imn, "%s", " | y-unit: ]\n" );
    else
       fprintf( pltptr_imn, "%s", " | y-unit: % ]\n" );
 
    fprintf( pltptr_inc, "%s",\
-      "# Epidemic | incidence [ x-unit: " );
+      "# Epidemic | total incidence [ x-unit: " );
    fprintf( pltptr_inc, "%s", timestr );
 
-   if ( ppt->yunits == null )
+   if (( ppt->yunits == null )||( ppt->yunits == 2))
       fprintf( pltptr_inc, "%s", " | y-unit: ]\n" );
    else
       fprintf( pltptr_inc, "%s", " | y-unit: per 100000 ]\n" );
@@ -377,7 +387,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "# Epidemic | deceased members [ x-unit: " );
    fprintf( pltptr_lty, "%s", timestr );
 
-   if ( ppt->yunits == null )
+   if (( ppt->yunits == null )||( ppt->yunits == 2))
       fprintf( pltptr_lty, "%s", " | y-unit: ]\n" );
    else
       fprintf( pltptr_lty, "%s", " | y-unit: % ]\n" );
@@ -469,7 +479,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /* [ no new cases or group immunity attained ] */
 
 	       ppt->dudt[null] = ZERO;
-       	       ppt->Timmun = ppt->tt;
+       	       ppt->timmun = ppt->tt;
 	       ppt->kend = kk;
 
                goto finish;
@@ -577,12 +587,50 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fclose( pltptr_rpd );
 
 /*............................................................................*/
-/* form the plot headers
+/* store maxima: */ 
+      
+   fleptr_par = fopen( parmtr_fle, "a+" );
+      
+   fprintf( fleptr_par,
+      "\nHerd incidence maximum attained "\
+          "at %10.5e-th transmission cycle: ", ppt->tmxinc );
+
+   fprintf( fleptr_par,
+      "%10.5e %%\n", 100.*( ppt->maxinc ));
+
+   fprintf( fleptr_par,
+      "Maximum number of simultaneously sick members: %10.5e\n",
+           ( ppt->maxinc )*( ppt->Nhrd ));
+	 
+   fprintf( fleptr_par,
+      "%s", "Integral herd incidence = ");
+   fprintf( fleptr_par,
+      "%10.5e\n", integral_incidence );
+
+   if ( ZERO < ppt->timmun )
+      fprintf( fleptr_par,
+         "\n100%% herd immunity attained "\
+         "at %10.5e-th day\n", ppt->timmun );
+   else
+      fprintf( fleptr_par,
+         "\nHerd immunity not attained.\n" );
+
+   fclose( fleptr_par );
+/*............................................................................*/
+/* store gnuplot headers
+
    Format: 
    GNUPLOT( STREAM, FILENAME, PLOTFILE, "OPTION", "XUNIT", "YUNIT", YMIN, YMAX )
    yscale: 0 linear, 1 logarithmic
 */
 /*............................................................................*/
+/* scale incidence extrema to community size */
+
+   ppt->mininc *= ppt->ffct;
+   ppt->maxinc *= ppt->ffct;
+   ppt->minica *= ppt->ffct;
+   ppt->maxica *= ppt->ffct;
+   
    if ( ppt->xscale == null )
       strcpy ( timestr, "transmission cycles" );
    else
@@ -590,14 +638,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    if ( ppt->titles == ONE )
    {
-      strcpy( optnstr, "Incidence (" );
+      strcpy( optnstr, "Total incidence (" );
       strcat( optnstr, lotos(( long ) ppt->Tinc, 2, " " ));
       strcat( optnstr, " days )" );
    }
    else
       strcpy( optnstr, " " );
 
-   if ( ppt->yunits == null ) /* normalized y-units [ herd size = 1 ] */
+   if (( ppt->yunits == null )||( ppt->yunits == 2))
    {
       GNUPLOT( gnuptr_ica, plot_ica, flname_ica, optnstr, timestr, \
          " ", ( .77*1.0e+0*ppt->minica ), ( 1.10e+0*ppt->maxica ));
@@ -613,7 +661,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          " ", ( .77*1.0e+0*ppt->rifc ), ( 1.10e+0*ppt->maxifc ));
 
       if ( ppt->titles == ONE )
-         strcpy( optnstr, "Immunity" );
+         strcpy( optnstr, "Herd immunity" );
       else
          strcpy( optnstr, " " );
 
@@ -621,7 +669,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          " ", ( .77*1.0e+0*ppt->rimn ), ( 1.10e+0*ppt->maximn ));
 
       if ( ppt->titles == ONE )
-         strcpy( optnstr, "Incidence" );
+         strcpy( optnstr, "Total incidence" );
       else
          strcpy( optnstr, " " );
 
@@ -652,7 +700,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          "percent", ( .77*1.0e+2*ppt->rifc ), ( 1.10e+2*ppt->maxifc ));
 
       if ( ppt->titles == ONE )
-         strcpy( optnstr, "Immunity" );
+         strcpy( optnstr, "Herd immunity" );
       else
          strcpy( optnstr, " " );
 
@@ -673,8 +721,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_lty, plot_lty, flname_lty, optnstr, timestr, \
-         "members", ( .77*ppt->rlty*ppt->Ncom ), \
-            ( 1.10e+0*ppt->maxlty*ppt->Ncom ));
+         "members", ( .77*ppt->rlty*ppt->Nhrd ), \
+            ( 1.10e+0*ppt->maxlty*ppt->Nhrd ));
    };
 
    if ( ppt->titles == ONE )
@@ -684,36 +732,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    GNUPLOT( gnuptr_rpd, plot_rpd, flname_rpd, optnstr, timestr, \
       "reprod. no", ( .77*ppt->minrpd ), ( 1.10*ppt->maxrpd ));
+
 /*............................................................................*/
-/* store maxima: */ 
-      
-   fleptr_par = fopen( parmtr_fle, "a+" );
-      
-   fprintf( fleptr_par,
-      "\nIncidence maximum at %10.5e-th day: ", ppt->Tmxinc );
-   fprintf( fleptr_par,
-      "%10.5e %%\n", 100.*( ppt->maxinc ));
-   fprintf( fleptr_par,
-      "Maximum number of sick members attained "\
-      "at %10.5e-th day: ", ppt->Tmxinc );
-   fprintf( fleptr_par,
-      "%10.5e\n", ( ppt->maxinc )*( ppt->Ncom ));
-	 
-   fprintf( fleptr_par,
-      "%s", "integral_incidence = ");
-   fprintf( fleptr_par,
-      "%10.5e\n", integral_incidence );
-
-   if ( ZERO < ppt->Timmun )
-      fprintf( fleptr_par,
-         "\n100%% group immunity attained "\
-         "at %10.5e-th day\n", ppt->Timmun );
-   else
-      fprintf( fleptr_par,
-         "\nGroup immunity not attained !\n" );
-
-   fclose( fleptr_par );
-/*...........................................................................*/
    return state;
 }
 /*============================================================================*/
@@ -727,7 +747,6 @@ AMDSTATE *amdwrk( AMDSTATE *state )
     das ganze Leben, 
     wenn sie Nebensaechliches tun.
 
-                        Seneca
-                        Briefe an Lucilius
+    Seneca [ Briefe an Lucilius ]
 */
 /* EOF */

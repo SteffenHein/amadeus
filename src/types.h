@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 09, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 10, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -84,7 +84,8 @@ typedef struct
       dt,        /* internal time step [ Ttrm scale ] */
       DltT,      /* time increment [ days ] */
 
-      Ncom,      /* number of members in the community */
+      Ncom,      /* community size [ number of members ] */
+      Nhrd,      /* herd size [ number of members ] */
       Nifc,      /* initial number of infected persons */
       Nimn,      /* initial number immune persons */
       Ninf,      /* initial number infective [sick] persons */
@@ -103,6 +104,8 @@ typedef struct
       repr,      /* reproduction rate [ log(Nrpd)/Tinf ] */
       rthr,      /* incidence threshold [ Nthr/Tinf ] */
 
+      ffct,      /* form factor */
+
       wght_ifc,  /* infection weight: 100/( 100-Slnt ) */
       wght_imm,  /* immunisation weight: ( 100+Ltlt )/( 100-Slnt ) */
       wght_lty,  /* lethality weight: Ltlt/( 100-Slnt ) */
@@ -114,14 +117,14 @@ typedef struct
       ticn,      /* Tinc in natural units [ Ttrm scale ] */
       Tend,      /* time intervall [ length ] */
 
-      Timmun,    /* time of attained group immunity */
-      Tmxinc,    /* time of maximum incidence */
-      Tmxica,    /* time of maximum N days incidence */
-      Tmximn,    /* time of maximum immunity */
-      Tmxrpd,    /* time of maximum reproduction number */
-      Tmxifc,    /* time of maximum infections */
-      Tmxicr,    /* time of maximum increase */
-      Tmmicr,    /* time of maximum decrease */
+      timmun,    /* time of attained group immunity */
+      tmxinc,    /* time of maximum incidence */
+      tmxica,    /* time of maximum N days incidence */
+      tmximn,    /* time of maximum immunity */
+      tmxrpd,    /* time of maximum reproduction number */
+      tmxifc,    /* time of maximum infections */
+      tmxicr,    /* time of maximum increase */
+      tmmicr,    /* time of maximum decrease */
 
       minica,    /* minimum averaged incidence */
       maxica,    /* maximum averaged incidence */
