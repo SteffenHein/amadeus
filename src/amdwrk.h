@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 11, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 12, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -54,7 +54,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
      *opt = null;
 
    static FILE
-     *pltptr_ica = null,
+     *pltptr_cic = null,
      *pltptr_ifc = null,
      *pltptr_imn = null,
      *pltptr_inc = null,
@@ -63,7 +63,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
      *fleptr_par = null;
 
    static FILE
-     *gnuptr_ica = null,
+     *gnuptr_cic = null,
      *gnuptr_ifc = null,
      *gnuptr_imn = null,
      *gnuptr_inc = null,
@@ -71,20 +71,20 @@ AMDSTATE *amdwrk( AMDSTATE *state )
      *gnuptr_rpd = null;
 
    char   
-      textstr[80] = {'\0'},
-      copystr[80] = {'\0'},
+      inptstr[80] = {'\0'},
+      outpstr[80] = {'\0'},
       optnstr[50] = {'\0'},
       timestr[50] = {'\0'},
       longstr[50] = {'\0'},
 
-      flname_ica[50] = {'\0'},
+      flname_cic[50] = {'\0'},
       flname_ifc[50] = {'\0'},
       flname_imn[50] = {'\0'},
       flname_inc[50] = {'\0'},
       flname_lty[50] = {'\0'},
       flname_rpd[50] = {'\0'},
 
-      pltfle_ica[50] = AMD_RESULTS,
+      pltfle_cic[50] = AMD_RESULTS,
       pltfle_ifc[50] = AMD_RESULTS,
       pltfle_imn[50] = AMD_RESULTS,
       pltfle_inc[50] = AMD_RESULTS,
@@ -94,7 +94,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       parmtr_fle[50] = AMD_RESULTS;
 
    char
-      plot_ica[50] = AMD_RESULTS,
+      plot_cic[50] = AMD_RESULTS,
       plot_ifc[50] = AMD_RESULTS,
       plot_imn[50] = AMD_RESULTS,
       plot_inc[50] = AMD_RESULTS,
@@ -110,7 +110,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       scpt0 = ZERO,
       rrpd = ZERO,
       lnrpd = ZERO,   /* log( Repr(t)/Ttrm ) */
-      ndays_inc_upd = ZERO,
+      ndays_cic_upd = ZERO,
       suscpt_upd = ZERO,   /* 1. - h(t) */
       infected_upd = ZERO,
       immune_upd = ZERO, /* updated immunity, inner loop */
@@ -128,7 +128,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
    strcat( parmtr_fle, "parameters" );
 
-   strcat( plot_ica, "gpl_n_days_incidence" );
+   strcat( plot_cic, "gpl_n_days_incidence" );
    strcat( plot_ifc, "gpl_infection" );
    strcat( plot_imn, "gpl_immunity" );
    strcat( plot_inc, "gpl_incidence" );
@@ -141,7 +141,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( longstr, lotos(( state->job ), null, " " ));
    strcat( parmtr_fle, longstr );
 
-   strcat( plot_ica, longstr );
+   strcat( plot_cic, longstr );
    strcat( plot_ifc, longstr );
    strcat( plot_imn, longstr );
    strcat( plot_inc, longstr );
@@ -166,7 +166,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
 /* Repr = 1.000;  initial reproduction number */
 /* Tend = 365.0;  computed time intervall [ days ] */
-/* Tinc =   14.;  incidence average time [ days ] */
+/* Tcic =   14.;  incidence cumulated over time [ days ] */
 /* Ttrm =    7.;  mean transmission time [ days ] */
 /*............................................................................*/
 /* LnRp = log( Repr )/Ttrm;  i.e. exp( LnRp ) = Repr[0]^(1./Ttrm) */ 
@@ -198,13 +198,13 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->ticn = ppt->Tinc/ppt->Ttrm; /* ticn: Tinc in natural units */
 
    ppt->kend = ( long )( ppt->Tend/ppt->DltT );
-   ppt->kinc = ( long )( ppt->Tinc/ppt->DltT );
+   ppt->kcic = ( long )( ppt->Tinc/ppt->DltT );
    ppt->ktrm = ( long )( ppt->Ttrm/ppt->DltT );
 
    ppt->mxictm = ppt->ktrm;
 
-   if ( ppt->mxictm < ppt->kinc )
-      ppt->mxictm = ppt->kinc;
+   if ( ppt->mxictm < ppt->kcic )
+      ppt->mxictm = ppt->kcic;
 
    ppt->rifc = ppt->Nifc/ppt->Nhrd;
    ppt->rimn = ppt->Nimn/ppt->Nhrd;
@@ -254,105 +254,105 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fleptr_par = fopen( parmtr_fle, "w+" ); 
    fprintf( fleptr_par, "Essential_parameters\n" );
 
-   cpylne( textstr,
-      "\nCommunity_size","members", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( ppt->Ncom, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   cpylne( outpstr,
+      "\nBackground_community","members", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Ncom, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nHerd_size","members", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( ppt->Nhrd, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Nhrd, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nInitially_infected","members", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( ppt->Nifc, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Nifc, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nInitially_immune","members", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos(( ppt->Nimn ), 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos(( ppt->Nimn ), 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nMean_transmission_time","days", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( ppt->Ttrm, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Ttrm, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nMean_duration_of_immunity","days", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( ppt->Timu, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Timu, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nCumulative_incidence,_integrated_over","days", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( ppt->Tinc, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Tinc, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nCumulative_incidence,_integrated_over","iterations", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, lotos( ppt->kinc, 9, " " ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, lotos( ppt->kcic, 9, " " ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nInitial_reproduction_factor","dimensionless", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( ppt->Repr, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Repr, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nInitial_base_of_exponential_increase","dimensionless", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( rrpd, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( rrpd, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
    fprintf( fleptr_par, "\n" );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nTime_limit","days", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( ppt->Tend, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Tend, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nTime_step","days", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( ppt->DltT, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->DltT, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nInternal_time_step","transmission_cycles", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( ppt->dt, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->dt, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
    fprintf( fleptr_par, "\n" );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nMaximum_number_of_iterations","number", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, lotos( ppt->kend, 9, " " ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, lotos( ppt->kend, 9, " " ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nMaximum_number_of_outer_iterations","number", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, lotos( ppt->maxout, 9, " " ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, lotos( ppt->maxout, 9, " " ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nNumber_of_inner_iterations","number", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, lotos( ppt->maxinn, 9, " " ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, lotos( ppt->maxinn, 9, " " ));
+   fprintf( fleptr_par, outpstr );
 
    fclose( fleptr_par );
 /*............................................................................*/
@@ -363,10 +363,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( longstr, "=" );
    strcat( longstr, dotos( ppt->Repr, 4, "f" ));
 
-   strcat( flname_ica, lotos(( short ) ppt->Tinc, null, " " ));
-   strcat( flname_ica, "_days_incidence_" );
-   strcat( flname_ica, longstr );
-   strcat( pltfle_ica, flname_ica );
+   strcat( flname_cic, lotos(( short ) ppt->Tinc, null, " " ));
+   strcat( flname_cic, "_days_incidence_" );
+   strcat( flname_cic, longstr );
+   strcat( pltfle_cic, flname_cic );
 
    strcat( flname_ifc, "h(t)_" );
    strcat( flname_ifc, longstr );
@@ -388,7 +388,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( flname_rpd, longstr );
    strcat( pltfle_rpd, flname_rpd );
 
-   pltptr_ica = fopen( pltfle_ica, "w+" );
+   pltptr_cic = fopen( pltfle_cic, "w+" );
    pltptr_ifc = fopen( pltfle_ifc, "w+" );
    pltptr_imn = fopen( pltfle_imn, "w+" );
    pltptr_inc = fopen( pltfle_inc, "w+" );
@@ -400,26 +400,26 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    else
       strcpy ( timestr, "days" );
 /* 
-   fprintf( pltptr_ica, "%s",\
+   fprintf( pltptr_cic, "%s",\
       "# Epidemic | " );
 */
-   fprintf( pltptr_ica, "%s",\
+   fprintf( pltptr_cic, "%s",\
       "# Epidemic | " );
     
    strcpy( optnstr, "total " );
    strcat( optnstr, lotos(( long ) ppt->Tinc, 2, " " ));
    strcat( optnstr, " days incidence " );
 
-   fprintf( pltptr_ica, "%s", optnstr );
+   fprintf( pltptr_cic, "%s", optnstr );
 
-   fprintf( pltptr_ica, "%s",\
+   fprintf( pltptr_cic, "%s",\
       "[ x-unit: " );
-   fprintf( pltptr_ica, "%s", timestr );
+   fprintf( pltptr_cic, "%s", timestr );
 
    if (( ppt->yunits == null )||( ppt->yunits == 2))
-      fprintf( pltptr_ica, "%s", " | y-unit: ]\n" );
+      fprintf( pltptr_cic, "%s", " | y-unit: ]\n" );
    else
-      fprintf( pltptr_ica, "%s", " | y-unit: per 100000 ]\n" );
+      fprintf( pltptr_cic, "%s", " | y-unit: per 100000 ]\n" );
 
    fprintf( pltptr_ifc, "%s",\
       "# Epidemic | infected members [ x-unit: " );
@@ -467,8 +467,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* initialize iteration */
 
-   ppt->minica =  1.00e+27;
-   ppt->maxica = -1.00e+27;
+   ppt->mincic =  1.00e+27;
+   ppt->maxcic = -1.00e+27;
    ppt->mininc =  1.00e+27;
    ppt->maxinc = -1.00e+27;
    ppt->maxifc = -1.00e+27;
@@ -617,14 +617,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /* mean n days incidence */
 /* and shift dudt from k to k+1 */    
 
-         ndays_inc_upd = ZERO;
+         ndays_cic_upd = ZERO;
          ii = ppt->mxictm;
 	 while( null < ii )
          {
             ppt->dudt[ii] = ppt->dudt[ii-ONE];
 	    
-	    if ( ii < ppt->kinc )
-               ndays_inc_upd += \
+	    if ( ii < ppt->kcic )
+               ndays_cic_upd += \
                   ( ppt->dt*ppt->dudt[ii] );
 
 	    ii--;
@@ -643,7 +643,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................end of outer loop ..............................*/
   finish:
 
-   fclose( pltptr_ica );
+   fclose( pltptr_cic );
    fclose( pltptr_ifc );
    fclose( pltptr_imn );
    fclose( pltptr_inc );
@@ -655,42 +655,42 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       
    fleptr_par = fopen( parmtr_fle, "a+" );
       
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nIncidence_maximum_attained_at","transmission_cycle", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( ppt->tmxinc, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->tmxinc, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nMaximum_herd_incidence","percent", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( 100.*ppt->maxinc, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( 100.*ppt->maxinc, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-   strcpy( copystr, "\nMaximum_cumulative_herd_incidence_(");
-   strcat( copystr, dotos( ppt->Tinc, 4, "f" ));
-   strcat( copystr, "_days)");
-   cpylne( textstr, copystr, "percent", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos( 100.*ppt->maxica, 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcpy( inptstr, "\nMaximum_cumulative_herd_incidence_(");
+   strcat( inptstr, dotos( ppt->Tinc, 4, "f" ));
+   strcat( inptstr, "_days)");
+   cpylne( outpstr, inptstr, "percent", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( 100.*ppt->maxcic, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-   cpylne( textstr,
+   cpylne( outpstr,
       "\nTotal_herd_incidence_(sum_t=0->Tend)",
       "members", 60 );
-   strcat( textstr, ": ");
-   strcat( textstr, dotos(( integral_inc*ppt->Nhrd ), 4, "e" ));
-   fprintf( fleptr_par, textstr );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos(( integral_inc*ppt->Nhrd ), 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
    if ( ZERO < ppt->timmun )
    {
       fprintf( fleptr_par, "\n" );
 
-      cpylne( textstr,
+      cpylne( outpstr,
          "\n100%%_herd_immunity_attained_at","transmission_cycle", 60 );
-      strcat( textstr, ": ");
-      strcat( textstr, dotos( ppt->timmun, 4, "e" ));
-      fprintf( fleptr_par, textstr );
+      strcat( outpstr, ": ");
+      strcat( outpstr, dotos( ppt->timmun, 4, "e" ));
+      fprintf( fleptr_par, outpstr );
    }
    else
       fprintf( fleptr_par,
@@ -709,8 +709,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    ppt->mininc *= ppt->ffct;
    ppt->maxinc *= ppt->ffct;
-   ppt->minica *= ppt->ffct;
-   ppt->maxica *= ppt->ffct;
+   ppt->mincic *= ppt->ffct;
+   ppt->maxcic *= ppt->ffct;
    
    if ( ppt->xscale == null )
       strcpy ( timestr, "transmission cycles" );
@@ -728,8 +728,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    if (( ppt->yunits == null )||( ppt->yunits == 2))
    {
-      GNUPLOT( gnuptr_ica, plot_ica, flname_ica, optnstr, timestr, \
-         " ", ( .77*1.0e+0*ppt->minica ), ( 1.10e+0*ppt->maxica ));
+      GNUPLOT( gnuptr_cic, plot_cic, flname_cic, optnstr, timestr, \
+         " ", ( .77*1.0e+0*ppt->mincic ), ( 1.10e+0*ppt->maxcic ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr,
@@ -767,8 +767,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    }
    else /* conventional units */
    {
-      GNUPLOT( gnuptr_ica, plot_ica, flname_ica, optnstr, timestr, \
-         "per 100000", ( .77*1.0e+5*ppt->minica ), ( 1.10e+5*ppt->maxica ));
+      GNUPLOT( gnuptr_cic, plot_cic, flname_cic, optnstr, timestr, \
+         "per 100000", ( .77*1.0e+5*ppt->mincic ), ( 1.10e+5*ppt->maxcic ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, \

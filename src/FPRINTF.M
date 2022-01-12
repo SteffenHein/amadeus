@@ -1,4 +1,4 @@
-/* Update: January 10, 2022 */
+/* Update: January 12, 2022 */
 # define FPRINTF( XX )\
 { \
    if ( XX == 1 ) \
@@ -36,19 +36,19 @@
       fprintf( pltptr_ifc, \
          "%12s\n", longstr ); \
  \
-      if ( ppt->kinc <= kk ) \
+      if ( ppt->kcic <= kk ) \
       { \
-         fprintf( pltptr_ica, \
+         fprintf( pltptr_cic, \
             "%12s     ", timestr ); \
  \
          if(( ppt->yunits == 0 )||( ppt->yunits == 2 )) \
             strcpy( longstr, \
-               dotos( ppt->ffct*ndays_inc_upd, 7, "e" )); \
+               dotos( ppt->ffct*ndays_cic_upd, 7, "e" )); \
          else \
             strcpy( longstr, \
-               dotos(( 1.0e+5 )*( ppt->ffct*ndays_inc_upd ), 7, "e" )); \
+               dotos(( 1.0e+5 )*( ppt->ffct*ndays_cic_upd ), 7, "e" )); \
  \
-         fprintf( pltptr_ica, \
+         fprintf( pltptr_cic, \
             "%12s\n", longstr ); \
  \
       }; \

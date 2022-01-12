@@ -1,5 +1,5 @@
 /* [ file: deflt_par.h ] */
-/* Update: January 09, 2022 */
+/* Update: January 12, 2022 */
 /*----------------------------------------------------------------------------*/
 # ifndef LINLEN
    # define LINLEN 61
@@ -25,41 +25,41 @@ void deflt_params( void ) /* default model parameters */
      "_connected_strings_must_remain_connected!]" );
 
    cpypar( 1, \
-      "The_community_size", "number" );
+      "Background_community_[Ncom]", "0<Ncom" );
    cpypar( 2, \
-      "The_herd_size", "number" );
+      "Herd_size_[Nhrd]", "0<Nhrd<=Ncom" );
    cpypar( 3, \
-      "The_initially_infective_['sick']_members", "number" );
+      "Initially_infective_('sick')_members_[Ninf]", "0<Ninf" );
    cpypar( 4, \
-      "The_initially_infected_members", "number" );
+      "Initially_infected_members_[Nifc]", "Ninf<=Nifc" );
    cpypar( 5, \
-      "The_initially_immune_members_[eg.Nimn=Nifc]", "number" );
+      "Initially_immune_members_[Nimn]", "0<=Nimn" );
    cpypar( 6, \
-      "The_already_deceased_members", "number" );
+      "Already_deceased_members_[Nlty]", "0<Nlty" );
    cpypar( 7, \
-      "The_reproduction_number", "number" );
+      "Initial_reproduction_number_[Repr]", "0<Repr" );
    cpypar( 8, \
-      "The_incidence_threshold", "number" );
+      "Incidence_threshold_[Nthr]", "stop_below_N=Nthr_cases" );
    cpypar( 9, \
-      "The_immunization_coefficient", "number" );
+      "Immunization_coefficient_[Immc]", "0<Immc<=1" );
    cpypar( 10, \
-      "The_percentage_of_asymptomatic_('silent')_cases", "P<100" );
+      "Percentage_of_asymptomatic_cases_[Slnt]", "0<=Slnt<100" );
    cpypar( 11, \
-      "The_percentage_of_lethal_cases", "P<100" );
+      "Percentage_of_lethal_cases_[Ltlt]", "0<=Ltlt<=100" );
    cpypar( 12, \
-      "The_mean_transmission_time", "Ttrm/days" );
+      "Mean_transmission_time_[Ttrm]", "0<=days" );
    cpypar( 13, \
-      "The_mean_duration_of_immunity", "Timu/days" );
+      "Mean_duration_of_immunity_[Timu]", "0<days" );
    cpypar( 14, \
-      "Cumulative_incidence_over_time", "Tinc/days" );
+      "Cumulative_incidence_over_time_[Tcic]", "0<days" );
    cpypar( 15, \
-      "The_time_interval", "Tend/days" );
+      "Length_of_time_interval_[Tend]", "0<days" );
    cpypar( 16, \
-      "The_time_step", "DltT/days" );
+      "Time_step_[DltT]", "0<days" );
 /*............................................................................*/
 /* parameters: */
                                                                                
-   par->s[1]  = 1.000e+05; /* Ncom; community size [number of members]  */
+   par->s[1]  = 1.000e+05; /* Ncom; background community [number of members] */
    par->s[2]  = 1.000e+05; /* Nhrd; herd size [number of members]  */
    par->s[3]  = 1.000e+00; /* Ninf; Initially transmissive members [number] */ 
    par->s[4]  = 1.000e+00; /* Nifc; Initially infected members [number] */
@@ -67,10 +67,10 @@ void deflt_params( void ) /* default model parameters */
    par->s[6]  = 0.000e+00; /* Nlty; Init. already deceased members [number] */
    par->s[7]  = 3.000e+00; /* Nrpd; The reproduction number */
    par->s[8]  = 0.000e+00; /* Nthr; The incidence threshold */
-   par->s[9]  = 1.000e+00; /* Nthr; The immunization coefficient */
+   par->s[9]  = 1.000e+00; /* Immc; The immunization coefficient */
    par->s[10] = 2.000e+01; /* Percentage of asymptomatic ('silent') cases */
    par->s[11] = 2.000e-02; /* Percentage of lethal cases */
-   par->s[12] = 7.000e+00; /* Ttrm; The mean tansmissive time [days] */
+   par->s[12] = 1.400e+01; /* Ttrm; The mean tansmissive time [days] */
    par->s[13] = 9.000e+01; /* Timu; The mean duration of immunity [days] */
    par->s[14] = 7.000e+00; /* Tinc; The incidence averaging time [days] */
    par->s[15] = 7.300e+02; /* Tend; End of the time interval [days] */

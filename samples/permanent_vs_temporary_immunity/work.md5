@@ -1,0 +1,16 @@
+[file: work.md5]
+created: Wed Jan 12 16:27:48 2022
+-------------------------------------------------------------------------------
+MD5( R=3.0_job1 ) = 0d2c582f8cd58e41844cbd0bd63a36e9
+MD5( R=3.0_job2 ) = 09fd6e61e1af54268b9875314faa8be9
+MD5( amadeus.csh ) = be1ffed481e59877741ac0658bc53d60
+MD5( clean-up ) = 15b285f38e5138942a95f0a795cd1abc
+MD5( dplct.csh ) = ed72be7014636ec4b3441d7f73ae4142
+MD5( gnuplot_7_days ) = 6d4eef5676c665df220c0d75f2570209
+MD5( job0 ) = a8e59944e41c3963520f8fb4a450c4d4
+MD5( job1 ) = 6c26ae3c4967bf6c76feafeb766120d4
+MD5( job2 ) = 7ca2ce971c1ac8034c44b5aa0e8281bb
+MD5( n_days_incidence ) = 13d563fd5a95b371625ee90726ff6063
+MD5( par.init0 ) = af1e3068eeb818072e7329448b86b1aa
+MD5( par.init1 ) = e658f87ec46140571649057a055d2f59
+MD5( par.init2 ) = dda7883d903dfa6943e8c0d22ef517d1

@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 10, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 12, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -66,7 +66,7 @@ typedef struct
 
    long
       kend,
-      kinc,
+      kcic,
       ktrm,
 
       nout,      /* outer iteration index */ 
@@ -119,15 +119,15 @@ typedef struct
 
       timmun,    /* time of attained group immunity */
       tmxinc,    /* time of maximum incidence */
-      tmxica,    /* time of maximum N days incidence */
+      tmxcic,    /* time of maximum N days incidence */
       tmximn,    /* time of maximum immunity */
       tmxrpd,    /* time of maximum reproduction number */
       tmxifc,    /* time of maximum infections */
       tmxicr,    /* time of maximum increase */
       tmmicr,    /* time of maximum decrease */
 
-      minica,    /* minimum averaged incidence */
-      maxica,    /* maximum averaged incidence */
+      mincic,    /* minimum averaged incidence */
+      maxcic,    /* maximum averaged incidence */
       maxifc,    /* maximum infection */
       maximn,    /* maximum immunity */
       mininc,    /* minimum incidence */

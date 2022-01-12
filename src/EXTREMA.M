@@ -12,14 +12,14 @@
       if ( incidence_upd < ppt->mininc ) \
          ppt->mininc = incidence_upd; \
  \
-      if ( ppt->maxica < ndays_inc_upd ) \
+      if ( ppt->maxcic < ndays_cic_upd ) \
       { \
-         ppt->maxica = ndays_inc_upd; \
-         ppt->tmxica = ppt->tt; \
+         ppt->maxcic = ndays_cic_upd; \
+         ppt->tmxcic = ppt->tt; \
       }; \
  \
-      if ( ndays_inc_upd < ppt->minica ) \
-         ppt->minica = ndays_inc_upd; \
+      if ( ndays_cic_upd < ppt->mincic ) \
+         ppt->mincic = ndays_cic_upd; \
  \
       if ( ppt->maximn < immune_upd ) \
       { \

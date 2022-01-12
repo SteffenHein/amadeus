@@ -5,22 +5,22 @@ Evolution_of_spreading_diseases
 parameters
 [do_not_change_file_topology:_connected_strings_must_remain_connected]
 
-s001=The_community_size______________________________[0<Ncom]:   1.00000e+05
-s002=The_herd_size_____________________________[0<Nhrd<=Ncom]:   1.00000e+05
-s003=The_initially_infective_('sick')_members________[0<Ninf]:   1.00000e+00
-s004=The_initially_infected_members______________[Ninf<=Nifc]:   1.00000e+00
-s005=The_initially_immune_members___________________[0<=Nimn]:   1.00000e+00
-s006=The_already_deceased_members____________________[0<Nlty]:   1.00000e+00
-s007=The_reproduction_number_________________________[0<Repr]:   1.20000e+00
-s008=The_incidence_threshold_[stop_below_that_No>=0_of_cases]:   0.00000e+00
-s009=The_immunization_coefficient_in_percent_________[0<C<=1]:   1.00000e+00
-s010=The_percentage_of_asymptomatic_cases_________[0<=P<=100]:   2.00000e+01
-s011=The_percentage_of_lethal_cases_______________[0<=P<=100]:   3.00000e-01
-s012=The_mean_transmission_time_____________________[0<=days]:   7.00000e+00
-s013=The_mean_duration_of_immunity___________________[0<days]:   3.65000e+02
-s014=Cumulative_incidence_over_time__________________[0<days]:   7.00000e+00
-s015=The_time_interval_______________________________[0<days]:   7.30000e+02
-s016=The_time_step___________________________________[0<days]:   1.00000e-01
+s001=Background_community_[Ncom]_____________________[0<Ncom]:   1.00000e+05
+s002=Herd_size_[Nhrd]__________________________[0<Nhrd<=Ncom]:   1.00000e+05
+s003=Initially_infective_('sick')_members_[Ninf]_____[0<Ninf]:   1.00000e+00
+s004=Initially_infected_members_[Nifc]___________[Ninf<=Nifc]:   1.00000e+00
+s005=Initially_immune_members_[Nimn]________________[0<=Nimn]:   1.00000e+00
+s006=Already_deceased_members_[Nlty]_________________[0<Nlty]:   1.00000e+00
+s007=Initial_reproduction_number_[Repr]______________[0<Repr]:   1.20000e+00
+s008=Incidence_threshold_[Nthr]_____[stop_below_N=Nthr_cases]:   0.00000e+00
+s009=Immunization_coefficient_[Immc]______________[0<Immc<=1]:   1.00000e+00
+s010=Percentage_of_asymptomatic_cases_[Slnt]____[0<=Slnt<100]:   2.00000e+01
+s011=Percentage_of_lethal_cases_[Ltlt]_________[0<=Ltlt<=100]:   3.00000e-01
+s012=Mean_transmission_time_[Ttrm]__________________[0<=days]:   7.00000e+00
+s013=Mean_duration_of_immunity_[Timu]________________[0<days]:   3.65000e+02
+s014=Cumulative_incidence_over_time_[Tcic]___________[0<days]:   7.00000e+00
+s015=Length_of_time_interval_[Tend]__________________[0<days]:   7.30000e+02
+s016=Time_step_[DltT]________________________________[0<days]:   1.00000e-01
 
 ================================================================================
 
@@ -40,5 +40,5 @@ y-units___[herd_size_normalized:_0,2|conventional_units:_1,3]:            1
 [0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:            1
 
 PANDEMIA input parameter file par.log19 created:
-Wed Jan 12 00:06:00 2022
+Wed Jan 12 16:20:28 2022
 ÿ

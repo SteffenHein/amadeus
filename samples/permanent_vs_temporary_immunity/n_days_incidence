@@ -9,8 +9,8 @@ set border
 set key box
 set pointsize 0.2
 plot \
-'R=3.0_job1' with lines
+'Ti=infinite' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'R=3.0_job2' with lines
+'Ti=90_days' with lines
 pause -1 '[ hit return to continue ]'
