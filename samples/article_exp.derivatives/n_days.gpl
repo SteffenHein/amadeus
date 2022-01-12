@@ -1,4 +1,4 @@
-#set title 'Incidence ( 7 days )'
+#set title 'Cumulative incidence ( 7 days )'
 set xlabel 'transmission cycles'
 set xrange [ 0.000000e+00 : 6.000000e+01 ]
 set ylabel ' '

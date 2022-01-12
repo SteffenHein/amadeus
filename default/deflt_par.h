@@ -47,11 +47,11 @@ void deflt_params( void ) /* default model parameters */
    cpypar( 11, \
       "The_percentage_of_lethal_cases", "P<100" );
    cpypar( 12, \
-      "The_mean_transmissive_time", "Ttrm/days" );
+      "The_mean_transmission_time", "Ttrm/days" );
    cpypar( 13, \
       "The_mean_duration_of_immunity", "Timu/days" );
    cpypar( 14, \
-      "Incidence_averaged_over_time", "Tinc/days" );
+      "Cumulative_incidence_over_time", "Tinc/days" );
    cpypar( 15, \
       "The_time_interval", "Tend/days" );
    cpypar( 16, \

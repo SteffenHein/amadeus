@@ -80,11 +80,11 @@ short rvise_params( void )
    cpypar( 11, \
       "The_percentage_of_lethal_cases", "0<=P<=100" );
    cpypar( 12, \
-      "The_mean_transmissive_time", "0<=days" );
+      "The_mean_transmission_time", "0<=days" );
    cpypar( 13, \
       "The_mean_duration_of_immunity", "0<days" );
    cpypar( 14, \
-      "Incidence_averaged_over_time", "0<days" );
+      "Cumulative_incidence_over_time", "0<days" );
    cpypar( 15, \
       "The_time_interval", "0<days" );
    cpypar( 16, \

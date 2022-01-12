@@ -1,5 +1,5 @@
 #!/bin/csh
-set init=1
+set init=0
 set final=16
 
 set COPIED_FILE="par.log"

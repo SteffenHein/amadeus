@@ -16,9 +16,9 @@ s008=The_incidence_threshold_[stop_below_that_No>=0_of_cases]:   0.00000e+00
 s009=The_immunization_coefficient_in_percent_________[0<C<=1]:   1.00000e+00
 s010=The_percentage_of_asymptomatic_cases_________[0<=P<=100]:   2.00000e+01
 s011=The_percentage_of_lethal_cases_______________[0<=P<=100]:   3.00000e-01
-s012=The_mean_transmissive_time_____________________[0<=days]:   7.00000e+00
+s012=The_mean_transmission_time_____________________[0<=days]:   7.00000e+00
 s013=The_mean_duration_of_immunity___________________[0<days]:   3.65000e+02
-s014=Incidence_averaged_over_time____________________[0<days]:   7.00000e+00
+s014=Cumulative_incidence_over_time__________________[0<days]:   7.00000e+00
 s015=The_time_interval_______________________________[0<days]:   7.30000e+02
 s016=The_time_step___________________________________[0<days]:   1.00000e-01
 
@@ -40,5 +40,5 @@ y-units___[herd_size_normalized:_0,2|conventional_units:_1,3]:            1
 [0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:            1
 
 PANDEMIA input parameter file par.log22 created:
-Mon Jan 10 21:18:43 2022
+Wed Jan 12 00:06:00 2022
 ÿ
