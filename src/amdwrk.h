@@ -187,7 +187,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->Ltlt = ppt->s[11];
    ppt->Ttrm = ppt->s[12];
    ppt->Timu = ppt->s[13];
-   ppt->Tinc = ppt->s[14];
+   ppt->Tcic = ppt->s[14];
    ppt->Tend = ppt->s[15];
    ppt->DltT = ppt->s[16];
 /*............................................................................*/
@@ -195,10 +195,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    ppt->dt = ppt->DltT/ppt->Ttrm;
    ppt->timn = ppt->Timu/ppt->Ttrm; /* timn: Timu in natural units */
-   ppt->ticn = ppt->Tinc/ppt->Ttrm; /* ticn: Tinc in natural units */
+   ppt->tcin = ppt->Tcic/ppt->Ttrm; /* tcin: Tcic in natural units */
 
    ppt->kend = ( long )( ppt->Tend/ppt->DltT );
-   ppt->kcic = ( long )( ppt->Tinc/ppt->DltT );
+   ppt->kcic = ( long )( ppt->Tcic/ppt->DltT );
    ppt->ktrm = ( long )( ppt->Ttrm/ppt->DltT );
 
    ppt->mxictm = ppt->ktrm;
@@ -293,7 +293,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    cpylne( outpstr,
       "\nCumulative_incidence,_integrated_over","days", 60 );
    strcat( outpstr, ": ");
-   strcat( outpstr, dotos( ppt->Tinc, 4, "e" ));
+   strcat( outpstr, dotos( ppt->Tcic, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
@@ -363,7 +363,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( longstr, "=" );
    strcat( longstr, dotos( ppt->Repr, 4, "f" ));
 
-   strcat( flname_cic, lotos(( short ) ppt->Tinc, null, " " ));
+   strcat( flname_cic, lotos(( short ) ppt->Tcic, null, " " ));
    strcat( flname_cic, "_days_incidence_" );
    strcat( flname_cic, longstr );
    strcat( pltfle_cic, flname_cic );
@@ -407,7 +407,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "# Epidemic | " );
     
    strcpy( optnstr, "total " );
-   strcat( optnstr, lotos(( long ) ppt->Tinc, 2, " " ));
+   strcat( optnstr, lotos(( long ) ppt->Tcic, 2, " " ));
    strcat( optnstr, " days incidence " );
 
    fprintf( pltptr_cic, "%s", optnstr );
@@ -668,7 +668,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( fleptr_par, outpstr );
 
    strcpy( inptstr, "\nMaximum_cumulative_herd_incidence_(");
-   strcat( inptstr, dotos( ppt->Tinc, 4, "f" ));
+   strcat( inptstr, dotos( ppt->Tcic, 4, "f" ));
    strcat( inptstr, "_days)");
    cpylne( outpstr, inptstr, "percent", 60 );
    strcat( outpstr, ": ");
@@ -720,7 +720,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    if ( ppt->titles == ONE )
    {
       strcpy( optnstr, "Cumulative incidence ( " );
-      strcat( optnstr, lotos(( long ) ppt->Tinc, null, " " ));
+      strcat( optnstr, lotos(( long ) ppt->Tcic, null, " " ));
       strcat( optnstr, " days )" );
    }
    else

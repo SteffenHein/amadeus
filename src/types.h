@@ -80,8 +80,8 @@ typedef struct
    double
       yy,      
       dy,      
-      tt,        /* time [ Ttrm scale ] */
-      dt,        /* internal time step [ Ttrm scale ] */
+      tt,        /* time in natural units [ Ttrm scale ] */
+      dt,        /* time step, natural units [ Ttrm scale ] */
       DltT,      /* time increment [ days ] */
 
       Ncom,      /* community size [ number of members ] */
@@ -113,8 +113,8 @@ typedef struct
       Ttrm,      /* mean transmission time [ Tinc+Till, e.g. ] */
       Timu,      /* mean immunity duration [ days ] */
       timn,      /* Timu in natural units [ Ttrm scale ] */
-      Tinc,      /* N [=Tacu] days incidence */
-      ticn,      /* Tinc in natural units [ Ttrm scale ] */
+      Tcic,      /* N [=Tcic] days incidence */
+      tcin,      /* Tcic in natural units [ Ttrm scale ] */
       Tend,      /* time intervall [ length ] */
 
       timmun,    /* time of attained group immunity */
