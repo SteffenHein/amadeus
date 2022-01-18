@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 26 -f par.init26
-./gnuplot26

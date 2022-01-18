@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 34 -f par.init34
-./gnuplot34

@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 23 -f par.init23
-./gnuplot23

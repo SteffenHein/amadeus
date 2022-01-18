@@ -1,0 +1,10 @@
+#!/bin/sh
+amadeus -n 18 -f par.init18
+cp 7_days_incidence_R0=3.000 R=3.000_T=oo
+gnuplot gpl_n_days_incidence_job.18
+gnuplot gpl_incidence_job.18
+gnuplot gpl_immunity_job.18
+gnuplot gpl_reproduction_job.18
+gnuplot gpl_infection_job.18
+gnuplot gpl_lethality_job.18
+#gnuplot covid.compare

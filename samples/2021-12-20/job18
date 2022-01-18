@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 18 -f par.init18
-./gnuplot18

@@ -1,0 +1,10 @@
+#!/bin/sh
+amadeus -n 0 -f par.init0
+gnuplot gpl_n_days_incidence_job.0
+gnuplot gpl_incidence_job.0
+gnuplot gpl_immunity_job.0
+gnuplot gpl_reproduction_job.0
+gnuplot gpl_infection_job.0
+gnuplot gpl_lethality_job.0
+#gnuplot covid.compare
+./gnuplot0

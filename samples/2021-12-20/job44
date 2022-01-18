@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 44 -f par.init44
-./gnuplot44

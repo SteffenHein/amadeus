@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 40 -f par.init40
-./gnuplot40

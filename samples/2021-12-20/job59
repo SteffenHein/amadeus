@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 59 -f par.init59
-./gnuplot59

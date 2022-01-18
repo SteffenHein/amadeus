@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 38 -f par.init38
-./gnuplot38

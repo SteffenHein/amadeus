@@ -1,6 +1,6 @@
 set title '7 days cumulative incidence ( R=3, Ttrm=21 days )'
 set xlabel 'days'
-set xrange [ 0.000000e+00 : 7.300000e+02 ]
+set xrange [ 0.000000e+00 : 1.095000e+03 ]
 set ylabel 'per 100000'
 set format y '%10.1e'
 set yrange [ 0.000000e+00 : 1.500000e+04 ]
@@ -9,8 +9,8 @@ set border
 set key box
 set pointsize 0.2
 plot \
-'Ti=infinite' with lines
+'T=infinite' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'Ti=90_days' with lines
+'T=90_days' with lines
 pause -1 '[ hit return to continue ]'

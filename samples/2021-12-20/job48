@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 48 -f par.init48
-./gnuplot48

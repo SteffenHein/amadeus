@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 35 -f par.init35
-./gnuplot35

@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 5 -f par.init5
-./gnuplot5

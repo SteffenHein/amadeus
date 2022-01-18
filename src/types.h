@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 12, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 18, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -84,16 +84,17 @@ typedef struct
       dt,        /* time step, natural units [ Ttrm scale ] */
       DltT,      /* time increment [ days ] */
 
-      Ncom,      /* community size [ number of members ] */
       Nhrd,      /* herd size [ number of members ] */
       Nifc,      /* initial number of infected persons */
       Nimn,      /* initial number immune persons */
-      Ninf,      /* initial number infective [sick] persons */
-      Nlty,      /* initial number of dead persons */
-      Nthr,      /* incidence "threshold" [ stop computation when incidence  */
+      Ninf,      /* initial number of infective ['sick'] persons */
+      Nlty,      /* initial number of deceased persons */
+
+      Repr,      /* initial reproduction number */
+      Dspf,      /* Dispersion factor [real number; 0<=Dspf] */
+      Ithr,      /* incidence "threshold" [ stop computation when incidence  */
                                       /* lower than that number of persons ] */
       Immc,      /* immunisation coefficient [ 0 < Immc <= 1 ] */
-      Repr,      /* initial reproduction number */
       Slnt,      /* percentage of "silent" (asymptomatic) cases */
       Ltlt,      /* lethality [ percent ] */
       
@@ -102,7 +103,7 @@ typedef struct
       rinf,      /* initial group infectivity [ ratio ] */
       rlty,      /* initial group lethality [ ratio ] */
       repr,      /* reproduction rate [ log(Nrpd)/Tinf ] */
-      rthr,      /* incidence threshold [ Nthr/Tinf ] */
+      rthr,      /* incidence threshold [ Ithr/Tinf ] */
 
       ffct,      /* form factor */
 

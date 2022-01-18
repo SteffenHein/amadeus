@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 12, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 18, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -150,16 +150,16 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* dictionary: */
       
-/* Ncom = 8.20e+07;  community size [ number of members ] */
 /* Nhrd = 8.20e+07;  herd size [ number of members ] */
-/* Nifc = 1.60e+05;  number of initially infected members [sum] */
-/* Nimn = Nifc;      initial number immune members [ usually ~ Nifc ] */
 /* Ninf = 3.40e+04;  initial number of infective [sick] members */
+/* Nifc = 1.60e+05;  number of initially infected members Ninf <= Nifc */
+/* Nimn = 1.60e+05;  initial number immune members */
 /* Nlty = 2.40e+03;  initial number of deceased members */
+/* Dspf = 0.000+00;  Dispersion factor [0<=Dspf] */
 
+/* rinf = Ninf/Nhrd; initial ratio of infective members */
 /* rifc = Nifc/Nhrd; initial ratio of infected members */
 /* rimn = Nimn/Nhrd; initial herd immunity [ ratio ] */
-/* rinf = Ninf/Nhrd; initial ratio of infective members */
 /* rlty = Nlty/Nhrd; initial ratio of deceased members */
 /*............................................................................*/
 /* desease features [example values]: */
@@ -174,14 +174,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* copy the input parameters */
 
-   ppt->Ncom = ppt->s[1];
-   ppt->Nhrd = ppt->s[2];
-   ppt->Ninf = ppt->s[3];
-   ppt->Nifc = ppt->s[4];
-   ppt->Nimn = ppt->s[5];
-   ppt->Nlty = ppt->s[6];
-   ppt->Repr = ppt->s[7];
-   ppt->Nthr = ppt->s[8];
+   ppt->Nhrd = ppt->s[1];
+   ppt->Ninf = ppt->s[2];
+   ppt->Nifc = ppt->s[3];
+   ppt->Nimn = ppt->s[4];
+   ppt->Nlty = ppt->s[5];
+   ppt->Repr = ppt->s[6];
+   ppt->Dspf = ppt->s[7];
+   ppt->Ithr = ppt->s[8];
    ppt->Immc = ppt->s[9];
    ppt->Slnt = ppt->s[10];
    ppt->Ltlt = ppt->s[11];
@@ -210,17 +210,13 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->rimn = ppt->Nimn/ppt->Nhrd;
    ppt->rinf = ppt->Ninf/ppt->Nhrd;
    ppt->rlty = ppt->Nlty/ppt->Nhrd;
-   ppt->rthr = ppt->Nthr/ppt->Nhrd;
+   ppt->rthr = ppt->Ithr/ppt->Nhrd;
    
    ppt->wght_imm = ( 100.*ppt->Immc - ppt->Ltlt )/( 100. - ppt->Slnt );
    ppt->wght_ifc = ( 100./( 100. - ppt->Slnt ));
    ppt->wght_lty = ppt->Ltlt/( 100. - ppt->Slnt );
 
-   if ( 1 < opt->n[6] )
-      ppt->ffct = ppt->Nhrd/ppt->Ncom;
-   else
-      ppt->ffct = 1.;
-
+   ppt->ffct = 1./( 1. + ppt->Dspf );
 /*............................................................................*/
 /* limits: */
 
@@ -253,12 +249,6 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    fleptr_par = fopen( parmtr_fle, "w+" ); 
    fprintf( fleptr_par, "Essential_parameters\n" );
-
-   cpylne( outpstr,
-      "\nBackground_community","members", 60 );
-   strcat( outpstr, ": ");
-   strcat( outpstr, dotos( ppt->Ncom, 4, "e" ));
-   fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
       "\nHerd_size","members", 60 );
@@ -306,6 +296,12 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "\nInitial_reproduction_factor","dimensionless", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( ppt->Repr, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
+
+   cpylne( outpstr,
+      "\nDispersion_factor","members", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Dspf, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
@@ -538,7 +534,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
          if ( ppt->nmstop == ONE ) /* stop if no sick members remain */
 	 {
-            if ((( incidence_upd * reprod_upd ) < ppt->rthr )
+            if ((( incidence_upd*reprod_upd ) < ppt->rthr )
 	       || ( suscpt_upd <= ppt->rthr ))
             { 
 /* [ no new cases or group immunity attained ] */
@@ -587,22 +583,22 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*...........................................................................*/
 /* integrate incidence */
 
-            integral_inc += ( ppt->dt * incidence_upd );
+            integral_inc += ( ppt->dt*incidence_upd );
 
 /*...........................................................................*/
 /* update herd infection, immunity and incidence */
 
             infected_upd +=\
-               ( ppt->dt * ppt->wght_ifc * incidence_upd );
+               ( ppt->dt*ppt->wght_ifc*incidence_upd );
 
-            if ( infected_upd > ( 1. - ppt->rthr ))
+            if ( infected_upd >  1. )
 	       infected_upd = 1.;
 
             lethal_upd +=\
-               ( ppt->dt * ppt->wght_lty * incidence_upd );
+               ( ppt->dt*ppt->wght_lty*incidence_upd );
          }
 	 else /* suscpt_upd <= ppt->rthr */
-            incidence_upd = ZERO;
+            incidence_upd = ZERO; 
 
          ppt->dudt[null] = incidence_upd;
 
@@ -611,7 +607,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 	 
          immune_upd *= ( exp( - ppt->dt / ppt->timn ));
          immune_upd +=\
-            ( ppt->dt * ppt->wght_imm * ppt->dudt[null] );
+            ( ppt->dt*ppt->wght_imm*ppt->dudt[null] );
 
 /*...........................................................................*/
 /* mean n days incidence */

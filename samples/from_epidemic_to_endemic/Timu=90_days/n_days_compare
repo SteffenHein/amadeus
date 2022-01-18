@@ -1,0 +1,100 @@
+set title 'Cumulative incidence ( 7 days )'
+set xlabel 'days'
+set xrange [ 0.000000e+00 : 1.095000e+03 ]
+set ylabel 'per 100000'
+set format y '%10.1e'
+set yrange [ 0.000000e+00 : 2.398665e+04 ]
+set grid
+set border
+set key box
+set pointsize 0.2
+plot \
+'R=3.250_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=3.250_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=3.000_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=3.000_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=2.875_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=2.875_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=2.750_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=2.750_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=2.500_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=2.500_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=2.250_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=2.250_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=2.000_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=2.000_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=1.750_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=1.750_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=1.500_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=1.500_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=1.375_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=1.375_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=1.250_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=1.250_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=1.000_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=1.000_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=.8750_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=.8750_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=.7500_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=.7500_T=oo' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=.5000_T=90d' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'R=.5000_T=oo' with lines
+pause -1 '[ hit return to continue ]'

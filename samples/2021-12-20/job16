@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 16 -f par.init16
-./gnuplot16

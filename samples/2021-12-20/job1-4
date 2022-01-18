@@ -1,5 +1,0 @@
-#!/bin/sh
-amadeus -n 0 -f par.init0
-amadeus -n 1 -f par.init1
-amadeus -n 2 -f par.init2
-amadeus -n 3 -f par.init3

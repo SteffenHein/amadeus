@@ -25,48 +25,48 @@ void deflt_params( void ) /* default model parameters */
      "_connected_strings_must_remain_connected!]" );
 
    cpypar( 1, \
-      "Background_community_[Ncom]", "0<Ncom" );
+      "Herd_size_[Nhrd]", "0<Nhrd<=Nref" );
    cpypar( 2, \
-      "Herd_size_[Nhrd]", "0<Nhrd<=Ncom" );
-   cpypar( 3, \
       "Initially_infective_('sick')_members_[Ninf]", "0<Ninf" );
-   cpypar( 4, \
+   cpypar( 3, \
       "Initially_infected_members_[Nifc]", "Ninf<=Nifc" );
+   cpypar( 4, \
+      "Initially_immune_members", "0<=N" );
    cpypar( 5, \
-      "Initially_immune_members_[Nimn]", "0<=Nimn" );
+      "Already_deceased_members", "0<N" );
    cpypar( 6, \
-      "Already_deceased_members_[Nlty]", "0<Nlty" );
+      "Initial_reproduction_factor", "0<R" );
    cpypar( 7, \
-      "Initial_reproduction_number_[Repr]", "0<Repr" );
+      "Dispersion_factor", "0<=D" );
    cpypar( 8, \
-      "Incidence_threshold_[Nthr]", "stop_below_N=Nthr_cases" );
+      "Incidence_threshold", "stop_below_that_number_of_cases" );
    cpypar( 9, \
-      "Immunization_coefficient_[Immc]", "0<Immc<=1" );
+      "Immunization_coefficient", "0<C<=1" );
    cpypar( 10, \
-      "Percentage_of_asymptomatic_cases_[Slnt]", "0<=Slnt<100" );
+      "Percentage_of_asymptomatic_cases", "0<=P<100" );
    cpypar( 11, \
-      "Percentage_of_lethal_cases_[Ltlt]", "0<=Ltlt<=100" );
+      "Percentage_of_lethal_cases", "0<=P<=100" );
    cpypar( 12, \
-      "Mean_transmission_time_[Ttrm]", "0<=days" );
+      "Mean_transmission_time_[T/days]", "0<=T" );
    cpypar( 13, \
-      "Mean_duration_of_immunity_[Timu]", "0<days" );
+      "Mean_duration_of_immunity_[T/days]", "0<T" );
    cpypar( 14, \
-      "Cumulative_incidence_over_time_[Tcic]", "0<days" );
+      "Cumulative_incidence_over_time_[T/days]", "0<T" );
    cpypar( 15, \
-      "Length_of_time_interval_[Tend]", "0<days" );
+      "Length_of_time_interval_[T/days]", "0<T" );
    cpypar( 16, \
-      "Time_step_[DltT]", "0<days" );
+      "Time_step_[Dt/days]", "0<Dt" );
 /*............................................................................*/
 /* parameters: */
                                                                                
-   par->s[1]  = 1.000e+05; /* Ncom; background community [number of members] */
-   par->s[2]  = 1.000e+05; /* Nhrd; herd size [number of members]  */
-   par->s[3]  = 1.000e+00; /* Ninf; Initially transmissive members [number] */ 
-   par->s[4]  = 1.000e+00; /* Nifc; Initially infected members [number] */
-   par->s[5]  = 1.000e+00; /* Nimn; Initially immune members [number] */
-   par->s[6]  = 0.000e+00; /* Nlty; Init. already deceased members [number] */
-   par->s[7]  = 3.000e+00; /* Nrpd; The reproduction number */
-   par->s[8]  = 0.000e+00; /* Nthr; The incidence threshold */
+   par->s[1]  = 1.000e+05; /* Nhrd; herd size [(real) number of members]  */
+   par->s[2]  = 1.000e+00; /* Ninf; Initially transmissive members [number] */ 
+   par->s[3]  = 1.000e+00; /* Nifc; Initially infected members [number] */
+   par->s[4]  = 1.000e+00; /* Nimn; Initially immune members [number] */
+   par->s[5]  = 0.000e+00; /* Nlty; Init. already deceased members [number] */
+   par->s[6]  = 3.000e+00; /* Nrpd; The reproduction factor */
+   par->s[7]  = 1.000e+00; /* Dspf; Dispersion factor [ real number >=0 ] */
+   par->s[8]  = 0.000e+00; /* Ithr; The incidence threshold [ number ] */
    par->s[9]  = 1.000e+00; /* Immc; The immunization coefficient */
    par->s[10] = 2.000e+01; /* Percentage of asymptomatic ('silent') cases */
    par->s[11] = 2.000e-02; /* Percentage of lethal cases */

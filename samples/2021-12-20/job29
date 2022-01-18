@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 29 -f par.init29
-./gnuplot29

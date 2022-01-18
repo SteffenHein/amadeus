@@ -1,9 +1,9 @@
 #!/bin/sh
 amadeus -n 2 -f par.init2
+cp 7_days_incidence_R0=3.000 T=90_days
 gnuplot gpl_n_days_incidence_job.2
 gnuplot gpl_incidence_job.2
 gnuplot gpl_immunity_job.2
 gnuplot gpl_reproduction_job.2
 gnuplot gpl_infection_job.2
 gnuplot gpl_lethality_job.2
-#gnuplot covid.compare

@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 15 -f par.init15
-./gnuplot15

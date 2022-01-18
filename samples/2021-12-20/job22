@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 22 -f par.init22
-./gnuplot22

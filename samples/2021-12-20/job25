@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 25 -f par.init25
-./gnuplot25

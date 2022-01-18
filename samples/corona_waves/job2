@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 2 -f par.init2
-./gnuplot2

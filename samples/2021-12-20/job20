@@ -1,3 +1,0 @@
-#!/bin/sh
-amadeus -n 20 -f par.init20
-./gnuplot20
