@@ -11,7 +11,7 @@ s003=Initially_infected_members_[Nifc]___________[Ninf<=Nifc]:   1.00000e+00
 s004=Initially_immune_members__________________________[0<=N]:   1.00000e+00
 s005=Already_deceased_members___________________________[0<N]:   0.00000e+00
 s006=Initial_reproduction_factor________________________[0<R]:   3.25000e+00
-s007=Dispersion_factor_________________________________[0<=D]:   0.00000e+00
+s007=Dispersion_coefficient____________________________[0<=D]:   0.00000e+00
 s008=Incidence_threshold____[stop_below_that_number_of_cases]:   0.00000e+00
 s009=Immunization_coefficient________________________[0<C<=1]:   1.00000e+00
 s010=Percentage_of_asymptomatic_cases______________[0<=P<100]:   2.00000e+01
@@ -19,7 +19,7 @@ s011=Percentage_of_lethal_cases___________________[0<=P<=100]:   1.00000e+00
 s012=Mean_transmission_time_[T/days]___________________[0<=T]:   1.40000e+01
 s013=Mean_duration_of_immunity_[T/days]_________________[0<T]:   1.80000e+02
 s014=Cumulative_incidence_over_time_[T/days]____________[0<T]:   7.00000e+00
-s015=Length_of_time_interval_[T/days]___________________[0<T]:   2.19000e+03
+s015=Time_limit_[T/days]________________________________[0<T]:   2.19000e+03
 s016=Time_step_[Dt/days]_______________________________[0<Dt]:   1.00000e-01
 
 ================================================================================
@@ -40,5 +40,5 @@ y-units___[herd_size_normalized:_0,2|conventional_units:_1,3]:            1
 [0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:            0
 
 PANDEMIA input parameter file par.log1 created:
-Tue Jan 18 16:56:58 2022
+Tue Jan 18 21:34:50 2022
 ÿ

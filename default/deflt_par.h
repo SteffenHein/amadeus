@@ -1,5 +1,5 @@
 /* [ file: deflt_par.h ] */
-/* Update: January 12, 2022 */
+/* Update: January 18, 2022 */
 /*----------------------------------------------------------------------------*/
 # ifndef LINLEN
    # define LINLEN 61
@@ -37,7 +37,7 @@ void deflt_params( void ) /* default model parameters */
    cpypar( 6, \
       "Initial_reproduction_factor", "0<R" );
    cpypar( 7, \
-      "Dispersion_factor", "0<=D" );
+      "Dispersion_coefficient", "0<=D" );
    cpypar( 8, \
       "Incidence_threshold", "stop_below_that_number_of_cases" );
    cpypar( 9, \

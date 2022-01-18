@@ -70,7 +70,7 @@ short rvise_params( void )
    cpypar( 6, \
       "Initial_reproduction_factor", "0<R" );
    cpypar( 7, \
-      "Dispersion_factor", "0<=D" );
+      "Dispersion_coefficient", "0<=D" );
    cpypar( 8, \
       "Incidence_threshold", "stop_below_that_number_of_cases" );
    cpypar( 9, \
@@ -86,7 +86,7 @@ short rvise_params( void )
    cpypar( 14, \
       "Cumulative_incidence_over_time_[T/days]", "0<T" );
    cpypar( 15, \
-      "Length_of_time_interval_[T/days]", "0<T" );
+      "Time_limit_[T/days]", "0<T" );
    cpypar( 16, \
       "Time_step_[Dt/days]", "0<Dt" );
 /*............................................................................*/

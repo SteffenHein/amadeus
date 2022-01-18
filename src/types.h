@@ -91,7 +91,7 @@ typedef struct
       Nlty,      /* initial number of deceased persons */
 
       Repr,      /* initial reproduction number */
-      Dspf,      /* Dispersion factor [real number; 0<=Dspf] */
+      Dspc,      /* Dispersion coefficient [real number; 0<=Dspf] */
       Ithr,      /* incidence "threshold" [ stop computation when incidence  */
                                       /* lower than that number of persons ] */
       Immc,      /* immunisation coefficient [ 0 < Immc <= 1 ] */

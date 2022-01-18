@@ -155,7 +155,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /* Nifc = 1.60e+05;  number of initially infected members Ninf <= Nifc */
 /* Nimn = 1.60e+05;  initial number immune members */
 /* Nlty = 2.40e+03;  initial number of deceased members */
-/* Dspf = 0.000+00;  Dispersion factor [0<=Dspf] */
+/* Dspc = 0.000+00;  Dispersion coefficient [0<=Dspc] */
 
 /* rinf = Ninf/Nhrd; initial ratio of infective members */
 /* rifc = Nifc/Nhrd; initial ratio of infected members */
@@ -180,7 +180,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->Nimn = ppt->s[4];
    ppt->Nlty = ppt->s[5];
    ppt->Repr = ppt->s[6];
-   ppt->Dspf = ppt->s[7];
+   ppt->Dspc = ppt->s[7];
    ppt->Ithr = ppt->s[8];
    ppt->Immc = ppt->s[9];
    ppt->Slnt = ppt->s[10];
@@ -216,7 +216,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->wght_ifc = ( 100./( 100. - ppt->Slnt ));
    ppt->wght_lty = ppt->Ltlt/( 100. - ppt->Slnt );
 
-   ppt->ffct = 1./( 1. + ppt->Dspf );
+   ppt->ffct = 1./( 1. + ppt->Dspc );
 /*............................................................................*/
 /* limits: */
 
@@ -299,9 +299,9 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
-      "\nDispersion_factor","members", 60 );
+      "\nDispersion_coefficient","dimensionless", 60 );
    strcat( outpstr, ": ");
-   strcat( outpstr, dotos( ppt->Dspf, 4, "e" ));
+   strcat( outpstr, dotos( ppt->Dspc, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
