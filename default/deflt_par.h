@@ -1,5 +1,5 @@
 /* [ file: deflt_par.h ] */
-/* Update: January 18, 2022 */
+/* Update: January 21, 2022 */
 /*----------------------------------------------------------------------------*/
 # ifndef LINLEN
    # define LINLEN 61
@@ -14,7 +14,7 @@ void deflt_params( void ) /* default model parameters */
 /* parameter strings: */
 /* number of parameters */
    
-   par->s[0]  = 16;
+   par->s[0]  = 18;
 
 /* write only connected (!) strings into the string copy function strcpy(*) */
 /* [ 2nd. argument       | ] */
@@ -23,7 +23,7 @@ void deflt_params( void ) /* default model parameters */
    strcpy( par->stx[0], "parameters\n" );
    strcat( par->stx[0], "[do_not_change_file_topology:"\
      "_connected_strings_must_remain_connected!]" );
-
+/*............................................................................*/
    cpypar( 1, \
       "Herd_size_[Nhrd]", "0<Nhrd<=Nref" );
    cpypar( 2, \
@@ -37,24 +37,28 @@ void deflt_params( void ) /* default model parameters */
    cpypar( 6, \
       "Initial_reproduction_factor", "0<R" );
    cpypar( 7, \
-      "Dispersion_coefficient", "0<=D" );
+      "Immunization_ratio", "0<Ir<=1" );
    cpypar( 8, \
-      "Incidence_threshold", "stop_below_that_number_of_cases" );
-   cpypar( 9, \
-      "Immunization_coefficient", "0<C<=1" );
-   cpypar( 10, \
       "Percentage_of_asymptomatic_cases", "0<=P<100" );
-   cpypar( 11, \
+   cpypar( 9, \
       "Percentage_of_lethal_cases", "0<=P<=100" );
-   cpypar( 12, \
+   cpypar( 10, \
       "Mean_transmission_time_[T/days]", "0<=T" );
-   cpypar( 13, \
+   cpypar( 11, \
       "Mean_duration_of_immunity_[T/days]", "0<T" );
-   cpypar( 14, \
+   cpypar( 12, \
       "Cumulative_incidence_over_time_[T/days]", "0<T" );
+   cpypar( 13, \
+      "Incidence_threshold", "stop_below_that_number_of_cases" );
+   cpypar( 14, \
+      "Burst_level_on_average", "0<=Bl" );
    cpypar( 15, \
-      "Length_of_time_interval_[T/days]", "0<T" );
+      "If_0<Bl:_Burst_length_on_average_[T/days]", "0<=T" );
    cpypar( 16, \
+      "If_0<Bl:_Burst_every_T-th_day_on_average", "0<=T" );
+   cpypar( 17, \
+      "Time_limit_[T/days]", "0<T" );
+   cpypar( 18, \
       "Time_step_[Dt/days]", "0<Dt" );
 /*............................................................................*/
 /* parameters: */
@@ -65,16 +69,18 @@ void deflt_params( void ) /* default model parameters */
    par->s[4]  = 1.000e+00; /* Nimn; Initially immune members [number] */
    par->s[5]  = 0.000e+00; /* Nlty; Init. already deceased members [number] */
    par->s[6]  = 3.000e+00; /* Nrpd; The reproduction factor */
-   par->s[7]  = 1.000e+00; /* Dspf; Dispersion factor [ real number >=0 ] */
-   par->s[8]  = 0.000e+00; /* Ithr; The incidence threshold [ number ] */
-   par->s[9]  = 1.000e+00; /* Immc; The immunization coefficient */
-   par->s[10] = 2.000e+01; /* Percentage of asymptomatic ('silent') cases */
-   par->s[11] = 2.000e-02; /* Percentage of lethal cases */
-   par->s[12] = 1.400e+01; /* Ttrm; The mean tansmissive time [days] */
-   par->s[13] = 9.000e+01; /* Timu; The mean duration of immunity [days] */
-   par->s[14] = 7.000e+00; /* Tinc; The incidence averaging time [days] */
-   par->s[15] = 7.300e+02; /* Tend; End of the time interval [days] */
-   par->s[16] = 1.000e-01; /* DltT; The time step [days] */
+   par->s[7]  = 1.000e+00; /* Immc; The immunization coefficient */
+   par->s[8]  = 2.000e+01; /* Percentage of asymptomatic ('silent') cases */
+   par->s[9]  = 2.000e-02; /* Percentage of lethal cases */
+   par->s[10] = 1.400e+01; /* Ttrm; The mean tansmission time [days] */
+   par->s[11] = 9.000e+01; /* Timu; The mean duration of immunity [days] */
+   par->s[12] = 7.000e+00; /* Tinc; Cumulative incidence over time [days] */
+   par->s[13] = 0.000e+00; /* Ithr; The incidence threshold [0<=Ithr] */
+   par->s[14] = 0.000e+00; /* Lvlb; Burst level, on average [0<=Lvlb] */
+   par->s[15] = 0.000e+00; /* Tmeb; Burst length, on average [days] */
+   par->s[16] = 0.000e+00; /* Tbst; Burst every T-th day on average [days] */
+   par->s[17] = 7.300e+02; /* Tend; Time limit [days] */
+   par->s[18] = 1.000e-01; /* DltT; Time step [days] */
 
    return;
 }

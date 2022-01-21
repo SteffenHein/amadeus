@@ -11,16 +11,18 @@ s003=Initially_infected_members_[Nifc]___________[Ninf<=Nifc]:   1.00000e+00
 s004=Initially_immune_members__________________________[0<=N]:   0.00000e+00
 s005=Already_deceased_members___________________________[0<N]:   0.00000e+00
 s006=Initial_reproduction_factor________________________[0<R]:   1.25000e+00
-s007=Dispersion_coefficient____________________________[0<=D]:   0.00000e+00
-s008=Incidence_threshold____[stop_below_that_number_of_cases]:   0.00000e+00
-s009=Immunization_coefficient________________________[0<C<=1]:   1.00000e+00
-s010=Percentage_of_asymptomatic_cases______________[0<=P<100]:   2.00000e+01
-s011=Percentage_of_lethal_cases___________________[0<=P<=100]:   2.00000e-01
-s012=Mean_transmission_time_[T/days]___________________[0<=T]:   1.40000e+01
-s013=Mean_duration_of_immunity_[T/days]_________________[0<T]:   1.00000e+99
-s014=Cumulative_incidence_over_time_[T/days]____________[0<T]:   7.00000e+00
-s015=Time_limit_[T/days]________________________________[0<T]:   1.09500e+03
-s016=Time_step_[Dt/days]_______________________________[0<Dt]:   1.00000e-01
+s007=Immunization_ratio_____________________________[0<Ir<=1]:   1.00000e+00
+s008=Percentage_of_asymptomatic_cases______________[0<=P<100]:   2.00000e+01
+s009=Percentage_of_lethal_cases___________________[0<=P<=100]:   2.00000e-01
+s010=Mean_transmission_time_[T/days]___________________[0<=T]:   1.40000e+01
+s011=Mean_duration_of_immunity_[T/days]_________________[0<T]:   1.00000e+99
+s012=Cumulative_incidence_over_time_[T/days]____________[0<T]:   7.00000e+00
+s013=Incidence_threshold____[stop_below_that_number_of_cases]:   0.00000e+00
+s014=Burst_level_on_average___________________________[0<=Bl]:   0.00000e+00
+s015=If_0<Bl:_Burst_length_on_average_[T/days]_________[0<=T]:   0.00000e+00
+s016=If_0<Bl:_Burst_every_T-th_day_on_average__________[0<=T]:   0.00000e+00
+s017=Time_limit_[T/days]________________________________[0<T]:   1.09500e+03
+s018=Time_step_[Dt/days]_______________________________[0<Dt]:   5.00000e-02
 
 ================================================================================
 
@@ -31,7 +33,7 @@ Evolution_of_spreading_diseases
 computation_modes
 
 maximum_number_of_outer_iterations_________________[<=100000]:       100000
-number_of_inner_iterations____________________________[1-100]:            5
+number_of_inner_iterations____________________________[1-100]:           20
 formula_0,1,2__[_0:_input_is_BASIC/_else:_CURRENT/_repr._no.]:            0
 x-scale______________________[transmission_cycles:0_|_days:1]:            1
 y-scale____________________________[linear:0_|_logarithmic:1]:            0
@@ -40,5 +42,5 @@ y-units___[herd_size_normalized:_0,2|conventional_units:_1,3]:            1
 [0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:            1
 
 PANDEMIA input parameter file par.log27 created:
-Tue Jan 18 21:35:28 2022
+Fri Jan 21 14:13:27 2022
 ÿ

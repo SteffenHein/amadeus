@@ -1,16 +1,16 @@
-/* Update: January 10, 2022 */
+/* Update: January 20, 2022 */
 # define EXTREMA(XX)\
 { \
    if ( XX == 1 ) \
    { \
-      if ( ppt->maxinc < incidence_upd ) \
+      if ( ppt->maxinc < ppt->dudt[null] ) \
       { \
-         ppt->maxinc = incidence_upd; \
+         ppt->maxinc = ppt->dudt[null]; \
          ppt->tmxinc = ppt->tt; \
       }; \
  \
-      if ( incidence_upd < ppt->mininc ) \
-         ppt->mininc = incidence_upd; \
+      if ( ppt->dudt[null] < ppt->mininc ) \
+         ppt->mininc = ppt->dudt[null]; \
  \
       if ( ppt->maxcic < ndays_cic_upd ) \
       { \

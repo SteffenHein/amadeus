@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 18, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 20, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -68,6 +68,7 @@ typedef struct
       kend,
       kcic,
       ktrm,
+      kbst,
 
       nout,      /* outer iteration index */ 
       ninn,      /* inner iteration index */
@@ -91,12 +92,12 @@ typedef struct
       Nlty,      /* initial number of deceased persons */
 
       Repr,      /* initial reproduction number */
-      Dspc,      /* Dispersion coefficient [real number; 0<=Dspf] */
       Ithr,      /* incidence "threshold" [ stop computation when incidence  */
                                       /* lower than that number of persons ] */
       Immc,      /* immunisation coefficient [ 0 < Immc <= 1 ] */
       Slnt,      /* percentage of "silent" (asymptomatic) cases */
       Ltlt,      /* lethality [ percent ] */
+      Lvlb,      /* random burst level [ ratio ] */
       
       rifc,      /* initial group infecion [ ratio ] */
       rimn,      /* initial group immunity [ ratio ] */
@@ -105,8 +106,6 @@ typedef struct
       repr,      /* reproduction rate [ log(Nrpd)/Tinf ] */
       rthr,      /* incidence threshold [ Ithr/Tinf ] */
 
-      ffct,      /* form factor */
-
       wght_ifc,  /* infection weight: 100/( 100-Slnt ) */
       wght_imm,  /* immunisation weight: ( 100+Ltlt )/( 100-Slnt ) */
       wght_lty,  /* lethality weight: Ltlt/( 100-Slnt ) */
@@ -114,8 +113,12 @@ typedef struct
       Ttrm,      /* mean transmission time [ Tinc+Till, e.g. ] */
       Timu,      /* mean immunity duration [ days ] */
       timn,      /* Timu in natural units [ Ttrm scale ] */
-      Tcic,      /* N [=Tcic] days incidence */
+      Tcic,      /* n days incidence */
       tcin,      /* Tcic in natural units [ Ttrm scale ] */
+      Tmeb,      /* random burst length [ 0<=Tmeb ] */
+      tmeb,      /* Tmeb in natural units [ Ttrm scale ] */
+      Tbst,      /* burst Time [ interval ] */ 
+      tbst,      /* Tbst in natural units [ Ttrm scale ] */
       Tend,      /* time intervall [ length ] */
 
       timmun,    /* time of attained group immunity */

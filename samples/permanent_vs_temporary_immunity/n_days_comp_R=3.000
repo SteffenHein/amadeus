@@ -1,6 +1,6 @@
-set title '7 days cumulative incidence ( R=3, Ttrm=21 days )'
+set title '7 days cumulative incidence ( R=3, transmission time 21 days )'
 set xlabel 'days'
-set xrange [ 0.000000e+00 : 1.095000e+03 ]
+set xrange [ 0.000000e+00 : 2.190000e+03 ]
 set ylabel 'per 100000'
 set format y '%10.1e'
 set yrange [ 0.000000e+00 : 1.500000e+04 ]
@@ -13,4 +13,10 @@ plot \
 pause -1 '[ hit return to continue ]'
 replot \
 'T=90_days' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'T=180_days' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'T=360_days' with lines
 pause -1 '[ hit return to continue ]'

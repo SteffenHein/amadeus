@@ -1,0 +1,2 @@
+#!/bin/sh
+gnuplot imm_R=3.000

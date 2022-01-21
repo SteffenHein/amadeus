@@ -51,8 +51,8 @@ AMD_RESD=	${HOME}/
 # The C compiler
 #CCOMPILER=	/usr/local/bin/egcc
 #CCOMPILER=	/usr/local/bin/gcc
-#CCOMPILER=	/usr/bin/gcc
-CCOMPILER=	cc
+CCOMPILER=	/usr/bin/gcc
+#CCOMPILER=	cc
 #
 # Compiler options [ please modify ]:
 AMD_CC=${CCOMPILER} -ansi -std=c99 -pedantic -Wall -pipe

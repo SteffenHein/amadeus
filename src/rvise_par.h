@@ -20,7 +20,7 @@
 *  option "parameters" whenever such dependencies exist.                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 18, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 21, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -37,6 +37,12 @@ short rvise_params( void )
    static PARMTRS
      *prp = NULL;
 /*
+   short 
+      ii = null;
+
+   double 
+      dd = 0.;
+
    static char
       ptr[STS_SIZE] = {null};
 */
@@ -50,7 +56,7 @@ short rvise_params( void )
 /*............................................................................*/
 /* number of parameters */
 
-   ( prp->s[null] )  = 16;
+   ( prp->s[null] )  = 18;
 
 /*............................................................................*/
    strcpy( par->stx[0] , "parameters\n" );
@@ -70,37 +76,41 @@ short rvise_params( void )
    cpypar( 6, \
       "Initial_reproduction_factor", "0<R" );
    cpypar( 7, \
-      "Dispersion_coefficient", "0<=D" );
+      "Immunization_ratio", "0<Ir<=1" );
    cpypar( 8, \
-      "Incidence_threshold", "stop_below_that_number_of_cases" );
-   cpypar( 9, \
-      "Immunization_coefficient", "0<C<=1" );
-   cpypar( 10, \
       "Percentage_of_asymptomatic_cases", "0<=P<100" );
-   cpypar( 11, \
+   cpypar( 9, \
       "Percentage_of_lethal_cases", "0<=P<=100" );
-   cpypar( 12, \
+   cpypar( 10, \
       "Mean_transmission_time_[T/days]", "0<=T" );
-   cpypar( 13, \
+   cpypar( 11, \
       "Mean_duration_of_immunity_[T/days]", "0<T" );
-   cpypar( 14, \
+   cpypar( 12, \
       "Cumulative_incidence_over_time_[T/days]", "0<T" );
+   cpypar( 13, \
+      "Incidence_threshold", "stop_below_that_number_of_cases" );
+   cpypar( 14, \
+      "Burst_level_on_average", "0<=Bl" );
    cpypar( 15, \
-      "Time_limit_[T/days]", "0<T" );
+      "If_0<Bl:_Burst_length_on_average_[T/days]", "0<=T" );
    cpypar( 16, \
+      "If_0<Bl:_Burst_every_T-th_day_on_average", "0<=T" );
+   cpypar( 17, \
+      "Time_limit_[T/days]", "0<T" );
+   cpypar( 18, \
       "Time_step_[Dt/days]", "0<Dt" );
 /*............................................................................*/
 
    if ( prp->s[3] < prp->s[2] )
       prp->s[3] = prp->s[2];
 
-   if (  prp->s[7] < 0. )
-      prp->s[7] = 0.;
+   if (  prp->s[13] < 0. )
+      prp->s[13] = 0.;
 
-   if ( 1. < prp->s[9] )
-      prp->s[9] = 1.;
-   else if ( prp->s[9] <= 0. )
-      prp->s[9] = 1.;
+   if ( 1. < prp->s[7] )
+      prp->s[7] = 1.;
+   else if ( prp->s[7] <= 0. )
+      prp->s[7] = 1.;
 
    return null;
 }

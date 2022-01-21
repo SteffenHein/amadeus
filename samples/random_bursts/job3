@@ -1,0 +1,4 @@
+#!/bin/sh
+amadeus -n 3 -f par.init3
+cp 7_days_incidence_R0=3.000 burst_level=5.0
+./gnuplot3

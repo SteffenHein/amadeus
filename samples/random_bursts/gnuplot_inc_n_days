@@ -1,0 +1,2 @@
+#!/bin/sh
+gnuplot n_days_inc_R=3.000
