@@ -42,7 +42,7 @@
 /*----------------------------------------------------------------------------*/
 /* Edit and customize this general configuration header: */
 # include "../CONFIG.H" 
-# include "../src/FPRINTF.M"
+# include "../src/STOREVAL.M"
 # include "../src/EXTREMA.M"
 # include "../src/GNUPLOT.M"
 # include "../src/types.h"

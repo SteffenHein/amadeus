@@ -20,22 +20,22 @@
 *  option "parameters" whenever such dependencies exist.                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 21, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 25, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
-
+# include "../src/PARSTRNGS.M"
+/*----------------------------------------------------------------------------*/
+# undef LINLEN
+   # define LINLEN 56
 /*============================================================================*/
 
-short rvise_params( void )
+short rvise_par( void )
 {
-   AMDSTATE 
-     *state = &amdstat;
-
    static PARMTRS
      *par = &parmtrs;
 
-   static PARMTRS
-     *prp = NULL;
+   static short
+      ll = LINLEN;
 /*
    short 
       ii = null;
@@ -46,71 +46,29 @@ short rvise_params( void )
    static char
       ptr[STS_SIZE] = {null};
 */
+/* prototypes: */
+
+   char
+     *lotos ( long nn, char cc, char *format );
+
    void
-      cpypar( short index, const char *ltext, const char *bracket );
+      cpylne( char lne[], const char *txt, const char *brc, short linlen );
 /*----------------------------------------------------------------------------*/
-/* parameter strings:                                                         */
+   par = &parmtrs;
 
-   ( state->par ) = &parmtrs;
-   prp = ( state->par );
-/*............................................................................*/
-/* number of parameters */
-
-   ( prp->s[null] )  = 18;
-
-/*............................................................................*/
-   strcpy( par->stx[0] , "parameters\n" );
-   strcat( par->stx[0] , "[do_not_change_file_topology:"\
-     "_connected_strings_must_remain_connected]" );
-/*............................................................................*/
-   cpypar( 1, \
-      "Herd_size_[Nhrd]", "0<Nhrd<=Nref" );
-   cpypar( 2, \
-      "Initially_infective_('sick')_members_[Ninf]", "0<Ninf" );
-   cpypar( 3, \
-      "Initially_infected_members_[Nifc]", "Ninf<=Nifc" );
-   cpypar( 4, \
-      "Initially_immune_members", "0<=N" );
-   cpypar( 5, \
-      "Already_deceased_members", "0<N" );
-   cpypar( 6, \
-      "Initial_reproduction_factor", "0<R" );
-   cpypar( 7, \
-      "Immunization_ratio", "0<Ir<=1" );
-   cpypar( 8, \
-      "Percentage_of_asymptomatic_cases", "0<=P<100" );
-   cpypar( 9, \
-      "Percentage_of_lethal_cases", "0<=P<=100" );
-   cpypar( 10, \
-      "Mean_transmission_time_[T/days]", "0<=T" );
-   cpypar( 11, \
-      "Mean_duration_of_immunity_[T/days]", "0<T" );
-   cpypar( 12, \
-      "Cumulative_incidence_over_time_[T/days]", "0<T" );
-   cpypar( 13, \
-      "Incidence_threshold", "stop_below_that_number_of_cases" );
-   cpypar( 14, \
-      "Burst_level_on_average", "0<=Bl" );
-   cpypar( 15, \
-      "If_0<Bl:_Burst_length_on_average_[T/days]", "0<=T" );
-   cpypar( 16, \
-      "If_0<Bl:_Burst_every_T-th_day_on_average", "0<=T" );
-   cpypar( 17, \
-      "Time_limit_[T/days]", "0<T" );
-   cpypar( 18, \
-      "Time_step_[Dt/days]", "0<Dt" );
+   PARSTRNGS( ); /* copy number of parameters and parameter strings */
 /*............................................................................*/
 
-   if ( prp->s[3] < prp->s[2] )
-      prp->s[3] = prp->s[2];
+   if ( par->s[3] < par->s[2] )
+      par->s[3] = par->s[2];
 
-   if (  prp->s[13] < 0. )
-      prp->s[13] = 0.;
+   if (  par->s[13] < 0. )
+      par->s[13] = 0.;
 
-   if ( 1. < prp->s[7] )
-      prp->s[7] = 1.;
-   else if ( prp->s[7] <= 0. )
-      prp->s[7] = 1.;
+   if ( 1. < par->s[7] )
+      par->s[7] = 1.;
+   else if ( par->s[7] <= 0. )
+      par->s[7] = 1.;
 
    return null;
 }

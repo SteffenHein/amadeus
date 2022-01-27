@@ -2,29 +2,43 @@
    # define PARAMETERS 50
 # endif
 /*============================================================================*/
-void init_params( void )
+void init_par( void )
 {
+   static PARMTRS
+     *par = &parmtrs;
+
    short
       ii = null,
       jj = null;
 
-   void deflt_params( void );
-   short rvise_params( void );
+   void deflt_par( void );
+   short rvise_par( void );
 /*----------------------------------------------------------------------------*/
-   if ( ( short ) par->s[null] == null )
+   par = &parmtrs;
+
+   if (( short ) par->s[null] == null )
    {
-/* initialize; enter default parameters: */
+/* reset and enter default parameters: */
 
-      for ( ii=null; ii<=PARAMETERS; ii++ )
-         par->stx[ii] = ( char *) calloc( STS_SIZE, ONE );
+      ii = null;
+      while( ii <= PARAMETERS )
+      {
+/*         par->stx[ii] = ( char *) calloc( STS_SIZE, ONE ); */
+         par->s[ii] = ZERO;
 
-      for ( ii=null; ii<=PARAMETERS; ii++ )
-         for ( jj=null; jj<STS_SIZE; jj++ )
+	 jj = null;
+	 while(jj < STS_SIZE )
+	 {
             par->stx[ii][jj] = ( char ) null;
+            jj++;
+	 };
+	 ii++;
+      };
 /*............................................................................*/
-      deflt_params( );     /*                                                 */
-      rvise_params( );    /*                                                  */
-/*.......................*/
+      deflt_par( );        /*                                                 */
+      rvise_par( );       /*                                                  */
+/*......................*/
    };
    return;
 }
+/*============================================================================*/

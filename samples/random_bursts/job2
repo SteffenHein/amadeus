@@ -1,4 +1,4 @@
 #!/bin/sh
 amadeus -n 2 -f par.init2
-cp 7_days_incidence_R0=3.000 Burst_level=0.5
-./gnuplot2
+cp 7_days_incidence_R0=3.000_job_no_2 burst=0.5
+#./gnuplot2

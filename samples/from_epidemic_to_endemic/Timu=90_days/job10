@@ -1,10 +1,10 @@
 #!/bin/sh
 amadeus -n 10 -f par.init10
-cp 7_days_incidence_R0=1.375 R=1.375_T=90d
-gnuplot gpl_n_days_incidence_job.10
-gnuplot gpl_incidence_job.10
-gnuplot gpl_immunity_job.10
-gnuplot gpl_reproduction_job.10
-gnuplot gpl_infection_job.10
-gnuplot gpl_lethality_job.10
+cp 7_days_incidence_R0=1.375_job_no_10 R=1.375_T=90d
+gnuplot gpl_n_days_incidence_job_no_10
+gnuplot gpl_incidence_job_no_10
+gnuplot gpl_immunity_job_no_10
+gnuplot gpl_reproduction_job_no_10
+gnuplot gpl_infection_job_no_10
+gnuplot gpl_lethality_job_no_10
 #gnuplot covid.compare

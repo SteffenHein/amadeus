@@ -2,7 +2,7 @@
    # define OPERATIONS 20
 # endif
 /*============================================================================*/
-void init_operts( void )
+void init_opr( void )
 {
    static OPERTNS
      *opr = &opertns;
@@ -11,20 +11,31 @@ void init_operts( void )
       ii = null,
       jj = null;
       
-   void deflt_operts( void );
-   short rvise_operts( void );
+   void deflt_opr( void );
+   short rvise_opr( void );
 /*............................................................................*/
+   opr = &opertns;
+
    if ( opr->n[null] == null )
    {
-/* initialize; enter default divisions */
+/* reset operation parameters and enter default divisions */
 
-      for ( ii=null; ii<=OPERATIONS; ii++ )
-         for ( jj=null; jj<STS_SIZE; jj++ )
+      ii = null;
+      while( ii <= OPERATIONS )
+      {
+	 jj = null;
+	 while( jj < STS_SIZE )
+         {
             opr->ntx[ii][jj] = ( char ) null;
+	    ++jj;
+         };
+         ++ii;
+      };
 /*............................................................................*/
-      deflt_operts( );        /* enter default operations                     */
-      rvise_operts( );       /*  revise default parameters                    */
+      deflt_opr( );           /* enter default operations                     */
+      rvise_opr( );          /*  revise default parameters                    */
 /*.........................*/
    };
    return;
 }
+/*============================================================================*/

@@ -1,5 +1,5 @@
 /* [ file: deflt_opr.h ] */
-/* Update: January 10, 2022 */
+/* Update: January 25, 2022 */
 /*----------------------------------------------------------------------------*/
 # ifndef LINLEN
    # define LINLEN 61
@@ -8,9 +8,12 @@
 # include "../src/OPRSTRNGS.M"
 /*============================================================================*/
 
-void deflt_operts( void ) /* default operation modes */
+void deflt_opr( void ) /* default operation modes */
 {
 /* declarations: - */
+
+   static OPERTNS
+     *opr = &opertns;
 
    static short
       ll = LINLEN;
@@ -23,12 +26,9 @@ void deflt_operts( void ) /* default operation modes */
    void
       cpylne( char lne[], const char *txt, const char *brc, short linlen );
 /*----------------------------------------------------------------------------*/
-   OPRSTRNGS( ); /* copy the operation options strings */
-/*............................................................................*/
-/* number of parameters: */
+   opr = &opertns;
 
-   opr->n[0] = 8 ; /* number M of parameters opr->n[1],...,opr->n[M] */
-
+   OPRSTRNGS( ); /* copy number of operation parameters and parameter strings */
 /*............................................................................*/
 /* defaults: structure/reference line; time/frequency domain: */
 

@@ -4,7 +4,7 @@
 *   Defines some often used mathematical constants                             *
 *                                                                              *
 *   (C) SHEIN; Munich, April 2020                             Steffen Hein     *
-*   [ Update: December 19, 2021 ]                          <contact@sfenx.de>  *
+*   [ Update: January 25, 2022 ]                           <contact@sfenx.de>  *
 *                                                                              *
 *******************************************************************************/
 # ifndef __consts_h /* this condition embraces the whole content of this file */
@@ -12,11 +12,11 @@
 # define __consts_h
 /*----------------------------------------------------------------------------*/
 # ifndef HUGE_VALF
-   # define HUGE_VALF ( double )( 1.000e+277 )
+   # define HUGE_VALF (( double ) 1.000e+277 )
 # endif 
 /*----------------------------------------------------------------------------*/
 # ifndef TINY_VALF
-   # define TINY_VALF ( double )( 1.000e-277 )
+   # define TINY_VALF (( double ) 1.000e-277 )
 # endif 
 /*----------------------------------------------------------------------------*/
 /* relative precision: */

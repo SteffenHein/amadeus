@@ -47,7 +47,7 @@
 # endif
 /*----------------------------------------------------------------------------*/
 # ifndef PARAMETERS
-   # define PARAMETERS 100
+   # define PARAMETERS 50
 # endif
 /*----------------------------------------------------------------------------*/
 # ifndef IPT_PARINIT
@@ -84,21 +84,19 @@
 static AMDSTATE amdstat = {null};
 /*----------------------------------------------------------------------------*/
 static OPERTNS opertns = {null};
-static OPERTNS *opr = &opertns;
 /*----------------------------------------------------------------------------*/
 static PARMTRS parmtrs = {null};
-static PARMTRS *par = &parmtrs;
 /*----------------------------------------------------------------------------*/
 static TXCNSL console = {null};
 /*----------------------------------------------------------------------------*/
 static char /* temporary file name */
    tmpfle[STS_SIZE] = {null};
 /*----------------------------------------------------------------------------*/
-# include "../src/inputs.h"
+# include "../src/input.h"
 /*----------------------------------------------------------------------------*/
 # include "../src/PRNTCRS.M"
 /*============================================================================*/
-/* include the function body [ short heliosdrv( int argn, char **args ) ] */
+/* include the function body [ short amddrv( int argn, char **args ) ] */
 # include "./amddrv.h" 
 /*============================================================================*/
 # undef DO_AMDDRV

@@ -487,7 +487,7 @@ int main( int argc, char **argv )
 
    freopen( logname, "a+", logfile );
 
-   fprintf( logfile, "\n%s", ptlne );
+/* fprintf( logfile, "\n%s", ptlne ); */
    fprintf( logfile,
       "\nProgram %s terminated:\n", PROGRAM );
    fprintf( logfile, "%.24s", tmeptr );

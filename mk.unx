@@ -50,9 +50,9 @@ ${AMD_OBJ}dotos.o: ${AMD_MATH}dotos.c
 	${AMD_CC} ${AMD_CFLG} -c ${AMD_MATH}dotos.c \
 -o ${AMD_OBJ}dotos.o
 
-${AMD_OBJ}cpylne.o: ${AMD_TOOLS}cpylne.c
+${AMD_OBJ}cpylne.o: ${AMD_SRC}cpylne.c
 	@echo "===> Building cpylne(*)"
-	${AMD_CC} ${AMD_CFLG} -c ${AMD_TOOLS}cpylne.c \
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}cpylne.c \
 -o ${AMD_OBJ}cpylne.o
 
 ${AMD_OBJ}txcnsl.o: ${AMD_MATH}txcnsl.c

@@ -20,24 +20,18 @@
 *  option "operation" whenever such dependencies exist.                        *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 10, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 24, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
-# ifndef OPR_SSTRNG
-   # include "../src/OPRSTRNGS.M"
-# endif
+# include "../src/OPRSTRNGS.M"
 /*----------------------------------------------------------------------------*/
-# ifndef LINLEN
-   # define LINLEN 58
-# endif
+# undef LINLEN
+   # define LINLEN 61
 /*============================================================================*/
 
-short rvise_operts( void )
+short rvise_opr( void )
 {
 /* declarations: */
-
-   AMDSTATE 
-     *state = &amdstat;
 
    static OPERTNS
      *opr = &opertns;
@@ -54,49 +48,9 @@ short rvise_operts( void )
    void
       cpylne( char lne[], const char *txt, const char *brc, short linlen );
 /*----------------------------------------------------------------------------*/
-   ( state->opr ) = &opertns;
+   opr = &opertns;
 
-   opr->n[null] = 8; /* the number of operation parameters */
-/*............................................................................*/
-/* the operation parameter strings, something like that: */
-
-/* write only connected (!) strings in the string copy function strcpy(*) */
-/* [ 2nd. argument       | ]  */
-/*                       V    */
-/* strcpy( opr->ntx[0], "computation_modes" ); */
-/*............................................................................*/
-
-   cpylne( opr->ntx[1],
-      "maximum_number_of_outer_iterations",
-         "<=100000", ll );
-		  
-   cpylne( opr->ntx[2],
-      "number_of_inner_iterations", 
-         "1-100", ll );
-		  
-   cpylne( opr->ntx[3],
-      "formula_0,1,2",
-         "_0:_input_is_BASIC/_else:_CURRENT/_repr._no.", ll );
-
-   cpylne( opr->ntx[4],
-      "x-scale",
-         "transmission_cycles:0_|_days:1", ll );
-
-   cpylne( opr->ntx[5],
-      "y-scale",
-         "linear:0_|_logarithmic:1", ll );
-
-   cpylne( opr->ntx[6],
-      "y-units",
-         "herd_size_normalized:_0,2|conventional_units:_1,3", ll );
-
-   cpylne( opr->ntx[7],
-      "[0]_1:_[don't]_write_titels_on_graphics",
-         "0/1", ll );
-
-   cpylne( opr->ntx[8],
-      "[0]_1:_[don't]_stop_when_no_sick_individuals_remain",
-         "0/1", ll );
+   OPRSTRNGS( ); /* copy number of operation parameters and parameter strings */
 /*............................................................................*/
    if ( 100000 < opr->n[1] )
       opr->n[1] = 100000;
@@ -155,5 +109,6 @@ short rvise_operts( void )
 
    return null;
 }
+# undef LINLEN
 /*============================================================================*/
 /*********************** end of function rvise_opr(*) *************************/

@@ -1,9 +1,9 @@
 #!/bin/sh
 amadeus -n 5 -f par.init5
-cp 7_days_incidence_R0=2.500 R=2.500_T=90d
-gnuplot gpl_n_days_incidence_job.5
-gnuplot gpl_incidence_job.5
-gnuplot gpl_immunity_job.5
-gnuplot gpl_reproduction_job.5
-gnuplot gpl_infection_job.5
-gnuplot gpl_lethality_job.5
+cp 7_days_incidence_R0=2.500_job_no_5 R=2.500_T=90d
+gnuplot gpl_n_days_incidence_job_no_5
+gnuplot gpl_incidence_job_no_5
+gnuplot gpl_immunity_job_no_5
+gnuplot gpl_reproduction_job_no_5
+gnuplot gpl_infection_job_no_5
+gnuplot gpl_lethality_job_no_5

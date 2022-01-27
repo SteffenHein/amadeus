@@ -1,5 +1,5 @@
 [file: amadeus-v1.0r1.md5]
-created: Fri Jan 21 22:18:08 2022
+created: Thu Jan 27 20:42:47 2022
 -------------------------------------------------------------------------------
 MD5( .git ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( .gitignore ) = 345f5bed3b3787bb8e517ed62ded3507
@@ -11,19 +11,18 @@ MD5( README ) = 4dc5344479a351537bc10046db27aa29
 MD5( SETUP ) = 174f54e8b9041ac6ec177ad55a919c64
 MD5( amd.log ) = 65ed04680a43f24d6c3f55964a3bff02
 MD5( bin ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( cc-messages ) = 4ae0b05eb012377d6d07c2b810d1820f
+MD5( cc-messages ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( default ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( doc ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( makefile.gnu ) = 6c7287c9310098dd8bac4c969628192c
 MD5( makefile.unx ) = a83e0513bad3c17c09b1dd901c5ab92f
 MD5( math ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( mk.gnu ) = 78cd5e7c71dc930f2539381efb9e725f
-MD5( mk.unx ) = 809f27177b73ef7699687dc12edf576a
+MD5( mk.gnu ) = fa46482f00b1a955405a050f8d36e2c3
+MD5( mk.unx ) = cda97d963b726cf3009fae57454d9818
 MD5( objects ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( ports ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( prv ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( samples ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( scripts ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( src ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( tools ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( work ) = d41d8cd98f00b204e9800998ecf8427e

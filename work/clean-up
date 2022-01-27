@@ -1,0 +1,8 @@
+#!/bin/sh
+rm *_R0=*
+rm *_R=*
+rm gpl_*
+rm opr.log*
+rm par.log*
+rm parameters*
+rm amd.log

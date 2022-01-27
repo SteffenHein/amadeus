@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 20, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 27, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -38,17 +38,13 @@ typedef struct
 /* The type definition structure of the parameter transfer functions          */
 /*----------------------------------------------------------------------------*/
 # ifndef PARAMETERS
-   # define PARAMETERS 100
+   # define PARAMETERS 50
 # endif
 /*----------------------------------------------------------------------------*/
 # define TP_PARMTRS
 /*----------------------------------------------------------------------------*/
 typedef struct
 {
-/*
-   static struct PARMTRS
-     *ppt;
-*/   
    char 
       xscale,
       yscale,
@@ -58,8 +54,7 @@ typedef struct
       rtn;
 
    char
-     *ntx[PARAMETERS+ONE],
-     *stx[PARAMETERS+ONE];
+     stx[PARAMETERS+ONE][STS_SIZE];
 
    double
       s[100+ONE];
@@ -141,7 +136,7 @@ typedef struct
       maxrpd;    /* maximum reproduction number */
 
    double
-      dudt[100000+ONE];
+      dhdt[100000+ONE];
 
 } PARMTRS;
 /*----------------------------------------------------------------------------*/
@@ -170,15 +165,17 @@ typedef struct
 
 } DSPLAY;
 /*----------------------------------------------------------------------------*/
-# define TP_TXCNSL 1
+/* The type definition structure of the text console function txcnsl(*)       */
 
+# ifndef TP_TXCNSL
+    # define TP_TXCNSL 1
+# endif
+/*----------------------------------------------------------------------------*/
 # define CNS_ITEMS 10 /* maximum number of menu items                         */
 # define CNS_LNLEN 79 /* number of characters in menu line                    */
 # define CNS_LNINT  1 /* number of characters in menu line                    */
 # define CNS_POSIT 67 /* position of menu items [labels] in line              */
 /*----------------------------------------------------------------------------*/
-/* The type definition structure of the text console function txcnsl(*)       */
-
 typedef struct
 {
    signed char 

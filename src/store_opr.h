@@ -16,7 +16,7 @@
 # include "./STOREOPR.M"
 /*============================================================================*/
 
-short store_operts( char *filename, char mode )
+short store_opr( char *filename, char mode )
 {
 /* declarations: */
 
@@ -51,6 +51,9 @@ short store_operts( char *filename, char mode )
    char
       *lotos( long mm, char cc, char *format );
 /*----------------------------------------------------------------------------*/
+   state = &amdstat;
+   opr = &opertns;
+
    strcpy( fleptr, filename );
    operatns = fopen( fleptr, "w+" );  /* save actual options on log file */
 
@@ -104,4 +107,4 @@ short store_operts( char *filename, char mode )
    return null;
 }
 /*============================================================================*/
-/********************* end of function store_operts(*) ************************/
+/*********************** end of function store_opr(*) ******i******************/

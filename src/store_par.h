@@ -16,7 +16,7 @@
 
 /*============================================================================*/
 
-short store_params( char *filename, char mode )
+short store_par( char *filename, char mode )
 {
 /* declarations: */
 
@@ -56,6 +56,10 @@ short store_params( char *filename, char mode )
    char
       *lotos( long mm, char cc, char *format );
 /*----------------------------------------------------------------------------*/
+   state = &amdstat;
+   par = &parmtrs;
+   opr = &opertns;
+   
    strcpy( fleptr, filename );
    paramtrs = fopen( fleptr, "w+" );  /* save coordinates on log file */
 
@@ -123,4 +127,4 @@ short store_params( char *filename, char mode )
    return null;
 }
 /*============================================================================*/
-/********************* end of function store_params(*) ************************/
+/*********************** end of function store_par(*) *************************/

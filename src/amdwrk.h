@@ -46,9 +46,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    void 
       cpylne( char txlne[], const char *ltext, const char *bracket, short ll );
 /*............................................................................*/
+/*
    AMDSTATE
      *stp = state;
-
+*/
    static PARMTRS
      *ppt = null;
 
@@ -115,11 +116,12 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       tntb = ZERO,     
       scpt0 = ZERO,
       lnrpd = ZERO,   /* log( Repr(t)/Ttrm ) */
-      ndays_cic_upd = ZERO,
       suscpt_upd = ZERO,   /* 1. - h(t) */
-      infected_upd = ZERO,
+      incdnc_upd = ZERO,
+      incidc_upd = ZERO,
+      infctd_upd = ZERO,
+      cmlinc_upd = ZERO,
       immune_upd = ZERO, /* updated immunity, inner loop */
-      incidence_upd = ZERO,
       lethal_upd = ZERO,
       reprod_upd = ZERO, /* updated reproduction number, inner loop */
       integral_inc = ZERO;
@@ -127,9 +129,9 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*----------------------------- end declarations -----------------------------*/
 /* assign structure pointers */
 
-   stp = state;
-   ppt = stp->par;
-   opt = stp->opr;
+ /*  stp = state; */
+   ppt = state->par;
+   opt = state->opr;
 /*............................................................................*/
    strcat( parmtr_fle, "parameters" );
 
@@ -142,7 +144,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* append job number to filenames */
 
-   strcpy( longstr, "_job." );
+   strcpy( longstr, "_job_no_" );
    strcat( longstr, lotos(( state->job ), null, " " ));
    strcat( parmtr_fle, longstr );
 
@@ -215,6 +217,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "Time_limit_[T/days]", "0<T" );
    cpypar( 18, \
       "Time_step_[Dt/days]", "0<Dt" );
+*/
 /*............................................................................*/
 /* copy the input parameters */
 
@@ -422,11 +425,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fclose( fleptr_par );
 /*............................................................................*/
    strcpy( longstr, "R0" );
-   
-/* strcat( longstr, lotos(( state->job ), null, " " )); */
-
    strcat( longstr, "=" );
    strcat( longstr, dotos( ppt->Repr, 4, "f" ));
+   strcat( longstr, "_job_no_" );
+   strcat( longstr, lotos(( state->job ), null, " " ));
 
    strcat( flname_cic, lotos(( short ) ppt->Tcic, null, " " ));
    strcat( flname_cic, "_days_incidence_" );
@@ -545,8 +547,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* start outer loop */
 
-   incidence_upd = ppt->rinf;
-   infected_upd = ppt->rifc;
+   incdnc_upd = ppt->rinf;
+   infctd_upd = ppt->rifc;
    immune_upd = ppt->rimn;
    lethal_upd = ppt->rlty;
 
@@ -559,30 +561,31 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       reprod_upd = ppt->repr;
 
    lnrpd= log( reprod_upd );
-   ppt->dudt[null] = incidence_upd;
+   ppt->dhdt[null] = incdnc_upd;
    
    ii = null;
    while( ii < ppt->mxictm )
    {
       ii++;
-      ppt->dudt[ii] = ZERO;
+      ppt->dhdt[ii] = ZERO;
    };
 
-   kk = null;
+   rnd = 1.;
    krd = ppt->kbst;
-   ppt->tt = ZERO;
    integral_inc = ZERO;
 /*...........................................................................*/
 /* here start the iterations */
 /* outer loop */
 
+   kk = null;
+   ppt->tt = ZERO;
    ppt->nout = null;
    while ( ppt->nout < ppt->maxout )
    {
 /*...........................................................................*/
 /* store values */
 
-      FPRINTF(1);
+      STOREVAL(1);
 /*...........................................................................*/
 /* compute extrema in outer loop: set EXTREMA(1)  */
 
@@ -603,13 +606,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
          if ( ppt->nmstop == ONE ) /* stop if no sick members remain */
 	 {
-            if ((( incidence_upd*reprod_upd ) < ppt->rthr )
+            if ((( incdnc_upd*reprod_upd ) < ppt->rthr )
 	       || ( suscpt_upd <= ppt->rthr ))
             { 
 /* [ no new cases or group immunity attained ] */
 
-	       ppt->dudt[null] = ZERO;
+	       ppt->dhdt[null] = ZERO;
        	       ppt->timmun = ppt->tt;
+	       incidc_upd = ZERO;
 	       ppt->kend = kk;
 
                goto finish;
@@ -627,7 +631,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
 	       reprod_upd = suscpt_upd*ppt->repr;
                lnrpd = log( reprod_upd );
-               incidence_upd *= \
+               incdnc_upd *= \
                   exp( ppt->dt*lnrpd );
 
               break;
@@ -638,22 +642,22 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
 	       reprod_upd = suscpt_upd*ppt->repr;
                lnrpd = log( reprod_upd );
-               incidence_upd *= \
+               incdnc_upd *= \
                   exp( ppt->dt*lnrpd );
 
               break;
 /*...........................................................................*/
               case 2: /* R(t) = R(0) [ constant ] */
 
-               incidence_upd *= exp( ppt->dt*lnrpd );
+               incdnc_upd *= exp( ppt->dt*lnrpd );
 		  
               break;
             };
          }
 	 else /* suscpt_upd <= ppt->rthr */
-            incidence_upd = ZERO;
+            incdnc_upd = ZERO;
 /*...........................................................................*/
-         ppt->dudt[null] = incidence_upd;
+         incidc_upd = incdnc_upd;
 
          if ( ZERO < ppt->Lvlb )
          {
@@ -661,57 +665,59 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 	    {
                if ( fmod( kk, krd ) < 0.1 )
 	       {
-                  rnd = ( double ) rand( );
-                  rnd /= RAND_MAX; 
-	          tntb = ppt->tt + 2*rnd*ppt->tmeb;
-
                   rnd = ( double ) rand( ); 
                   rnd /= RAND_MAX; 
 	          krd = 1 + ( long ) 2*rnd*ppt->kbst;
+
+                  rnd = ( double ) rand( );
+                  rnd /= RAND_MAX; 
+	          tntb = ppt->tt + 2.*rnd*ppt->tmeb;
 
                   rnd = ( double ) rand( ); 
                   rnd /= RAND_MAX; 
                   rnd = 1.+ 2.*rnd*ppt->Lvlb;
                };
             }; 
-            ppt->dudt[null] *= rnd;
+            incidc_upd *= rnd;
          }; 
 /*...........................................................................*/
 /* integrate incidence */
 
-         integral_inc += ( ppt->dt*ppt->dudt[null] );
+         integral_inc += ( ppt->dt*incidc_upd );
 
 /*...........................................................................*/
 /* update herd infection, immunity and incidence */
 
-         infected_upd +=\
-            ( ppt->dt*ppt->wght_ifc*ppt->dudt[null] );
+         infctd_upd +=\
+            ( ppt->dt*ppt->wght_ifc*incidc_upd );
 
-         if ( infected_upd > 1. )
-	    infected_upd = 1.;
+         if ( infctd_upd > 1. )
+	    infctd_upd = 1.;
 
          lethal_upd +=\
-            ( ppt->dt*ppt->wght_lty*ppt->dudt[null] );
+            ( ppt->dt*ppt->wght_lty*incidc_upd );
 /*...........................................................................*/
 /* the immune fraction */
 	 
          immune_upd *= ( exp( - ppt->dt / ppt->timn ));
          immune_upd +=\
-            ( ppt->dt*ppt->wght_imm*ppt->dudt[null] );
+            ( ppt->dt*ppt->wght_imm*incidc_upd );
 
 /*...........................................................................*/
 /* mean n days incidence */
 /* and shift dudt from k to k+1 */    
 
-         ndays_cic_upd = ZERO;
-         ii = ppt->mxictm;
+
+         ppt->dhdt[null] = incidc_upd;
+	 
+         cmlinc_upd = ZERO;
+         ii = ppt->kcic;
 	 while( null < ii )
          {
-            ppt->dudt[ii] = ppt->dudt[ii-ONE];
-	    
-	    if ( ii < ppt->kcic )
-               ndays_cic_upd += \
-                  ( ppt->dt*ppt->dudt[ii] );
+            ppt->dhdt[ii] = ppt->dhdt[ii-ONE];
+
+            cmlinc_upd += \
+               ( ppt->dt*ppt->dhdt[ii] );
 	    ii--;
          };
 

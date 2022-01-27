@@ -1,13 +1,17 @@
 /* [ file: txctyp.h ] */
-/* Update: December 19, 2021 */
+/* Update: January 27, 2022 */
+/*----------------------------------------------------------------------------*/
+/* The structure type header of text console function txcnsl(*) */
+
+# ifndef TP_TXCNSL
+    # define TP_TXCNSL 1
+# endif
 /*----------------------------------------------------------------------------*/
 # define CNS_ITEMS 10 /* maximum number of menu items                         */
 # define CNS_LNLEN 79 /* number of characters in menu line                    */
 # define CNS_LNINT  1 /* number of characters in menu line                    */
 # define CNS_POSIT 67 /* position of menu items [labels] in line              */
 /*----------------------------------------------------------------------------*/
-/* structure type definition header of text console input function txcnsl(*)  */
-
 typedef struct
 {
    signed char 

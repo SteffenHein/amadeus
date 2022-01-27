@@ -51,7 +51,6 @@ $dirtree[ $i++ ] = $distname . "/prv";
 $dirtree[ $i++ ] = $distname . "/samples";
 $dirtree[ $i++ ] = $distname . "/scripts";
 $dirtree[ $i++ ] = $distname . "/src";
-$dirtree[ $i++ ] = $distname . "/tools";
 $dirtree[ $i++ ] = $distname . "/work";
 
 #------------------------------------------------------------------------------#
@@ -72,7 +71,6 @@ $tgzlist[ $i++ ] = $distname . "/prv";
 $tgzlist[ $i++ ] = $distname . "/samples";
 $tgzlist[ $i++ ] = $distname . "/scripts";
 $tgzlist[ $i++ ] = $distname . "/src";
-$tgzlist[ $i++ ] = $distname . "/tools";
 $tgzlist[ $i++ ] = $distname . "/work";
 $tgzlist[ $i++ ] = $distname . "/Makefile";
 $tgzlist[ $i++ ] = $distname . "/makefile.gnu";
@@ -97,7 +95,6 @@ $ziplist[ $i++ ] = $distname . "/prv";
 $ziplist[ $i++ ] = $distname . "/samples";
 $ziplist[ $i++ ] = $distname . "/scripts";
 $ziplist[ $i++ ] = $distname . "/src";
-$ziplist[ $i++ ] = $distname . "/tools";
 $ziplist[ $i++ ] = $distname . "/work";
 $ziplist[ $i++ ] = $distname . "/Makefile";
 $ziplist[ $i++ ] = $distname . "/makefile.gnu";

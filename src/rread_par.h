@@ -6,17 +6,17 @@
 *  A plain numerical Model Approximating the Development of Epidemics          *
 *  Under varied conditions if Spread                                           *
 *                                                                              *
-*  Function rread_par.h(*)                                                     *
+*  Function rread_par(*)                                                       *
 *  Reads parameter file [ type par.log<N> ]                                    *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 09, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 25, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
 /*============================================================================*/
 
-short rread_params( char *filename, char mode )
+short rread_par( char *filename, char mode )
 {
 /* declarations: */
 
@@ -41,9 +41,9 @@ short rread_params( char *filename, char mode )
 
    static const char 
      *scformat = "%s";
-
 /*----------------------------------------------------------------------------*/
-   ( state->par ) = &parmtrs;
+   state = &amdstat;
+   par = &parmtrs;
 
    strcpy( fleptr, filename );
 

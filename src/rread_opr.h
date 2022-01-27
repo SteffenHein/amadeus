@@ -6,17 +6,17 @@
 *  A plain numerical Model Approximating the Development of Epidemics          *
 *  Under varied conditions if Spread                                           *
 *                                                                              *
-*  Function rread_opr.h(*)                                                     *
+*  Function rread_opr(*)                                                       *
 *  Reads operation modes from a file [ type opr.log<N> ]                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 10, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 25, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
 /*============================================================================*/
 
-short rread_operts( char *filename, char mode )
+short rread_opr( char *filename, char mode )
 {
 /* declarations: */
 
@@ -42,7 +42,8 @@ short rread_operts( char *filename, char mode )
    static const char
      *scformat = "%80s";
 /*----------------------------------------------------------------------------*/
-   ( state->opr ) = &opertns;
+   state = &amdstat;
+   opr = &opertns; 
 
    strcpy( fleptr, filename );
 

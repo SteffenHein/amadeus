@@ -1,67 +1,29 @@
 /* [ file: deflt_par.h ] */
-/* Update: January 21, 2022 */
+/* Update: January 25, 2022 */
 /*----------------------------------------------------------------------------*/
 # ifndef LINLEN
    # define LINLEN 61
 # endif
+/*----------------------------------------------------------------------------*/
+# include "../src/PARSTRNGS.M"
 /*============================================================================*/
 
-void deflt_params( void ) /* default model parameters */
+void deflt_par( void ) /* default model parameters */
 {
-   void
-      cpypar( short index, const char *ltext, const char *bracket );
-/*----------------------------------------------------------------------------*/
-/* parameter strings: */
-/* number of parameters */
-   
-   par->s[0]  = 18;
+   static PARMTRS
+     *par = &parmtrs;
 
-/* write only connected (!) strings into the string copy function strcpy(*) */
-/* [ 2nd. argument       | ] */
-/*                       V   */
+   static short
+      ll = LINLEN;
+
+   void
+      cpylne( char lne[], const char *txt, const char *brc, short linlen );
+/*----------------------------------------------------------------------------*/
+   par = &parmtrs;
+
+   PARSTRNGS( );  /* copy number of parameters and parameter strings */
 /*............................................................................*/
-   strcpy( par->stx[0], "parameters\n" );
-   strcat( par->stx[0], "[do_not_change_file_topology:"\
-     "_connected_strings_must_remain_connected!]" );
-/*............................................................................*/
-   cpypar( 1, \
-      "Herd_size_[Nhrd]", "0<Nhrd<=Nref" );
-   cpypar( 2, \
-      "Initially_infective_('sick')_members_[Ninf]", "0<Ninf" );
-   cpypar( 3, \
-      "Initially_infected_members_[Nifc]", "Ninf<=Nifc" );
-   cpypar( 4, \
-      "Initially_immune_members", "0<=N" );
-   cpypar( 5, \
-      "Already_deceased_members", "0<N" );
-   cpypar( 6, \
-      "Initial_reproduction_factor", "0<R" );
-   cpypar( 7, \
-      "Immunization_ratio", "0<Ir<=1" );
-   cpypar( 8, \
-      "Percentage_of_asymptomatic_cases", "0<=P<100" );
-   cpypar( 9, \
-      "Percentage_of_lethal_cases", "0<=P<=100" );
-   cpypar( 10, \
-      "Mean_transmission_time_[T/days]", "0<=T" );
-   cpypar( 11, \
-      "Mean_duration_of_immunity_[T/days]", "0<T" );
-   cpypar( 12, \
-      "Cumulative_incidence_over_time_[T/days]", "0<T" );
-   cpypar( 13, \
-      "Incidence_threshold", "stop_below_that_number_of_cases" );
-   cpypar( 14, \
-      "Burst_level_on_average", "0<=Bl" );
-   cpypar( 15, \
-      "If_0<Bl:_Burst_length_on_average_[T/days]", "0<=T" );
-   cpypar( 16, \
-      "If_0<Bl:_Burst_every_T-th_day_on_average", "0<=T" );
-   cpypar( 17, \
-      "Time_limit_[T/days]", "0<T" );
-   cpypar( 18, \
-      "Time_step_[Dt/days]", "0<Dt" );
-/*............................................................................*/
-/* parameters: */
+/* default parameters: */
                                                                                
    par->s[1]  = 1.000e+05; /* Nhrd; herd size [(real) number of members]  */
    par->s[2]  = 1.000e+00; /* Ninf; Initially transmissive members [number] */ 

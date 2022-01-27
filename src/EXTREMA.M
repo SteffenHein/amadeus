@@ -3,23 +3,23 @@
 { \
    if ( XX == 1 ) \
    { \
-      if ( ppt->maxinc < ppt->dudt[null] ) \
+      if ( ppt->maxinc < incidc_upd ) \
       { \
-         ppt->maxinc = ppt->dudt[null]; \
+         ppt->maxinc = incidc_upd; \
          ppt->tmxinc = ppt->tt; \
       }; \
  \
-      if ( ppt->dudt[null] < ppt->mininc ) \
-         ppt->mininc = ppt->dudt[null]; \
+      if ( incidc_upd < ppt->mininc ) \
+         ppt->mininc = incidc_upd; \
  \
-      if ( ppt->maxcic < ndays_cic_upd ) \
+      if ( ppt->maxcic < cmlinc_upd ) \
       { \
-         ppt->maxcic = ndays_cic_upd; \
+         ppt->maxcic = cmlinc_upd; \
          ppt->tmxcic = ppt->tt; \
       }; \
  \
-      if ( ndays_cic_upd < ppt->mincic ) \
-         ppt->mincic = ndays_cic_upd; \
+      if ( cmlinc_upd < ppt->mincic ) \
+         ppt->mincic = cmlinc_upd; \
  \
       if ( ppt->maximn < immune_upd ) \
       { \
@@ -36,9 +36,9 @@
       if ( ppt->minrpd > reprod_upd ) \
          ppt->minrpd = reprod_upd; \
  \
-      if ( ppt->maxifc < infected_upd ) \
+      if ( ppt->maxifc < infctd_upd ) \
       { \
-         ppt->maxifc = infected_upd; \
+         ppt->maxifc = infctd_upd; \
          ppt->tmxifc = ppt->tt; \
       }; \
  \
