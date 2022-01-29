@@ -182,7 +182,6 @@ short input ( char *option )
    static short
       ii = null,
       ind = null,
-      item = null,
       parameters = null;
 
    static char 
@@ -349,32 +348,30 @@ short input ( char *option )
 # endif
 /*............................................................................*/
       cns = txcnsl( null ); /* clear text console */
-
-  /*  item = items1; */
-      item = 3;
       cns->clscr = 1; /* 0 / N: clear screen / scroll N lines */
+      cns->dfopt = 3;
 
    opr_menu:
 
-      ( cns->items ) = items1;
-      ( cns->dfopt ) = item;
-      ( cns->dflnf ) = item; /* set line feed before that option line */
+      cns->items = 7;
+      cns->dflnf = cns->dfopt; /* set line feed before defaut line */
 
       nseconds = time( timer );
       strcpy( timeptr, ctime( &nseconds ));
-      strcpy(( cns->title ), "Program AMADEUS: " );
-      strncat(( cns->title ), timeptr, 24 );
+      strcpy( cns->title, "Program AMADEUS: " );
+      strncat( cns->title, timeptr, 24 );
 
-      strcpy(( cns->envmt ), "INPUT" );
-      strcpy(( cns->cmmnt ), "Select [ enter number ]" );
-      strcpy(( cns->tasks ), "OPERATIONS" );
+      strcpy( cns->envmt, "INPUT" );
+      strcpy( cns->cmmnt, "Select [ enter number ]" );
+      strcpy( cns->tasks, "OPERATIONS" );
 
-      strcpy(( cns->mline[1] ), "* Display presently defined operation modes" );
-      strcpy(( cns->mline[2] ), "* Enter new operation modes from file" );
-      strcpy(( cns->mline[3] ), "* Edit [ and evtly. modify ] operation modes" );
-      strcpy(( cns->mline[4] ), "* Reload default operation modes" );
-      strcpy(( cns->mline[5] ), "* Print operation modes" );
-      strcpy(( cns->mline[6] ), "* Continue" );
+      strcpy( cns->mline[1], "* Display presently defined operation modes" );
+      strcpy( cns->mline[2], "* Enter new operation modes from file" );
+      strcpy( cns->mline[3], "* Edit [ and evtly. modify ] operation modes" );
+      strcpy( cns->mline[4], "* Reload default operation modes" );
+      strcpy( cns->mline[5], "* Print operation modes" );
+      strcpy( cns->mline[6], "* Start computation" );
+      strcpy( cns->mline[7], "* Continue" );
 
       strcpy(( cns->escpe ), "End of program / escape" );
 
@@ -387,14 +384,27 @@ short input ( char *option )
       cns = txcnsl( cns );   /* call the menu building function               */
 /*.........................*/
 
-      item = ( cns->option );
-
-/*............................................................................*/
-      switch ( item )
+      switch ( cns->option )
       {
         default: /* continue program [ e.g. item = items1 ] */
-         break;
+	case 7:
 
+         remove( tmpfle );
+         PRBLDCLR( "" );
+         fprintf( stdout, "\r%*s", 79, "INPUT" );
+         PRNORMAL( "" );
+        break;
+/*............................................................................*/
+        case 0: /* escape */
+         return null;
+	break;
+/*............................................................................*/
+        case 'y':
+        case 'Y':
+
+         return -ONE;
+        break;
+/*............................................................................*/
         case 1:  /* display the actual configuration [ on screen ] */
 /*............................................................................*/
 # if defined ( AMD_PAGER )
@@ -418,12 +428,12 @@ short input ( char *option )
          };
 # endif
 /*............................................................................*/
-         item = items1;
+         cns->option = 3;
          cns->clscr = 0; /* 0 / N: clear screen / scroll N lines */
 	 
         goto opr_menu;
-         break;
-
+        break;
+/*............................................................................*/
         case 2: /* enter another configuration from file */
 
          printf( "\n Please enter filename [ Continue/"
@@ -446,12 +456,12 @@ short input ( char *option )
          rvise_opr( );                 /*  revise/reconfigure ...             */
          store_opr( tmpfle, 't' );    /*   restore on tmp file                */
 /*..................................*/
-         item = items1;
-         ( cns->clscr ) = 1; /* 0 / N: clear screen / scroll N lines */
+         cns->dfopt = 3; 
+         cns->clscr = 1; /* 0 / N: clear screen / scroll N lines */
 
-         goto opr_menu;
-         break;
-
+        goto opr_menu;
+        break;
+/*............................................................................*/
         case 3:  /* edit and/or modify the actual configuration */
 /*............................................................................*/
 # if defined ( AMD_EDITOR )
@@ -468,12 +478,12 @@ short input ( char *option )
 	 printf( "\n No editor defined for this option !" );
 # endif
 /*............................................................................*/
-	 item = items1;
-	 ( cns->clscr ) = 1; /* 0 / N: clear screen / scroll N lines */
+         cns->dfopt = 3; 
+	 cns->clscr = 1; /* 0 / N: clear screen / scroll N lines */
 
-         goto opr_menu;
-         break;
-
+        goto opr_menu;
+        break;
+/*............................................................................*/
         case 4:  /* reload the default configuration */
 
 /*......................................*/
@@ -481,12 +491,12 @@ short input ( char *option )
          rvise_opr( );                 /*  revise/reconfigure ...             */
          store_opr( tmpfle, 't' );    /*   store on tmp file                  */
 /*..................................*/
-         item = items1;
-         ( cns->clscr ) = 1; /* 0 / N: clear screen / scroll N lines */
+         cns->dfopt = 3; 
+         cns->clscr = 1; /* 0 / N: clear screen / scroll N lines */
 	 
-         goto opr_menu;
-         break;
-
+        goto opr_menu;
+        break;
+/*............................................................................*/
         case 5:
 /*............................................................................*/
 # if defined ( AMD_PRINTER )
@@ -498,23 +508,24 @@ short input ( char *option )
          system ( ptr );               /* print temporary operations file */
 /*...................................*/
 # else
-         printf( "\n No printer is defined for this option !" );
+         fprintf( stdout,
+	    "\n No printer defined in file \"CONFIG.H\" !" );
 # endif
 /*............................................................................*/
-         item = items1;
-         ( cns->clscr ) = 1; /* 0 / N: clear screen / scroll N lines */
+         cns->dfopt = 3; 
+         cns->clscr = 1; /* 0 / N: clear screen / scroll N lines */
 
-         goto opr_menu;
-         break;
-
-        case 0:  /* end of program / escape */
+        goto opr_menu;
+        break;
+/*............................................................................*/
+        case 6:  /* start computation */
 
          remove( tmpfle );
 
          PRBLDCLR( "" );
-         printf( "\r%*s", 79, "INPUT" );
          PRNORMAL( "" );
-         return -ONE;
+
+        return ONE;
         break;
       }; /* end switch(*) */
 /*............................................................................*/
@@ -594,34 +605,32 @@ short input ( char *option )
 # endif
 /*............................................................................*/
       cns = txcnsl( null ); /* clear text console */
-      
-      item = items2;
-      item = 3;
       cns->clscr = 1; /* 0 / N: clear screen / scroll N lines */
+      cns->dfopt = 3;
 
    par_menu:
 
-      ( cns->items ) = items2;
-      ( cns->dfopt ) = item;
-      ( cns->dflnf ) = item; /* set line feed before that option line */
+      cns->items = 7;
+      cns->dflnf = cns->dfopt; /* set line feed before that option line */
 
       nseconds = time( timer );
       strcpy( timeptr, ctime( &nseconds ));
-      strcpy(( cns->title ), "Program AMADEUS: " );
-      strncat(( cns->title ), timeptr, 24 );
+      strcpy( cns->title, "Program AMADEUS: " );
+      strncat( cns->title, timeptr, 24 );
 
-      strcpy(( cns->envmt ), "INPUT" );
-      strcpy(( cns->cmmnt ), "Select [ enter number ]" );
-      strcpy(( cns->tasks ), "PARAMETERS" );
+      strcpy( cns->envmt, "INPUT" );
+      strcpy( cns->cmmnt, "Select [ enter number ]" );
+      strcpy( cns->tasks, "PARAMETERS" );
 
-      strcpy(( cns->mline[1] ), "* Display the presently charged parameters" );
-      strcpy(( cns->mline[2] ), "* Enter new parameters from file" );
-      strcpy(( cns->mline[3] ), "* Edit [ and evtly. modify ] the parameters" );
-      strcpy(( cns->mline[4] ), "* Reload the default parameters" );
-      strcpy(( cns->mline[5] ), "* Print the parameters" );
-      strcpy(( cns->mline[6] ), "* Continue" );
+      strcpy( cns->mline[1], "* Display the presently charged parameters" );
+      strcpy( cns->mline[2], "* Enter new parameters from file" );
+      strcpy( cns->mline[3], "* Edit [ and evtly. modify ] the parameters" );
+      strcpy( cns->mline[4], "* Reload the default parameters" );
+      strcpy( cns->mline[5], "* Print the parameters" );
+      strcpy( cns->mline[6], "* Start computation" );
+      strcpy( cns->mline[7], "* Continue" );
 
-      strcpy(( cns->escpe ), "End of program / escape" );
+      strcpy( cns->escpe, "End of program / escape" );
 
       if ( state->job == null )
          strcpy( cns->cnfrm, "Nothing done! Do you really want to quit ?" );
@@ -632,15 +641,29 @@ short input ( char *option )
       cns = txcnsl( cns );   /* call the menu building function               */
 /*.........................*/
 
-      item = ( cns->option );
-
-/*............................................................................*/
-      
-      switch ( item )
+      switch ( cns->option )
       {
         default: /* continue program [ e.g item = items2 ] */
-        break;
+	case 7:
 
+         PRBLDCLR( "" );
+         fprintf( stdout, "\r%*s", 79, "INPUT" );
+         PRNORMAL( "" );
+
+        return ONE;
+        break;
+/*............................................................................*/
+        case 0:  /* escape */
+	 return null;
+
+        break;
+/*............................................................................*/
+        case 'y':
+        case 'Y':
+
+        return -ONE;
+        break;
+/*............................................................................*/
         case 1:  /* display the actual configuration [ on screen ] */
 /*............................................................................*/
 # if defined ( AMD_PAGER )
@@ -665,12 +688,12 @@ short input ( char *option )
          };
 # endif
 /*............................................................................*/
-         item = items2;
          cns->clscr = 0; /* 0 / N: clear screen / scroll N lines */
+         cns->dfopt = 3;
 
         goto par_menu;
-         break;
-
+        break;
+/*............................................................................*/
         case 2: /* enter another configuration from file */
 
          printf( "\n Please enter filename [ Continue/"
@@ -693,12 +716,12 @@ short input ( char *option )
          rvise_par( );                  /*  revise/reconfigure ...            */
          store_par( tmpfle, 't' );     /*   restore parameters on tmp file    */
 /*...................................*/
-         item = items2;
-         ( cns->clscr ) = 1; /* 0 / N: clear screen / scroll N lines */
+         cns->clscr = 1; /* 0 / N: clear screen / scroll N lines */
+         cns->dfopt = 3;
 
-         goto par_menu;
-         break;
-
+        goto par_menu;
+        break;
+/*............................................................................*/
         case 3:  /* edit and/or modify the actual configuration */
 /*............................................................................*/
 # if defined ( AMD_EDITOR )
@@ -715,24 +738,24 @@ short input ( char *option )
          printf( "\n No editor defined for this option !" );
 # endif
 /*............................................................................*/
-         item = items2;
-         ( cns->clscr ) = 1; /* 0 / N: clear screen / scroll N lines */
+         cns->clscr = 1; /* 0 / N: clear screen / scroll N lines */
+         cns->dfopt = 7;
 
         goto par_menu;
-         break;
-
+        break;
+/*............................................................................*/
         case 4:  /* reload the default configuration */
 /*............................................................................*/
          deflt_par( );                  /* enter default parameters           */
          rvise_par( );                 /*  revise/reconfigure parameters      */
          store_par( tmpfle, 't' );    /*   store on temporary file            */
 /*..................................*/
-         item = items2;
-         ( cns->clscr ) = 1; /* 0 / N: clear screen / scroll N lines */
+         cns->clscr = 1; /* 0 / N: clear screen / scroll N lines */
+         cns->dfopt = 7;
 
         goto par_menu;
-         break;
-
+        break;
+/*............................................................................*/
         case 5:
 /*............................................................................*/
 # if defined ( AMD_PRINTER )
@@ -745,21 +768,20 @@ short input ( char *option )
 # else
          printf( "\n No printer is defined for this option !" );
 # endif
-         item = items2;
+/*............................................................................*/
          cns->clscr = 1; /* 0 / N: clear screen / scroll N lines */
+         cns->dfopt = 7;
 
         goto par_menu;
-         break;
-
-        case 0:  /* end of program / escape */
+        break;
+/*............................................................................*/
+        case 6:  /* start computation */
 
          remove( tmpfle );
-
          PRBLDCLR( "" );
-         printf( "\r%*s", 79, "INPUT" );
          PRNORMAL( "" );
-         return -ONE;
 
+        return ONE;
         break;
       }; /* end switch(*) */
 /*............................................................................*/
