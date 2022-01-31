@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 27, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 31, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -258,7 +258,7 @@ typedef struct
      *display;
 
    TXCNSL
-     *cns;
+     *csp;
 
    OPERTNS
      *opr;

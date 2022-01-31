@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 21, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 31, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 

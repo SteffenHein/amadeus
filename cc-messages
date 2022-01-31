@@ -1,8 +1,0 @@
-In file included from ./src/amddrv.c:95:0:
-./src/../src/input.h: In function ‘input’:
-./src/../src/input.h:194:7: warning: unused variable ‘items2’ [-Wunused-variable]
-       items2 = SIX,
-       ^~~~~~
-./src/../src/input.h:193:7: warning: unused variable ‘items1’ [-Wunused-variable]
-       items1 = SIX,
-       ^~~~~~

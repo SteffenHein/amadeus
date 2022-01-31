@@ -11,7 +11,7 @@
 *  by subsequently calling the respective functions                            *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 27, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: January 31, 2022 ]                             <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -34,13 +34,12 @@ short amddrv( int argn, char **args )
 # endif
 
    static TXCNSL
-     *cns = &console;
+     *csp = &cns;
 
    static char 
-      item,
-      fleptr[STS_SIZE] = {null};
-
-   static char 
+      cpmrk = null, 
+      fleptr[STS_SIZE] = {null},
+      lnestr[STS_SIZE] = {null},
       ptr[STS_SIZE] = {null},           
     **endp = null;
 
@@ -66,7 +65,7 @@ short amddrv( int argn, char **args )
    static char
       timeptr[STS_SIZE] = {null};
 
-/* prototyping: */
+/* prototypes: */
 
 # ifndef _CCBUG
    char
@@ -82,7 +81,7 @@ short amddrv( int argn, char **args )
       *dotos( double x, char precision, char *format );
 
    TXCNSL 
-     *txcnsl( TXCNSL *cns );
+     *txcnsl( TXCNSL *csp );
 
    AMDSTATE
      *amdwrk( AMDSTATE *state );
@@ -127,20 +126,20 @@ short amddrv( int argn, char **args )
 
    kk = tgetent( null, term );
 
-   if( ONE != kk )
+   if( kk != ONE )
    {
       errfle = fopen( errptr, "a+" );
 
       fprintf( errfle, \
          "\nError message from job %s, function %s :", \
-         lotos (( state->job ), null, " " ), __func__ ); \
+         lotos ( state->job, null, " " ), __func__ ); \
       fprintf( errfle, "\nCan't get the termcap info\n" );
 
       fclose ( errfle );
 
       fprintf( stderr, \
          "\n Error message from job %s, function %s :", \
-         lotos (( state->job ), null, " " ), __func__ ); \
+         lotos ( state->job, null, " " ), __func__ ); \
       fprintf( stderr, "\n Can't get the termcap info\n" );
 
       exit( EXIT_FAILURE );
@@ -152,34 +151,34 @@ short amddrv( int argn, char **args )
    kk = setvbuf( stdin, null, _IONBF, null );
    kk = setvbuf( stdout, null, _IONBF, null ); 
 /*............................................................................*/
-/* initialize: */
+/* initialize file pointers: */
 
-   kk = null; do
+   ii = null; do
    {
-      tmpfle[kk] = null;
-      fleptr[kk] = null;
-   } while(( ++kk ) < STS_SIZE );
+      tmpfle[ii] = null;
+      fleptr[ii] = null;
+      ++ii;
+   } while( ii < STS_SIZE );
 /*...........................................................................*/
-   cns = txcnsl( null ); /* initialize the text console */
-
 /* bind structure pointers */
 
-   ( state->par ) = &parmtrs;
-   ( state->opr ) = &opertns;
-   ( state->cns ) = &console;
+   state->par = &parmtrs;
+   state->opr = &opertns;
+   state->csp = &cns;
 
    ii = null; do
    {
       ( state->logfle[ii] ) = null;
       ( state->errfle[ii] ) = null;
-   } while(( ++ii ) < STS_SIZE );
+      ++ii;
+   } while( ii < STS_SIZE );
 
    ( state->fleps ) = null;
    
-   strcpy(( state->name ), "AMADEUS" );
-   strcpy(( state->text ), "Evolution_of_spreading_diseases" );
-   strcpy(( state->logfle ), logptr );
-   strcpy(( state->errfle ), errptr );
+   strcpy( state->name, "AMADEUS" );
+   strcpy( state->text, "Evolution_of_spreading_diseases" );
+   strcpy( state->logfle, logptr );
+   strcpy( state->errfle, errptr );
 /*............................................................................*/
 /* read command line: */
 
@@ -191,7 +190,7 @@ short amddrv( int argn, char **args )
          strcpy( ptr, *( args++ ));
 
          if ( null == strncmp( ptr, "--file", 6 )) /* paramater file */
-            ( state->uif ) = 'f';                  /* input mode */
+            state->uif = 'f';                      /* input mode */
 
          if ( null == strncmp( ptr, "--init-job", 9 ))
          {
@@ -204,7 +203,8 @@ short amddrv( int argn, char **args )
 
          if ( null == strncmp( ptr, "--init-fle", 9 ))
          {                                         /* parameter file */
-            ( state->uif ) = 'f';                  /* input mode */
+            state->uif = 'f';                      /* input mode */
+
             if ( --argn )
             {
                strcpy ( fleptr, *( args++ ));
@@ -213,69 +213,94 @@ short amddrv( int argn, char **args )
       } while ( --argn );
    };
 /*............................................................................*/
-   ( state->fstjob ) = job; /* the 1st job index */
-   ( state->job ) = job;    /* the running job index */
+   state->fstjob = job; /* the 1st job index */
+   state->job = job;    /* the running job index */
 
    strcpy( tmpfle, "/tmp/temp.XXXXX" );
 /*............................................................................*/
    init_opr( );
    init_par( );
 /*............................................................................*/
-/* text mode: */
+/* 't'ext mode: */
 
    if (( state->uif != 'g' )
      &&( state->uif != 'b' )
      &&( state->uif != 'f' ))
    {
+      first_console:
+
       state->uif = 't'; /* user interface: 't'ext console */
+      csp = txcnsl( null ); /* initialize the text console */
 
-      cns->option = 3; do
+      cpmrk = null;
+      csp->option = 3; do
       {
-         strcpy( cns->cmmnt, "Welcome to AMADEUS !" );
+         if ( state->job == null )
+            strcpy( csp->cmmnt, "Welcome to AMADEUS !" );
+         else
+            strcpy( csp->cmmnt, "Welcome back to AMADEUS !" );
 
-         cns->clscr = - ONE;
-         cns->items = 3;
-         cns->dfopt = 2; /* the initial default menu option */
-         cns->dflnf = cns->dfopt; /* set line feed before this option */
+         csp->clscr = - ONE;
+         csp->items = 3;
+         csp->dfopt = 2; /* the initial default menu option */
+         csp->dflnf = csp->dfopt; /* set line feed before this option */
 
-
-         strcpy( cns->envmt, "AMADEUS" );
-         strcpy( cns->tasks, "Select [enter number]:" );
+         strcpy( csp->envmt, "AMADEUS" );
+         strcpy( csp->tasks, "Select [enter number]:" );
 
 /* menu options */
 
-         strcpy( cns->mline[1], "* parameter file input " );
-         strcpy( cns->mline[2], "* text console input " );
-         strcpy( cns->mline[3], "* support" );
+         strcpy( lnestr, "* parameter input file \"" );
+	 strcat( lnestr, IPT_PARINIT );
+	 strcat( lnestr, lotos( job, null, " " ));
+	 strcat( lnestr, "\"");
 
-         strcpy(( cns->escpe ), "End of program / escape" );
+         strcpy( csp->mline[1], lnestr );
+         strcpy( csp->mline[2], "* text console input " );
+         strcpy( csp->mline[3], "* support" );
+
+         strcpy( csp->escpe, "End of program / escape" );
 
          if ( state->job == null )
-            strcpy( cns->cnfrm, "Nothing done! Do you really want to quit ?" );
+            strcpy( csp->cnfrm, "Nothing done! Do you really want to quit ?" );
          else
-            strcpy( cns->cnfrm, "Do you really want to quit ?" );
+            strcpy( csp->cnfrm, "Do you really want to quit ?" );
+
 /*............................................................................*/
-         cns = txcnsl( cns );   /* build the [ start ] menu                   */
+         csp = txcnsl( csp );   /* build the [ start ] menu                   */
 /*............................*/
 
-         switch( cns->option )
+         switch( csp->option )
 	 {
            default:
            case 0:
            case 'y':
            case 'Y':
-
-           return null;
+            return null;
            break;
 
-           case 1:
-            state->uif = 'f'; /* 'f'ile input mode */
+/*............................................................................*/
+	   case 1:
+/* clear screen: */
+
+            fprintf( stdout, CLEAR_LINE );
+            fprintf( stdout, "\n ======================================="
+                             "=======================================" );
+            nseconds = time( timer );
+            strcpy( timeptr, ctime( &nseconds ));
+            fprintf( stdout, "\n ");
+            PRBLDCLR( "HELIOS started:");
+            fprintf( stdout, "\n %s", timeptr );
+            PRNORMAL( "" );
+
+            cpmrk = TWO;
 	   break;
 
+/*............................................................................*/
            case 2:
-            state->uif = 't'; /* 'f'ile input mode */
 	   break;
 
+/*............................................................................*/
 	   case 3:
 
             fprintf( stdout, "\n %s",\
@@ -287,51 +312,54 @@ short amddrv( int argn, char **args )
 	    fprintf( stdout, "\n [ Don't hesitate to ask your questions.]" );
             PRNORMAL( "\n");
 
-            cns->dfopt = 2; /* the initial default menu option */
+            csp->dfopt = 2; /* next default: text console input */
 	   break;
          };
-      } while( cns->option == 3 );
+      } while( csp->option == 3 );
    };
 
-   if ( state->uif == 't' ) /* text console input */
+   if (( cpmrk < TWO )
+     &&( state->uif == 't' )) /* text console input */
    {
-      strcpy( cns->cmmnt, "Welcome back to AMADEUS !" );
+      cpmrk = null;
+      strcpy( csp->cmmnt, "Welcome back to AMADEUS !" );
 
-      cns->dfopt = 3; /* the initial default menu option */
-      cns->clscr = 1;
-      item = null;
+      csp->dfopt = 3; /* next default: complete configuration */
+      csp->clscr = 1;
 
-     console_menu:
+     second_console:
 
-      cns->items = 5;
-      cns->dflnf = cns->dfopt; /* set special line feed before */
+      csp->items = 5;
+      csp->dflnf = csp->dfopt; /* set special line feed before */
                                /* that option line */
       nseconds = time( timer );
       strcpy( timeptr, ctime( &nseconds ));
-      strcpy( cns->title, "Program AMADEUS: " );
-      strncat( cns->title, timeptr, 24 );
+      strcpy( csp->title, "Program AMADEUS: " );
+      strncat( csp->title, timeptr, 24 );
 
-      strcpy( cns->envmt, "AMADEUS" );
-      strcpy( cns->tasks, "Select [enter number]:" );
+      strcpy( csp->envmt, "AMADEUS" );
+      strcpy( csp->tasks, "Select [enter number]:" );
 
-      strcpy( cns->mline[1], "* computation modes" );
-      strcpy( cns->mline[2], "* parameters" );
-      strcpy( cns->mline[3], "* the complete configuration" );
-      strcpy( cns->mline[4], "* start computation" );
-      strcpy( cns->mline[5], "* support" );
+      strcpy( csp->mline[1], "* computation modes" );
+      strcpy( csp->mline[2], "* parameters" );
+      strcpy( csp->mline[3], "* the complete configuration" );
+      strcpy( csp->mline[4], "* start computation" );
+      strcpy( csp->mline[5], "* support" );
 
-      strcpy( cns->escpe, "End of program / escape" );
+      strcpy( csp->escpe, "End of program / escape" );
 
       if ( state->job == null )
-         strcpy( cns->cnfrm, "Nothing done! Do you really want to quit ?" );
+         strcpy( csp->cnfrm, "Nothing done! Do you really want to quit ?" );
       else
-         strcpy( cns->cnfrm, "Do you really want to quit ?" );
+         strcpy( csp->cnfrm, "Do you really want to quit ?" );
+
 /*............................................................................*/
-      cns = txcnsl( cns );      /* build the [ start ] menu                   */
+      csp = txcnsl( csp );      /* build the [ start ] menu                   */
 /*............................*/
+
       state->act = null; /* the current prog stage [ null = par input ] */
 
-      switch( cns->option )
+      switch( csp->option )
       {
         default:
          break;
@@ -350,12 +378,12 @@ short amddrv( int argn, char **args )
 	   return null;
          else if ( ii == ONE ) /*start computation */
 	 {
-            item = ONE;
+           cpmrk = ONE;
 	   break;
          };
 
-         cns->dfopt = 2; /* the next default menu option */
-         cns->clscr = 1; /* N != 0: clear screen; scroll N lines */
+         csp->dfopt = 2; /* the next default menu option */
+         csp->clscr = 1; /* N != 0: clear screen; scroll N lines */
 
          break;
 /*...........................................................................*/
@@ -366,12 +394,12 @@ short amddrv( int argn, char **args )
 	   return null;
          else if ( ii == ONE ) /*start computation */
 	 {
-            item = ONE;
+           cpmrk = ONE;
 	   break;
          };
 
-         cns->dfopt = 4; /* the next default menu option */
-         cns->clscr = 1; /* N != 0: clear screen; scroll N lines */
+         csp->dfopt = 4; /* the next default menu option */
+         csp->clscr = 1; /* N != 0: clear screen; scroll N lines */
 
          break;
 /*...........................................................................*/
@@ -382,7 +410,7 @@ short amddrv( int argn, char **args )
 	   return null;
          else if ( ii == ONE ) /*start computation */
 	 {
-            item = ONE;
+           cpmrk = ONE;
            break;
          };
 
@@ -391,12 +419,12 @@ short amddrv( int argn, char **args )
 	   return null;
          else if ( ii == ONE ) /*start computation */
 	 {
-            item = ONE;
+           cpmrk = ONE;
 	   break;
          };
 
-         cns->dfopt = 4; /* the next default menu option */
-         cns->clscr = 1; /* N != 0: clear screen; scroll N lines */
+         csp->dfopt = 4; /* the next default menu option */
+         csp->clscr = 1; /* N != 0: clear screen; scroll N lines */
 
         break;
 /*...........................................................................*/
@@ -405,7 +433,7 @@ short amddrv( int argn, char **args )
          PRBLDCLR( "" );
          PRNORMAL( "\n");
 
-         item = ONE;
+         cpmrk = ONE;
         break;
 /*...........................................................................*/
         case 5:
@@ -416,18 +444,18 @@ short amddrv( int argn, char **args )
          fprintf( stdout, "\n [ Don't hesitate to ask your questions.]" );
          PRNORMAL( "\n");
 
-         cns->dfopt = 4; /* the initial default menu option */
+         csp->dfopt = 4; /* the initial default menu option */
 	 
         break;
       };
 
-      if (( null < cns->option )
-        &&( item == null ))
+      if (( null < csp->option )
+        &&( cpmrk == null ))
       {
-         strcpy(( cns->cmmnt ), "Welcome back to AMADEUS !" );
-         goto console_menu;
+         strcpy( csp->cmmnt, "Welcome back to AMADEUS !" );
+         goto second_console;
       }
-      else if ( item == ONE )
+      else if ( null < cpmrk )
       {
          rvise_par( );
 /*............................................................................*/
@@ -442,17 +470,19 @@ short amddrv( int argn, char **args )
          PRBLDCLR( "AMADEUS started:");
          fprintf( stdout, "\n %s", timeptr );
          PRNORMAL( "" );
-      }; /* end if item == ONE */
-   } /* end if ( state->uif != 'f','g','b' ) */
-   else /* if ( state->uif != 't' ) *//* parameter 'f'ile input */
-   {                                     /* [graphical mode, e.g.] */
+      }; /* end if cpmrk == ONE */
+   }; /* end if ( state->uif != 'f','g','b' ) */
+
+   if (( cpmrk == TWO )
+     ||( state->uif != 't' )) /* parameter 'f'ile input */
+   {                          /* or graphical mode, e.g. */
 /*............................................................................*/
 /* enter computation modes: */
 
       if ( null == fleptr[null] )
       {
          strcpy( fleptr, IPT_PARINIT );
-         strcat( fleptr, lotos(( state->job ), null, " " ));
+         strcat( fleptr, lotos( state->job, null, " " ));
       };
 
       rvise_opr( ); /* revise and eventually reconfigure ...*/
@@ -460,7 +490,7 @@ short amddrv( int argn, char **args )
       rvise_opr( ); /* revise and eventually reconfigure ...*/
 
       strcpy( tmpfle, "opr.log" );
-      strcat( tmpfle, lotos(( state->job ), null, " " ));
+      strcat( tmpfle, lotos( state->job, null, " " ));
       store_opr( tmpfle, 'o' ); /* restore revised file as log file */
 /*............................................................................*/
 /* enter parameters: */
@@ -478,7 +508,7 @@ short amddrv( int argn, char **args )
    strcpy( timeptr, ( ctime( &nseconds ) + 11 ));
 
    fprintf( logfle, "\nJob no " );
-   fprintf( logfle, "%s ", ( lotos(( state->job ), null," " )));
+   fprintf( logfle, "%s ", ( lotos( state->job, null," " )));
    fprintf( logfle, "launched at " );
    fprintf( logfle, "%-.8s", timeptr );
 
@@ -492,12 +522,12 @@ short amddrv( int argn, char **args )
 
    rvise_opr( ); /* final operations */
    strcpy( fleptr, IPT_OPRLOG );
-   strcat( fleptr, lotos(( state->job ), null, " " ));
+   strcat( fleptr, lotos( state->job, null, " " ));
    store_opr( fleptr, 'o' ); /* restore revised file as log file */
 
    rvise_par( ); /* final parameters */
    strcpy( fleptr, IPT_PARLOG );
-   strcat( fleptr, lotos(( state->job ), null, " " ));
+   strcat( fleptr, lotos( state->job, null, " " ));
    store_par( fleptr, 'p' ); /* restore revised file as log file */
    
 /* here starts the proper algorithm */
@@ -510,11 +540,14 @@ short amddrv( int argn, char **args )
    {
       ++( state->job ); /* next job label */
 
-      strcpy(( cns->cmmnt ), "Welcome back to AMADEUS !" );
-      ( cns->dfopt ) = 0; /* the next default menu option */
-      ( cns->clscr ) = 0; /* 0 / N: clear screen / scroll N lines */
+      strcpy( csp->cmmnt, "Welcome back to AMADEUS !" );
+      csp->dfopt = 0; /* the next default menu option */
+      csp->clscr = 0; /* 0 / N: clear screen / scroll N lines */
 
-      goto console_menu;
+      if ( cpmrk == TWO )
+         goto first_console;
+      else
+         goto second_console;
    };
    
    logfle = fopen( logptr, "a+" );
