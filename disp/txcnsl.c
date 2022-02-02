@@ -44,7 +44,7 @@
    # include <ncurses.h>
 # endif 
 /*----------------------------------------------------------------------------*/
-# include "../math/txctyp.h" /* structure of type TXCNSL, cf. below */
+# include "../disp/txctyp.h" /* structure of type TXCNSL, cf. below */
 /*----------------------------------------------------------------------------*/
 # define CNS_DEFLT  "active"   
                      

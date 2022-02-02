@@ -1,14 +1,9 @@
 [file: math.md5]
-created: Mon Jan 31 23:35:18 2022
+created: Tue Feb  1 23:40:56 2022
 -------------------------------------------------------------------------------
 MD5( .directory ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( consts.h ) = b8bc5ba0e5bbdcbe1d9158c8a247b2a0
 MD5( dotos.c ) = 4dfadef2b4659ba8c18830101989590d
-MD5( dsplay.c ) = 2bf5806b48982bdf856b15f971678837
-MD5( dsplay.h ) = 8dd3ec8e1e7d13223597874a37f41f41
-MD5( dsptyp.h ) = 93340e8d228ecea24ad2c810610a568d
 MD5( lotos.c ) = bead0a01e2ccc691735438613237bb09
 MD5( maths.h ) = d1603982aa1b87dee9d566273c53d6ea
 MD5( rndoff.c ) = 3247ba7f5cee0bfc76a5218a14b70703
-MD5( txcnsl.c ) = 8027b4903c8efec062a2905b990fb093
-MD5( txctyp.h ) = a2d9f46b28abf54276ebe55a509ce864

@@ -43,16 +43,15 @@ $i = 0;
 $dirtree[ $i++ ] = $distname;
 $dirtree[ $i++ ] = $distname . "/bin";
 $dirtree[ $i++ ] = $distname . "/default";
+$dirtree[ $i++ ] = $distname . "/disp";
 $dirtree[ $i++ ] = $distname . "/doc";
 $dirtree[ $i++ ] = $distname . "/math";
 $dirtree[ $i++ ] = $distname . "/objects";
-$dirtree[ $i++ ] = $distname . "/ports";
 $dirtree[ $i++ ] = $distname . "/prv";
 $dirtree[ $i++ ] = $distname . "/samples";
 $dirtree[ $i++ ] = $distname . "/scripts";
 $dirtree[ $i++ ] = $distname . "/src";
 $dirtree[ $i++ ] = $distname . "/work";
-
 #------------------------------------------------------------------------------#
 # the list of files stored in $tgzarch
 #
@@ -63,10 +62,10 @@ $tgzlist[ $i++ ] = $distname . "/INSTALL";
 $tgzlist[ $i++ ] = $distname . "/CONFIG.H";
 $tgzlist[ $i++ ] = $distname . "/bin";
 $tgzlist[ $i++ ] = $distname . "/default";
+$tgzlist[ $i++ ] = $distname . "/disp";
 $tgzlist[ $i++ ] = $distname . "/doc";
 $tgzlist[ $i++ ] = $distname . "/math";
-$tgzlist[ $i++ ] = $distname . "/objects/.directory";
-$tgzlist[ $i++ ] = $distname . "/ports";
+$tgzlist[ $i++ ] = $distname . "/objects";
 $tgzlist[ $i++ ] = $distname . "/prv";
 $tgzlist[ $i++ ] = $distname . "/samples";
 $tgzlist[ $i++ ] = $distname . "/scripts";
@@ -76,7 +75,6 @@ $tgzlist[ $i++ ] = $distname . "/Makefile";
 $tgzlist[ $i++ ] = $distname . "/makefile.gnu";
 $tgzlist[ $i++ ] = $distname . "/mk.gnu";
 $tgzlist[ $i++ ] = $distname . "/SETUP";
-
 #------------------------------------------------------------------------------#
 # The Z-compressed archive of the following [ essential ] sources; $tararch:
 #
@@ -87,10 +85,10 @@ $ziplist[ $i++ ] = $distname . "/INSTALL";
 $ziplist[ $i++ ] = $distname . "/CONFIG.H";
 $ziplist[ $i++ ] = $distname . "/bin";
 $ziplist[ $i++ ] = $distname . "/default";
+$ziplist[ $i++ ] = $distname . "/disp";
 $ziplist[ $i++ ] = $distname . "/doc";
 $ziplist[ $i++ ] = $distname . "/math";
-$ziplist[ $i++ ] = $distname . "/objects/.directory";
-$ziplist[ $i++ ] = $distname . "/ports";
+$ziplist[ $i++ ] = $distname . "/objects";
 $ziplist[ $i++ ] = $distname . "/prv";
 $ziplist[ $i++ ] = $distname . "/samples";
 $ziplist[ $i++ ] = $distname . "/scripts";
@@ -100,7 +98,6 @@ $ziplist[ $i++ ] = $distname . "/Makefile";
 $ziplist[ $i++ ] = $distname . "/makefile.gnu";
 $ziplist[ $i++ ] = $distname . "/mk.gnu";
 $ziplist[ $i++ ] = $distname . "/SETUP";
-
 #------------------------------------------------------------------------------#
 # Create a new tar archive for FreeBSD port building system:
 #

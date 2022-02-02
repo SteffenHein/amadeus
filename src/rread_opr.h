@@ -10,7 +10,7 @@
 *  Reads operation modes from a file [ type opr.log<N> ]                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 25, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: February 01, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -37,6 +37,7 @@ short rread_opr( char *filename, char mode )
    static char
       ptr[STS_SIZE] = {null},
       fleptr[STS_SIZE] = {null},
+      txtstr[STS_SIZE] = {null},
     **endp = NULL;
 
    static const char
@@ -53,22 +54,40 @@ short rread_opr( char *filename, char mode )
 
       while ( operatns == null )
       {
-         if (( state->uif ) == 't' )
+         if ( state->uif == 't' )
          {
-            printf( "\n operation parameters file %s not found "
-               "in present directory:\n", fleptr );
-            printf( "\n please re-enter filename [ Escape: "
-               "enter null ] >----> " );
+            if ( state->cpmrk < TWO )
+	    {
+               fprintf( stdout, "\n Operation parameter file \"%s\" "
+                  "not found in present directory:\n", fleptr );
 
-            scanf( "%s", fleptr );
+               fprintf( stdout, "\n Please re-enter filename "
+                  "[ Escape: enter null ] >----> " );
 
-            if ( *fleptr == '0' )
-               return null;
+               scanf( "%s", fleptr );
+
+               if ( *fleptr == '0' )
+                  return null;
+            }
+	    else if ( state->cpmrk == TWO )
+            { 
+               fprintf( stdout, CLEAR_LINE );
+
+               strcpy( txtstr, 
+	          "\n Parameter file \"" );
+               strcat( txtstr, fleptr );
+               strcat( txtstr, "\" not found in present directory !" );
+
+               PRBLDCLR( txtstr );
+               PRNORMAL( "" );
+
+	       return null;
+            };
          }
 	 else
          {
-            fprintf( stderr, "\noperation parameters file %s not found "
-	       "in working directory\n", fleptr );
+            fprintf( stderr, "\nOperation parameters file \"%s\" "
+	       "not found in working directory\n", fleptr );
             exit( EXIT_FAILURE );
          };
 
@@ -109,31 +128,51 @@ short rread_opr( char *filename, char mode )
             };
 
             fclose( operatns );
-            return null;
+            return ONE;
+	    
 	    break;
          }
          else
          {
-            ii++;
-
+            ++ii;
             if( ii == IPT_MAXLBL )
             {
-               if (( state->uif ) == 't' )
+               if ( state->uif == 't' )
 	       {
-                  printf( "\n operation parameters not found "
-                     "in file '%s':\n", fleptr );
-                  printf( "\n please re-enter filename [ Escape: "
-                     "enter null ] >----> " );
+                  if ( state->cpmrk < TWO )
+	          {
+                     fprintf( stdout, 
+		        "\n Operation parameters not found "
+                           "in in file \"%s\" :\n", fleptr );
 
-                  scanf( "%s", fleptr );
+                     fprintf( stdout,
+		        "\n Please re-enter filename "
+                           "[ Escape: enter null ] >----> " );
+                     scanf( "%s", fleptr );
 
-                  if ( *fleptr == '0' )
-                     return null;
+                     if ( *fleptr == '0' )
+                        return null;
+                  }
+	          else if ( state->cpmrk == TWO )
+                  { 
+                     fprintf( stdout, CLEAR_LINE );
+
+                     strcpy( txtstr, 
+	                "\n Operation parameters not found in file \"" );
+                     strcat( txtstr, fleptr );
+                     strcat( txtstr, "\" !" ); 
+
+                     PRBLDCLR( txtstr );
+                     PRNORMAL( "" );
+
+	             return null;
+                  };
                }
 	       else
 	       {
-                  fprintf( stderr, "\noperation parameters not found "
-	             "in file '%s'\n", fleptr );
+                  fprintf( stderr, 
+		     "\nOperation parameters not found "
+	             "in file \"%s\"\n", fleptr );
                   exit( EXIT_FAILURE );
                };
             };
@@ -141,7 +180,8 @@ short rread_opr( char *filename, char mode )
       }; /* end while( ii < IPT_MAXLBL ) */
    }; /* end while( *fleptr != '0' */
 
-   return null;
+   fclose( operatns );
+   return ONE;
 }
 /*============================================================================*/
 /********************* end of function rread_operts(*) ************************/

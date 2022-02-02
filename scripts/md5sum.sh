@@ -2,25 +2,16 @@
 CHECKSUM=$1
 RMFILES=${CHECKSUM}" *.md5"
 #
-cd ../models
-rm -f ${RMFILES}
-md5sum * > ${CHECKSUM}
 cd ../bin
 rm -f ${RMFILES}
 md5sum * > ${CHECKSUM}
 cd ../doc
 rm -f ${RMFILES}
 md5sum * > ${CHECKSUM}
-cd ../elfe
+cd ../default
 rm -f ${RMFILES}
 md5sum * > ${CHECKSUM}
-cd ../elsy
-rm -f ${RMFILES}
-md5sum * > ${CHECKSUM}
-cd ../eval
-rm -f ${RMFILES}
-md5sum * > ${CHECKSUM}
-cd ../expm
+cd ../disp
 rm -f ${RMFILES}
 md5sum * > ${CHECKSUM}
 cd ../math
@@ -32,10 +23,16 @@ md5sum * > ${CHECKSUM}
 cd ../prv
 rm -f ${RMFILES}
 md5sum * > ${CHECKSUM}
+cd ../samples
+rm -f ${RMFILES}
+md5sum * > ${CHECKSUM}
 cd ../scripts
 rm -f ${RMFILES}
 md5sum * > ${CHECKSUM}
-cd ../tools
+cd ../src
+rm -f ${RMFILES}
+md5sum * > ${CHECKSUM}
+cd ../work
 rm -f ${RMFILES}
 md5sum * > ${CHECKSUM}
 cd ../

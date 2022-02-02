@@ -6,7 +6,7 @@
 #  and [ optionally ] lncurses.                                                #
 #                                                                              #
 #  (C) SHEIN; Munich, April 2020                               Steffen Hein    #
-#  [ Update: December 28, 2021 ]                            <contact@sfenx.de> #
+#  [ Update: February 01, 2022 ]                            <contact@sfenx.de> #
 #                                                                              #
 #------------------------------------------------------------------------------#
 # executable program name: amadeus                                             #
@@ -70,7 +70,7 @@ AMD_CFLG=	-D_Debian -D_CCBUG -D_Forced
 AMD_CONF=	./
 AMD_SRC=	./src/
 AMD_MATH=	./math/
-AMD_TOOLS=	./tools/
+AMD_DISP=	./disp/
 AMD_OBJ=	./objects/
 AMD_DEFLT=	./default/
 #

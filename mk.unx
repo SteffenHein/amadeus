@@ -1,5 +1,5 @@
 # [ file: mk.unx ]
-# Update: December 22, 2021
+# Update: February 01, 2022
 #------------------------------------------------------------------------------
 setup: perm install
 	@echo "===> Cleaning for ${AMD_BIN}"
@@ -25,6 +25,7 @@ ${AMD_MATH}consts.h \
 ${AMD_OBJ}lotos.o \
 ${AMD_OBJ}dotos.o \
 ${AMD_OBJ}cpylne.o \
+${AMD_OBJ}dsplay.o \
 ${AMD_OBJ}txcnsl.o \
 ${AMD_OBJ}amdwrk.o \
 ${AMD_OBJ}amddrv.o \
@@ -34,6 +35,7 @@ ${AMD_OBJ}amadeus.o
 ${AMD_OBJ}lotos.o \
 ${AMD_OBJ}dotos.o \
 ${AMD_OBJ}cpylne.o \
+${AMD_OBJ}dsplay.o \
 ${AMD_OBJ}txcnsl.o \
 ${AMD_OBJ}amdwrk.o \
 ${AMD_OBJ}amddrv.o \
@@ -50,14 +52,19 @@ ${AMD_OBJ}dotos.o: ${AMD_MATH}dotos.c
 	${AMD_CC} ${AMD_CFLG} -c ${AMD_MATH}dotos.c \
 -o ${AMD_OBJ}dotos.o
 
-${AMD_OBJ}cpylne.o: ${AMD_SRC}cpylne.c
+${AMD_OBJ}cpylne.o: ${AMD_DISP}cpylne.c
 	@echo "===> Building cpylne(*)"
-	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}cpylne.c \
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_DISP}cpylne.c \
 -o ${AMD_OBJ}cpylne.o
 
-${AMD_OBJ}txcnsl.o: ${AMD_MATH}txcnsl.c
+${AMD_OBJ}dsplay.o: ${AMD_DISP}dsplay.c
+	@echo "===> Building dsplay(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_DISP}dsplay.c \
+-o ${AMD_OBJ}dsplay.o
+
+${AMD_OBJ}txcnsl.o: ${AMD_DISP}txcnsl.c
 	@echo "===> Building txcnsl(*)"
-	${AMD_CC} ${AMD_CFLG} -c ${AMD_MATH}txcnsl.c \
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_DISP}txcnsl.c \
 -o ${AMD_OBJ}txcnsl.o
 
 ${AMD_OBJ}amddrv.o: ${AMD_SRC}amddrv.c

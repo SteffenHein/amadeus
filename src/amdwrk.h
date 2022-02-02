@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 31, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: February 01, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -46,10 +46,28 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    void 
       cpylne( char txlne[], const char *ltext, const char *bracket, short ll );
 /*............................................................................*/
-/*
+   static time_t
+      bufsize = null;
+
+/* time_t types etc.: */
+
+   time_t
+      nseconds = null,
+     *timer = null;
+
+   static char
+     timeptr[STS_SIZE] = {null};
+/*----------------------------------------------------------------------------*/
+
    AMDSTATE
      *stp = state;
-*/
+
+   DSPLAY 
+     *dsplay( DSPLAY *dsp );
+
+   static DSPLAY
+     *dsp = null;
+
    static PARMTRS
      *ppt = null;
 
@@ -57,6 +75,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
      *opt = null;
 
    static FILE
+     *logfle = null,
      *pltptr_cic = null,
      *pltptr_ifc = null,
      *pltptr_imn = null,
@@ -125,13 +144,29 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       lethal_upd = ZERO,
       reprod_upd = ZERO, /* updated reproduction number, inner loop */
       integral_inc = ZERO;
-
 /*----------------------------- end declarations -----------------------------*/
 /* assign structure pointers */
 
- /*  stp = state; */
+   stp = state; 
    ppt = state->par;
    opt = state->opr;
+/*............................................................................*/
+/* initialize dsplay(*) [ structure dsp* DSPLAY ]: */
+
+   dsp = dsplay( null );
+
+   logfle = fopen( stp->logfle, "r+" );
+   fseek( logfle, stp->fleps, SEEK_SET );
+/*
+   errfle = fopen( stp->errfle, "a+" );
+*/
+   if ( stp->uif != 't' )
+   {
+      kk = setvbuf( logfle, null, _IONBF, bufsize ); /* set unbuffered */
+      dsp->display = logfle;
+   }
+   else
+      dsp->display = stdout;
 /*............................................................................*/
    strcat( parmtr_fle, "parameters" );
 
@@ -897,12 +932,28 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    GNUPLOT( gnuptr_rpd, plot_rpd, flname_rpd, optnstr, timestr, \
       "reprod. no", ( .77*ppt->minrpd ), ( 1.10*ppt->maxrpd ));
-
 /*............................................................................*/
+   if ( stp->uif == 't' )
+   {
+      strcpy(( dsp->messge ), "\n Job no " );
+      strcat(( dsp->messge ), lotos( stp->job, null, " " ));
+      strcat(( dsp->messge ), " terminated" );
+
+      nseconds = time( timer );
+      strcpy( timeptr, ctime( &nseconds ) + 11 );
+      strncat(( dsp->messge ), " at ", 4 );
+      strncat(( dsp->messge ), timeptr, 8 );
+      strcat(( dsp->messge ), "\r" );
+/*............................................................................*/
+/* termination message - display on screen:                                   */
+
+      dsp->option = 't'; /* terminated */
+      dsplay( dsp );
+   };
+
    return state;
 }
 /*============================================================================*/
-
 /****************************** end of amdwrk(*) ******************************/
 /*
     Ein grosser Teil des Lebens

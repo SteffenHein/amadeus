@@ -6,7 +6,7 @@
 *   on screen.                                                                 *
 *                                                                              *
 *   (C) SHEIN; Munich, April 2020                             Steffen Hein     *
-*   [ Update: December 19, 2021 ]                          <contact@sfenx.de>  *
+*   [ Update: February 01, 2022 ]                          <contact@sfenx.de>  *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 0 /* set to 1: if POSIX.1 standard headers will be used*/
@@ -18,7 +18,7 @@
 /*----------------------------------------------------------------------------*/
 # include "../math/maths.h"
 # include "../math/consts.h"
-# include "../math/scropr.h"
+# include "../disp/scropr.h"
 /*----------------------------------------------------------------------------*/
 # include "../CONFIG.H"
 /*----------------------------------------------------------------------------*/
@@ -795,6 +795,26 @@ dsplay( DSPLAY *dsp )
       crs = null; /* reset cursor position */
       sln = null; /* reset length of cursor message */
       
+      fprintf( dsp->display, "\r" );
+
+      cc = null;
+      while( cc < DSP_LMRGN_ )
+      {
+         fprintf( dsp->display, "%c", 32 );
+         cc++ ;
+      };
+
+      PRBLDCLR( "" );
+      fprintf( dsp->display, "%s\n", ( dsp->messge ));
+      PRNORMAL( "" );
+
+      arrow = DSP_TRACE_;
+
+      break;
+
+     case 't': /* dsp->display termination message, initialize struct dsp */
+     case 'T':
+
       fprintf( dsp->display, "\r" );
 
       cc = null;

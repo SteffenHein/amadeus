@@ -11,6 +11,7 @@ cd ../../
 tar -czf spcf-${RELEASE}.tgz \
 ${DISTNAME}/bin \
 ${DISTNAME}/default \
+${DISTNAME}/disp \
 ${DISTNAME}/doc \
 ${DISTNAME}/math \
 ${DISTNAME}/objects \
@@ -19,7 +20,6 @@ ${DISTNAME}/prv \
 ${DISTNAME}/samples \
 ${DISTNAME}/scripts \
 ${DISTNAME}/src \
-${DISTNAME}/tools \
 ${DISTNAME}/work \
 ${DISTNAME}/CONFIG.H \
 ${DISTNAME}/INSTALL \
