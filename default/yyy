@@ -1,8 +1,0 @@
-/* write only connected (!) strings into the string copy function strcpy(*) */
-/* [ 2nd. argument       | ] */
-/*                       V   */
-/*............................................................................*/
-   strcpy( par->stx[0], "parameters\n" );
-   strcat( par->stx[0], "[do_not_change_file_topology:"\
-     "_connected_strings_must_remain_connected!]" );
-/*............................................................................*/
