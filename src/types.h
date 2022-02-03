@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 31, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: February 03, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -63,7 +63,6 @@ typedef struct
       kend,
       kcic,
       ktrm,
-      kbst,
 
       nout,      /* outer iteration index */ 
       ninn,      /* inner iteration index */
@@ -92,7 +91,7 @@ typedef struct
       Immc,      /* immunisation coefficient [ 0 < Immc <= 1 ] */
       Slnt,      /* percentage of "silent" (asymptomatic) cases */
       Ltlt,      /* lethality [ percent ] */
-      Lvlb,      /* random burst level [ ratio ] */
+      Bstf,      /* random burst factor */
       
       rifc,      /* initial group infecion [ ratio ] */
       rimn,      /* initial group immunity [ ratio ] */
@@ -110,11 +109,11 @@ typedef struct
       timn,      /* Timu in natural units [ Ttrm scale ] */
       Tcic,      /* n days incidence */
       tcin,      /* Tcic in natural units [ Ttrm scale ] */
-      Tmeb,      /* random burst length [ 0<=Tmeb ] */
-      tmeb,      /* Tmeb in natural units [ Ttrm scale ] */
-      Tbst,      /* burst Time [ interval ] */ 
-      tbst,      /* Tbst in natural units [ Ttrm scale ] */
-      Tend,      /* time intervall [ length ] */
+      Tlen,      /* random burst length [ days ] */
+      tlen,      /* Tlen in natural units [ Ttrm scale ] */
+      Trep,      /* burst repetion time [ days ] */ 
+      trep,      /* Trep in natural units [ Ttrm scale ] */
+      Tend,      /* time intervall [ days ] */
 
       timmun,    /* time of attained group immunity */
       tmxinc,    /* time of maximum incidence */
@@ -129,6 +128,7 @@ typedef struct
       maxcic,    /* maximum averaged incidence */
       maxifc,    /* maximum infection */
       maximn,    /* maximum immunity */
+      minimn,    /* minimum immunity */
       mininc,    /* minimum incidence */
       maxinc,    /* maximum incidence */
       maxlty,    /* maximum lethal cases */

@@ -1,11 +1,7 @@
 [file: default.md5]
-created: Tue Feb  1 23:40:56 2022
+created: Thu Feb  3 21:50:20 2022
 -------------------------------------------------------------------------------
 MD5( .directory ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( deflt1_opr.h ) = 8f25365186c566bb5fd2857115e5d755
 MD5( deflt_opr.h ) = 8f25365186c566bb5fd2857115e5d755
-MD5( deflt_par.h ) = 9a3887a2a8cfed3ebe7cc7b83cb4945d
-MD5( deflt_par.prv ) = 4af97395ca93dbd10cbe321b4854042d
-MD5( deflt_par.var ) = aa77b8212cfc80c26876f2034c3c9b1b
-MD5( yyy ) = b57b83971e0f0e5fdc9e59b5fae56705
-MD5( zzz ) = 6216adc37da6f6e28715e1c2a68a7d46
+MD5( deflt_par.h ) = 0530f25278f165494b990e66e6ec9411

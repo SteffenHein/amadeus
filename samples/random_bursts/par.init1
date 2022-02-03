@@ -19,8 +19,8 @@ s011=Mean_duration_of_immunity_[T/days]_________________[0<T]:   9.00000e+01
 s012=Cumulative_incidence_over_time_[T/days]____________[0<T]:   7.00000e+00
 s013=Incidence_threshold____[stop_below_that_number_of_cases]:   0.00000e+00
 s014=Random_burst_factor_[average:_Bf]________________[0<=Bf]:   0.00000e+00
-s015=If_0<Bf:_Random_burst_length_[average:_T/days]____[0<=T]:   0.00000e+00
-s016=If_0<Bf:_Random_burst_every_T-th_day_[average]____[0<=T]:   0.00000e+00
+s015=If_0<Bf:_Random_burst_length_[average:_T/days]____[0<=T]:   1.40000e+01
+s016=If_0<Bf:_Random_burst_every_T-th_day_[average]____[0<=T]:   3.00000e+00
 s017=Time_limit_[T/days]________________________________[0<T]:   7.30000e+02
 s018=Time_step_[Dt/days]_______________________________[0<Dt]:   1.00000e-01
 

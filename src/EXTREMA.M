@@ -27,6 +27,9 @@
          ppt->tmximn = ppt->tt; \
       }; \
  \
+      if ( ppt->minimn > immune_upd ) \
+         ppt->minimn = immune_upd; \
+ \
       if ( ppt->maxrpd < reprod_upd ) \
       { \
          ppt->maxrpd = reprod_upd; \

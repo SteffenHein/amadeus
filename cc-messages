@@ -1,0 +1,5 @@
+In file included from ./src/amdwrk.c:50:0:
+./src/./amdwrk.h: In function ‘amdwrk’:
+./src/./amdwrk.h:131:6: warning: unused variable ‘krd’ [-Wunused-variable]
+      krd = null;
+      ^~~

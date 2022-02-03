@@ -10,44 +10,44 @@ set border
 set key box
 set pointsize 0.2
 plot \
-'u(t)_R0=3.000' with lines
+'u(t)_r0=3.000' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'u(t)_R0=2.750' with lines
+'u(t)_r0=2.750' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'u(t)_R0=2.500' with lines
+'u(t)_r0=2.500' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'u(t)_R0=2.250' with lines
+'u(t)_r0=2.250' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'u(t)_R0=2.000' with lines
+'u(t)_r0=2.000' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'u(t)_R0=1.750' with lines
+'u(t)_r0=1.750' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'u(t)_R0=1.500' with lines
+'u(t)_r0=1.500' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'u(t)_R0=1.375' with lines
+'u(t)_r0=1.375' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'u(t)_R0=1.250' with lines
+'u(t)_r0=1.250' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'u(t)_R0=1.125' with lines
+'u(t)_r0=1.125' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'u(t)_R0=1.000' with lines
+'u(t)_r0=1.000' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'u(t)_R0=.8750' with lines
+'u(t)_r0=.8750' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'u(t)_R0=.7500' with lines
+'u(t)_r0=.7500' with lines
 pause -1 '[ hit return to continue ]'
 replot \
-'u(t)_R0=.5000' with lines
+'u(t)_r0=.5000' with lines
 pause -1 '[ hit return to continue ]'

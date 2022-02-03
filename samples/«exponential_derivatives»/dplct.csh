@@ -1,6 +1,6 @@
 #!/bin/csh
 set init=0
-set final=15
+set final=100
 
 set COPIED_FILE="par.log"
 set TARGET_FILE="par.init"

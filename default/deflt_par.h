@@ -38,9 +38,9 @@ void deflt_par( void ) /* default model parameters */
    par->s[11] = 9.000e+01; /* Timu; The mean duration of immunity [days] */
    par->s[12] = 7.000e+00; /* Tinc; Cumulative incidence over time [days] */
    par->s[13] = 0.000e+00; /* Ithr; The incidence threshold [0<=Ithr] */
-   par->s[14] = 0.000e+00; /* Lvlb; Burst level, on average [0<=Lvlb] */
-   par->s[15] = 0.000e+00; /* Tmeb; Burst length, on average [days] */
-   par->s[16] = 0.000e+00; /* Tbst; Burst every T-th day on average [days] */
+   par->s[14] = 0.000e+00; /* Bstf; Burst factor, average [0<=Bstf] */
+   par->s[15] = 0.000e+00; /* Tlen; Burst length, average [days] */
+   par->s[16] = 0.000e+00; /* Trep; Burst every T-th day on average [days] */
    par->s[17] = 7.300e+02; /* Tend; Time limit [days] */
    par->s[18] = 1.000e-01; /* DltT; Time step [days] */
 

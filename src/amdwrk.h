@@ -10,10 +10,12 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 01, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: February 03, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
-
+# ifndef AMD_JOBLBL
+   # define AMD_JOBLBL 1   /* [0] 1: [don't] append job labels at file names */
+# endif
 /*============================================================================*/
 AMDSTATE *amdwrk( AMDSTATE *state )
 {
@@ -132,9 +134,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       hh = ZERO,
       rnd = ZERO,
       rrpd = ZERO,
-      tntb = ZERO,     
       scpt0 = ZERO,
-      lnrpd = ZERO,   /* log( Repr(t)/Ttrm ) */
+      lnrpd = ZERO, /* log( Repr(t)/Ttrm ) */
+      nxtbst = ZERO,     
+      bststp = ZERO,     
       suscpt_upd = ZERO,   /* 1. - h(t) */
       incdnc_upd = ZERO,
       incidc_upd = ZERO,
@@ -179,16 +182,18 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* append job number to filenames */
 
+# if AMD_JOBLBL == 1
    strcpy( longstr, "_job_no_" );
    strcat( longstr, lotos(( state->job ), null, " " ));
-   strcat( parmtr_fle, longstr );
 
+   strcat( parmtr_fle, longstr );
    strcat( plot_cic, longstr );
    strcat( plot_ifc, longstr );
    strcat( plot_imn, longstr );
    strcat( plot_inc, longstr );
    strcat( plot_lty, longstr );
    strcat( plot_rpd, longstr );
+# endif
 /*............................................................................*/
 /* dictionary: */
       
@@ -197,7 +202,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /* Nifc = 1.60e+05;  number of initially infected members Ninf <= Nifc */
 /* Nimn = 1.60e+05;  initial number immune members */
 /* Nlty = 2.40e+03;  initial number of deceased members */
-/* Lvlb = 0.000+00;  random burst level [0<=Lvlb] */
+/* Bstf = 0.000+00;  random burst level [0<=Bstf] */
 
 /* rinf = Ninf/Nhrd; initial ratio of infective members */
 /* rifc = Nifc/Nhrd; initial ratio of infected members */
@@ -214,51 +219,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /* LnRp = log( Repr )/Ttrm;  i.e. exp( LnRp ) = Repr[0]^(1./Ttrm) */ 
 /* rrpd = exp( LnRp ); = Repr[0]^(1./Ttrm), base of init. exp. incr. */
 /*...........................................................................*/
-/* legend: 
-
-   cpypar( 1, \
-      "Herd_size_[Nhrd]", "0<Nhrd<=Nref" );
-   cpypar( 2, \
-      "Initially_infective_('sick')_members_[Ninf]", "0<Ninf" );
-   cpypar( 3, \
-      "Initially_infected_members_[Nifc]", "Ninf<=Nifc" );
-   cpypar( 4, \
-      "Initially_immune_members", "0<=N" );
-   cpypar( 5, \
-      "Already_deceased_members", "0<N" );
-   cpypar( 6, \
-      "Initial_reproduction_factor", "0<R" );
-   cpypar( 7, \
-      "Immunization_ratio", "0<Ir<=1" );
-   cpypar( 8, \
-      "Percentage_of_asymptomatic_cases", "0<=P<100" );
-   cpypar( 9, \
-      "Percentage_of_lethal_cases", "0<=P<=100" );
-   cpypar( 10, \
-      "Mean_transmission_time_[T/days]", "0<=T" );
-   cpypar( 11, \
-      "Mean_duration_of_immunity_[T/days]", "0<T" );
-   cpypar( 12, \
-      "Cumulative_incidence_over_time_[T/days]", "0<T" );
-   cpypar( 13, \
-      "Incidence_threshold", "stop_below_that_number_of_cases" );
-   cpypar( 14, \
-      "Burst_level_on_average", "0<=Bl" );
-   cpypar( 15, \
-      "If_0<Bl:_Burst_length_on_average_[T/days]", "0<=T" );
-   cpypar( 16, \
-      "If_0<Bl:_Burst_every_T-th_day_on_average", "0<=T" );
-   cpypar( 17, \
-      "Time_limit_[T/days]", "0<T" );
-   cpypar( 18, \
-      "Time_step_[Dt/days]", "0<Dt" );
-*/
-/*............................................................................*/
 /* copy the input parameters */
 
-   ppt->Nhrd = ppt->s[1];
-   ppt->Ninf = ppt->s[2];
-   ppt->Nifc = ppt->s[3];
+   ppt->Nhrd = ppt->s[1]; /* herd size */
+   ppt->Ninf = ppt->s[2]; /* initially sick */
+   ppt->Nifc = ppt->s[3]; /* initially infected */
    ppt->Nimn = ppt->s[4];
    ppt->Nlty = ppt->s[5];
    ppt->Repr = ppt->s[6];
@@ -269,9 +234,9 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->Timu = ppt->s[11];
    ppt->Tcic = ppt->s[12];
    ppt->Ithr = ppt->s[13];
-   ppt->Lvlb = ppt->s[14];
-   ppt->Tmeb = ppt->s[15];
-   ppt->Tbst = ppt->s[16];
+   ppt->Bstf = ppt->s[14];
+   ppt->Tlen = ppt->s[15];
+   ppt->Trep = ppt->s[16];
    ppt->Tend = ppt->s[17];
    ppt->DltT = ppt->s[18];
 /*............................................................................*/
@@ -280,17 +245,15 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->dt = ppt->DltT/ppt->Ttrm;
    ppt->timn = ppt->Timu/ppt->Ttrm; /* timn: Timu in natural units */
    ppt->tcin = ppt->Tcic/ppt->Ttrm; /* tcin: Tcic in natural units */
-   ppt->tbst = ppt->Tbst/ppt->Ttrm; /* tbst: Tbst in natural units */
-   ppt->tmeb = ppt->Tmeb/ppt->Ttrm; /* bstl: Tmeb in natural units */
+   ppt->tlen = ppt->Tlen/ppt->Ttrm; /* tlen: Tlen in natural units */
+   ppt->trep = ppt->Trep/ppt->Ttrm; /* trep: Trep in natural units */
 
-   tntb = ppt->tmeb;
+   nxtbst = ppt->trep; /* burst start */ 
+   bststp = ppt->tlen; /* burst stop */
 
    ppt->kend = ( long )( ppt->Tend/ppt->DltT );
    ppt->kcic = ( long )( ppt->Tcic/ppt->DltT );
    ppt->ktrm = ( long )( ppt->Ttrm/ppt->DltT );
-   ppt->kbst = ( long )( ppt->Tbst/ppt->DltT );
-
-   krd = ppt->kbst;
 
    ppt->mxictm = ppt->ktrm;
 
@@ -396,24 +359,24 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    fprintf( fleptr_par, "\n" );
 
-   if ( ZERO < ppt->Lvlb )
+   if ( ZERO < ppt->Bstf )
    {
       cpylne( outpstr,
          "\nRandom_burst_level","dimensionless", 60 );
       strcat( outpstr, ": ");
-      strcat( outpstr, dotos( ppt->Lvlb, 4, "e" ));
+      strcat( outpstr, dotos( ppt->Bstf, 4, "e" ));
       fprintf( fleptr_par, outpstr );
 
       cpylne( outpstr,
          "\nAverage_burst_length","days", 60 );
       strcat( outpstr, ": ");
-      strcat( outpstr, dotos( ppt->Tmeb, 4, "e" ));
+      strcat( outpstr, dotos( ppt->Tlen, 4, "e" ));
       fprintf( fleptr_par, outpstr );
 
       cpylne( outpstr,
-         "\nAverage_burst_period","days", 60 );
+         "\nAverage_burst_repetition_rate","days", 60 );
       strcat( outpstr, ": ");
-      strcat( outpstr, dotos( ppt->Tbst, 4, "e" ));
+      strcat( outpstr, dotos( ppt->Trep, 4, "e" ));
       fprintf( fleptr_par, outpstr );
 
       fprintf( fleptr_par, "\n" );
@@ -462,9 +425,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcpy( longstr, "R0" );
    strcat( longstr, "=" );
    strcat( longstr, dotos( ppt->Repr, 4, "f" ));
+/*----------------------------------------------------------------------------*/
+# if AMD_JOBLBL == 1
+/* append job number to filenames */
+
    strcat( longstr, "_job_no_" );
    strcat( longstr, lotos(( state->job ), null, " " ));
-
+# endif
+/*----------------------------------------------------------------------------*/
    strcat( flname_cic, lotos(( short ) ppt->Tcic, null, " " ));
    strcat( flname_cic, "_days_incidence_" );
    strcat( flname_cic, longstr );
@@ -574,6 +542,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->mininc =  1.00e+27;
    ppt->maxinc = -1.00e+27;
    ppt->maxifc = -1.00e+27;
+   ppt->minimn =  1.00e+27;
    ppt->maximn = -1.00e+27;
    ppt->maxlty = -1.00e+27;
    ppt->maxrpd = -1.00e+27;
@@ -606,7 +575,6 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    };
 
    rnd = 1.;
-   krd = ppt->kbst;
    integral_inc = ZERO;
 /*...........................................................................*/
 /* here start the iterations */
@@ -624,7 +592,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*...........................................................................*/
 /* compute extrema in outer loop: set EXTREMA(1)  */
 
-      EXTREMA(1);
+      EXTREMA( ONE );
 /*...........................................................................*/
 /* start inner loop */
 
@@ -634,7 +602,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*...........................................................................*/
 /* compute extrema in inner loop: set EXTREMA(1) */
 
-         EXTREMA(0);
+         EXTREMA( null );
 /*...........................................................................*/
          hh = immune_upd + lethal_upd;
          suscpt_upd = ( 1. - hh ); 
@@ -694,25 +662,34 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*...........................................................................*/
          incidc_upd = incdnc_upd;
 
-         if ( ZERO < ppt->Lvlb )
+         if ( ZERO < ppt->Bstf )
          {
-            if ( tntb < ppt->tt )
+            if ( nxtbst < ppt->tt ) /* burst start */
 	    {
-               if ( fmod( kk, krd ) < 0.1 )
-	       {
-                  rnd = ( double ) rand( ); 
-                  rnd /= RAND_MAX; 
-	          krd = 1 + ( long ) 2*rnd*ppt->kbst;
+               rnd = ( double ) rand( );
+               rnd /= RAND_MAX; 
 
-                  rnd = ( double ) rand( );
-                  rnd /= RAND_MAX; 
-	          tntb = ppt->tt + 2.*rnd*ppt->tmeb;
+	       bststp = ppt->tt;
+	       bststp += ( 2.*rnd*ppt->tlen ); /* next stop */
+               nxtbst = bststp;
 
-                  rnd = ( double ) rand( ); 
-                  rnd /= RAND_MAX; 
-                  rnd = 1.+ 2.*rnd*ppt->Lvlb;
-               };
-            }; 
+               rnd = ( double ) rand( ); 
+               rnd /= RAND_MAX; 
+               rnd = 1. + 2.*rnd*ppt->Bstf;
+            }
+
+            if ( bststp < ppt->tt ) /* burst stop */
+	    {
+               rnd = ( double ) rand( ); 
+               rnd /= RAND_MAX; 
+
+	       nxtbst = ppt->tt;
+	       nxtbst += ( 2.*rnd*ppt->trep ); /* next burst */
+               bststp = nxtbst;
+
+	       rnd = 1.;
+            };
+
             incidc_upd *= rnd;
          }; 
 /*...........................................................................*/
@@ -866,7 +843,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_imn, plot_imn, flname_imn, optnstr, timestr, \
-         " ", ( .77*1.0e+0*ppt->rimn ), ( 1.10e+0*ppt->maximn ));
+         " ", ( .95*1.0e+0*ppt->minimn ), ( 1.10e+0*ppt->maximn ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Incidence" );
@@ -905,7 +882,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_imn, plot_imn, flname_imn, optnstr, timestr, \
-         "percent", ( .77*1.0e+2*ppt->rimn ), ( 1.10e+2*ppt->maximn ));
+         "percent", ( .95*1.0e+2*ppt->minimn ), ( 1.10e+2*ppt->maximn ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Incidence" );

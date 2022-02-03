@@ -1,8 +1,8 @@
 [file: src.md5]
-created: Tue Feb  1 23:40:56 2022
+created: Thu Feb  3 21:50:20 2022
 -------------------------------------------------------------------------------
 MD5( .directory ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( EXTREMA.M ) = 4d7ee9bdfaae4203eb741f3cf3231edd
+MD5( EXTREMA.M ) = 020da4a4df2905aadc8715378e4a1f7b
 MD5( GNUPLOT.M ) = 0de66479d13897645a9600656cb1f724
 MD5( OPRSTRNGS.M ) = 953ee57a15a2e2481a5dce11770d148f
 MD5( PARSTRNGS.M ) = 65594e84afee8407e7a2e239b27fd295
@@ -14,7 +14,7 @@ MD5( amadeus.c ) = 60214db727da234c2d78da66369047da
 MD5( amddrv.c ) = dc17180825c269d6c9b49e442c6f67bb
 MD5( amddrv.h ) = b5e0979557172e3b479448738f97d7b9
 MD5( amdwrk.c ) = b5aabfeff0e6f9957984c0d176e53fed
-MD5( amdwrk.h ) = e379313c93780be1a0c854fd5618248a
+MD5( amdwrk.h ) = 0d2c7501c2ec42bbd362ee1d79816753
 MD5( init_opr.h ) = fa987e17643ed126a4ba0b6dcaf6b38a
 MD5( init_par.h ) = 8dde85f15be387f80e6c4a1a151507d6
 MD5( inputs.h ) = 02eeab01d481db3bb39fc4e36ab4513e
@@ -24,5 +24,4 @@ MD5( rvise_opr.h ) = 971633e847b3b5770c016244ff3751b8
 MD5( rvise_par.h ) = 9d5dfc4fa7e9829bb8bbf19a7310f009
 MD5( store_opr.h ) = 57d34aa4dc61c17dd3e8062352eb87ee
 MD5( store_par.h ) = 1e0523e06292d2236b79b15a6482e189
-MD5( types.h ) = 1a076aab8ce69dd7757263ecc614a986
-MD5( yyy ) = 47040cdf9acd904e1372ebebf11078bf
+MD5( types.h ) = 5ae2cab9f6875d25050c85796e8a2abf
