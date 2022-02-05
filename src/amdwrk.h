@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 03, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: February 05, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
@@ -127,8 +127,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    long
      ii = null,
-     kk = null,
-     krd = null;
+     kk = null;
 
    static double
       hh = ZERO,
@@ -285,9 +284,9 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ( long ) fminl(( ppt->kend/ppt->maxinn ), 100000. );
 
    ppt->formula = ( char ) ( opt->n[3] );
-   ppt->xscale = ( char ) ( opt->n[4] );
-   ppt->yscale = ( char ) ( opt->n[5] );
-   ppt->yunits = ( char ) ( opt->n[6] );
+   ppt->xunits = ( char ) ( opt->n[4] );
+   ppt->yunits = ( char ) ( opt->n[5] );
+   ppt->yscale = ( char ) ( opt->n[6] );
    ppt->titles = ( char ) ( opt->n[7] );
    ppt->nmstop = ( char ) ( opt->n[8] );
 /*............................................................................*/
@@ -465,7 +464,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    pltptr_lty = fopen( pltfle_lty, "w+" );
    pltptr_rpd = fopen( pltfle_rpd, "w+" );
    
-   if ( ppt->xscale == null )
+   if ( ppt->xunits == null )
       strcpy ( timestr, "transmission cycles" );
    else
       strcpy ( timestr, "days" );
@@ -808,7 +807,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    yscale: 0 linear, 1 logarithmic
 */
 /*............................................................................*/
-   if ( ppt->xscale == null )
+   if ( ppt->xunits == null )
       strcpy ( timestr, "transmission cycles" );
    else
       strcpy ( timestr, "days" );

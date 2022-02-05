@@ -3,7 +3,7 @@
 { \
    if ( XX == 1 ) \
    { \
-      if( ppt->xscale == 0 ) \
+      if( ppt->xunits == 0 ) \
          strcpy( timestr, \
             dotos( ppt->tt, 5, "e" )); \
       else \

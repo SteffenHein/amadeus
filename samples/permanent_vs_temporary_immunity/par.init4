@@ -35,12 +35,12 @@ computation_modes
 maximum_number_of_outer_iterations_________________[<=100000]:       100000
 number_of_inner_iterations____________________________[1-100]:           20
 the_formula________________________________________[0,1_or_2]:            0
-[1]_0:_[don't]_stop_when_there_are_no_more_sick_persons_[0/1]:            1
-x-scale________________________[days:0_|_transmission_time:1]:            0
-y-scale____________________________[linear:0_|_logarithmic:1]:            1
-y-units___________________[conventional:0/2_|_normalized:1/3]:            1
-[0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[1/3]:            0
+x-units______________________[transmission_cycles:0_|_days:1]:            1
+y-units___________________[normalized:0/2_|_conventional:1/3]:            1
+y-scale____________________________[linear:0_|_logarithmic:1]:            0
+[1]_0:_[don't]_write_titles_on_graphics_________________[0/1]:            1
+[0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:            0
 
-PANDEMIA input parameter file par.log4 created:
-Thu Jan 27 20:40:57 2022
+AMADEUS input parameter file par.log4 created:
+Sat Feb  5 21:42:01 2022
 ÿ

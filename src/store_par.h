@@ -10,7 +10,7 @@
 *  Stores the model parameters                                                 *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 19, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: February 05, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -118,7 +118,7 @@ short store_par( char *filename, char mode )
       nseconds = time( timer );
       timeptr = ctime( &nseconds );
 
-      fprintf( paramtrs, "\nPANDEMIA input parameter file %s created:", fleptr );
+      fprintf( paramtrs, "\nAMADEUS input parameter file %s created:", fleptr );
       fprintf( paramtrs, "\n%.24s", timeptr );
       fprintf( paramtrs, "\n%c", EOF );
    };

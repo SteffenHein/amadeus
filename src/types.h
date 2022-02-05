@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 03, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: February 05, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -46,9 +46,9 @@ typedef struct
 typedef struct
 {
    char 
-      xscale,
-      yscale,
+      xunits,
       yunits,
+      yscale,
       nmstop, 
       titles,
       rtn;

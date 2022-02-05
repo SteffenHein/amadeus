@@ -1,5 +1,5 @@
 /* [ file: OPRSTRNGS.M ] */
-/* Update: January 24, 2022 */
+/* Update: February 05, 2022 */
 /*============================================================================*/
 # define OPRSTRNGS( ) \
 { \
@@ -25,18 +25,18 @@
       "the_formula", "0,1_or_2", ll ); \
  \
    cpylne( opr->ntx[4], \
-      "[1]_0:_[don't]_stop_when_there_are_no_more_sick_persons", "0/1", ll ); \
+    	  "x-units", "transmission_cycles:0_|_days:1", ll ); \
  \
    cpylne( opr->ntx[5], \
-    	  "x-scale", "days:0_|_transmission_time:1", ll ); \
+    	  "y-units", "normalized:0/2_|_conventional:1/3", ll ); \
  \
    cpylne( opr->ntx[6], \
     	  "y-scale", "linear:0_|_logarithmic:1", ll ); \
  \
    cpylne( opr->ntx[7], \
-    	  "y-units", "conventional:0/2_|_normalized:1/3", ll ); \
+      "[1]_0:_[don't]_write_titles_on_graphics", "0/1", ll ); \
  \
    cpylne( opr->ntx[8], \
-          "[0]_1:_[don't]_stop_when_no_sick_individuals_remain", "1/3", ll ); \
+          "[0]_1:_[don't]_stop_when_no_sick_individuals_remain", "0/1", ll ); \
 }
 /*============================================================================*/
