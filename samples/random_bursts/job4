@@ -1,4 +1,0 @@
-#!/bin/sh
-amadeus -n 4 -f par.init4
-cp 7_days_incidence_R0=3.000_job_no_4 burst=2.0
-#./gnuplot4

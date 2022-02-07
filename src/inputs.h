@@ -623,11 +623,11 @@ short input ( char *option )
 /*............................................................................*/
       csp = txcnsl( null ); /* clear text console */
       csp->clscr = 1; /* 0 / N: clear screen / scroll N lines */
-      csp->dfopt = 3;
+      csp->dfopt = 4;
 
    par_menu:
 
-      csp->items = 7;
+      csp->items = 8;
       csp->dflnf = csp->dfopt; /* set line feed before that option line */
 
       nseconds = time( timer );
@@ -639,13 +639,14 @@ short input ( char *option )
       strcpy( csp->cmmnt, "Select [ enter number ]" );
       strcpy( csp->tasks, "PARAMETERS" );
 
-      strcpy( csp->mline[1], "* Display the presently charged parameters" );
-      strcpy( csp->mline[2], "* Enter new parameters from file" );
-      strcpy( csp->mline[3], "* Edit [ and evtly. modify ] the parameters" );
-      strcpy( csp->mline[4], "* Reload the default parameters" );
-      strcpy( csp->mline[5], "* Print the parameters" );
-      strcpy( csp->mline[6], "* Start computation" );
-      strcpy( csp->mline[7], "* Continue" );
+      strcpy( csp->mline[1], "* Return to previous menu" );
+      strcpy( csp->mline[2], "* Display the presently charged parameters" );
+      strcpy( csp->mline[3], "* Enter new parameters from file" );
+      strcpy( csp->mline[4], "* Edit [ and evtly. modify ] the parameters" );
+      strcpy( csp->mline[5], "* Reload the default parameters" );
+      strcpy( csp->mline[6], "* Print the parameters" );
+      strcpy( csp->mline[7], "* Start computation" );
+      strcpy( csp->mline[8], "* Continue" );
 
       strcpy( csp->escpe, "End of program / escape" );
 
@@ -661,7 +662,7 @@ short input ( char *option )
       switch(csp->option )
       {
         default: /* continue program */
-	case 7:
+	case 8:
 
          PRBLDCLR( "" );
          fprintf( stdout, "\r%*s", 79, "INPUT" );
@@ -685,6 +686,11 @@ short input ( char *option )
 
 /*............................................................................*/
         case 1:  /* display the actual configuration [ on screen ] */
+         goto opr_menu;
+	break; 
+
+/*............................................................................*/
+        case 2:  /* display the actual configuration [ on screen ] */
 
 /*............................................................................*/
 # if defined ( AMD_PAGER )
@@ -710,13 +716,13 @@ short input ( char *option )
 # endif
 /*............................................................................*/
          csp->clscr = 0; /* 0 / N: clear screen / scroll N lines */
-         csp->dfopt = 6;
+         csp->dfopt = 7;
 
          goto par_menu;
         break;
 
 /*............................................................................*/
-        case 2: /* enter another configuration from file */
+        case 3: /* enter another configuration from file */
 
          printf( "\n Please enter filename [ Continue/"
             "Escape: null ] >----> " );
@@ -739,13 +745,13 @@ short input ( char *option )
          store_par( tmpfle, 't' );     /*   restore parameters on tmp file    */
 /*...................................*/
          csp->clscr = 1; /* 0 / N: clear screen / scroll N lines */
-         csp->dfopt = 6;
+         csp->dfopt = 7;
 
          goto par_menu;
         break;
 
 /*............................................................................*/
-        case 3:  /* edit and/or modify the actual configuration */
+        case 4:  /* edit and/or modify the actual configuration */
 
 /*............................................................................*/
 # if defined ( AMD_EDITOR )
@@ -763,12 +769,12 @@ short input ( char *option )
 # endif
 /*............................................................................*/
          csp->clscr = 1; /* 0 / N: clear screen / scroll N lines */
-         csp->dfopt = 6;
+         csp->dfopt = 7;
 
          goto par_menu;
         break;
 /*............................................................................*/
-        case 4:  /* reload the default configuration */
+        case 5:  /* reload the default configuration */
 
 /*......................................*/
          deflt_par( );                  /* enter default parameters           */
@@ -776,12 +782,12 @@ short input ( char *option )
          store_par( tmpfle, 't' );    /*   store on temporary file            */
 /*..................................*/
          csp->clscr = 1; /* 0 / N: clear screen / scroll N lines */
-         csp->dfopt = 6;
+         csp->dfopt = 7;
 
          goto par_menu;
         break;
 /*............................................................................*/
-        case 5:
+        case 6:
 
 /*............................................................................*/
 # if defined ( AMD_PRINTER )
@@ -797,13 +803,13 @@ short input ( char *option )
 # endif
 /*............................................................................*/
          csp->clscr = 1; /* 0 / N: clear screen / scroll N lines */
-         csp->dfopt = 6;
+         csp->dfopt = 7;
 
          goto par_menu;
         break;
 
 /*............................................................................*/
-        case 6:  /* start computation */
+        case 7:  /* start computation */
 
          remove( tmpfle );
          PRBLDCLR( "" );

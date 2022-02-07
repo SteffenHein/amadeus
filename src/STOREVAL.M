@@ -41,7 +41,8 @@
          fprintf( pltptr_cic, \
             "%12s     ", timestr ); \
  \
-         if(( ppt->yunits == 0 )||( ppt->yunits == 2 )) \
+         if(( ppt->yunits == 0 ) \
+          ||( ppt->yunits == 2 )) \
             strcpy( longstr, \
                dotos( cmlinc_upd, 7, "e" )); \
          else \

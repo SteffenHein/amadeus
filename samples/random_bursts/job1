@@ -1,4 +1,0 @@
-#!/bin/sh
-amadeus -n 1 -f par.init1
-cp 7_days_incidence_R0=3.000_job_no_1 no_bursts
-#./gnuplot1

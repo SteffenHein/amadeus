@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 05, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: February 07, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
@@ -221,7 +221,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /* copy the input parameters */
 
    ppt->Nhrd = ppt->s[1]; /* herd size */
-   ppt->Ninf = ppt->s[2]; /* initially sick */
+   ppt->Ninf = ppt->s[2]; /* initially acutely sick */
    ppt->Nifc = ppt->s[3]; /* initially infected */
    ppt->Nimn = ppt->s[4];
    ppt->Nlty = ppt->s[5];
@@ -344,11 +344,30 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( outpstr, lotos( ppt->kcic, 9, " " ));
    fprintf( fleptr_par, outpstr );
 
-   cpylne( outpstr,
-      "\nInitial_reproduction_factor","dimensionless", 60 );
-   strcat( outpstr, ": ");
-   strcat( outpstr, dotos( ppt->Repr, 4, "e" ));
-   fprintf( fleptr_par, outpstr );
+   if ( ppt->formula == null )      /* Repr is basic reproduction number */
+   {
+      cpylne( outpstr,
+         "\nBasic_reproduction_factor","dimensionless", 60 );
+      strcat( outpstr, ": ");
+      strcat( outpstr, dotos( ppt->Repr, 4, "e" ));
+      fprintf( fleptr_par, outpstr );
+   }
+   else
+   {
+      cpylne( outpstr,
+         "\nInitial_reproduction_factor","dimensionless", 60 );
+      strcat( outpstr, ": ");
+      strcat( outpstr, dotos( ppt->Repr, 4, "e" ));
+      fprintf( fleptr_par, outpstr );
+
+      scpt0 = 1. - ( ppt->rimn + ppt->rlty );
+
+      cpylne( outpstr,
+         "\nBasic_reproduction_factor_[estimate]","dimensionless", 60 );
+      strcat( outpstr, ": ");
+      strcat( outpstr, dotos( ppt->Repr/scpt0, 4, "e" ));
+      fprintf( fleptr_par, outpstr );
+   };
 
    cpylne( outpstr,
       "\nInitial_base_of_exponential_increase","dimensionless", 60 );
@@ -494,7 +513,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "# Epidemic | infected members [ x-unit: " );
    fprintf( pltptr_ifc, "%s", timestr );
 
-   if (( ppt->yunits == null )||( ppt->yunits == 2))
+   if (( ppt->yunits == null )
+     ||( ppt->yunits == TWO ))
       fprintf( pltptr_ifc, "%s", " | y-unit: ]\n" );
    else
       fprintf( pltptr_ifc, "%s", " | y-unit: % ]\n" );
@@ -575,6 +595,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    rnd = 1.;
    integral_inc = ZERO;
+   incidc_upd = incdnc_upd;
 /*...........................................................................*/
 /* here start the iterations */
 /* outer loop */
@@ -758,13 +779,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fleptr_par = fopen( parmtr_fle, "a+" );
       
    cpylne( outpstr,
-      "\nIncidence_maximum_attained_at","transmission_cycle", 60 );
+      "\nIncidence_maximum_attained_at",
+           "transmission_cycle", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( ppt->tmxinc, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
-      "\nMaximum_herd_incidence","percent", 60 );
+      "\nMaximum_transm.time_incidence","percent", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( 100.*ppt->maxinc, 4, "e" ));
    fprintf( fleptr_par, outpstr );
@@ -837,7 +859,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          " ", ( .77*1.0e+0*ppt->rifc ), ( 1.10e+0*ppt->maxifc ));
 
       if ( ppt->titles == ONE )
-         strcpy( optnstr, "Herd immunity" );
+         strcpy( optnstr, "Immunity" );
       else
          strcpy( optnstr, " " );
 
@@ -845,12 +867,12 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          " ", ( .95*1.0e+0*ppt->minimn ), ( 1.10e+0*ppt->maximn ));
 
       if ( ppt->titles == ONE )
-         strcpy( optnstr, "Incidence" );
+         strcpy( optnstr, "Transmission time incidence" );
       else
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_inc, plot_inc, flname_inc, optnstr, timestr, \
-         " ", ( .77*1.0e+0*ppt->mininc ), ( 1.10e+0*ppt->maxinc ));
+         " ", ( .95*1.0e+0*ppt->mininc ), ( 1.10e+0*ppt->maxinc ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Deceased" );
@@ -858,12 +880,12 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_lty, plot_lty, flname_lty, optnstr, timestr, \
-         " ", ( .77*1.0e+0*ppt->rlty ), ( 1.10e+0*ppt->maxlty ));\
+         " ", ( .95*1.0e+0*ppt->rlty ), ( 1.10e+0*ppt->maxlty ));\
    }
    else /* conventional units */
    {
       GNUPLOT( gnuptr_cic, plot_cic, flname_cic, optnstr, timestr, \
-         "per 100000", ( .77*1.0e+5*ppt->mincic ), ( 1.10e+5*ppt->maxcic ));
+         "per 100000", ( .95*1.0e+5*ppt->mincic ), ( 1.10e+5*ppt->maxcic ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, \
@@ -873,10 +895,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_ifc, plot_ifc, flname_ifc, optnstr, timestr, \
-         "percent", ( .77*1.0e+2*ppt->rifc ), ( 1.10e+2*ppt->maxifc ));
+         "percent", ( .95*1.0e+2*ppt->rifc ), ( 1.10e+2*ppt->maxifc ));
 
       if ( ppt->titles == ONE )
-         strcpy( optnstr, "Herd immunity" );
+         strcpy( optnstr, "Immunity" );
       else
          strcpy( optnstr, " " );
 
@@ -884,12 +906,12 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          "percent", ( .95*1.0e+2*ppt->minimn ), ( 1.10e+2*ppt->maximn ));
 
       if ( ppt->titles == ONE )
-         strcpy( optnstr, "Incidence" );
+         strcpy( optnstr, "Transmission time incidence" );
       else
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_inc, plot_inc, flname_inc, optnstr, timestr, \
-         "per 100000", ( .77*1.0e+5*ppt->mininc ), ( 1.10e+5*ppt->maxinc ));
+         "per 100000", ( .95*1.0e+5*ppt->mininc ), ( 1.10e+5*ppt->maxinc ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Deceased" );

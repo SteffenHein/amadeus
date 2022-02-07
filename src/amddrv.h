@@ -555,6 +555,7 @@ short amddrv( int argn, char **args )
    if ( state->uif == 't' ) /* text input */
    {
       strcpy( csp->cmmnt, "Welcome back to AMADEUS !" );
+      csp->dfopt = 0; /* the initial default menu option */
 
       if ( state->cpmrk == TWO )
          goto first_console;
