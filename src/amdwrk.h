@@ -10,11 +10,16 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 07, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: February 10, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
    # define AMD_JOBLBL 1   /* [0] 1: [don't] append job labels at file names */
+# endif
+/*----------------------------------------------------------------------------*/
+/* susceptibility threshold */
+# ifndef SUSCPT_THR
+     # define SUSCPT_THR ( PRECISION )
 # endif
 /*============================================================================*/
 AMDSTATE *amdwrk( AMDSTATE *state )
@@ -564,8 +569,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->minimn =  1.00e+27;
    ppt->maximn = -1.00e+27;
    ppt->maxlty = -1.00e+27;
+   ppt->minrpd =  1.00e+27;
    ppt->maxrpd = -1.00e+27;
-   ppt->minrpd = +1.00e+27;
 
 /*............................................................................*/
 /* start outer loop */
@@ -608,6 +613,9 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*...........................................................................*/
 /* store values */
 
+      if ( ppt->xunits == ONE ) /* [ days ] */
+         incidc_upd /= ppt->Ttrm;
+
       STOREVAL(1);
 /*...........................................................................*/
 /* compute extrema in outer loop: set EXTREMA(1)  */
@@ -625,14 +633,13 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          EXTREMA( null );
 /*...........................................................................*/
          hh = immune_upd + lethal_upd;
-         suscpt_upd = ( 1. - hh ); 
+         suscpt_upd = fmax(( 1. - hh ), SUSCPT_THR ); 
 
-         if ( ppt->nmstop == ONE ) /* stop if no sick members remain */
+         if ( ppt->nmstop == ONE ) /* stop if no susceptible members remain */
 	 {
-            if ((( incdnc_upd*reprod_upd ) < ppt->rthr )
-	       || ( suscpt_upd <= ppt->rthr ))
+	    if ( suscpt_upd < ppt->rthr )
             { 
-/* [ no new cases or group immunity attained ] */
+/* susceptible fraction smaller than N = ppt->Tthr herd members */
 
 	       ppt->dhdt[null] = ZERO;
        	       ppt->timmun = ppt->tt;
@@ -747,11 +754,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 	 while( null < ii )
          {
             ppt->dhdt[ii] = ppt->dhdt[ii-ONE];
-
-            cmlinc_upd += \
-               ( ppt->dt*ppt->dhdt[ii] );
-	    ii--;
+            cmlinc_upd += ppt->dhdt[ii];
+	    --ii;
          };
+         cmlinc_upd *= ppt->dt;
 
          ppt->tt += ppt->dt;
          ppt->ninn++ ;
@@ -785,10 +791,20 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( outpstr, dotos( ppt->tmxinc, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
-   cpylne( outpstr,
-      "\nMaximum_transm.time_incidence","percent", 60 );
-   strcat( outpstr, ": ");
-   strcat( outpstr, dotos( 100.*ppt->maxinc, 4, "e" ));
+   if ( ppt->xunits == null )
+   {
+      cpylne( outpstr,
+         "\nMaximum_incidence","percent", 60 );
+      strcat( outpstr, ": ");
+      strcat( outpstr, dotos( 100.*ppt->maxinc, 4, "e" ));
+   }
+   else
+   {
+      cpylne( outpstr,
+         "\nMaximum_daily_incidence","percent", 60 );
+      strcat( outpstr, ": ");
+      strcat( outpstr, dotos(( 100.*ppt->maxinc/ppt->Ttrm ), 4, "e" ));
+   };
    fprintf( fleptr_par, outpstr );
 
    strcpy( inptstr, "\nMaximum_cumulative_herd_incidence_(");
@@ -832,7 +848,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    if ( ppt->xunits == null )
       strcpy ( timestr, "transmission cycles" );
    else
+   {
       strcpy ( timestr, "days" );
+  /*    ppt->mininc /= ppt->Ttrm;
+      ppt->maxinc /= ppt->Ttrm; */
+   };
 
    if ( ppt->titles == ONE )
    {
@@ -843,10 +863,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    else
       strcpy( optnstr, " " );
 
-   if (( ppt->yunits == null )||( ppt->yunits == 2))
+   if (( ppt->yunits == null )
+     ||( ppt->yunits == TWO ))
    {
       GNUPLOT( gnuptr_cic, plot_cic, flname_cic, optnstr, timestr, \
-         " ", ( .77*1.0e+0*ppt->mincic ), ( 1.10e+0*ppt->maxcic ));
+         " ", ( .95*1.0e+0*ppt->mincic ), ( 1.10e+0*ppt->maxcic ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr,
@@ -856,7 +877,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_ifc, plot_ifc, flname_ifc, optnstr, timestr, \
-         " ", ( .77*1.0e+0*ppt->rifc ), ( 1.10e+0*ppt->maxifc ));
+         " ", ( .95*1.0e+0*ppt->rifc ), ( 1.10e+0*ppt->maxifc ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Immunity" );
@@ -867,7 +888,12 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          " ", ( .95*1.0e+0*ppt->minimn ), ( 1.10e+0*ppt->maximn ));
 
       if ( ppt->titles == ONE )
-         strcpy( optnstr, "Transmission time incidence" );
+      {
+         if ( ppt->xunits == null )
+            strcpy( optnstr, "Incidence [ dh/dt ]" );
+	 else
+            strcpy( optnstr, "Daily incidence [ dh/dt ]" );
+      }
       else
          strcpy( optnstr, " " );
 
@@ -882,7 +908,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       GNUPLOT( gnuptr_lty, plot_lty, flname_lty, optnstr, timestr, \
          " ", ( .95*1.0e+0*ppt->rlty ), ( 1.10e+0*ppt->maxlty ));\
    }
-   else /* conventional units */
+   else /* conventional yunits */
    {
       GNUPLOT( gnuptr_cic, plot_cic, flname_cic, optnstr, timestr, \
          "per 100000", ( .95*1.0e+5*ppt->mincic ), ( 1.10e+5*ppt->maxcic ));
@@ -906,12 +932,17 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          "percent", ( .95*1.0e+2*ppt->minimn ), ( 1.10e+2*ppt->maximn ));
 
       if ( ppt->titles == ONE )
-         strcpy( optnstr, "Transmission time incidence" );
+      {
+         if ( ppt->xunits == null )
+            strcpy( optnstr, "Incidence [ dh/dt ]" );
+	 else
+            strcpy( optnstr, "Daily incidence [ dh/dt ]" );
+      }
       else
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_inc, plot_inc, flname_inc, optnstr, timestr, \
-         "per 100000", ( .95*1.0e+5*ppt->mininc ), ( 1.10e+5*ppt->maxinc ));
+         "per 100000", .95*1.0e+5*ppt->mininc, 1.10e+5*ppt->maxinc ); 
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Deceased" );
@@ -919,17 +950,17 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_lty, plot_lty, flname_lty, optnstr, timestr, \
-         "members", ( .77*ppt->rlty*ppt->Nhrd ), \
+         "members", ( .95*ppt->rlty*ppt->Nhrd ), \
             ( 1.10e+0*ppt->maxlty*ppt->Nhrd ));
    };
 
    if ( ppt->titles == ONE )
       strcpy( optnstr, "Reproduction number" );
    else
-         strcpy( optnstr, " " );
+      strcpy( optnstr, " " );
 
    GNUPLOT( gnuptr_rpd, plot_rpd, flname_rpd, optnstr, timestr, \
-      "reprod. no", ( .77*ppt->minrpd ), ( 1.10*ppt->maxrpd ));
+      "reprod. no", ( .95*ppt->minrpd ), ( 1.10*ppt->maxrpd ));
 /*............................................................................*/
    if ( stp->uif == 't' )
    {

@@ -20,7 +20,7 @@
 *  option "operation" whenever such dependencies exist.                        *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 05, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: February 09, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # include "../src/OPRSTRNGS.M"
@@ -76,12 +76,8 @@ short rvise_opr( void )
       break;
    };
      
-   ii = 3; do
-   {
-      ++ii;
-      if ( opr->n[ii] != null )
-         opr->n[ii] = ONE;
-   } while ( ii < 5 );
+   if ( opr->n[4] != null )
+      opr->n[4] = ONE;
 
    ii = opr->n[5];
    switch( ii )
@@ -102,10 +98,10 @@ short rvise_opr( void )
 
    ii = 6; do
    {
-      ++ii;
       if ( opr->n[ii] != null )
          opr->n[ii] = ONE;
-   } while ( ii < 8 );
+      ++ii;
+   } while ( ii < 9 );
 
    return null;
 }

@@ -4,7 +4,7 @@
 *   Defines some often used mathematical constants                             *
 *                                                                              *
 *   (C) SHEIN; Munich, April 2020                             Steffen Hein     *
-*   [ Update: January 25, 2022 ]                           <contact@sfenx.de>  *
+*   [ Update: February 10, 2022 ]                          <contact@sfenx.de>  *
 *                                                                              *
 *******************************************************************************/
 # ifndef __consts_h /* this condition embraces the whole content of this file */
@@ -76,7 +76,7 @@ typedef struct
 *//* character strings
 *//* and standard string initializers [ 80 chars ]:
 */
-# define CLEAR_LINE "\r%*s", 78, "                                          "
+# define CLEAR_LINE "\r%*s", 80, "                                          "
 # define SSTRNG  "****************************************"\
                  "**************************************** "
 

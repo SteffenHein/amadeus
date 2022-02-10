@@ -1,4 +1,4 @@
-/* Update: January 20, 2022 */
+/* Update: February 08, 2022 */
 # define EXTREMA(XX)\
 { \
    if ( XX == 1 ) \
@@ -18,7 +18,8 @@
          ppt->tmxcic = ppt->tt; \
       }; \
  \
-      if ( cmlinc_upd < ppt->mincic ) \
+      if (( ppt->kcic <= kk ) \
+        &&( cmlinc_upd < ppt->mincic )) \
          ppt->mincic = cmlinc_upd; \
  \
       if ( ppt->maximn < immune_upd ) \

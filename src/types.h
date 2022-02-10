@@ -124,8 +124,8 @@ typedef struct
       tmxicr,    /* time of maximum increase */
       tmmicr,    /* time of maximum decrease */
 
-      mincic,    /* minimum averaged incidence */
-      maxcic,    /* maximum averaged incidence */
+      mincic,    /* minimum N days incidence */
+      maxcic,    /* maximum N days incidence */
       maxifc,    /* maximum infection */
       maximn,    /* maximum immunity */
       minimn,    /* minimum immunity */

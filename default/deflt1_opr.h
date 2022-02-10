@@ -38,7 +38,7 @@ void deflt_opr( void ) /* default operation modes */
                                                         reproduction number ] */
    opr->n[4] = 1 ; /* x units 0: transmission time | 1: days                  */
    opr->n[5] = 0 ; /* y units 0: normalized        | 1: conventional          */
-/* more precisely:
+/* more options:
                                0: normalized ( herd size = 1 )
                                1: conventional units 
 		               2: normalized, scaled to community size
