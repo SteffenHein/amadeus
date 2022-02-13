@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 05, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: February 11, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -126,12 +126,14 @@ typedef struct
 
       mincic,    /* minimum N days incidence */
       maxcic,    /* maximum N days incidence */
+      minifc,    /* initial infection [= minimum] */
       maxifc,    /* maximum infection */
-      maximn,    /* maximum immunity */
       minimn,    /* minimum immunity */
+      maximn,    /* maximum immunity */
       mininc,    /* minimum incidence */
       maxinc,    /* maximum incidence */
-      maxlty,    /* maximum lethal cases */
+      minlty,    /* initial lethality [= minimum] */
+      maxlty,    /* maximum lethality */
       minrpd,    /* minimum reproduction number */
       maxrpd;    /* maximum reproduction number */
 

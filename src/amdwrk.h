@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 10, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: February 13, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
@@ -492,21 +492,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       strcpy ( timestr, "transmission cycles" );
    else
       strcpy ( timestr, "days" );
-/* 
-   fprintf( pltptr_cic, "%s",\
-      "# Epidemic | " );
-*/
-   fprintf( pltptr_cic, "%s",\
-      "# Epidemic | " );
+
+   fprintf( pltptr_cic, "%s", "# Epidemic | " );
     
-   strcpy( optnstr, "total " );
-   strcat( optnstr, lotos(( long ) ppt->Tcic, 2, " " ));
+   strcpy( optnstr, lotos(( long ) ppt->Tcic, 2, " " ));
    strcat( optnstr, " days incidence " );
 
    fprintf( pltptr_cic, "%s", optnstr );
-
-   fprintf( pltptr_cic, "%s",\
-      "[ x-unit: " );
+   fprintf( pltptr_cic, "%s", "[ x-unit: " );
    fprintf( pltptr_cic, "%s", timestr );
 
    if (( ppt->yunits == null )||( ppt->yunits == 2))
@@ -528,13 +521,19 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "# Epidemic | immune members [ x-unit: " );
    fprintf( pltptr_imn, "%s", timestr );
 
-   if (( ppt->yunits == null )||( ppt->yunits == 2))
+   if (( ppt->yunits == null )
+     ||( ppt->yunits == TWO ))
       fprintf( pltptr_imn, "%s", " | y-unit: ]\n" );
    else
       fprintf( pltptr_imn, "%s", " | y-unit: % ]\n" );
+      
+   if ( ppt->xunits == null )
+      fprintf( pltptr_inc, "%s",\
+         "# Epidemic | incidence [ x-unit: " );
+   else
+      fprintf( pltptr_inc, "%s",\
+         "# Epidemic | daily incidence [ x-unit: " );
 
-   fprintf( pltptr_inc, "%s",\
-      "# Epidemic | total incidence [ x-unit: " );
    fprintf( pltptr_inc, "%s", timestr );
 
    if (( ppt->yunits == null )||( ppt->yunits == 2))
@@ -561,16 +560,18 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* initialize iteration */
 
-   ppt->mincic =  1.00e+27;
-   ppt->maxcic = -1.00e+27;
-   ppt->mininc =  1.00e+27;
-   ppt->maxinc = -1.00e+27;
-   ppt->maxifc = -1.00e+27;
-   ppt->minimn =  1.00e+27;
-   ppt->maximn = -1.00e+27;
-   ppt->maxlty = -1.00e+27;
-   ppt->minrpd =  1.00e+27;
-   ppt->maxrpd = -1.00e+27;
+   ppt->mincic =  1.00e+77;
+   ppt->maxcic = -1.00e+77;
+   ppt->mininc =  1.00e+77;
+   ppt->maxinc = -1.00e+77;
+   ppt->minifc =  1.00e+77;
+   ppt->maxifc = -1.00e+77;
+   ppt->minimn =  1.00e+77;
+   ppt->maximn = -1.00e+77;
+   ppt->minlty =  1.00e+77;
+   ppt->maxlty = -1.00e+77;
+   ppt->minrpd =  1.00e+77;
+   ppt->maxrpd = -1.00e+77;
 
 /*............................................................................*/
 /* start outer loop */
@@ -585,7 +586,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    if ( ppt->formula == null )      /* Repr is basic reproduction number */
       reprod_upd = scpt0*ppt->repr;
-   else                             /* Repr is current reproduction number */
+   else                             /* Repr is initial reproduction number */
       reprod_upd = ppt->repr;
 
    lnrpd= log( reprod_upd );
@@ -730,7 +731,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          infctd_upd +=\
             ( ppt->dt*ppt->wght_ifc*incidc_upd );
 
-         if ( infctd_upd > 1. )
+         if ( 1. < infctd_upd )
 	    infctd_upd = 1.;
 
          lethal_upd +=\
@@ -742,10 +743,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          immune_upd +=\
             ( ppt->dt*ppt->wght_imm*incidc_upd );
 
+         if ( 1. < immune_upd )
+	    immune_upd = 1.;
 /*...........................................................................*/
 /* mean n days incidence */
 /* and shift dudt from k to k+1 */    
-
 
          ppt->dhdt[null] = incidc_upd;
 	 
@@ -803,7 +805,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       cpylne( outpstr,
          "\nMaximum_daily_incidence","percent", 60 );
       strcat( outpstr, ": ");
-      strcat( outpstr, dotos(( 100.*ppt->maxinc/ppt->Ttrm ), 4, "e" ));
+      strcat( outpstr, dotos( 100.*ppt->maxinc/ppt->Ttrm, 4, "e" ));
    };
    fprintf( fleptr_par, outpstr );
 
@@ -848,11 +850,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    if ( ppt->xunits == null )
       strcpy ( timestr, "transmission cycles" );
    else
-   {
       strcpy ( timestr, "days" );
-  /*    ppt->mininc /= ppt->Ttrm;
-      ppt->maxinc /= ppt->Ttrm; */
-   };
 
    if ( ppt->titles == ONE )
    {
@@ -867,7 +865,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
      ||( ppt->yunits == TWO ))
    {
       GNUPLOT( gnuptr_cic, plot_cic, flname_cic, optnstr, timestr, \
-         " ", ( .95*1.0e+0*ppt->mincic ), ( 1.10e+0*ppt->maxcic ));
+        " ", ( .95*ppt->mincic ), ( 1.10*ppt->maxcic ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr,
@@ -877,7 +875,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_ifc, plot_ifc, flname_ifc, optnstr, timestr, \
-         " ", ( .95*1.0e+0*ppt->rifc ), ( 1.10e+0*ppt->maxifc ));
+        " ", ( .95*ppt->rifc ), ( 1.10*ppt->maxifc ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Immunity" );
@@ -885,7 +883,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_imn, plot_imn, flname_imn, optnstr, timestr, \
-         " ", ( .95*1.0e+0*ppt->minimn ), ( 1.10e+0*ppt->maximn ));
+        " ", ( .95*ppt->minimn ), ( 1.10*ppt->maximn ));
 
       if ( ppt->titles == ONE )
       {
@@ -898,7 +896,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_inc, plot_inc, flname_inc, optnstr, timestr, \
-         " ", ( .95*1.0e+0*ppt->mininc ), ( 1.10e+0*ppt->maxinc ));
+        " ", ( .95*ppt->mininc ), ( 1.10*ppt->maxinc ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Deceased" );
@@ -906,12 +904,12 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_lty, plot_lty, flname_lty, optnstr, timestr, \
-         " ", ( .95*1.0e+0*ppt->rlty ), ( 1.10e+0*ppt->maxlty ));\
+        " ", ( .95*ppt->rlty ), ( 1.10*ppt->maxlty ));\
    }
    else /* conventional yunits */
    {
       GNUPLOT( gnuptr_cic, plot_cic, flname_cic, optnstr, timestr, \
-         "per 100000", ( .95*1.0e+5*ppt->mincic ), ( 1.10e+5*ppt->maxcic ));
+        "per 100000", ( .95*1.0e+05*ppt->mincic ), ( 1.10e+05*ppt->maxcic ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, \
@@ -921,7 +919,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_ifc, plot_ifc, flname_ifc, optnstr, timestr, \
-         "percent", ( .95*1.0e+2*ppt->rifc ), ( 1.10e+2*ppt->maxifc ));
+        "percent", ( .95*1.0e+02*ppt->rifc ), ( 1.10e+02*ppt->maxifc ));
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Immunity" );
@@ -929,7 +927,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_imn, plot_imn, flname_imn, optnstr, timestr, \
-         "percent", ( .95*1.0e+2*ppt->minimn ), ( 1.10e+2*ppt->maximn ));
+        "percent", ( .95*1.0e+02*ppt->minimn ), ( 1.10e+02*ppt->maximn ));
 
       if ( ppt->titles == ONE )
       {
@@ -942,7 +940,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_inc, plot_inc, flname_inc, optnstr, timestr, \
-         "per 100000", .95*1.0e+5*ppt->mininc, 1.10e+5*ppt->maxinc ); 
+        "per 100000", ( .95*1.0e+05*ppt->mininc ), ( 1.10e+05*ppt->maxinc )); 
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Deceased" );
@@ -950,8 +948,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       GNUPLOT( gnuptr_lty, plot_lty, flname_lty, optnstr, timestr, \
-         "members", ( .95*ppt->rlty*ppt->Nhrd ), \
-            ( 1.10e+0*ppt->maxlty*ppt->Nhrd ));
+        "members", ( .95*ppt->rlty*ppt->Nhrd ), (1.10*ppt->maxlty*ppt->Nhrd ));
    };
 
    if ( ppt->titles == ONE )

@@ -1,5 +1,5 @@
 /* [ file: OPRSTRNGS.M ] */
-/* Update: February 05, 2022 */
+/* Update: February 11, 2022 */
 /*============================================================================*/
 # define OPRSTRNGS( ) \
 { \
@@ -13,7 +13,7 @@
 /* strcpy( opr->ntx[0], "computation_modes" ); */ \
 /*..........................................................................*/ \
    strcpy( opr->ntx[0], \
-      "computation_modes" ); \
+      "operation_parameters" ); \
  \
    cpylne( opr->ntx[1], \
       "maximum_number_of_outer_iterations", "<=100000", ll ); \
