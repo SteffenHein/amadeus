@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 13, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: February 15, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
@@ -85,18 +85,18 @@ AMDSTATE *amdwrk( AMDSTATE *state )
      *logfle = null,
      *pltptr_cic = null,
      *pltptr_ifc = null,
-     *pltptr_imn = null,
+     *pltptr_imm = null,
      *pltptr_inc = null,
-     *pltptr_lty = null,
+     *pltptr_dcd = null,
      *pltptr_rpd = null,
      *fleptr_par = null;
 
    static FILE
      *gnuptr_cic = null,
      *gnuptr_ifc = null,
-     *gnuptr_imn = null,
+     *gnuptr_imm = null,
      *gnuptr_inc = null,
-     *gnuptr_lty = null,
+     *gnuptr_dcd = null,
      *gnuptr_rpd = null;
 
    char   
@@ -108,16 +108,16 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
       flname_cic[50] = {'\0'},
       flname_ifc[50] = {'\0'},
-      flname_imn[50] = {'\0'},
+      flname_imm[50] = {'\0'},
       flname_inc[50] = {'\0'},
-      flname_lty[50] = {'\0'},
+      flname_dcd[50] = {'\0'},
       flname_rpd[50] = {'\0'},
 
       pltfle_cic[50] = AMD_RESULTS,
       pltfle_ifc[50] = AMD_RESULTS,
-      pltfle_imn[50] = AMD_RESULTS,
+      pltfle_imm[50] = AMD_RESULTS,
       pltfle_inc[50] = AMD_RESULTS,
-      pltfle_lty[50] = AMD_RESULTS,
+      pltfle_dcd[50] = AMD_RESULTS,
       pltfle_rpd[50] = AMD_RESULTS,
 
       parmtr_fle[50] = AMD_RESULTS;
@@ -125,9 +125,9 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    char
       plot_cic[50] = AMD_RESULTS,
       plot_ifc[50] = AMD_RESULTS,
-      plot_imn[50] = AMD_RESULTS,
+      plot_imm[50] = AMD_RESULTS,
       plot_inc[50] = AMD_RESULTS,
-      plot_lty[50] = AMD_RESULTS,
+      plot_dcd[50] = AMD_RESULTS,
       plot_rpd[50] = AMD_RESULTS;
 
    long
@@ -179,9 +179,9 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    strcat( plot_cic, "gpl_n_days_incidence" );
    strcat( plot_ifc, "gpl_infection" );
-   strcat( plot_imn, "gpl_immunity" );
+   strcat( plot_imm, "gpl_immunity" );
    strcat( plot_inc, "gpl_incidence" );
-   strcat( plot_lty, "gpl_lethality" );
+   strcat( plot_dcd, "gpl_lethality" );
    strcat( plot_rpd, "gpl_reproduction" );
 /*............................................................................*/
 /* append job number to filenames */
@@ -193,9 +193,9 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( parmtr_fle, longstr );
    strcat( plot_cic, longstr );
    strcat( plot_ifc, longstr );
-   strcat( plot_imn, longstr );
+   strcat( plot_imm, longstr );
    strcat( plot_inc, longstr );
-   strcat( plot_lty, longstr );
+   strcat( plot_dcd, longstr );
    strcat( plot_rpd, longstr );
 # endif
 /*............................................................................*/
@@ -461,31 +461,31 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( flname_cic, longstr );
    strcat( pltfle_cic, flname_cic );
 
-   strcat( flname_ifc, "h(t)_" );
+   strcat( flname_ifc, "ifc_" );
    strcat( flname_ifc, longstr );
    strcat( pltfle_ifc, flname_ifc );
 
-   strcat( flname_imn, "im(t)_" );
-   strcat( flname_imn, longstr );
-   strcat( pltfle_imn, flname_imn );
+   strcat( flname_imm, "imm_" );
+   strcat( flname_imm, longstr );
+   strcat( pltfle_imm, flname_imm );
 
-   strcat( flname_inc, "u(t)_" );
+   strcat( flname_inc, "inc_" );
    strcat( flname_inc, longstr );
    strcat( pltfle_inc, flname_inc );
 
-   strcat( flname_lty, "l(t)_" );
-   strcat( flname_lty, longstr );
-   strcat( pltfle_lty, flname_lty );
+   strcat( flname_dcd, "dcd_" );
+   strcat( flname_dcd, longstr );
+   strcat( pltfle_dcd, flname_dcd );
 
-   strcat( flname_rpd, "r(t)_" );
+   strcat( flname_rpd, "rpd_" );
    strcat( flname_rpd, longstr );
    strcat( pltfle_rpd, flname_rpd );
 
    pltptr_cic = fopen( pltfle_cic, "w+" );
    pltptr_ifc = fopen( pltfle_ifc, "w+" );
-   pltptr_imn = fopen( pltfle_imn, "w+" );
+   pltptr_imm = fopen( pltfle_imm, "w+" );
    pltptr_inc = fopen( pltfle_inc, "w+" );
-   pltptr_lty = fopen( pltfle_lty, "w+" );
+   pltptr_dcd = fopen( pltfle_dcd, "w+" );
    pltptr_rpd = fopen( pltfle_rpd, "w+" );
    
    if ( ppt->xunits == null )
@@ -517,15 +517,15 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    else
       fprintf( pltptr_ifc, "%s", " | y-unit: % ]\n" );
 
-   fprintf( pltptr_imn, "%s",\
+   fprintf( pltptr_imm, "%s",\
       "# Epidemic | immune members [ x-unit: " );
-   fprintf( pltptr_imn, "%s", timestr );
+   fprintf( pltptr_imm, "%s", timestr );
 
    if (( ppt->yunits == null )
      ||( ppt->yunits == TWO ))
-      fprintf( pltptr_imn, "%s", " | y-unit: ]\n" );
+      fprintf( pltptr_imm, "%s", " | y-unit: ]\n" );
    else
-      fprintf( pltptr_imn, "%s", " | y-unit: % ]\n" );
+      fprintf( pltptr_imm, "%s", " | y-unit: % ]\n" );
       
    if ( ppt->xunits == null )
       fprintf( pltptr_inc, "%s",\
@@ -541,14 +541,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    else
       fprintf( pltptr_inc, "%s", " | y-unit: per 100000 ]\n" );
 
-   fprintf( pltptr_lty, "%s",\
+   fprintf( pltptr_dcd, "%s",\
       "# Epidemic | deceased members [ x-unit: " );
-   fprintf( pltptr_lty, "%s", timestr );
+   fprintf( pltptr_dcd, "%s", timestr );
 
    if (( ppt->yunits == null )||( ppt->yunits == 2))
-      fprintf( pltptr_lty, "%s", " | y-unit: ]\n" );
+      fprintf( pltptr_dcd, "%s", " | y-unit: ]\n" );
    else
-      fprintf( pltptr_lty, "%s", " | y-unit: % ]\n" );
+      fprintf( pltptr_dcd, "%s", " | y-unit: % ]\n" );
 
    fprintf( pltptr_rpd, "%s",\
       "# Epidemic | reproduction number\n"
@@ -776,9 +776,9 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    fclose( pltptr_cic );
    fclose( pltptr_ifc );
-   fclose( pltptr_imn );
+   fclose( pltptr_imm );
    fclose( pltptr_inc );
-   fclose( pltptr_lty );
+   fclose( pltptr_dcd );
    fclose( pltptr_rpd );
 
 /*............................................................................*/
@@ -882,7 +882,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       else
          strcpy( optnstr, " " );
 
-      GNUPLOT( gnuptr_imn, plot_imn, flname_imn, optnstr, timestr, \
+      GNUPLOT( gnuptr_imm, plot_imm, flname_imm, optnstr, timestr, \
         " ", ( .95*ppt->minimn ), ( 1.10*ppt->maximn ));
 
       if ( ppt->titles == ONE )
@@ -903,7 +903,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       else
          strcpy( optnstr, " " );
 
-      GNUPLOT( gnuptr_lty, plot_lty, flname_lty, optnstr, timestr, \
+      GNUPLOT( gnuptr_dcd, plot_dcd, flname_dcd, optnstr, timestr, \
         " ", ( .95*ppt->rlty ), ( 1.10*ppt->maxlty ));\
    }
    else /* conventional yunits */
@@ -926,7 +926,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       else
          strcpy( optnstr, " " );
 
-      GNUPLOT( gnuptr_imn, plot_imn, flname_imn, optnstr, timestr, \
+      GNUPLOT( gnuptr_imm, plot_imm, flname_imm, optnstr, timestr, \
         "percent", ( .95*1.0e+02*ppt->minimn ), ( 1.10e+02*ppt->maximn ));
 
       if ( ppt->titles == ONE )
@@ -947,7 +947,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       else
          strcpy( optnstr, " " );
 
-      GNUPLOT( gnuptr_lty, plot_lty, flname_lty, optnstr, timestr, \
+      GNUPLOT( gnuptr_dcd, plot_dcd, flname_dcd, optnstr, timestr, \
         "members", ( .95*ppt->rlty*ppt->Nhrd ), (1.10*ppt->maxlty*ppt->Nhrd ));
    };
 

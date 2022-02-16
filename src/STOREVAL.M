@@ -1,4 +1,4 @@
-/* Update: February 09, 2022 */
+/* Update: February 15, 2022 */
 # define STOREVAL( XX )\
 { \
    if ( XX == 1 ) \
@@ -10,7 +10,7 @@
          strcpy( timestr, \
             dotos( ppt->tt*ppt->Ttrm, 5, "e" )); \
  \
-      fprintf( pltptr_imn, \
+      fprintf( pltptr_imm, \
          "%12s     ", timestr ); \
  \
       if(( ppt->yunits == 0 ) \
@@ -21,7 +21,7 @@
          strcpy( longstr, \
             dotos( 1.0e+02*immune_upd, 7, "e" )); \
  \
-      fprintf( pltptr_imn, \
+      fprintf( pltptr_imm, \
          "%12s\n", longstr ); \
  \
       fprintf( pltptr_ifc, \
@@ -56,7 +56,7 @@
  \
       }; \
  \
-      fprintf( pltptr_lty, \
+      fprintf( pltptr_dcd, \
          "%12s     ", timestr ); \
  \
       if(( ppt->yunits == null ) \
@@ -67,7 +67,7 @@
          strcpy( longstr, \
             dotos( ppt->Nhrd*( lethal_upd ), 7, "e" )); \
  \
-      fprintf( pltptr_lty, \
+      fprintf( pltptr_dcd, \
          "%12s\n", longstr ); \
  \
       fprintf( pltptr_inc, \
