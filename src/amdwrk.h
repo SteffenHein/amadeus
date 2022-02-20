@@ -10,11 +10,15 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 15, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: February 19, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
-   # define AMD_JOBLBL 1   /* [0] 1: [don't] append job labels at file names */
+   # define AMD_JOBLBL ONE /* [0] 1: [don't] append job labels at file names  */
+# endif
+/*----------------------------------------------------------------------------*/
+# ifndef AMD_INTRPL
+   # define AMD_INTRPL ONE /* [0] 1: [no] initial N-days incid. interpolation */
 # endif
 /*----------------------------------------------------------------------------*/
 /* susceptibility threshold */
@@ -151,6 +155,12 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       lethal_upd = ZERO,
       reprod_upd = ZERO, /* updated reproduction number, inner loop */
       integral_inc = ZERO;
+
+# if AMD_INTRPL == 1
+      static double 
+         uu = ZERO,
+         vv = ZERO;
+# endif
 /*----------------------------- end declarations -----------------------------*/
 /* assign structure pointers */
 
@@ -217,8 +227,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
 /* Repr = 1.000;  initial reproduction number */
 /* Tend = 365.0;  computed time intervall [ days ] */
-/* Tcic =   14.;  incidence cumulated over time [ days ] */
-/* Ttrm =    7.;  mean transmission time [ days ] */
+/* Tcic =    7.;  incidence cumulated over time [ days ] */
+/* Ttrm =    5.;  mean transmission time [ days ] */
 /*............................................................................*/
 /* LnRp = log( Repr )/Ttrm;  i.e. exp( LnRp ) = Repr[0]^(1./Ttrm) */ 
 /* rrpd = exp( LnRp ); = Repr[0]^(1./Ttrm), base of init. exp. incr. */
@@ -602,6 +612,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    rnd = 1.;
    integral_inc = ZERO;
    incidc_upd = incdnc_upd;
+   cmlinc_upd = incidc_upd*ppt->Tcic/ppt->Ttrm;
 /*...........................................................................*/
 /* here start the iterations */
 /* outer loop */
@@ -614,10 +625,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*...........................................................................*/
 /* store values */
 
-      if ( ppt->xunits == ONE ) /* [ days ] */
+      if ( ppt->xunits == ONE ) /* [ xunits "days" ] */
          incidc_upd /= ppt->Ttrm;
 
-      STOREVAL(1);
+      STOREVAL(1, AMD_INTRPL );
 /*...........................................................................*/
 /* compute extrema in outer loop: set EXTREMA(1)  */
 
@@ -761,6 +772,17 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          };
          cmlinc_upd *= ppt->dt;
 
+# if AMD_INTRPL == 1
+
+         if ( kk < ppt->kcic )
+	    cmlinc_upd = incidc_upd*ppt->Tcic/ppt->Ttrm;
+	 else if ( kk < 3.*ppt->kcic )
+         {
+            uu = ( double )( kk - ppt->kcic )/( 2.*ppt->kcic );
+	    vv = 1. - uu;
+	    cmlinc_upd = uu*cmlinc_upd + vv*incidc_upd*ppt->Tcic/ppt->Ttrm;
+         }; 
+# endif
          ppt->tt += ppt->dt;
          ppt->ninn++ ;
 	 kk++;

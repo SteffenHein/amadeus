@@ -1,5 +1,5 @@
 /* Update: February 15, 2022 */
-# define STOREVAL( XX )\
+# define STOREVAL( XX, YY )\
 { \
    if ( XX == 1 ) \
    { \
@@ -13,8 +13,8 @@
       fprintf( pltptr_imm, \
          "%12s     ", timestr ); \
  \
-      if(( ppt->yunits == 0 ) \
-       ||( ppt->yunits == 2 )) \
+      if(( ppt->yunits == null ) \
+       ||( ppt->yunits == TWO )) \
          strcpy( longstr, \
             dotos( immune_upd, 7, "e" )); \
       else \
@@ -28,7 +28,7 @@
          "%12s     ", timestr ); \
  \
       if(( ppt->yunits == null ) \
-       ||( ppt->yunits ==  TWO )) \
+       ||( ppt->yunits == TWO )) \
          strcpy( longstr, \
             dotos( infctd_upd, 7, "e" )); \
       else \
@@ -38,7 +38,8 @@
       fprintf( pltptr_ifc, \
          "%12s\n", longstr ); \
  \
-      if ( ppt->kcic <= kk ) \
+      if (( YY == 1 ) \
+        ||( ppt->kcic <= kk )) \
       { \
          fprintf( pltptr_cic, \
             "%12s     ", timestr ); \
