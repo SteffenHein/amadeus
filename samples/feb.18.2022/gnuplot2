@@ -1,0 +1,7 @@
+#!/bin/sh
+gnuplot gpl_n_days_incidence_job_no_2
+gnuplot gpl_incidence_job_no_2
+gnuplot gpl_immunity_job_no_2
+gnuplot gpl_reproduction_job_no_2
+gnuplot gpl_infection_job_no_2
+gnuplot gpl_lethality_job_no_2

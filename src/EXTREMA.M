@@ -1,4 +1,4 @@
-/* Update: February 08, 2022 */
+/* Update: February 23, 2022 */
 # define EXTREMA(XX)\
 { \
    if ( XX == 1 ) \
@@ -28,7 +28,7 @@
          ppt->tmximn = ppt->tt; \
       }; \
  \
-      if ( ppt->minimn > immune_upd ) \
+      if ( immune_upd < ppt->minimn ) \
          ppt->minimn = immune_upd; \
  \
       if ( ppt->maxrpd < reprod_upd ) \
@@ -37,7 +37,7 @@
          ppt->tmxrpd = ppt->tt; \
       }; \
  \
-      if ( ppt->minrpd > reprod_upd ) \
+      if ( reprod_upd < ppt->minrpd ) \
          ppt->minrpd = reprod_upd; \
  \
       if ( ppt->maxifc < infctd_upd ) \
@@ -46,7 +46,13 @@
          ppt->tmxifc = ppt->tt; \
       }; \
  \
+      if ( infctd_upd < ppt->minifc ) \
+         ppt->minifc = infctd_upd; \
+ \
       if ( ppt->maxlty < lethal_upd ) \
          ppt->maxlty = lethal_upd; \
+ \
+      if ( lethal_upd < ppt->minlty ) \
+         ppt->minlty = lethal_upd; \
    }; \
 }

@@ -6,7 +6,7 @@ Do_not_change_file_topology_!!!
 [Leave_contiguous_strings_contiguous.]
 
 s001=Herd_size_[Nhrd]__________________________[0<Nhrd<=Nref]:   1.00000e+05
-s002=Initially_infective_('sick')_members_[Ninf]_____[0<Ninf]:   1.00000e+00
+s002=Initially_infective_[acutely_sick]_members_[Ninf][0<Nin]:   1.00000e+00
 s003=Initially_infected_members_[Nifc]___________[Ninf<=Nifc]:   1.00000e+00
 s004=Initially_immune_members__________________________[0<=N]:   0.00000e+00
 s005=Already_deceased_members___________________________[0<N]:   0.00000e+00
@@ -14,9 +14,9 @@ s006=Initial_reproduction_factor________________________[0<R]:   2.75000e+00
 s007=Immunization_ratio_____________________________[0<Ir<=1]:   1.00000e+00
 s008=Percentage_of_asymptomatic_cases______________[0<=P<100]:   2.00000e+01
 s009=Percentage_of_lethal_cases___________________[0<=P<=100]:   2.00000e-01
-s010=Mean_transmission_time_[T/days]___________________[0<=T]:   7.00000e+00
-s011=Mean_duration_of_immunity_[T/days]_________________[0<T]:   1.00000e+99
-s012=Cumulative_incidence_over_time_[T/days]____________[0<T]:   7.00000e+00
+s010=Mean_transmission_time_[days]_____________________[0<=T]:   7.00000e+00
+s011=Immunity_half-life_time_[days]_____________________[0<T]:   1.00000e+99
+s012=Incidence_cumulation_time_[days]___________________[0<T]:   7.00000e+00
 s013=Incidence_threshold____[stop_below_that_number_of_cases]:   0.00000e+00
 s014=Random_burst_factor_[average:_Bf]________________[0<=Bf]:   0.00000e+00
 s015=If_0<Bf:_Random_burst_length_[average:_T/days]____[0<=T]:   0.00000e+00
@@ -42,5 +42,5 @@ y-scale____________________________[linear:0_|_logarithmic:1]:            0
 [0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:            1
 
 AMADEUS input parameter file par.log3 created:
-Fri Feb 11 11:28:17 2022
+Mon Feb 21 16:58:34 2022
 ÿ

@@ -1,0 +1,10 @@
+#!/bin/sh
+amadeus -n 2 -f par.init2
+cp 7_days_incidence_R0=.9400_job_no_2 Timm=120_Days
+cp inc_R0=.9400_job_no_2 Ti=120_Days
+#gnuplot gpl_n_days_incidence_job_no_2
+#gnuplot gpl_incidence_job_no_2
+#gnuplot gpl_immunity_job_no_2
+#gnuplot gpl_reproduction_job_no_2
+#gnuplot gpl_infection_job_no_2
+#gnuplot gpl_lethality_job_no_2

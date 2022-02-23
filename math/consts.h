@@ -4,7 +4,7 @@
 *   Defines some often used mathematical constants                             *
 *                                                                              *
 *   (C) SHEIN; Munich, April 2020                             Steffen Hein     *
-*   [ Update: February 10, 2022 ]                          <contact@sfenx.de>  *
+*   [ Update: February 23, 2022 ]                          <contact@sfenx.de>  *
 *                                                                              *
 *******************************************************************************/
 # ifndef __consts_h /* this condition embraces the whole content of this file */
@@ -44,13 +44,16 @@
 # define ELEVEN 11
 # define TWELVE 12
 
-# define HALF   0.5000000000000000000000 
-# define THIRD  0.3333333333333333333333 
-# define QUART  0.2500000000000000000000 
-# define ZERO   0.0000000000000000000000 
+# define HALF   0.5000000000000000000000
+# define THIRD  0.3333333333333333333333
+# define QUART  0.2500000000000000000000
+# define ZERO   0.0000000000000000000000
 
 # undef  PI
 # define PI     3.1415926535897932384626
+
+# undef  LN2
+# define LN2   .693147180559945309417232
 /* 
 *//* structure types:
 */

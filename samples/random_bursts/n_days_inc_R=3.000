@@ -1,0 +1,22 @@
+set title 'Cumulative 7 days incidence ( R0=3.000 )'
+set xlabel 'transmission cycles'
+set xrange [ 0.000000e+00 : 5.214285e+01 ]
+set ylabel ' '
+set format y '%10.1e'
+set yrange [ 0.000000e+00 : 2.300000e-01 ]
+set grid
+set border
+set key box
+set pointsize 0.2
+plot \
+'no_bursts' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'burst=0.5' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'burst=1.0' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'burst=2.0' with lines
+pause -1 '[ hit return to continue ]'

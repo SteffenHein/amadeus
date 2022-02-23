@@ -1,0 +1,6 @@
+#!/bin/sh
+amadeus -n 3 -f par.init3
+cp 7_days_incidence_R0=3.000_job_no_3 burst=1.0
+cp inc_R0=3.000_job_no_3 inc_burst=1.0
+cp imm_R0=3.000_job_no_3 imm_burst=1.0
+#./gnuplot3

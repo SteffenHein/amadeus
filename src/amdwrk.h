@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 19, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: February 23, 2022 ]                            <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
@@ -19,6 +19,10 @@
 /*----------------------------------------------------------------------------*/
 # ifndef AMD_INTRPL
    # define AMD_INTRPL ONE /* [0] 1: [no] initial N-days incid. interpolation */
+# endif
+/*----------------------------------------------------------------------------*/
+# ifndef AMD_FRAME
+   # define AMD_FRAME ( 7.7e-02 ) /* frame of graphics [ cf. GNUPLOT ] */
 # endif
 /*----------------------------------------------------------------------------*/
 /* susceptibility threshold */
@@ -141,7 +145,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    static double
       hh = ZERO,
       rnd = ZERO,
+      frm = ZERO,
       rrpd = ZERO,
+      lwbnd = ZERO,
+      upbnd = ZERO,
       scpt0 = ZERO,
       lnrpd = ZERO, /* log( Repr(t)/Ttrm ) */
       nxtbst = ZERO,     
@@ -212,10 +219,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /* dictionary: */
       
 /* Nhrd = 8.20e+07;  herd size [ number of members ] */
-/* Ninf = 3.40e+04;  initial number of infective [sick] members */
+/* Ninf = 3.40e+04;  initial number of infective [acutely sick] members */
 /* Nifc = 1.60e+05;  number of initially infected members Ninf <= Nifc */
-/* Nimn = 1.60e+05;  initial number immune members */
-/* Nlty = 2.40e+03;  initial number of deceased members */
+/* Nimn = 1.60e+05;  initially immune members */
+/* Nlty = 2.40e+03;  initially already of deceased members */
 /* Bstf = 0.000+00;  random burst level [0<=Bstf] */
 
 /* rinf = Ninf/Nhrd; initial ratio of infective members */
@@ -235,32 +242,32 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*...........................................................................*/
 /* copy the input parameters */
 
-   ppt->Nhrd = ppt->s[1]; /* herd size */
-   ppt->Ninf = ppt->s[2]; /* initially acutely sick */
-   ppt->Nifc = ppt->s[3]; /* initially infected */
-   ppt->Nimn = ppt->s[4];
-   ppt->Nlty = ppt->s[5];
-   ppt->Repr = ppt->s[6];
-   ppt->Immc = ppt->s[7];
-   ppt->Slnt = ppt->s[8];
-   ppt->Ltlt = ppt->s[9];
-   ppt->Ttrm = ppt->s[10];
-   ppt->Timu = ppt->s[11];
-   ppt->Tcic = ppt->s[12];
-   ppt->Ithr = ppt->s[13];
-   ppt->Bstf = ppt->s[14];
-   ppt->Tlen = ppt->s[15];
-   ppt->Trep = ppt->s[16];
-   ppt->Tend = ppt->s[17];
-   ppt->DltT = ppt->s[18];
+   ppt->Nhrd = ppt->s[1];  /* herd size */
+   ppt->Ninf = ppt->s[2];  /* initially infective [ acutely sick ] members */
+   ppt->Nifc = ppt->s[3];  /* initially infected members */
+   ppt->Nimn = ppt->s[4];  /* initially immune members */
+   ppt->Nlty = ppt->s[5];  /* initially already deceased members */
+   ppt->Repr = ppt->s[6];  /* initial reproduction factor */
+   ppt->Immc = ppt->s[7];  /* immunization coefficient [ ratio: 0<Immc<=1 ] */
+   ppt->Slnt = ppt->s[8];  /* percentage of asymptomatic ['silent'] cases */
+   ppt->Ltlt = ppt->s[9];  /* percentage of lethal cases */
+   ppt->Ttrm = ppt->s[10]; /* mean transmission time [ days ] */
+   ppt->Timu = ppt->s[11]; /* immunity half-life time [ days ] */
+   ppt->Tcic = ppt->s[12]; /* incidence cumulation time [ days ] */
+   ppt->Ithr = ppt->s[13]; /* incidence threshold [stop below that number...] */
+   ppt->Bstf = ppt->s[14]; /* average burst factor */
+   ppt->Tlen = ppt->s[15]; /* average burst length [ days ] */
+   ppt->Trep = ppt->s[16]; /* average burst repetion time [ days ] */
+   ppt->Tend = ppt->s[17]; /* length of modelled time interval [ days ] */ 
+   ppt->DltT = ppt->s[18]; /* time increment [ days ] */ 
 /*............................................................................*/
 /* normalized parameters: */
 
    ppt->dt = ppt->DltT/ppt->Ttrm;
-   ppt->timn = ppt->Timu/ppt->Ttrm; /* timn: Timu in natural units */
    ppt->tcin = ppt->Tcic/ppt->Ttrm; /* tcin: Tcic in natural units */
    ppt->tlen = ppt->Tlen/ppt->Ttrm; /* tlen: Tlen in natural units */
    ppt->trep = ppt->Trep/ppt->Ttrm; /* trep: Trep in natural units */
+   ppt->timn = ppt->Timu/ppt->Ttrm/LN2; /* immunity half-life [ LN2 = log(2) ]*/
 
    nxtbst = ppt->trep; /* burst start */ 
    bststp = ppt->tlen; /* burst stop */
@@ -342,9 +349,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
-      "\nMean_duration_of_immunity","days", 60 );
+      "\nImmunity_half-life_time","days", 60 );
    strcat( outpstr, ": ");
-   strcat( outpstr, dotos( ppt->Timu, 4, "e" ));
+
+   if ( ppt->Timu < 1.00e+05 )
+      strcat( outpstr, dotos( ppt->Timu, 4, "e" ));
+   else
+      strcat( outpstr, "Infinite" );
+
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
@@ -886,8 +898,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    if (( ppt->yunits == null )
      ||( ppt->yunits == TWO ))
    {
-      GNUPLOT( gnuptr_cic, plot_cic, flname_cic, optnstr, timestr, \
-        " ", ( .95*ppt->mincic ), ( 1.10*ppt->maxcic ));
+      frm = AMD_FRAME*( ppt->maxcic - ppt->mincic );
+      lwbnd = fmax( ppt->mincic - frm, ZERO );
+      upbnd = ppt->maxcic + frm;
+      GNUPLOT( gnuptr_cic, plot_cic, flname_cic, optnstr, timestr,
+        " ", lwbnd, upbnd );
 
       if ( ppt->titles == ONE )
          strcpy( optnstr,
@@ -896,16 +911,22 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       else
          strcpy( optnstr, " " );
 
-      GNUPLOT( gnuptr_ifc, plot_ifc, flname_ifc, optnstr, timestr, \
-        " ", ( .95*ppt->rifc ), ( 1.10*ppt->maxifc ));
+      frm = AMD_FRAME*( ppt->maxifc - ppt->minifc );
+      lwbnd = fmax( ppt->minifc - frm, ZERO );
+      upbnd = ppt->maxifc + frm;
+      GNUPLOT( gnuptr_ifc, plot_ifc, flname_ifc, optnstr, timestr,
+        " ", lwbnd, upbnd );
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Immunity" );
       else
          strcpy( optnstr, " " );
 
-      GNUPLOT( gnuptr_imm, plot_imm, flname_imm, optnstr, timestr, \
-        " ", ( .95*ppt->minimn ), ( 1.10*ppt->maximn ));
+      frm = AMD_FRAME*( ppt->maximn - ppt->minimn );
+      lwbnd = fmax( ppt->minimn - frm, ZERO );
+      upbnd = ppt->maximn + frm;
+      GNUPLOT( gnuptr_imm, plot_imm, flname_imm, optnstr, timestr,
+        " ", lwbnd, upbnd );
 
       if ( ppt->titles == ONE )
       {
@@ -917,21 +938,30 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       else
          strcpy( optnstr, " " );
 
-      GNUPLOT( gnuptr_inc, plot_inc, flname_inc, optnstr, timestr, \
-        " ", ( .95*ppt->mininc ), ( 1.10*ppt->maxinc ));
+      frm = AMD_FRAME*( ppt->maxinc - ppt->mininc );
+      lwbnd = fmax( ppt->mininc - frm, ZERO );
+      upbnd = ppt->maxinc + frm;
+      GNUPLOT( gnuptr_inc, plot_inc, flname_inc, optnstr, timestr, 
+        " ", lwbnd, upbnd );
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Deceased" );
       else
          strcpy( optnstr, " " );
 
-      GNUPLOT( gnuptr_dcd, plot_dcd, flname_dcd, optnstr, timestr, \
-        " ", ( .95*ppt->rlty ), ( 1.10*ppt->maxlty ));\
+      frm = AMD_FRAME*( ppt->maxlty - ppt->minlty );
+      lwbnd = fmax( ppt->minlty - frm, ZERO );
+      upbnd = ppt->maxlty + frm;
+      GNUPLOT( gnuptr_dcd, plot_dcd, flname_dcd, optnstr, timestr, 
+        " ", lwbnd, upbnd );\
    }
    else /* conventional yunits */
    {
-      GNUPLOT( gnuptr_cic, plot_cic, flname_cic, optnstr, timestr, \
-        "per 100000", ( .95*1.0e+05*ppt->mincic ), ( 1.10e+05*ppt->maxcic ));
+      frm = AMD_FRAME*( ppt->maxcic - ppt->mincic );
+      lwbnd = fmax( ppt->mincic - frm, ZERO );
+      upbnd = ppt->maxcic + frm;
+      GNUPLOT( gnuptr_cic, plot_cic, flname_cic, optnstr, timestr,
+        "per 100000", 1.0e+05*lwbnd, 1.0e+05*upbnd );
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, \
@@ -940,16 +970,22 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       else
          strcpy( optnstr, " " );
 
-      GNUPLOT( gnuptr_ifc, plot_ifc, flname_ifc, optnstr, timestr, \
-        "percent", ( .95*1.0e+02*ppt->rifc ), ( 1.10e+02*ppt->maxifc ));
+      frm = AMD_FRAME*( ppt->maxifc - ppt->minifc );
+      lwbnd = fmax( ppt->minifc - frm, ZERO );
+      upbnd = ppt->maxifc + frm;
+      GNUPLOT( gnuptr_ifc, plot_ifc, flname_ifc, optnstr, timestr,
+        "percent", 1.0e+02*lwbnd, 1.02e+02*upbnd );
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Immunity" );
       else
          strcpy( optnstr, " " );
 
-      GNUPLOT( gnuptr_imm, plot_imm, flname_imm, optnstr, timestr, \
-        "percent", ( .95*1.0e+02*ppt->minimn ), ( 1.10e+02*ppt->maximn ));
+      frm = AMD_FRAME*( ppt->maximn - ppt->minimn );
+      lwbnd = fmax( ppt->minimn - frm, ZERO );
+      upbnd = ppt->maximn + frm;
+      GNUPLOT( gnuptr_imm, plot_imm, flname_imm, optnstr, timestr,
+        "percent", 1.0e+02*lwbnd, 1.0e+02*upbnd );
 
       if ( ppt->titles == ONE )
       {
@@ -961,16 +997,22 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       else
          strcpy( optnstr, " " );
 
-      GNUPLOT( gnuptr_inc, plot_inc, flname_inc, optnstr, timestr, \
-        "per 100000", ( .95*1.0e+05*ppt->mininc ), ( 1.10e+05*ppt->maxinc )); 
+      frm = AMD_FRAME*( ppt->maxinc - ppt->mininc );
+      lwbnd = fmax( ppt->mininc - frm, ZERO );
+      upbnd = ppt->maxinc + frm;
+      GNUPLOT( gnuptr_inc, plot_inc, flname_inc, optnstr, timestr,
+        "per 100000", 1.0e+05*lwbnd, 1.0e+05*upbnd );
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Deceased" );
       else
          strcpy( optnstr, " " );
 
-      GNUPLOT( gnuptr_dcd, plot_dcd, flname_dcd, optnstr, timestr, \
-        "members", ( .95*ppt->rlty*ppt->Nhrd ), (1.10*ppt->maxlty*ppt->Nhrd ));
+      frm = AMD_FRAME*( ppt->maxlty - ppt->minlty );
+      lwbnd = fmax( ppt->minlty - frm, ZERO );
+      upbnd = ppt->maxlty + frm;
+      GNUPLOT( gnuptr_dcd, plot_dcd, flname_dcd, optnstr, timestr,
+        "members", ppt->Nhrd*lwbnd, ppt->Nhrd*upbnd );
    };
 
    if ( ppt->titles == ONE )
@@ -978,8 +1020,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    else
       strcpy( optnstr, " " );
 
-   GNUPLOT( gnuptr_rpd, plot_rpd, flname_rpd, optnstr, timestr, \
-      "reprod. no", ( .95*ppt->minrpd ), ( 1.10*ppt->maxrpd ));
+   frm = AMD_FRAME*( ppt->maxrpd - ppt->minrpd );
+   lwbnd = fmax( ppt->minrpd - frm, ZERO );
+   upbnd = ppt->maxrpd + frm;
+   GNUPLOT( gnuptr_rpd, plot_rpd, flname_rpd, optnstr, timestr,
+      "reprod. no", lwbnd, upbnd );
 /*............................................................................*/
    if ( stp->uif == 't' )
    {

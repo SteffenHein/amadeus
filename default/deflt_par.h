@@ -1,5 +1,5 @@
 /* [ file: deflt_par.h ] */
-/* Update: January 25, 2022 */
+/* Update: February 21, 2022 */
 /*----------------------------------------------------------------------------*/
 # ifndef LINLEN
    # define LINLEN 61
@@ -29,14 +29,14 @@ void deflt_par( void ) /* default model parameters */
    par->s[2]  = 1.000e+00; /* Ninf; Initially transmissive members [number] */ 
    par->s[3]  = 1.000e+00; /* Nifc; Initially infected members [number] */
    par->s[4]  = 1.000e+00; /* Nimn; Initially immune members [number] */
-   par->s[5]  = 0.000e+00; /* Nlty; Init. already deceased members [number] */
-   par->s[6]  = 3.000e+00; /* Nrpd; The reproduction factor */
-   par->s[7]  = 1.000e+00; /* Immc; The immunization coefficient */
+   par->s[5]  = 0.000e+00; /* Nlty; Initially yet deceased members [number] */
+   par->s[6]  = 3.000e+00; /* Nrpd; Initial reproduction factor */
+   par->s[7]  = 1.000e+00; /* Immc; Immunization coefficient */
    par->s[8]  = 2.000e+01; /* Percentage of asymptomatic ('silent') cases */
    par->s[9]  = 2.000e-02; /* Percentage of lethal cases */
-   par->s[10] = 1.400e+01; /* Ttrm; The mean tansmission time [days] */
-   par->s[11] = 9.000e+01; /* Timu; The mean duration of immunity [days] */
-   par->s[12] = 7.000e+00; /* Tinc; Cumulative incidence over time [days] */
+   par->s[10] = 1.400e+01; /* Ttrm; Mean tansmission time [days] */
+   par->s[11] = 9.000e+01; /* Timu; Immunity half-life time [days] */
+   par->s[12] = 7.000e+00; /* Tinc; Incidence cumulation time [days] */
    par->s[13] = 0.000e+00; /* Ithr; The incidence threshold [0<=Ithr] */
    par->s[14] = 0.000e+00; /* Bstf; Burst factor, average [0<=Bstf] */
    par->s[15] = 0.000e+00; /* Tlen; Burst length, average [days] */
