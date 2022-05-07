@@ -1,14 +1,14 @@
-/* Update: February 15, 2022 */
+/* Update: March 16, 2022 */
 # define STOREVAL( XX, YY )\
 { \
    if ( XX == 1 ) \
    { \
       if( ppt->xunits == null ) \
          strcpy( timestr, \
-            dotos( ppt->tt, 5, "e" )); \
+            dotos( upd->tt, 5, "e" )); \
       else \
          strcpy( timestr, \
-            dotos( ppt->tt*ppt->Ttrm, 5, "e" )); \
+            dotos( upd->tt*ppt->Ttrm, 5, "e" )); \
  \
       fprintf( pltptr_imm, \
          "%12s     ", timestr ); \
@@ -16,10 +16,10 @@
       if(( ppt->yunits == null ) \
        ||( ppt->yunits == TWO )) \
          strcpy( longstr, \
-            dotos( immune_upd, 7, "e" )); \
+            dotos( upd->immune, 7, "e" )); \
       else \
          strcpy( longstr, \
-            dotos( 1.0e+02*immune_upd, 7, "e" )); \
+            dotos( 1.0e+02*upd->immune, 7, "e" )); \
  \
       fprintf( pltptr_imm, \
          "%12s\n", longstr ); \
@@ -30,16 +30,16 @@
       if(( ppt->yunits == null ) \
        ||( ppt->yunits == TWO )) \
          strcpy( longstr, \
-            dotos( infctd_upd, 7, "e" )); \
+            dotos( upd->infctd, 7, "e" )); \
       else \
          strcpy( longstr, \
-            dotos( 1.0e+02*infctd_upd, 7, "e" )); \
+            dotos( 1.0e+02*upd->infctd, 7, "e" )); \
  \
       fprintf( pltptr_ifc, \
          "%12s\n", longstr ); \
  \
       if (( YY == 1 ) \
-        ||( ppt->kcic <= kk )) \
+        ||( ppt->kcic <= upd->kk )) \
       { \
          fprintf( pltptr_cic, \
             "%12s     ", timestr ); \
@@ -47,10 +47,10 @@
          if(( ppt->yunits == null ) \
           ||( ppt->yunits == TWO )) \
             strcpy( longstr, \
-               dotos( cmlinc_upd, 7, "e" )); \
+               dotos( upd->cmlinc, 7, "e" )); \
          else \
             strcpy( longstr, \
-               dotos(( 1.0e+5 )*( cmlinc_upd ), 7, "e" )); \
+               dotos(( 1.0e+5 )*( upd->cmlinc ), 7, "e" )); \
  \
          fprintf( pltptr_cic, \
             "%12s\n", longstr ); \
@@ -63,10 +63,10 @@
       if(( ppt->yunits == null ) \
        ||( ppt->yunits == TWO )) \
          strcpy( longstr, \
-            dotos( lethal_upd, 7, "e" )); \
+            dotos( upd->lethal, 7, "e" )); \
       else \
          strcpy( longstr, \
-            dotos( ppt->Nhrd*( lethal_upd ), 7, "e" )); \
+            dotos( ppt->Nhrd*( upd->lethal ), 7, "e" )); \
  \
       fprintf( pltptr_dcd, \
          "%12s\n", longstr ); \
@@ -77,10 +77,10 @@
       if(( ppt->yunits == null ) \
        ||( ppt->yunits == TWO )) \
          strcpy( longstr, \
-               dotos( incidc_upd, 7, "e" )); \
+               dotos( upd->incidc, 7, "e" )); \
       else \
          strcpy( longstr, \
-            dotos( 1.0e+05*incidc_upd, 7, "e" )); \
+            dotos( 1.0e+05*upd->incidc, 7, "e" )); \
  \
       fprintf( pltptr_inc, \
             "%12s\n", longstr ); \
@@ -89,7 +89,7 @@
          "%12s     ", timestr ); \
  \
       strcpy( longstr, \
-         dotos( reprod_upd, 7, "e" )); \
+         dotos( upd->reprod, 7, "e" )); \
       fprintf( pltptr_rpd, \
          "%12s\n", longstr ); \
    }; \

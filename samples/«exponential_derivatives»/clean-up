@@ -1,5 +1,6 @@
 #!/bin/sh
 rm *R0=*
+rm *r0=*
 rm gpl_*
 rm opr.log*
 rm par.log*

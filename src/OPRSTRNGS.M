@@ -1,5 +1,5 @@
 /* [ file: OPRSTRNGS.M ] */
-/* Update: February 11, 2022 */
+/* Update: March 17, 2022 */
 /*============================================================================*/
 # define OPRSTRNGS( ) \
 { \
@@ -34,7 +34,7 @@
     	  "y-scale", "linear:0_|_logarithmic:1", ll ); \
  \
    cpylne( opr->ntx[7], \
-      "[1]_0:_[don't]_write_titles_on_graphics", "0/1", ll ); \
+      "[0]_1:_[don't]_write_titles_on_graphics", "0/1", ll ); \
  \
    cpylne( opr->ntx[8], \
           "[0]_1:_[don't]_stop_when_no_sick_individuals_remain", "0/1", ll ); \

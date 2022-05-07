@@ -12,7 +12,7 @@
 *  by subsequently calling the respective functions                            *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 29, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: March 16, 2022 ]                               <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 1 /* some headers of the POSIX.1 standard will be used */
@@ -86,6 +86,8 @@ static AMDSTATE amdstat = {null};
 static OPERTNS opertns = {null};
 /*----------------------------------------------------------------------------*/
 static PARMTRS parmtrs = {null};
+/*----------------------------------------------------------------------------*/
+static UPDATES updates = {null};
 /*----------------------------------------------------------------------------*/
 static TXCNSL cns = {null};
 /*----------------------------------------------------------------------------*/

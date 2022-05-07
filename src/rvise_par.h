@@ -20,7 +20,7 @@
 *  option "parameters" whenever such dependencies exist.                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 25, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: May 07, 2022 ]                                 <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # include "../src/PARSTRNGS.M"

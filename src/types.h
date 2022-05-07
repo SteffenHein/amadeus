@@ -9,10 +9,42 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 11, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: May 07, 2022 ]                                 <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
+/*----------------------------------------------------------------------------*/
+# define TP_UPDATES 1
+typedef struct
+{
+   long
+      kk,
+      kout,      /* outer iteration index */ 
+      kinn;      /* inner iteration index */
+
+   double
+      tt,
+      dt, 
+      rnd,
+      suscpt,
+      incdnc,
+      incidc,
+      incsum,
+      infctd,
+      cmlinc,
+      immune,
+      vaccin,
+      lethal,
+      reprod,
+      nxtbst,
+      bststp;
+
+   double
+      dhdt[100000+ONE];
+
+} UPDATES;
+/*----------------------------------------------------------------------------*/
+/* The type definition structure of the parameter transfer functions          */
 /*----------------------------------------------------------------------------*/
 # ifndef OPERATIONS
    # define OPERATIONS 20
@@ -41,7 +73,7 @@ typedef struct
    # define PARAMETERS 50
 # endif
 /*----------------------------------------------------------------------------*/
-# define TP_PARMTRS
+# define TP_PARMTRS 1
 /*----------------------------------------------------------------------------*/
 typedef struct
 {
@@ -64,9 +96,6 @@ typedef struct
       kcic,
       ktrm,
 
-      nout,      /* outer iteration index */ 
-      ninn,      /* inner iteration index */
-      
       maxout,    /* the maximum number of outer iterations */
       maxinn,    /* the maximum number of inner iterations */
       mxictm,    /* maximum ( kinc, ktrm ) */
@@ -75,21 +104,21 @@ typedef struct
    double
       yy,      
       dy,      
-      tt,        /* time in natural units [ Ttrm scale ] */
-      dt,        /* time step, natural units [ Ttrm scale ] */
       DltT,      /* time increment [ days ] */
 
       Nhrd,      /* herd size [ number of members ] */
-      Nifc,      /* initial number of infected persons */
-      Nimn,      /* initial number immune persons */
-      Ninf,      /* initial number of infective ['sick'] persons */
-      Nlty,      /* initial number of deceased persons */
+      Nifc,      /* initial number of infected members */
+      Nimn,      /* initial number immune members */
+      Ninf,      /* initial number of infective ['sick'] members */
+      Nlty,      /* initial number of deceased members */
+      Nvcc,      /* number of members vaccinated per day */
 
       Repr,      /* initial reproduction number */
       Ithr,      /* incidence "threshold" [ stop computation when incidence  */
                                       /* lower than that number of persons ] */
-      Immc,      /* immunisation coefficient [ 0 < Immc <= 1 ] */
-      Slnt,      /* percentage of "silent" (asymptomatic) cases */
+      Immc,      /* immunisation coefficient [ ratio; 0 < Immc <= 1 ] */
+      Veff,      /* vaccination efficiency [ ratio; 0 < Veff <= 1 ] */
+      Slnt,      /* percentage of "silent" [ asymptomatic ] cases */
       Ltlt,      /* lethality [ percent ] */
       Bstf,      /* random burst factor */
       
@@ -99,10 +128,12 @@ typedef struct
       rlty,      /* initial group lethality [ ratio ] */
       repr,      /* reproduction rate [ log(Nrpd)/Tinf ] */
       rthr,      /* incidence threshold [ Ithr/Tinf ] */
+      rvcc,      /* vaccination rate per cycle */
 
       wght_ifc,  /* infection weight: 100/( 100-Slnt ) */
       wght_imm,  /* immunisation weight: ( 100+Ltlt )/( 100-Slnt ) */
       wght_lty,  /* lethality weight: Ltlt/( 100-Slnt ) */
+      wght_vcc,  /* vaccination efficiency [ ratio ] */
       
       Ttrm,      /* mean transmission time [ Tinc+Till, e.g. ] */
       Timu,      /* mean immunity duration [ days ] */
@@ -135,10 +166,11 @@ typedef struct
       minlty,    /* initial lethality [= minimum] */
       maxlty,    /* maximum lethality */
       minrpd,    /* minimum reproduction number */
-      maxrpd;    /* maximum reproduction number */
+      maxrpd,    /* maximum reproduction number */
 
-   double
-      dhdt[100000+ONE];
+      mean_imm,  /* mean mmunity */
+      mean_inc,  /* mean incidence */
+      mean_cic;  /* mean n days accumulated incidence */
 
 } PARMTRS;
 /*----------------------------------------------------------------------------*/
@@ -220,7 +252,7 @@ typedef struct
 /* [ reflects actually charged topology, parameter, boundary conditions, ..., */
 /*   file names, file labels etc.]: */
 /*----------------------------------------------------------------------------*/
-# define AMDTP_AMDSTATE 1
+# define TP_AMDSTATE 1
 typedef struct
 {
    signed char
@@ -253,8 +285,6 @@ typedef struct
       fleps; /* file position pointer */
 
    double
-      upd, /* update coefficient [ transferred to any function ] */
-      uexp, /* initial update coefficient */
       scale;
 
    FILE 
@@ -268,6 +298,9 @@ typedef struct
 
    PARMTRS
      *par;
+
+   UPDATES 
+     *upd;
 
 } AMDSTATE;
 /*************************** end of file types.h ******************************/

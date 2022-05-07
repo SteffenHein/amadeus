@@ -1,58 +1,58 @@
-/* Update: February 23, 2022 */
+/* Update: March 16, 2022 */
 # define EXTREMA(XX)\
 { \
    if ( XX == 1 ) \
    { \
-      if ( ppt->maxinc < incidc_upd ) \
+      if ( ppt->maxinc < upd->incidc ) \
       { \
-         ppt->maxinc = incidc_upd; \
-         ppt->tmxinc = ppt->tt; \
+         ppt->maxinc = upd->incidc; \
+         ppt->tmxinc = upd->tt; \
       }; \
  \
-      if ( incidc_upd < ppt->mininc ) \
-         ppt->mininc = incidc_upd; \
+      if ( upd->incidc < ppt->mininc ) \
+         ppt->mininc = upd->incidc; \
  \
-      if ( ppt->maxcic < cmlinc_upd ) \
+      if ( ppt->maxcic < upd->cmlinc ) \
       { \
-         ppt->maxcic = cmlinc_upd; \
-         ppt->tmxcic = ppt->tt; \
+         ppt->maxcic = upd->cmlinc; \
+         ppt->tmxcic = upd->tt; \
       }; \
  \
-      if (( ppt->kcic <= kk ) \
-        &&( cmlinc_upd < ppt->mincic )) \
-         ppt->mincic = cmlinc_upd; \
+      if (( ppt->kcic <= upd->kk ) \
+        &&( upd->cmlinc < ppt->mincic )) \
+         ppt->mincic = upd->cmlinc; \
  \
-      if ( ppt->maximn < immune_upd ) \
+      if ( ppt->maximn < upd->immune ) \
       { \
-         ppt->maximn = immune_upd; \
-         ppt->tmximn = ppt->tt; \
+         ppt->maximn = upd->immune; \
+         ppt->tmximn = upd->tt; \
       }; \
  \
-      if ( immune_upd < ppt->minimn ) \
-         ppt->minimn = immune_upd; \
+      if ( upd->immune < ppt->minimn ) \
+         ppt->minimn = upd->immune; \
  \
-      if ( ppt->maxrpd < reprod_upd ) \
+      if ( ppt->maxrpd < upd->reprod ) \
       { \
-         ppt->maxrpd = reprod_upd; \
-         ppt->tmxrpd = ppt->tt; \
+         ppt->maxrpd = upd->reprod; \
+         ppt->tmxrpd = upd->tt; \
       }; \
  \
-      if ( reprod_upd < ppt->minrpd ) \
-         ppt->minrpd = reprod_upd; \
+      if ( upd->reprod < ppt->minrpd ) \
+         ppt->minrpd = upd->reprod; \
  \
-      if ( ppt->maxifc < infctd_upd ) \
+      if ( ppt->maxifc < upd->infctd ) \
       { \
-         ppt->maxifc = infctd_upd; \
-         ppt->tmxifc = ppt->tt; \
+         ppt->maxifc = upd->infctd; \
+         ppt->tmxifc = upd->tt; \
       }; \
  \
-      if ( infctd_upd < ppt->minifc ) \
-         ppt->minifc = infctd_upd; \
+      if ( upd->infctd < ppt->minifc ) \
+         ppt->minifc = upd->infctd; \
  \
-      if ( ppt->maxlty < lethal_upd ) \
-         ppt->maxlty = lethal_upd; \
+      if ( ppt->maxlty < upd->lethal ) \
+         ppt->maxlty = upd->lethal; \
  \
-      if ( lethal_upd < ppt->minlty ) \
-         ppt->minlty = lethal_upd; \
+      if ( upd->lethal < ppt->minlty ) \
+         ppt->minlty = upd->lethal; \
    }; \
 }

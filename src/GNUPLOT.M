@@ -1,4 +1,4 @@
-/* Update: February 20, 2022 */
+/* Update: March 16, 2022 */
 # define GNUPLOT( STREAM, FLNAME, PLTFLE, OPTION, XUNIT, YUNIT, YMIN, YMAX ) \
 { \
 /* gnuplot headers */ \
@@ -19,9 +19,9 @@
    fprintf( STREAM, "%s", " : " ); \
  \
    if ( ppt->xunits == null ) \
-      strcpy( longstr, dotos( 1.0000*ppt->tt, 7, "e" )); \
+      strcpy( longstr, dotos( 1.0000*upd->tt, 7, "e" )); \
    else \
-      strcpy( longstr, dotos( 1.0000*ppt->tt*ppt->Ttrm, 7, "e" )); \
+      strcpy( longstr, dotos( 1.0000*upd->tt*ppt->Ttrm, 7, "e" )); \
  \
    fprintf( STREAM, "%s", longstr ); \
    fprintf( STREAM, "%s", " ]\n" ); \

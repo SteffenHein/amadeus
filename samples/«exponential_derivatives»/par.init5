@@ -18,11 +18,13 @@ s010=Mean_transmission_time_[days]_____________________[0<=T]:   7.00000e+00
 s011=Immunity_half-life_time_[days]_____________________[0<T]:   1.00000e+99
 s012=Incidence_cumulation_time_[days]___________________[0<T]:   7.00000e+00
 s013=Incidence_threshold____[stop_below_that_number_of_cases]:   0.00000e+00
-s014=Random_burst_factor_[average:_Bf]________________[0<=Bf]:   0.00000e+00
-s015=If_0<Bf:_Random_burst_length_[average:_T/days]____[0<=T]:   0.00000e+00
-s016=If_0<Bf:_Random_burst_every_T-th_day_[average]____[0<=T]:   0.00000e+00
-s017=Time_limit_[T/days]________________________________[0<T]:   4.20000e+02
-s018=Time_step_[Dt/days]_______________________________[0<Dt]:   2.00000e-02
+s014=Members_vaccinated_per_day______________________[number]:   0.00000e+00
+s015=Vaccination_efficiency________________[ratio;_0<Veff<=1]:   1.00000e+00
+s016=Random_burst_factor_[average:_Bf]________________[0<=Bf]:   0.00000e+00
+s017=If_0<Bf:_Random_burst_length_[average:_T/days]____[0<=T]:   0.00000e+00
+s018=If_0<Bf:_Random_burst_every_T-th_day_[average]____[0<=T]:   0.00000e+00
+s019=Time_limit_[T/days]________________________________[0<T]:   4.20000e+02
+s020=Time_step_[Dt/days]_______________________________[0<Dt]:   2.00000e-02
 
 ================================================================================
 
@@ -38,9 +40,9 @@ the_formula________________________________________[0,1_or_2]:            0
 x-units______________________[transmission_cycles:0_|_days:1]:            0
 y-units___________________[normalized:0/2_|_conventional:1/3]:            0
 y-scale____________________________[linear:0_|_logarithmic:1]:            0
-[1]_0:_[don't]_write_titles_on_graphics_________________[0/1]:            1
+[0]_1:_[don't]_write_titles_on_graphics_________________[0/1]:            1
 [0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:            1
 
 AMADEUS input parameter file par.log5 created:
-Mon Feb 21 16:58:35 2022
+Sat May  7 14:30:04 2022
 ÿ

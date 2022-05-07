@@ -160,8 +160,9 @@ short amddrv( int argn, char **args )
 /*...........................................................................*/
 /* bind structure pointers */
 
-   state->par = &parmtrs;
    state->opr = &opertns;
+   state->par = &parmtrs;
+   state->upd = &updates;
    state->csp = &cns;
 
    ii = null; do
