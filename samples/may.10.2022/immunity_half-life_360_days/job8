@@ -1,0 +1,10 @@
+#!/bin/sh
+amadeus -n 8 -f par.init8
+cp 7_days_incidence_R0=.8200_job_no_8 VR=160
+cp inc_R0=.8200_job_no_8 vr=160
+#gnuplot gpl_n_days_incidence_job_no_8
+#gnuplot gpl_incidence_job_no_8
+#gnuplot gpl_immunity_job_no_8
+#gnuplot gpl_reproduction_job_no_8
+#gnuplot gpl_infection_job_no_8
+#gnuplot gpl_lethality_job_no_8

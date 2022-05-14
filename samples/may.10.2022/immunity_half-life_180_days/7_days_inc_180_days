@@ -1,0 +1,37 @@
+set title '7 days incidence next 180 days [ dependence on vaccination rate ]'
+set label 'VR: daily vaccinations per 100000'\
+at 2.1e+00, 4.30e+03
+set label '[ immunity half-life: 180 days ]'\
+at 2.1e+00, 4.10e+03
+set xlabel 'days since may 12, 2022'
+set xrange [ 0.000000e+00 : 1.800000e+02 ]
+set ylabel 'per 100000'
+set format y '%10.2e'
+set yrange [ 4.120091e+01 : 4.500000e+03 ]
+set grid
+set border
+set key box
+set pointsize 2
+set pointinterval 1
+set pointintervalbox 1
+plot \
+'VR=0' with lp lt 9 pt "1" pi -100
+pause -1 '[ hit return to continue ]'
+replot \
+'VR=50' with lp lt 5 pt "2" pi -100
+pause -1 '[ hit return to continue ]'
+replot \
+'VR=100' with lp lt 6 pt "3" pi -100
+pause -1 '[ hit return to continue ]'
+replot \
+'VR=140' with lp lt 4 pt "4" pi -100
+pause -1 '[ hit return to continue ]'
+replot \
+'VR=160' with lp lt 7 pt "5" pi -100
+pause -1 '[ hit return to continue ]'
+replot \
+'VR=180' with lp lt 3 pt "6" pi -100
+pause -1 '[ hit return to continue ]'
+replot \
+'VR=200' with lp lt 8 pt "7" pi -100
+pause -1 '[ hit return to continue ]'

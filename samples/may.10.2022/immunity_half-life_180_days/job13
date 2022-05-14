@@ -1,0 +1,10 @@
+#!/bin/sh
+amadeus -n 13 -f par.init13
+cp 7_days_incidence_R0=.8200_job_no_13 VR=260
+cp inc_R0=.8200_job_no_13 vr=260
+#gnuplot gpl_n_days_incidence_job_no_13
+#gnuplot gpl_incidence_job_no_13
+#gnuplot gpl_immunity_job_no_13
+#gnuplot gpl_reproduction_job_no_13
+#gnuplot gpl_infection_job_no_13
+#gnuplot gpl_lethality_job_no_13
