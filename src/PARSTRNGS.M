@@ -54,7 +54,7 @@
       "Incidence_threshold", "stop_below_that_number_of_cases", ll ); \
  \
    cpylne( par->stx[14], \
-      "Members_vaccinated_per_day", "number", ll ); \
+      "Vaccination_rate", "vaccinations_per_day;_0<=N", ll ); \
  \
    cpylne( par->stx[15], \
       "Vaccination_efficiency", "ratio;_0<Veff<=1", ll ); \

@@ -1,20 +1,21 @@
 #!/bin/csh
-set init=0
-set final=15
+set ii_init=0
+set jj_init=0
+set final=100
 
 set COPIED_FILE="par.log"
 set TARGET_FILE="par.init"
 set SUFFIX=""
 # now iterate
 
-@ i = $init
-@ j = $init
-while ( $i <= $final )
-	if (-f ./$COPIED_FILE$i) then
-		echo "copying file $COPIED_FILE$i to $TARGET_FILE$j$SUFFIX"
-		cp $COPIED_FILE$i $TARGET_FILE$i$SUFFIX
-	endif
-	@ i ++
-	@ j ++
+@ ii = $ii_init
+@ jj = $jj_init
+while ( ${ii} <= $final )
+   if (-f ./$COPIED_FILE${ii}) then
+      echo "copying file $COPIED_FILE${ii} to $TARGET_FILE${jj}$SUFFIX"
+      cp $COPIED_FILE${ii} $TARGET_FILE${jj}$SUFFIX
+   endif
+   @ ii ++
+   @ jj ++
 end
 echo "Done"

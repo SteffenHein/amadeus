@@ -19,7 +19,7 @@ plot \
 'vr=0' with lp lt 9 pt "1" pi -100
 pause -1 '[ hit return to continue ]'
 replot \
-'vr=50' with lp lt 5 pt "2" pi -100
+'vr=40' with lp lt 5 pt "2" pi -100
 pause -1 '[ hit return to continue ]'
 replot \
 'vr=80' with lp lt 6 pt "3" pi -100
