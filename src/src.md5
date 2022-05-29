@@ -1,11 +1,11 @@
 [file: src.md5]
-created: Sat May 14 21:47:57 2022
+created: Wed May 25 19:12:30 2022
 -------------------------------------------------------------------------------
 MD5( .directory ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( EXTREMA.M ) = a9ebb34c7511dbfe19e36e85cae2e37e
 MD5( GNUPLOT.M ) = 10915debb7ffff6e6476ce60889f2bfd
 MD5( OPRSTRNGS.M ) = f83dfcbae41624aae82a1c7fe74ac7f2
-MD5( PARSTRNGS.M ) = 842feb135b6469985b072b66d267fd19
+MD5( PARSTRNGS.M ) = b75ede3ad9891568a25f4e22d24bcd9f
 MD5( PRNTCRS.M ) = ae70f560efcf41cc6b149a2fdeec6a1f
 MD5( STOREOPR.M ) = 6c39c0989003891bc551750b5e0032a0
 MD5( STOREPAR.M ) = d71b94ae23b667fd57fac641bc411459
@@ -15,7 +15,7 @@ MD5( amddrv.c ) = 6c51d08fc559bfe991d7e51df898feb8
 MD5( amddrv.h ) = 9430aa19b79a6e5abd254e3ddc287a27
 MD5( amdrnd.c ) = 9351bc32997782cc643560636b6b1763
 MD5( amdwrk.c ) = 927369c07687dd5a1fcc481638411cd7
-MD5( amdwrk.h ) = 903446fd5cafd3b5f8fb99dceb945f2c
+MD5( amdwrk.h ) = c184b64d3280c3e724ebd3045e8c9e4a
 MD5( init_opr.h ) = fa987e17643ed126a4ba0b6dcaf6b38a
 MD5( init_par.h ) = 8dde85f15be387f80e6c4a1a151507d6
 MD5( inputs.h ) = 058e47626791ea2826372fc51dc9224f
@@ -25,4 +25,4 @@ MD5( rvise_opr.h ) = 8e5e7719577e02a34e29d1e2f9d5072a
 MD5( rvise_par.h ) = ce63bb35bd5ec6a8aa3126e98583db4f
 MD5( store_opr.h ) = 57d34aa4dc61c17dd3e8062352eb87ee
 MD5( store_par.h ) = fcde5e330fecdef1bd96cbc9b1fb8c73
-MD5( types.h ) = 9ddbb76cdf9065b479c8f3ae422036c4
+MD5( types.h ) = 85cd85ec357c2e7bbb3d903ffb83b1be

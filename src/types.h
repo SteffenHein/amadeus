@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: May 07, 2022 ]                                 <contact@sfenx.de> *
+*  [ Update: May 16, 2022 ]                                 <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -111,7 +111,7 @@ typedef struct
       Nimn,      /* initial number immune members */
       Ninf,      /* initial number of infective ['sick'] members */
       Nlty,      /* initial number of deceased members */
-      Nvcc,      /* number of members vaccinated per day */
+      Nvac,      /* number of members vaccinated per day */
 
       Repr,      /* initial reproduction number */
       Ithr,      /* incidence "threshold" [ stop computation when incidence  */
@@ -128,7 +128,7 @@ typedef struct
       rlty,      /* initial group lethality [ ratio ] */
       repr,      /* reproduction rate [ log(Nrpd)/Tinf ] */
       rthr,      /* incidence threshold [ Ithr/Tinf ] */
-      rvcc,      /* vaccination rate per cycle */
+      rvac,      /* vaccination rate per cycle */
 
       wght_ifc,  /* infection weight: 100/( 100-Slnt ) */
       wght_imm,  /* immunisation weight: ( 100+Ltlt )/( 100-Slnt ) */

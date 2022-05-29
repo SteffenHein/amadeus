@@ -1,5 +1,5 @@
 /* [ file: PARSTRNGS.M ] */
-/* Update: May 07, 2022 */
+/* Update: May 24, 2022 */
 /*============================================================================*/
 # define PARSTRNGS( ) \
 { \
@@ -27,7 +27,7 @@
       "Initially_immune_members", "0<=N" , ll ); \
  \
    cpylne( par->stx[5], \
-      "Already_deceased_members", "0<N", ll ); \
+      "Already_deceased_members", "0<=N", ll ); \
  \
    cpylne( par->stx[6], \
       "Initial_reproduction_factor", "0<R", ll ); \
@@ -45,7 +45,7 @@
       "Mean_transmission_time_[days]", "0<=T", ll ); \
  \
    cpylne( par->stx[11], \
-      "Immunity_half-life_time_[days]", "0<T", ll ); \
+      "Immunity_half-life_[days]", "0<T", ll ); \
  \
    cpylne( par->stx[12], \
       "Incidence_cumulation_time_[days]", "0<T", ll ); \
@@ -54,10 +54,10 @@
       "Incidence_threshold", "stop_below_that_number_of_cases", ll ); \
  \
    cpylne( par->stx[14], \
-      "Vaccination_rate", "vaccinations_per_day;_0<=N", ll ); \
+      "Vaccination_rate", "vaccinations_per_day;_0<=Nvac", ll ); \
  \
    cpylne( par->stx[15], \
-      "Vaccination_efficiency", "ratio;_0<Veff<=1", ll ); \
+      "Vaccination_efficacy", "ratio;_0<Veff<=1", ll ); \
  \
    cpylne( par->stx[16], \
       "Random_burst_factor_[average:_Bf]", "0<=Bf", ll ); \

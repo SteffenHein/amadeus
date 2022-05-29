@@ -15,7 +15,6 @@ ${DISTNAME}/disp \
 ${DISTNAME}/doc \
 ${DISTNAME}/math \
 ${DISTNAME}/objects \
-${DISTNAME}/ports \
 ${DISTNAME}/prv \
 ${DISTNAME}/samples \
 ${DISTNAME}/scripts \
@@ -27,4 +26,6 @@ ${DISTNAME}/README \
 ${DISTNAME}/SETUP \
 ${DISTNAME}/Makefile \
 ${DISTNAME}/makefile.gnu \
+${DISTNAME}/makefile.unx \
 ${DISTNAME}/mk.gnu \
+${DISTNAME}/mk.unx \

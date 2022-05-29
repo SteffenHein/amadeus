@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: May 07, 2022 ]                                 <contact@sfenx.de> *
+*  [ Update: May 25, 2022 ]                                 <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
@@ -218,7 +218,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /* Nifc = 1.60e+05;  number of initially infected members Ninf <= Nifc */
 /* Nimn = 1.60e+05;  initially immune members */
 /* Nlty = 2.40e+03;  initially already of deceased members */
-/* Nvcc = 0.00e+00;  number of members vaccinated per day */
+/* Nvac = 0.00e+00;  number of members vaccinated per day */
 /* Bstf = 0.000+00;  random burst level [0<=Bstf] */
 
 /* rinf = Ninf/Nhrd; initial ratio of infective members */
@@ -226,7 +226,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /* rimn = Nimn/Nhrd; initial herd immunity [ ratio ] */
 /* rlty = Nlty/Nhrd; initial ratio of deceased members */
 /*............................................................................*/
-/* desease features [ parameter examples ]: */
+/* disease features [ parameter examples ]: */
 
 /* Repr = 1.000;  initial reproduction number */
 /* Tend = 365.0;  computed time intervall [ days ] */
@@ -251,8 +251,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->Timu = ppt->s[11]; /* immunity half-life time [ days ] */
    ppt->Tcic = ppt->s[12]; /* incidence cumulation time [ days ] */
    ppt->Ithr = ppt->s[13]; /* incidence threshold [stop below that number...] */
-   ppt->Nvcc = ppt->s[14]; /* number of members vaccinated per day */
-   ppt->Veff = ppt->s[15]; /* vaccination efficiency [ ratio: 0<Veff<=1 ] */
+   ppt->Nvac = ppt->s[14]; /* vaccination rate [ vaccinations per day ] */
+   ppt->Veff = ppt->s[15]; /* vaccination efficacy [ ratio: 0<Veff<=1 ] */
    ppt->Bstf = ppt->s[16]; /* average burst factor */
    ppt->Tlen = ppt->s[17]; /* average burst length [ days ] */
    ppt->Trep = ppt->s[18]; /* average burst repetion time [ days ] */
@@ -266,7 +266,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->tcin = ppt->Tcic/ppt->Ttrm; /* tcin: Tcic in natural units */
    ppt->tlen = ppt->Tlen/ppt->Ttrm; /* tlen: Tlen in natural units */
    ppt->trep = ppt->Trep/ppt->Ttrm; /* trep: Trep in natural units */
-   ppt->timn = ppt->Timu/ppt->Ttrm/LN2; /* immunity half-life [ LN2 = log(2) ]*/
+   ppt->timn = ppt->Timu/ppt->Ttrm; /* immunity decay time */
+   ppt->timn /= LN2; /* immunity half-life [ LN2 = log(2) ] */
 
    ppt->kend = ( long )( ppt->Tend/ppt->DltT );
    ppt->kcic = ( long )( ppt->Tcic/ppt->DltT );
@@ -282,7 +283,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->rinf = ppt->Ninf/ppt->Nhrd;
    ppt->rlty = ppt->Nlty/ppt->Nhrd;
    ppt->rthr = ppt->Ithr/ppt->Nhrd;
-   ppt->rvcc = ppt->Nvcc/ppt->Nhrd;
+   ppt->rvac = ppt->Nvac/ppt->Nhrd;
 
    ppt->wght_imm = ( 100.*ppt->Immc - ppt->Ltlt )/( 100. - ppt->Slnt );
    ppt->wght_ifc = ( 100./( 100. - ppt->Slnt ));
@@ -403,6 +404,20 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( outpstr, dotos( rrpd, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
+   fprintf( fleptr_par, "\n" );
+
+   cpylne( outpstr,
+      "\nVaccination_rate","number_of_vaccinations_per_day", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Nvac, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
+
+   cpylne( outpstr,
+      "\nVaccination_efficacy","percent", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( 100.*ppt->Veff, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
+
    if ( ZERO < ppt->Bstf )
    {
       fprintf( fleptr_par, "\n" );
@@ -498,7 +513,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    fprintf( pltptr_cic, "%s", "# Epidemic | " );
     
-   strcpy( optnstr, lotos(( long ) ppt->Tcic, 2, " " ));
+   strcpy( optnstr, lotos(( long ) ppt->Tcic, null, " " ));
    strcat( optnstr, " days incidence " );
 
    fprintf( pltptr_cic, "%s", optnstr );
@@ -559,7 +574,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( pltptr_rpd, "%s", timestr );
 
    fprintf( pltptr_rpd, "%s", \
-      " | y-unit: members infected by one sick member ]\n");
+      " | y-unit: individuals infected by one sick member ]\n");
 /*............................................................................*/
 /* initialize iteration */
 
@@ -587,7 +602,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    upd->infctd = ppt->rifc;
    upd->lethal = ppt->rlty;
 
-   upd->vaccin = ppt->Veff*ppt->Ttrm*ppt->rvcc;
+   upd->vaccin = ppt->Veff*ppt->Ttrm*ppt->rvac;
 
    upd->nxtbst = ppt->trep; /* burst start */ 
    upd->bststp = ppt->tlen; /* burst stop */
@@ -1033,7 +1048,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       lwbnd = fmax( ppt->minlty - frm, ZERO );
       upbnd = ppt->maxlty + frm;
       GNUPLOT( gnuptr_dcd, plot_dcd, flname_dcd, optnstr, timestr,
-        "members", ppt->Nhrd*lwbnd, ppt->Nhrd*upbnd );
+        "individuals", ppt->Nhrd*lwbnd, ppt->Nhrd*upbnd );
    };
 
    if ( ppt->titles == ONE )

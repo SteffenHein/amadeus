@@ -1,5 +1,5 @@
 [file: amadeus-v1.0r1.md5]
-created: Sat May 14 21:47:57 2022
+created: Wed May 25 19:12:30 2022
 -------------------------------------------------------------------------------
 MD5( .gitignore ) = 345f5bed3b3787bb8e517ed62ded3507
 MD5( CONFIG.H ) = f62b9a787f5e3a1ec40f6ff5c148dc6e
@@ -19,7 +19,6 @@ MD5( math ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( mk.gnu ) = c130a0dc7dc2d154be73796c6e6fca94
 MD5( mk.unx ) = 328ae0d7f38d5560739d1e3d64c693e2
 MD5( objects ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( ports ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( prv ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( samples ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( scripts ) = d41d8cd98f00b204e9800998ecf8427e

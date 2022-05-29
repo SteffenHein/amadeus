@@ -9,17 +9,17 @@ s001=Herd_size_[Nhrd]__________________________[0<Nhrd<=Nref]:   1.00000e+05
 s002=Initially_infective_[acutely_sick]_members_[Ninf][0<Nin]:   1.00000e+00
 s003=Initially_infected_members_[Nifc]___________[Ninf<=Nifc]:   1.00000e+00
 s004=Initially_immune_members__________________________[0<=N]:   1.00000e+00
-s005=Already_deceased_members___________________________[0<N]:   0.00000e+00
+s005=Already_deceased_members__________________________[0<=N]:   0.00000e+00
 s006=Initial_reproduction_factor________________________[0<R]:   3.00000e+00
 s007=Immunization_ratio_____________________________[0<Ir<=1]:   1.00000e+00
 s008=Percentage_of_asymptomatic_cases______________[0<=P<100]:   2.00000e+01
 s009=Percentage_of_lethal_cases___________________[0<=P<=100]:   2.00000e-02
 s010=Mean_transmission_time_[days]_____________________[0<=T]:   1.40000e+01
-s011=Immunity_half-life_time_[days]_____________________[0<T]:   9.00000e+01
+s011=Immunity_half-life_[days]__________________________[0<T]:   9.00000e+01
 s012=Incidence_cumulation_time_[days]___________________[0<T]:   7.00000e+00
 s013=Incidence_threshold____[stop_below_that_number_of_cases]:   0.00000e+00
-s014=Vaccination_rate____________[vaccinations_per_day;_0<=N]:   0.00000e+00
-s015=Vaccination_efficiency________________[ratio;_0<Veff<=1]:   1.00000e+00
+s014=Vaccination_rate_________[vaccinations_per_day;_0<=Nvac]:   0.00000e+00
+s015=Vaccination_efficacy__________________[ratio;_0<Veff<=1]:   1.00000e+00
 s016=Random_burst_factor_[average:_Bf]________________[0<=Bf]:   5.00000e-01
 s017=If_0<Bf:_Random_burst_length_[average:_T/days]____[0<=T]:   1.40000e+01
 s018=If_0<Bf:_Random_burst_every_T-th_day_[average]____[0<=T]:   3.00000e+00
@@ -44,5 +44,5 @@ y-scale____________________________[linear:0_|_logarithmic:1]:            0
 [0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:            0
 
 AMADEUS input parameter file par.log2 created:
-Sun May 15 21:24:00 2022
+Wed May 25 13:17:31 2022
 ÿ

@@ -4,7 +4,7 @@
 #  AMADEUS archive creation perl script                                        #
 #                                                                              #
 #  (C) SHEIN; Munich, April 2020                             Steffen Hein      #
-#  [ Update: December 19, 2021 ]                          <contact@sfenx.de>   #
+#  [ Update: May 25, 2022 ]                               <contact@sfenx.de>   #
 #                                                                              #
 #------------------------------------------------------------------------------#
 BEGIN { push @INC, './'}
@@ -73,7 +73,9 @@ $tgzlist[ $i++ ] = $distname . "/src";
 $tgzlist[ $i++ ] = $distname . "/work";
 $tgzlist[ $i++ ] = $distname . "/Makefile";
 $tgzlist[ $i++ ] = $distname . "/makefile.gnu";
+$tgzlist[ $i++ ] = $distname . "/makefile.unx";
 $tgzlist[ $i++ ] = $distname . "/mk.gnu";
+$tgzlist[ $i++ ] = $distname . "/mk.unx";
 $tgzlist[ $i++ ] = $distname . "/SETUP";
 #------------------------------------------------------------------------------#
 # The Z-compressed archive of the following [ essential ] sources; $tararch:
@@ -96,7 +98,9 @@ $ziplist[ $i++ ] = $distname . "/src";
 $ziplist[ $i++ ] = $distname . "/work";
 $ziplist[ $i++ ] = $distname . "/Makefile";
 $ziplist[ $i++ ] = $distname . "/makefile.gnu";
+$ziplist[ $i++ ] = $distname . "/makefile.unx";
 $ziplist[ $i++ ] = $distname . "/mk.gnu";
+$ziplist[ $i++ ] = $distname . "/mk.unx";
 $ziplist[ $i++ ] = $distname . "/SETUP";
 #------------------------------------------------------------------------------#
 # Create a new tar archive for FreeBSD port building system:

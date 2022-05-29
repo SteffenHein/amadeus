@@ -2,11 +2,11 @@
 /*----------------------------------------------------------------------------*/
 /* AMADEUS, release v1.0r1                                                    */
 /*                                                                            */
-/* A plain numerical Model Approximating the Development of Epidemics         */
-/* Under different conditions of Spread                                       */
+/* A numerical Model Approximating the Development of Epidemics               */
+/* Under homogeneous conditions of Spread                                     */
 /*                                                                            */
 /* (C) SHEIN; Munich, April 2020                             Steffen Hein     */
-/* [ Update: December 20, 2021 ]                          <contact@sfenx.de>  */
+/* [ Update: May 26th, 2022 ]                             <contact@sfenx.de>  */
 /*----------------------------------------------------------------------------*/
 # ifndef AMD_PAGER
    # define AMD_PAGER "more" 

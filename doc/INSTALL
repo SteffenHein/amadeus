@@ -4,19 +4,19 @@ Installation instructions for the AMADEUS program package
 --------------------------------------------------------------------------------
 AMADEUS, release v1.0r1
 
-A plain numerical Model Approximating the Development of Epidemics 
-Under varied conditions of Spread
+A numerical Model Approximating the Development of Epidemics 
+Under homogeneous conditions of Spread
 
 (C) SHEIN; Munich, April 2020                               Steffen Hein
-[ Update: December 28, 2021 ]                            <contact@sfenx.de>
+[ Update: May 26th, 2022 ]                               <contact@sfenx.de>
 --------------------------------------------------------------------------------
-1. Copy the package file amadeus-1.0.tgz into your home directory [ or where- 
-   ever you want to create the initial installation directory ~/amadeus ].
-   In the following that directory is referred to as 'build directory'.
+1. Copy the package file amadeus-<version>.tgz into your home directory 
+   [ or whereever you want to create the initial installation directory ~/amadeus ].
+   In the following, that directory is referred to as 'build directory'.
 --------------------------------------------------------------------------------
 2. Unpack the amadeus package, using the tar command
 
-	tar -xvzf amadeus-v1.0r1.tgz
+	tar -xvzf amadeus-<version>.tgz
 --------------------------------------------------------------------------------
 3. Edit your [ operating system dependent ] makefile and define your  
    preferred program installation path [ viz. the directory /~ wherein the
