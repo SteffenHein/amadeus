@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: May 16, 2022 ]                                 <contact@sfenx.de> *
+*  [ Update: June 08, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -17,6 +17,9 @@
 # define TP_UPDATES 1
 typedef struct
 {
+   char
+      bst;
+
    long
       kk,
       kout,      /* outer iteration index */ 
@@ -37,7 +40,7 @@ typedef struct
       lethal,
       reprod,
       nxtbst,
-      bststp;
+      stpbst;
 
    double
       dhdt[100000+ONE];
@@ -140,10 +143,10 @@ typedef struct
       timn,      /* Timu in natural units [ Ttrm scale ] */
       Tcic,      /* n days incidence */
       tcin,      /* Tcic in natural units [ Ttrm scale ] */
-      Tlen,      /* random burst length [ days ] */
-      tlen,      /* Tlen in natural units [ Ttrm scale ] */
-      Trep,      /* burst repetion time [ days ] */ 
-      trep,      /* Trep in natural units [ Ttrm scale ] */
+      Tbln,      /* Average burst length [ days ] */
+      tbln,      /* Tbln in natural units [ Ttrm scale ] */
+      Tbps,      /* Average burst pause [ days ] */
+      tbps,      /* Tbps in natural units [ Ttrm scale ] */
       Tend,      /* time intervall [ days ] */
 
       timmun,    /* time of attained group immunity */

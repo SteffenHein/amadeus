@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: May 25, 2022 ]                                 <contact@sfenx.de> *
+*  [ Update: June 08, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
@@ -254,18 +254,18 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->Nvac = ppt->s[14]; /* vaccination rate [ vaccinations per day ] */
    ppt->Veff = ppt->s[15]; /* vaccination efficacy [ ratio: 0<Veff<=1 ] */
    ppt->Bstf = ppt->s[16]; /* average burst factor */
-   ppt->Tlen = ppt->s[17]; /* average burst length [ days ] */
-   ppt->Trep = ppt->s[18]; /* average burst repetion time [ days ] */
-   ppt->Tend = ppt->s[19]; /* length of modelled time interval [ days ] */ 
-   ppt->DltT = ppt->s[20]; /* time increment [ days ] */ 
+   ppt->Tbln = ppt->s[17]; /* average burst length [ days ] */
+   ppt->Tbps = ppt->s[18]; /* average burst pause [ days ] */
+   ppt->Tend = ppt->s[19]; /* time interval [ days ] */
+   ppt->DltT = ppt->s[20]; /* time increment [ days ] */
 /*............................................................................*/
 /* normalized parameters: */
 
    upd->dt = ppt->DltT/ppt->Ttrm;   /* time step in natural units */
    
    ppt->tcin = ppt->Tcic/ppt->Ttrm; /* tcin: Tcic in natural units */
-   ppt->tlen = ppt->Tlen/ppt->Ttrm; /* tlen: Tlen in natural units */
-   ppt->trep = ppt->Trep/ppt->Ttrm; /* trep: Trep in natural units */
+   ppt->tbln = ppt->Tbln/ppt->Ttrm; /* tbln: Tbln in natural units */
+   ppt->tbps = ppt->Tbps/ppt->Ttrm; /* tbps: Tbps in natural units */
    ppt->timn = ppt->Timu/ppt->Ttrm; /* immunity decay time */
    ppt->timn /= LN2; /* immunity half-life [ LN2 = log(2) ] */
 
@@ -431,13 +431,13 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       cpylne( outpstr,
          "\nAverage_burst_length","days", 60 );
       strcat( outpstr, ": ");
-      strcat( outpstr, dotos( ppt->Tlen, 4, "e" ));
+      strcat( outpstr, dotos( ppt->Tbln, 4, "e" ));
       fprintf( fleptr_par, outpstr );
 
       cpylne( outpstr,
-         "\nAverage_burst_repetition_rate","days", 60 );
+         "\nAverage_burst_pause","days", 60 );
       strcat( outpstr, ": ");
-      strcat( outpstr, dotos( ppt->Trep, 4, "e" ));
+      strcat( outpstr, dotos( ppt->Tbps, 4, "e" ));
       fprintf( fleptr_par, outpstr );
    };
 
@@ -604,8 +604,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    upd->vaccin = ppt->Veff*ppt->Ttrm*ppt->rvac;
 
-   upd->nxtbst = ppt->trep; /* burst start */ 
-   upd->bststp = ppt->tlen; /* burst stop */
+   upd->nxtbst = ppt->tbps; /* next burst start */ 
+   upd->stpbst = ppt->tbln; /* next burst stop */
 
    hh = upd->immune + upd->lethal;
    scpt0 = 1. - hh;
@@ -625,6 +625,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       upd->dhdt[ii] = ZERO;
    };
 
+   upd->bst = null;
    upd->rnd = ONE;
    upd->incsum = ZERO;
    upd->incidc = upd->incdnc;

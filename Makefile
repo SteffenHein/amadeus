@@ -1,1 +1,1 @@
-makefile.gnu
+makefile.unx

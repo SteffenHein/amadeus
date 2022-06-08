@@ -1,0 +1,5 @@
+#!/bin/sh
+amadeus -n 19 -f par.init19
+cp 7_days_incidence_R0=.8600_job_no_19 VR=400
+#
+gnuplot gpl_n_days_incidence_job_no_19

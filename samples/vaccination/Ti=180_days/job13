@@ -1,0 +1,5 @@
+#!/bin/sh
+amadeus -n 13 -f par.init13
+cp 7_days_incidence_R0=.8600_job_no_13 VR=200
+#
+gnuplot gpl_n_days_incidence_job_no_13

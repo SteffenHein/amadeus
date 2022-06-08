@@ -1,5 +1,5 @@
 /* [ file: deflt_par.h ] */
-/* Update: May 25, 2022 */
+/* Update: June 08, 2022 */
 /*----------------------------------------------------------------------------*/
 # ifndef LINLEN
    # define LINLEN 61
@@ -41,8 +41,8 @@ void deflt_par( void ) /* default model parameters */
    par->s[14] = 0.000e+00; /* Nvcc; Members vaccinated per day [ number ] */
    par->s[15] = 1.000e+00; /* Veff; Vaccination efficacy [ratio; 0<Veff<=1]*/
    par->s[16] = 0.000e+00; /* Bstf; Burst factor, average [0<=Bstf] */
-   par->s[17] = 0.000e+00; /* Tlen; Burst length, average [days] */
-   par->s[18] = 0.000e+00; /* Trep; Burst every T-th day on average [days] */
+   par->s[17] = 0.000e+00; /* Tlen; Average burst length [days] */
+   par->s[18] = 0.000e+00; /* Trep; Average burst pause [days] */
    par->s[19] = 7.300e+02; /* Tend; Time limit [days] */
    par->s[20] = 1.000e-01; /* DltT; Time step [days] */
 

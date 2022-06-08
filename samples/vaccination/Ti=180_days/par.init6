@@ -20,10 +20,10 @@ s012=Incidence_cumulation_time_[days]___________________[0<T]:   7.00000e+00
 s013=Incidence_threshold____[stop_below_that_number_of_cases]:   0.00000e+00
 s014=Vaccination_rate_________[vaccinations_per_day;_0<=Nvac]:   1.00000e+02
 s015=Vaccination_efficacy__________________[ratio;_0<Veff<=1]:   5.00000e-01
-s016=Random_burst_factor_[average:_Bf]________________[0<=Bf]:   0.00000e+00
-s017=If_0<Bf:_Random_burst_length_[average:_T/days]____[0<=T]:   0.00000e+00
-s018=If_0<Bf:_Random_burst_every_T-th_day_[average]____[0<=T]:   0.00000e+00
-s019=Time_limit_[T/days]________________________________[0<T]:   1.08000e+03
+s016=Random_burst_factor_[average]____________________[0<=Bf]:   0.00000e+00
+s017=If_0<Bf:_Average_burst_length_[T/days]____________[0<=T]:   0.00000e+00
+s018=If_0<Bf:_Average_burst_pause_[T/days]_____________[0<=T]:   0.00000e+00
+s019=Time_limit_[T/days]________________________________[0<T]:   3.60000e+02
 s020=Time_step_[Dt/days]_______________________________[0<Dt]:   2.00000e-02
 
 ================================================================================
@@ -44,5 +44,5 @@ y-scale____________________________[linear:0_|_logarithmic:1]:            0
 [0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:            0
 
 AMADEUS input parameter file par.log6 created:
-Fri May 27 00:01:28 2022
+Tue Jun  7 13:34:08 2022
 ÿ

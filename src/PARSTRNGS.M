@@ -60,13 +60,13 @@
       "Vaccination_efficacy", "ratio;_0<Veff<=1", ll ); \
  \
    cpylne( par->stx[16], \
-      "Random_burst_factor_[average:_Bf]", "0<=Bf", ll ); \
+      "Random_burst_factor_[average]", "0<=Bf", ll ); \
  \
    cpylne( par->stx[17], \
-      "If_0<Bf:_Random_burst_length_[average:_T/days]", "0<=T", ll ); \
+      "If_0<Bf:_Average_burst_length_[T/days]", "0<=T", ll ); \
  \
    cpylne( par->stx[18], \
-      "If_0<Bf:_Random_burst_every_T-th_day_[average]", "0<=T", ll ); \
+      "If_0<Bf:_Average_burst_pause_[T/days]", "0<=T", ll ); \
  \
    cpylne( par->stx[19], \
       "Time_limit_[T/days]", "0<T", ll ); \

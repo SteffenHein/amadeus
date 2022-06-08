@@ -1,0 +1,6 @@
+#!/bin/sh
+amadeus -n 0 -f par.init0
+cp 7_days_incidence_R0=.8600_job_no_0 VR=0
+cp inc_R0=.8600_job_no_0 vr=0
+#
+gnuplot gpl_n_days_incidence_job_no_0

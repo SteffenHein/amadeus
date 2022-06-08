@@ -6,10 +6,10 @@
 *  A plain numerical Model Approximating the Development of Epidemics          *
 *  Under varied conditions if Spread                                           *
 *                                                                              *
-*  Random events
+*  Random bursts                                                               *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: March 16, 2022 ]                               <contact@sfenx.de> *
+*  [ Update: June 08, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 1 /* some headers of the POSIX.1 standard will be used */
@@ -61,28 +61,32 @@ AMDSTATE *amdrnd( AMDSTATE *state )
 
    if ( ZERO < ppt->Bstf )
    {
-      if ( upd->nxtbst < upd->tt ) /* burst start */
+      if (( upd->bst == null )\
+        &&( upd->nxtbst < upd->tt )) /* start burst */
       {
+	 upd->bst = ONE;
+
          upd->rnd = ( double ) rand( );
-         upd->rnd /= RAND_MAX; 
+         upd->rnd /= RAND_MAX;
 
-         upd->bststp = upd->tt;
-	 upd->bststp += ( 2.*upd->rnd*ppt->tlen ); /* next stop */
-         upd->nxtbst = upd->bststp;
+         upd->stpbst = upd->tt;
+	 upd->stpbst += ( 2.*upd->rnd*ppt->tbln ); /* next stop */
 
-         upd->rnd = ( double ) rand( ); 
+         upd->rnd = ( double ) rand( );
          upd->rnd /= RAND_MAX; 
          upd->rnd = 1. + 2.*upd->rnd*ppt->Bstf;
       };
 
-      if ( upd->bststp < upd->tt ) /* burst stop */
+      if (( upd->bst == ONE )\
+        &&( upd->stpbst < upd->tt ))  /* stop burst */
       {
+	 upd->bst = null;
+
          upd->rnd = ( double ) rand( ); 
          upd->rnd /= RAND_MAX; 
 
          upd->nxtbst = upd->tt;
-         upd->nxtbst += ( 2.*upd->rnd*ppt->trep ); /* next burst */
-         upd->bststp = upd->nxtbst;
+         upd->nxtbst += ( 2.*upd->rnd*ppt->tbps ); /* next start */
 
          upd->rnd = 1.;
       };
