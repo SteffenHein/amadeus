@@ -1,10 +1,10 @@
 /* [ file: amddrv.h ] */
 /*******************************************************************************
 *                                                                              *
-*  AMADEUS, release v1.0r1                                                     *
+*  AMADEUS, release v1.0r2                                                     *
 *                                                                              *
-*  A plain numerical Model Approximating the Development of Epidemics          *
-*  Under varied conditions if Spread                                           *
+*  A numerical Model Approximating the Development of Epidemics                *
+*  Under homogeneous conditions of Spread                                      *
 *                                                                              *
 *  Body of driver function amddrv(*)                                           *
 *  Coordinates the parameter input, corrections and computational steps        *

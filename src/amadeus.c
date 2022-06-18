@@ -2,15 +2,15 @@
 # define PROGRAM "AMADEUS"
 /*******************************************************************************
 *                                                                              *
-*  AMADEUS, release v1.0r1                                                     *
+*  AMADEUS, release v1.0r2                                                     *
 *                                                                              *
-*  A plain numerical Model Approximating the Development of Epidemics          *
-*  Under varied conditions if Spread                                           *
+*  A numerical Model Approximating the Development of Epidemics                *
+*  Under homogeneous conditions of Spread                                      *
 *                                                                              *
 *  Main program amadeus(*)                                                     *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: December 20, 2021 ]                            <contact@sfenx.de> *
+*  [ Update: June 10, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 1 /* some headers of the POSIX.1 standard will be used */

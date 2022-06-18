@@ -1,6 +1,6 @@
 #!/bin/sh
 PORTNAME=amadeus
-RELEASE=v1.0r1
+RELEASE=v1.0r2
 DISTNAME=${PORTNAME}-${RELEASE}
 
 # switch into package directory
@@ -15,7 +15,6 @@ ${DISTNAME}/disp \
 ${DISTNAME}/doc \
 ${DISTNAME}/math \
 ${DISTNAME}/objects \
-${DISTNAME}/prv \
 ${DISTNAME}/samples \
 ${DISTNAME}/scripts \
 ${DISTNAME}/src \
@@ -25,7 +24,5 @@ ${DISTNAME}/INSTALL \
 ${DISTNAME}/README \
 ${DISTNAME}/SETUP \
 ${DISTNAME}/Makefile \
-${DISTNAME}/makefile.gnu \
 ${DISTNAME}/makefile.unx \
-${DISTNAME}/mk.gnu \
 ${DISTNAME}/mk.unx \

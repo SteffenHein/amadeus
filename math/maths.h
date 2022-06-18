@@ -1,7 +1,7 @@
 /* [ file: maths.h ] */
 /*******************************************************************************
 *                                                                              *
-*   User defined computing environment header maths.h                          *
+*   Mathematical environment header maths.h                                    *
 *                                                                              *
 *   (C) SHEIN; Munich, April 2020                             Steffen Hein     *
 *   [ Update: December 19, 2021 ]                          <contact@sfenx.de>  *

@@ -1,10 +1,10 @@
 /* [ file: rread_par.h ] */
 /*******************************************************************************
 *                                                                              *
-*  AMADEUS, release v1.0r1                                                     *
+*  AMADEUS, release v1.0r2                                                     *
 *                                                                              *
-*  A plain numerical Model Approximating the Development of Epidemics          *
-*  Under varied conditions if Spread                                           *
+*  A numerical Model Approximating the Development of Epidemics                *
+*  Under homogeneous conditions of Spread                                      *
 *                                                                              *
 *  Function rread_par(*)                                                       *
 *  Reads parameter file [ type par.log<N> ]                                    *

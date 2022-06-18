@@ -1,10 +1,10 @@
 /* [ file: rvise_par.h ] */
 /*******************************************************************************
 *                                                                              *
-*  AMADEUS, release v1.0r1                                                     *
+*  AMADEUS, release v1.0r2                                                     *
 *                                                                              *
-*  A plain numerical Model Approximating the Development of Epidemics          *
-*  Under varied conditions if Spread                                           *
+*  A numerical Model Approximating the Development of Epidemics                *
+*  Under homogeneous conditions of Spread                                      *
 *                                                                              *
 *  Function rvise_par(*)                                                       *
 *                                                                              *
@@ -20,7 +20,7 @@
 *  option "parameters" whenever such dependencies exist.                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: May 07, 2022 ]                                 <contact@sfenx.de> *
+*  [ Update: June 15, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # include "../src/PARSTRNGS.M"
@@ -36,16 +36,7 @@ short rvise_par( void )
 
    static short
       ll = LINLEN;
-/*
-   short 
-      ii = null;
 
-   double 
-      dd = 0.;
-
-   static char
-      ptr[STS_SIZE] = {null};
-*/
 /* prototypes: */
 
    char
@@ -62,13 +53,10 @@ short rvise_par( void )
    if ( par->s[3] < par->s[2] )
       par->s[3] = par->s[2];
 
-   if (  par->s[13] < 0. )
-      par->s[13] = 0.;
+/* to be completed */
 
-   if ( 1. < par->s[7] )
-      par->s[7] = 1.;
-   else if ( par->s[7] <= 0. )
-      par->s[7] = 1.;
+   if ( par->s[20] < ZERO )
+      par->s[20] = ZERO;
 
    return null;
 }

@@ -1,15 +1,15 @@
 /* [ file: types.h ] */
 /*******************************************************************************
 *                                                                              *
-*  AMADEUS, release v1.0r1                                                     *
+*  AMADEUS, release v1.0r2                                                     *
 *                                                                              *
-*  A plain numerical Model Approximating the Development of Epidemics          *
-*  Under varied conditions if Spread                                           *
+*  A numerical Model Approximating the Development of Epidemics                *
+*  Under homogeneous conditions of Spread                                      *
 *                                                                              *
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 08, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: June 17, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -18,7 +18,7 @@
 typedef struct
 {
    char
-      bst;
+      burst;
 
    long
       kk,
@@ -28,7 +28,6 @@ typedef struct
    double
       tt,
       dt, 
-      rnd,
       suscpt,
       incdnc,
       incidc,
@@ -86,6 +85,7 @@ typedef struct
       yscale,
       nmstop, 
       titles,
+      bstmde, /* burst mode [ 0: shift, 1: slates ] */
       rtn;
 
    char
@@ -114,7 +114,7 @@ typedef struct
       Nimn,      /* initial number immune members */
       Ninf,      /* initial number of infective ['sick'] members */
       Nlty,      /* initial number of deceased members */
-      Nvac,      /* number of members vaccinated per day */
+      Nvac,      /* initial number of vaccinated members */
 
       Repr,      /* initial reproduction number */
       Ithr,      /* incidence "threshold" [ stop computation when incidence  */
@@ -123,26 +123,36 @@ typedef struct
       Veff,      /* vaccination efficiency [ ratio; 0 < Veff <= 1 ] */
       Slnt,      /* percentage of "silent" [ asymptomatic ] cases */
       Ltlt,      /* lethality [ percent ] */
+      Rmda,      /* R modulation amplitude [ 0 < Rmda; default: 1 ] */
       Bstf,      /* random burst factor */
       
-      rifc,      /* initial group infecion [ ratio ] */
-      rimn,      /* initial group immunity [ ratio ] */
-      rinf,      /* initial group infectivity [ ratio ] */
-      rlty,      /* initial group lethality [ ratio ] */
+      rifc,      /* initially infected fraction [ ratio ] */
+      rinf,      /* initially infective fraction [ ratio ] */
+      rimn,      /* initially immune fraction [ ratio ] */
+      rvcd,      /* initially vaccinated fraction [ ratio ] */
+      rlty,      /* initially deceased fraction [ ratio ] */
       repr,      /* reproduction rate [ log(Nrpd)/Tinf ] */
       rthr,      /* incidence threshold [ Ithr/Tinf ] */
-      rvac,      /* vaccination rate per cycle */
+
+      Vacr,      /* vaccination rate [ vaccinations per day ] */
+      vrpc,      /* vaccination ratio per cycle */
 
       wght_ifc,  /* infection weight: 100/( 100-Slnt ) */
       wght_imm,  /* immunisation weight: ( 100+Ltlt )/( 100-Slnt ) */
       wght_lty,  /* lethality weight: Ltlt/( 100-Slnt ) */
-      wght_vcc,  /* vaccination efficiency [ ratio ] */
+      wght_vac,  /* vaccination efficiency [ ratio ] */
       
       Ttrm,      /* mean transmission time [ Tinc+Till, e.g. ] */
       Timu,      /* mean immunity duration [ days ] */
       timn,      /* Timu in natural units [ Ttrm scale ] */
+      Tvac,      /* mean vaccination duration [ days ] */
+      tvcn,      /* Tvac in natural units [ Trm scale ] */
       Tcic,      /* n days incidence */
       tcin,      /* Tcic in natural units [ Ttrm scale ] */
+      Trml,      /* R modulation length [ days ] */
+      trml,      /* R modulation length [ Ttrm scale ] */
+      Trrd,      /* R modulation retard [ delay in days ] */
+      trrd,      /* R modulation retard [ Ttrm scale ] */
       Tbln,      /* Average burst length [ days ] */
       tbln,      /* Tbln in natural units [ Ttrm scale ] */
       Tbps,      /* Average burst pause [ days ] */
@@ -160,16 +170,18 @@ typedef struct
 
       mincic,    /* minimum N days incidence */
       maxcic,    /* maximum N days incidence */
+      mininc,    /* minimum incidence */
+      maxinc,    /* maximum incidence */
       minifc,    /* initial infection [= minimum] */
       maxifc,    /* maximum infection */
       minimn,    /* minimum immunity */
       maximn,    /* maximum immunity */
-      mininc,    /* minimum incidence */
-      maxinc,    /* maximum incidence */
-      minlty,    /* initial lethality [= minimum] */
-      maxlty,    /* maximum lethality */
       minrpd,    /* minimum reproduction number */
       maxrpd,    /* maximum reproduction number */
+      minvac,    /* minimum vaccinated fraction */
+      maxvac,    /* maximum vaccinated fraction */
+      minlty,    /* initial lethality [= minimum] */
+      maxlty,    /* maximum lethality */
 
       mean_imm,  /* mean mmunity */
       mean_inc,  /* mean incidence */

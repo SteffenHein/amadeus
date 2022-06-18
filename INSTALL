@@ -2,13 +2,13 @@
 INSTALL 
 Installation instructions for the AMADEUS program package
 --------------------------------------------------------------------------------
-AMADEUS, release v1.0r1
+AMADEUS, release v1.0r2
 
 A numerical Model Approximating the Development of Epidemics 
 Under homogeneous conditions of Spread
 
 (C) SHEIN; Munich, April 2020                               Steffen Hein
-[ Update: May 26th, 2022 ]                               <contact@sfenx.de>
+[ Update: June 09, 2022 ]                                <contact@sfenx.de>
 --------------------------------------------------------------------------------
 1. Copy the package file amadeus-<version>.tgz into your home directory 
    [ or whereever you want to create the initial installation directory ~/amadeus ].

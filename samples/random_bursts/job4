@@ -1,6 +1,15 @@
 #!/bin/sh
-amadeus -n 4 -f par.init4
-cp 7_days_incidence_R0=3.000_job_no_4 burst=2.0
-cp inc_R0=3.000_job_no_4 inc_burst=2.0
-cp imm_R0=3.000_job_no_4 imm_burst=2.0
-#./gnuplot4
+#
+IDX="4"
+REPR="3.000"
+BRST="shift_100%"
+#
+amadeus -n 0 -f par.init0
+amadeus -n ${IDX} -f par.init${IDX}
+#
+cp 7_days_incidence_R0=${REPR}_job_no_${IDX} ${BRST}
+cp inc_R0=${REPR}_job_no_${IDX} inc_${BRST}
+cp imm_R0=${REPR}_job_no_${IDX} imm_${BRST}
+#
+gnuplot gpl_n_days_incidence_job_no_${IDX}
+gnuplot gpl_incidence_job_no_${IDX}

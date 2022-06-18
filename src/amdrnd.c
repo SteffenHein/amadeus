@@ -1,15 +1,15 @@
 /* [ file: amdrnd.c ] */
 /*******************************************************************************
 *                                                                              *
-*  AMADEUS, release v1.0r1                                                     *
+*  AMADEUS, release v1.0r2                                                     *
 *                                                                              *
-*  A plain numerical Model Approximating the Development of Epidemics          *
-*  Under varied conditions if Spread                                           *
+*  A numerical Model Approximating the Development of Epidemics                *
+*  Under homogeneous conditions of Spread                                      *
 *                                                                              *
 *  Random bursts                                                               *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 08, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: June 17, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 1 /* some headers of the POSIX.1 standard will be used */
@@ -34,10 +34,31 @@
 # include "../math/maths.h"
 # include "../math/consts.h"
 /*----------------------------------------------------------------------------*/
+/* returns real random number within the interval [0, 1]: */
+# define RNDNRN(NRR)\
+{ \
+   (NRR) = ( double ) rand( ); \
+            (NRR) /= RAND_MAX; \
+}
+/*----------------------------------------------------------------------------*/
 /* Edit this general configuration header: */
 # include "../CONFIG.H" 
 /*----------------------------------------------------------------------------*/
 # include "../src/types.h"
+/*----------------------------------------------------------------------------*/
+/* define burst plateau: BSTPLT > 0.
+*/
+# ifndef BSTPLT
+   # define BSTPLT 1.0e+00 
+# endif
+/*----------------------------------------------------------------------------*/
+/* burst length and pause: 
+   fixed:  RNDBST = 0 [ <- just for testing perposes ]
+   random: RNDBST = 1  
+*/   
+# ifndef RNDBST 
+   # define RNDBST 1
+# endif
 /*============================================================================*/
 
 AMDSTATE *amdrnd( AMDSTATE *state )
@@ -55,44 +76,86 @@ AMDSTATE *amdrnd( AMDSTATE *state )
 
    static UPDATES
      *upd = null;
+
+   static double 
+      nrr = ZERO,
+      rndbst = ZERO;
 /*----------------------------------------------------------------------------*/
    upd = state->upd;
    ppt = state->par;
 
    if ( ZERO < ppt->Bstf )
    {
-      if (( upd->bst == null )\
-        &&( upd->nxtbst < upd->tt )) /* start burst */
+      if ( upd->burst == null )
       {
-	 upd->bst = ONE;
+         if ( upd->nxtbst < upd->tt )
+         {
+/*.................................................................................*/
+/* switch on: */
 
-         upd->rnd = ( double ) rand( );
-         upd->rnd /= RAND_MAX;
+	    upd->burst = ONE;
+/*.................................................................................*/
+/* burst mode "shift" [ random factor within the interval ]P, P+2.*Bstf[
+                        ( P = BSTPLT ), constant during each burst ] */
 
-         upd->stpbst = upd->tt;
-	 upd->stpbst += ( 2.*upd->rnd*ppt->tbln ); /* next stop */
+            if ( ppt->bstmde == null )
+	    {
+               RNDNRN(nrr);
 
-         upd->rnd = ( double ) rand( );
-         upd->rnd /= RAND_MAX; 
-         upd->rnd = 1. + 2.*upd->rnd*ppt->Bstf;
-      };
+               rndbst = BSTPLT + 2.*nrr*ppt->Bstf;
+            };
+/*.................................................................................*/
+/* next stop: */
 
-      if (( upd->bst == ONE )\
-        &&( upd->stpbst < upd->tt ))  /* stop burst */
+# if RNDBST == 0
+	    upd->stpbst = upd->tt + ppt->tbln;
+# else  
+            RNDNRN(nrr);
+
+            upd->stpbst = upd->tt;
+	    upd->stpbst += 2.*nrr*ppt->tbln; /* next stop */
+# endif
+/*.................................................................................*/
+         } /* if upd->nxtbst < upd->tt */
+         else /* if ( upd->tt <= upd->nxtbst ) */
+	    rndbst = 1.;
+      }; /* end if bst == null */
+
+      if ( upd->burst == ONE )
       {
-	 upd->bst = null;
+         if ( upd->stpbst < upd->tt )  /* stop burst */
+         {
+/*.................................................................................*/
+/* switch off: */
+	    upd->burst = null;
+	    rndbst = 1.;
+/*.................................................................................*/
+/* next start: */
 
-         upd->rnd = ( double ) rand( ); 
-         upd->rnd /= RAND_MAX; 
+# if RNDBST == 0
+	    upd->nxtbst = upd->tt + ppt->tbps;
+# else
+            RNDNRN(nrr);
 
-         upd->nxtbst = upd->tt;
-         upd->nxtbst += ( 2.*upd->rnd*ppt->tbps ); /* next start */
+            upd->nxtbst = upd->tt;
+            upd->nxtbst += 2.*nrr*ppt->tbps;
+# endif
+/*.................................................................................*/
+	 }
+	 else if ( ppt->bstmde == ONE )
+	 {
+/*.................................................................................*/
+/* burst mode "slats" [ positive factor within the interval ]P, P+2*Bstf[,
+                        randomly at every time step during the burst ] */
 
-         upd->rnd = 1.;
-      };
+            RNDNRN(nrr);
 
-      upd->incidc *= upd->rnd;
-   }; 
+            rndbst = BSTPLT + 2.*nrr*ppt->Bstf;
+/*.................................................................................*/
+         };
+      }; /*end if bst == ONE */
+      upd->incidc *= rndbst;
+   }; /* end if ZERO < Bstf */
    return state;
 }
 /*============================================================================*/

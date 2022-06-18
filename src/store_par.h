@@ -1,20 +1,30 @@
 /* [ file: store_par.h ] */
 /*******************************************************************************
 *                                                                              *
-*  AMADEUS, release v1.0r1                                                     *
+*  AMADEUS, release v1.0r2                                                     *
 *                                                                              *
-*  A plain numerical Model Approximating the Development of Epidemics          *
-*  Under varied conditions if Spread                                           *
+*  A numerical Model Approximating the Development of Epidemics                *
+*  Under homogeneous conditions of Spread                                      *
 *                                                                              *
 *  Function store_par(*)                                                       *
 *  Stores the model parameters                                                 *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 05, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: June 14, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
 /*============================================================================*/
+/*
+# define EXCHANGE(M,N)\
+{ \
+   ii = (M); \
+   jj = (N); \
+   xx = par->s[ii]; \
+   par->s[ii] = par->s[jj]; \
+   par->s[jj] = xx; \
+}
+*/
 
 short store_par( char *filename, char mode )
 {
@@ -95,7 +105,6 @@ short store_par( char *filename, char mode )
    };
 
    fseek( paramtrs, ll, SEEK_SET );
-
    parameters = ( short ) par->s[null]; /* the number of parameters */
 /*............................................................................*/
    STOREPAR( paramtrs, mode );
@@ -122,7 +131,6 @@ short store_par( char *filename, char mode )
       fprintf( paramtrs, "\n%.24s", timeptr );
       fprintf( paramtrs, "\n%c", EOF );
    };
-
    fclose( paramtrs );
    return null;
 }

@@ -1,10 +1,10 @@
 /* [ file: rvise_opr.h ] */
 /*******************************************************************************
 *                                                                              *
-*  AMADEUS, release v1.0r1                                                     *
+*  AMADEUS, release v1.0r2                                                     *
 *                                                                              *
-*  A plain numerical Model Approximating the Development of Epidemics          *
-*  Under varied conditions if Spread                                           *
+*  A numerical Model Approximating the Development of Epidemics                *
+*  Under homogeneous conditions of Spread                                      *
 *                                                                              *
 *  Function rvise_opr(*)                                                       *
 *                                                                              *
@@ -20,7 +20,7 @@
 *  option "operation" whenever such dependencies exist.                        *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 09, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: June 10, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # include "../src/OPRSTRNGS.M"
@@ -69,39 +69,44 @@ short rvise_opr( void )
       opr->n[3] = null;
       break;
      
-     case 1:
-      break;
-
-     case 2:
+     case 1: case 2:
       break;
    };
      
-   if ( opr->n[4] != null )
-      opr->n[4] = ONE;
-
-   ii = opr->n[5];
+   ii = opr->n[4];
    switch( ii )
    { 
      default:
-      opr->n[5] = null;
+      opr->n[4] = null;
+      break;
+     
+     case 1: case 2: case 3: case 4:
+      break;
+   };
+     
+   if ( opr->n[5] != null )
+      opr->n[5] = ONE;
+
+   if ( opr->n[6] != null )
+      opr->n[6] = ONE;
+
+   ii = opr->n[7];
+   switch( ii )
+   { 
+     default:
+      opr->n[7] = null;
       break;
 
-     case 1:
-      break;
-
-     case 2:
-      break;
-
-     case 3:
+     case 1: case 2: case 3:
       break;
    };
 
-   ii = 6; do
+   ii = 8; do
    {
       if ( opr->n[ii] != null )
          opr->n[ii] = ONE;
       ++ii;
-   } while ( ii < 9 );
+   } while ( ii < 11 );
 
    return null;
 }

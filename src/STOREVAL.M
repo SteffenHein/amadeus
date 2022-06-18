@@ -1,7 +1,7 @@
 /* Update: March 16, 2022 */
 # define STOREVAL( XX, YY )\
 { \
-   if ( XX == 1 ) \
+   if ((XX) == 1 ) \
    { \
       if( ppt->xunits == null ) \
          strcpy( timestr, \
@@ -38,7 +38,7 @@
       fprintf( pltptr_ifc, \
          "%12s\n", longstr ); \
  \
-      if (( YY == 1 ) \
+      if (((YY) == 1 ) \
         ||( ppt->kcic <= upd->kk )) \
       { \
          fprintf( pltptr_cic, \
@@ -50,26 +50,52 @@
                dotos( upd->cmlinc, 7, "e" )); \
          else \
             strcpy( longstr, \
-               dotos(( 1.0e+5 )*( upd->cmlinc ), 7, "e" )); \
+               dotos( 1.0e+05*upd->cmlinc, 7, "e" )); \
  \
          fprintf( pltptr_cic, \
             "%12s\n", longstr ); \
  \
       }; \
  \
-      fprintf( pltptr_dcd, \
-         "%12s     ", timestr ); \
+      if ( ppt->minvac < ppt->maxvac ) \
+      { \
+         fprintf( pltptr_vac, \
+            "%12s     ", timestr ); \
  \
-      if(( ppt->yunits == null ) \
-       ||( ppt->yunits == TWO )) \
-         strcpy( longstr, \
-            dotos( upd->lethal, 7, "e" )); \
-      else \
-         strcpy( longstr, \
-            dotos( ppt->Nhrd*( upd->lethal ), 7, "e" )); \
+         if(( ppt->yunits == null ) \
+          ||( ppt->yunits == TWO )) \
+            strcpy( longstr, \
+               dotos( upd->vaccin, 7, "e" )); \
+         else \
+            strcpy( longstr, \
+               dotos( 1.0e+05*upd->vaccin, 7, "e" )); \
  \
-      fprintf( pltptr_dcd, \
-         "%12s\n", longstr ); \
+         fprintf( pltptr_vac, \
+            "%12s\n", longstr ); \
+      } \
+      else if (( ppt->maxvac <= ppt->minvac ) \
+             &&( upd->tt < 1.0e-77 )) \
+         fprintf( pltptr_vac, "%s", "NO DATA" ); \
+ \
+      if ( ppt->minlty < ppt->maxlty ) \
+      { \
+         fprintf( pltptr_dcd, \
+            "%12s     ", timestr ); \
+ \
+         if(( ppt->yunits == null ) \
+          ||( ppt->yunits == TWO )) \
+            strcpy( longstr, \
+               dotos( upd->lethal, 7, "e" )); \
+         else \
+            strcpy( longstr, \
+               dotos( ppt->Nhrd*( upd->lethal ), 7, "e" )); \
+ \
+         fprintf( pltptr_dcd, \
+            "%12s\n", longstr ); \
+      } \
+      else if (( ppt->maxlty <= ppt->minlty ) \
+             &&( upd->tt < 1.0e-77 )) \
+         fprintf( pltptr_dcd, "%s", "NO DATA" ); \
  \
       fprintf( pltptr_inc, \
          "%12s     ", timestr ); \

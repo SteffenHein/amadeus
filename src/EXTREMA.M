@@ -1,7 +1,7 @@
-/* Update: March 16, 2022 */
+/* Update: June 19, 2022 */
 # define EXTREMA(XX)\
 { \
-   if ( XX == 1 ) \
+   if ((XX) == 1 ) \
    { \
       if ( ppt->maxinc < upd->incidc ) \
       { \
@@ -18,8 +18,7 @@
          ppt->tmxcic = upd->tt; \
       }; \
  \
-      if (( ppt->kcic <= upd->kk ) \
-        &&( upd->cmlinc < ppt->mincic )) \
+      if ( upd->cmlinc < ppt->mincic ) \
          ppt->mincic = upd->cmlinc; \
  \
       if ( ppt->maximn < upd->immune ) \
@@ -39,6 +38,12 @@
  \
       if ( upd->reprod < ppt->minrpd ) \
          ppt->minrpd = upd->reprod; \
+ \
+      if ( ppt->maxvac < upd->vaccin ) \
+         ppt->maxvac = upd->vaccin; \
+ \
+      if ( upd->vaccin < ppt->minvac ) \
+         ppt->minvac = upd->vaccin; \
  \
       if ( ppt->maxifc < upd->infctd ) \
       { \

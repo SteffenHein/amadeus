@@ -2,10 +2,10 @@
 # define DO_AMDDRV "amddrv(*)"
 /*******************************************************************************
 *                                                                              *
-*  AMADEUS, release v1.0r1                                                     *
+*  AMADEUS, release v1.0r2                                                     *
 *                                                                              *
-*  A plain numerical Model Approximating the Development of Epidemics          *
-*  Under varied conditions if Spread                                           *
+*  A numerical Model Approximating the Development of Epidemics                *
+*  Under homogeneous conditions of Spread                                      *
 *                                                                              *
 *  Driver function amddrv(*)                                                   *
 *  Coordinates all parameter input, corrections and computational steps        *

@@ -7,7 +7,7 @@
    fprintf((FN), "%s\n", ( state->text )); \
    fprintf((FN), "\n%s\n", par->stx[null] ); \
  \
-   if (( MD ) == 't' ) \
+   if ((MD) == 't' ) \
    { \
       for ( ii=ONE; ii<=parameters; ii++ ) \
       { \

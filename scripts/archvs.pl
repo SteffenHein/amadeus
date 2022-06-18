@@ -4,7 +4,7 @@
 #  AMADEUS archive creation perl script                                        #
 #                                                                              #
 #  (C) SHEIN; Munich, April 2020                             Steffen Hein      #
-#  [ Update: May 25, 2022 ]                               <contact@sfenx.de>   #
+#  [ Update: June 08, 2022 ]                              <contact@sfenx.de>   #
 #                                                                              #
 #------------------------------------------------------------------------------#
 BEGIN { push @INC, './'}
@@ -22,7 +22,7 @@ my ( $srcarch, $tararch, $tgzarch, $modarch, $gzarch, $bz2arch, $i, $j, $md5 );
 
 #------------------------------------------------------------------------------#
 $portname = "amadeus";
-$release  = "v1.0r1";
+$release  = "v1.0r2";
 $distname = $portname . "-" . $release;
 $srcarch  = $distname . ".src.tar";
 $tararch  = $distname . ".tar";
@@ -47,7 +47,6 @@ $dirtree[ $i++ ] = $distname . "/disp";
 $dirtree[ $i++ ] = $distname . "/doc";
 $dirtree[ $i++ ] = $distname . "/math";
 $dirtree[ $i++ ] = $distname . "/objects";
-$dirtree[ $i++ ] = $distname . "/prv";
 $dirtree[ $i++ ] = $distname . "/samples";
 $dirtree[ $i++ ] = $distname . "/scripts";
 $dirtree[ $i++ ] = $distname . "/src";
@@ -66,15 +65,12 @@ $tgzlist[ $i++ ] = $distname . "/disp";
 $tgzlist[ $i++ ] = $distname . "/doc";
 $tgzlist[ $i++ ] = $distname . "/math";
 $tgzlist[ $i++ ] = $distname . "/objects";
-$tgzlist[ $i++ ] = $distname . "/prv";
 $tgzlist[ $i++ ] = $distname . "/samples";
 $tgzlist[ $i++ ] = $distname . "/scripts";
 $tgzlist[ $i++ ] = $distname . "/src";
 $tgzlist[ $i++ ] = $distname . "/work";
 $tgzlist[ $i++ ] = $distname . "/Makefile";
-$tgzlist[ $i++ ] = $distname . "/makefile.gnu";
 $tgzlist[ $i++ ] = $distname . "/makefile.unx";
-$tgzlist[ $i++ ] = $distname . "/mk.gnu";
 $tgzlist[ $i++ ] = $distname . "/mk.unx";
 $tgzlist[ $i++ ] = $distname . "/SETUP";
 #------------------------------------------------------------------------------#
@@ -91,15 +87,12 @@ $ziplist[ $i++ ] = $distname . "/disp";
 $ziplist[ $i++ ] = $distname . "/doc";
 $ziplist[ $i++ ] = $distname . "/math";
 $ziplist[ $i++ ] = $distname . "/objects";
-$ziplist[ $i++ ] = $distname . "/prv";
 $ziplist[ $i++ ] = $distname . "/samples";
 $ziplist[ $i++ ] = $distname . "/scripts";
 $ziplist[ $i++ ] = $distname . "/src";
 $ziplist[ $i++ ] = $distname . "/work";
 $ziplist[ $i++ ] = $distname . "/Makefile";
-$ziplist[ $i++ ] = $distname . "/makefile.gnu";
 $ziplist[ $i++ ] = $distname . "/makefile.unx";
-$ziplist[ $i++ ] = $distname . "/mk.gnu";
 $ziplist[ $i++ ] = $distname . "/mk.unx";
 $ziplist[ $i++ ] = $distname . "/SETUP";
 #------------------------------------------------------------------------------#

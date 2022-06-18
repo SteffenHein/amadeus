@@ -1,5 +1,0 @@
-#!/bin/sh
-amadeus -n 21 -f par.init21r
-cp 7_days_incidence_R0=.8600_job_no_21 Vr=54
-#
-gnuplot gpl_n_days_incidence_job_no_21

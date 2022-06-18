@@ -1,7 +1,8 @@
 #!/bin/sh
-rm *R0=*
-rm *r0=*
 rm gpl_*
+rm dcd_*
+rm 7_days_*
+rm *_job_no_*
 rm opr.log*
 rm par.log*
 rm parameters*

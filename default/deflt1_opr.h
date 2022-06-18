@@ -1,8 +1,8 @@
 /* [ file: deflt_opr.h ] */
-/* Update: February 05, 2022 */
+/* Update: June 16, 2022 */
 /*----------------------------------------------------------------------------*/
 # ifndef LINLEN
-   # define LINLEN 61
+   # define LINLEN 66
 # endif
 /*----------------------------------------------------------------------------*/
 # include "../src/OPRSTRNGS.M"
@@ -34,19 +34,26 @@ void deflt_opr( void ) /* default operation modes */
 
    opr->n[1] = 1.00e+05; /* maximum number of outer iterations */
    opr->n[2] = 10 ; /* number of inner iterations */
-   opr->n[3] = 0 ; /* formula 0,1,2  [ 0: input is BASIC (else: INITIAL)
+   opr->n[3] = 0 ; /* processing mode 0,1,2 [ 0: input is BASIC (else: INITIAL)
                                                         reproduction number ] */
-   opr->n[4] = 1 ; /* x units 0: transmission time | 1: days                  */
-   opr->n[5] = 0 ; /* y units 0: normalized        | 1: conventional          */
+
+   opr->n[4] = 0 ; /* reprod. factor modulation 0,1,...4 [ 0: rectangular, 
+                      1: parabolic, 2: half wave sinus, 3: full wave sinus,   
+                      4: half-wave sinus squared ]                            */
+		      
+   opr->n[5] = 0 ; /* burst mode [ 0: rectangular | 1: zigzag ]               */
+                    
+   opr->n[6] = 0 ; /* x units 0: transmission time | 1: days                  */
+   opr->n[7] = 1 ; /* y units 0: normalized        | 1: conventional          */
 /* more options:
                                0: normalized ( herd size = 1 )
                                1: conventional units 
 		               2: normalized, scaled to community size
                                3: conventional, scaled to community size 
 */
-   opr->n[6] = 0 ; /* y scale ( plot format ) 0: linear | 1: logarithmic      */
-   opr->n[7] = 1 ; /* [0] 1: [don't] write titles on graphics */
-   opr->n[8] = 1 ; /* [0] 1: [don't] stop when no sick persons remain */
+   opr->n[8] = 0 ; /* y scale ( plot format ) 0: linear | 1: logarithmic      */
+   opr->n[9] = 1 ; /* [0] 1: [don't] write titles on graphics */
+   opr->n[10] = 1 ; /* [0] 1: [don't] stop when no sick persons remain */
 
    return;
 }

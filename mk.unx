@@ -1,5 +1,5 @@
 # [ file: mk.unx ]
-# Update: March 16, 2022
+# Update: June 09, 2022
 #------------------------------------------------------------------------------
 setup: perm install
 	@echo "===> Cleaning for ${AMD_BIN}"
@@ -27,6 +27,7 @@ ${AMD_OBJ}dotos.o \
 ${AMD_OBJ}cpylne.o \
 ${AMD_OBJ}dsplay.o \
 ${AMD_OBJ}txcnsl.o \
+${AMD_OBJ}amdmdl.o \
 ${AMD_OBJ}amdrnd.o \
 ${AMD_OBJ}amdwrk.o \
 ${AMD_OBJ}amddrv.o \
@@ -38,6 +39,7 @@ ${AMD_OBJ}dotos.o \
 ${AMD_OBJ}cpylne.o \
 ${AMD_OBJ}dsplay.o \
 ${AMD_OBJ}txcnsl.o \
+${AMD_OBJ}amdmdl.o \
 ${AMD_OBJ}amdrnd.o \
 ${AMD_OBJ}amdwrk.o \
 ${AMD_OBJ}amddrv.o \
@@ -73,6 +75,11 @@ ${AMD_OBJ}amddrv.o: ${AMD_SRC}amddrv.c
 	@echo "===> Building amddrv(*)"
 	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}amddrv.c \
 -o ${AMD_OBJ}amddrv.o
+
+${AMD_OBJ}amdmdl.o: ${AMD_SRC}amdmdl.c
+	@echo "===> Building amdmdl(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}amdmdl.c \
+-o ${AMD_OBJ}amdmdl.o
 
 ${AMD_OBJ}amdrnd.o: ${AMD_SRC}amdrnd.c
 	@echo "===> Building amdrnd(*)"

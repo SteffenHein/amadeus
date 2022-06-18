@@ -1,5 +1,5 @@
 /* [ file: STOREOPR.M ] */
-/* Update: December 19, 2021 */
+/* Update: June 18, 2021 */
 /*============================================================================*/
 # define STOREOPR( FN, MD ) \
 { \
@@ -19,7 +19,7 @@
    { \
       for ( ii=ONE; ii<=operations; ii++ ) \
       { \
-         fprintf(( FN ), "\n%s: %12ld", \
+         fprintf(( FN ), "\nn%03d=%s: %12ld", ii,\
             opr->ntx[ii], opr->n[ii] ); \
       }; \
    }; \
