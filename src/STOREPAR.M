@@ -11,15 +11,15 @@
    { \
       for ( ii=ONE; ii<=parameters; ii++ ) \
       { \
-         fprintf((FN), "\n%10.5e  <---  s%03d=%-s", \
-            par->s[ii], ii, par->stx[ii] ); \
+         fprintf((FN), "\n%10.6e  <--- %-s", \
+            par->s[ii], par->stx[ii] ); \
       }; \
    }  \
    else \
    { \
       for ( ii=ONE; ii<=parameters; ii++ ) \
       { \
-         fprintf((FN), "\ns%03d=%s:  % .5e", \
+         fprintf((FN), "\ns%02d=%s:  % .5e", \
             ii, par->stx[ii], par->s[ii] ); \
       }; \
    }; \

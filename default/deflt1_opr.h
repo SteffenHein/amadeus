@@ -43,7 +43,7 @@ void deflt_opr( void ) /* default operation modes */
 		      
    opr->n[5] = 0 ; /* burst mode [ 0: rectangular | 1: zigzag ]               */
                     
-   opr->n[6] = 0 ; /* x units 0: transmission time | 1: days                  */
+   opr->n[6] = 1 ; /* x units 0: transmission time | 1: days                  */
    opr->n[7] = 1 ; /* y units 0: normalized        | 1: conventional          */
 /* more options:
                                0: normalized ( herd size = 1 )
@@ -53,7 +53,7 @@ void deflt_opr( void ) /* default operation modes */
 */
    opr->n[8] = 0 ; /* y scale ( plot format ) 0: linear | 1: logarithmic      */
    opr->n[9] = 1 ; /* [0] 1: [don't] write titles on graphics */
-   opr->n[10] = 1 ; /* [0] 1: [don't] stop when no sick persons remain */
+   opr->n[10] = 0 ; /* [0] 1: [don't] stop when no sick persons remain */
 
    return;
 }

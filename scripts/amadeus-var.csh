@@ -13,6 +13,7 @@ while ( $i <= ${final} )
 		echo "calling amadeus ""$i"
 		amadeus -n $i -f ${INIT_FILE}$i${IDX}
 		cp ${LOG_FILE}$i ${INIT_FILE}$i${IDX}
+		mv ${LOG_FILE}$i ${LOG_FILE}$i${IDX}
 	endif
 	@ i ++
 end

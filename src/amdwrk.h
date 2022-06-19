@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 17, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: June 19, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
@@ -23,6 +23,10 @@
 /*----------------------------------------------------------------------------*/
 # ifndef AMD_FRAME
    # define AMD_FRAME ( 1.0e-01 ) /* frame of graphics [ cf. GNUPLOT ] */
+# endif
+/*----------------------------------------------------------------------------*/
+# ifndef AMD_GNURNG
+   # define AMD_GNURNG ( 1.0e-14 ) /* least y range [ cf. GNUPLOT ] */
 # endif
 /*----------------------------------------------------------------------------*/
 /* susceptibility threshold */
@@ -255,7 +259,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    ppt->Nimn = ppt->s[4];  /* initially immune members */
    ppt->Timu = ppt->s[5];  /* immunity half-life [ days ] */
-   ppt->Immc = ppt->s[6];  /* immunization coefficient [ ratio: 0<Immc<=1 ] */
+   ppt->Ieff = ppt->s[6];  /* immunization efficay [ ratio: 0<Ieff<=1 ] */
    
    ppt->Nvac = ppt->s[7];  /* initially vaccinated members */
    ppt->Tvac = ppt->s[8];  /* vaccination half-life [ days ] */
@@ -315,7 +319,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->vrpc = ppt->Vacr/ppt->Nhrd;
    ppt->vrpc *= ppt->Ttrm;
 
-   ppt->wght_imm = ( 100.*ppt->Immc - ppt->Ltlt )/( 100. - ppt->Slnt );
+   ppt->wght_imm = ( 100.*ppt->Ieff - ppt->Ltlt )/( 100. - ppt->Slnt );
    ppt->wght_ifc = ( 100./( 100. - ppt->Slnt ));
    ppt->wght_lty = ppt->Ltlt/( 100. - ppt->Slnt );
    ppt->wght_vac = ppt->Veff;
@@ -435,28 +439,25 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( outpstr, dotos( rrpd, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
-   if ( 1.0e-77 < fabs( 1. - ppt->Rmda))  /* Rmdl is R modulation amplitude */
-   {
-      fprintf( fleptr_par, "\n" );
+   fprintf( fleptr_par, "\n" );
 
-      cpylne( outpstr,
-         "\nR_modulation_amplitude","dimensionless", 60 );
-      strcat( outpstr, ": ");
-      strcat( outpstr, dotos( ppt->Rmda, 4, "e" ));
-      fprintf( fleptr_par, outpstr );
+   cpylne( outpstr,
+      "\nR_modulation_amplitude","dimensionless", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Rmda, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-      cpylne( outpstr,
-         "\nR_modulation_length","days", 60 );
-      strcat( outpstr, ": ");
-      strcat( outpstr, dotos( ppt->Trml, 4, "e" ));
-      fprintf( fleptr_par, outpstr );
+   cpylne( outpstr,
+      "\nR_modulation_length","days", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Trml, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
-      cpylne( outpstr,
-         "\nR_modulation_delay","days", 60 );
-      strcat( outpstr, ": ");
-      strcat( outpstr, dotos( ppt->Trrd, 4, "e" ));
-      fprintf( fleptr_par, outpstr );
-   };
+   cpylne( outpstr,
+      "\nR_modulation_delay","days", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Trrd, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
 
    fprintf( fleptr_par, "\n" );
 
@@ -595,7 +596,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       fprintf( pltptr_ifc, "%s", " | y-unit: percent ]\n" );
 
    fprintf( pltptr_imm, "%s",\
-      "# Epidemic | immune members [ x-unit: " );
+      "# Epidemic | recovered immune members [ x-unit: " );
    fprintf( pltptr_imm, "%s", timestr );
 
    if (( ppt->yunits == null )
@@ -664,6 +665,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->mean_imm = ZERO;
    ppt->mean_inc = ZERO;
    ppt->mean_cic = ZERO;
+   ppt->mean_vac = ZERO;
 /*............................................................................*/
 /* start outer loop */
 
@@ -705,6 +707,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    upd->kk = null;
    upd->tt = ZERO;
    upd->kout = null;
+   upd->kinn = null;
    
    while ( upd->kout < ppt->maxout )
    {
@@ -822,6 +825,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          upd->vaccin +=\
             upd->dt*( ppt->wght_vac*ppt->vrpc );
 
+         if ( 1. < upd->vaccin )
+	    upd->vaccin = 1.;
+
+	 ppt->mean_vac += upd->vaccin;
 /*...........................................................................*/
 /* n days accumulated incidence */
 
@@ -863,6 +870,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->mean_imm /= upd->kk;
    ppt->mean_inc /= upd->kk;
    ppt->mean_cic /= upd->kk;
+   ppt->mean_vac /= upd->kk;
 
 /*............................end of outer loop ..............................*/
   finish:
@@ -983,6 +991,12 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       fprintf( fleptr_par,
          "\n\nHerd immunity not attained.\n" );
 
+   fprintf( fleptr_par, "\n" );
+
+   cpylne( outpstr,
+      "\nMean_vaccinated", "percent", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( 100.*ppt->mean_vac, 4, "e" ));
    fclose( fleptr_par );
 /*............................................................................*/
 /* store gnuplot headers
@@ -1010,6 +1024,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
      ||( ppt->yunits == TWO ))
    {
       frm = AMD_FRAME*( ppt->maxcic - ppt->mincic );
+
+      if ( frm < AMD_GNURNG )
+         frm = 0.5;
+      
       lwbnd = fmax( ppt->mincic - frm, ZERO );
       upbnd = ppt->maxcic + frm;
 
@@ -1024,6 +1042,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       frm = AMD_FRAME*( ppt->maxifc - ppt->minifc );
+
+      if ( frm < AMD_GNURNG )
+         frm = 0.5;
+      
       lwbnd = fmax( ppt->minifc - frm, ZERO );
       upbnd = ppt->maxifc + frm;
 
@@ -1031,11 +1053,15 @@ AMDSTATE *amdwrk( AMDSTATE *state )
         " ", lwbnd, upbnd );
 
       if ( ppt->titles == ONE )
-         strcpy( optnstr, "Recovered immune" );
+         strcpy( optnstr, "Immune recovered" );
       else
          strcpy( optnstr, " " );
 
       frm = AMD_FRAME*( ppt->maximn - ppt->minimn );
+
+      if ( frm < AMD_GNURNG )
+         frm = 0.5;
+      
       lwbnd = fmax( ppt->minimn - frm, ZERO );
       upbnd = ppt->maximn + frm;
 
@@ -1053,6 +1079,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       frm = AMD_FRAME*( ppt->maxinc - ppt->mininc );
+
+      if ( frm < AMD_GNURNG )
+         frm = 0.5;
+      
       lwbnd = fmax( ppt->mininc - frm, ZERO );
       upbnd = ppt->maxinc + frm;
 
@@ -1065,6 +1095,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       frm = AMD_FRAME*( ppt->maxvac - ppt->minvac );
+
+      if ( frm < AMD_GNURNG )
+         frm = 0.5;
+
       lwbnd = fmax( ppt->minvac - frm, ZERO );
       upbnd = ppt->maxvac + frm;
 
@@ -1077,6 +1111,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       frm = AMD_FRAME*( ppt->maxlty - ppt->minlty );
+
+      if ( frm < AMD_GNURNG )
+         frm = 0.5;
+      
       lwbnd = fmax( ppt->minlty - frm, ZERO );
       upbnd = ppt->maxlty + frm;
 
@@ -1086,6 +1124,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    else /* conventional yunits */
    {
       frm = AMD_FRAME*( ppt->maxcic - ppt->mincic );
+
+      if ( frm < AMD_GNURNG )
+         frm = 0.5;
+      
       lwbnd = fmax( ppt->mincic - frm, ZERO );
       upbnd = ppt->maxcic + frm;
 
@@ -1100,6 +1142,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       frm = AMD_FRAME*( ppt->maxifc - ppt->minifc );
+
+      if ( frm < AMD_GNURNG )
+         frm = 0.5;
+      
       lwbnd = fmax( ppt->minifc - frm, ZERO );
       upbnd = ppt->maxifc + frm;
 
@@ -1107,11 +1153,15 @@ AMDSTATE *amdwrk( AMDSTATE *state )
         "percent", 1.0e+02*lwbnd, 1.02e+02*upbnd );
 
       if ( ppt->titles == ONE )
-         strcpy( optnstr, "Recovered immune" );
+         strcpy( optnstr, "Immune recovered" );
       else
          strcpy( optnstr, " " );
 
       frm = AMD_FRAME*( ppt->maximn - ppt->minimn );
+
+      if ( frm < AMD_GNURNG )
+         frm = 0.5;
+      
       lwbnd = fmax( ppt->minimn - frm, ZERO );
       upbnd = ppt->maximn + frm;
 
@@ -1129,6 +1179,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       frm = AMD_FRAME*( ppt->maxinc - ppt->mininc );
+
+      if ( frm < AMD_GNURNG )
+         frm = 0.5;
+      
       lwbnd = fmax( ppt->mininc - frm, ZERO );
       upbnd = ppt->maxinc + frm;
 
@@ -1141,6 +1195,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       frm = AMD_FRAME*( ppt->maxvac - ppt->minvac );
+
+      if ( frm < AMD_GNURNG )
+         frm = 0.5;
+
       lwbnd = fmax( ppt->minvac - frm, ZERO );
       upbnd = ppt->maxvac + frm;
       
@@ -1153,6 +1211,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          strcpy( optnstr, " " );
 
       frm = AMD_FRAME*( ppt->maxlty - ppt->minlty );
+
+      if ( frm < AMD_GNURNG )
+         frm = 0.5;
+      
       lwbnd = fmax( ppt->minlty - frm, ZERO );
       upbnd = ppt->maxlty + frm;
 
@@ -1166,6 +1228,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       strcpy( optnstr, " " );
 
    frm = AMD_FRAME*( ppt->maxrpd - ppt->minrpd );
+
+   if ( frm < AMD_GNURNG )
+      frm = 0.5;
+     
    lwbnd = fmax( ppt->minrpd - frm, ZERO );
    upbnd = ppt->maxrpd + frm;
 

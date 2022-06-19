@@ -26,7 +26,7 @@
 # include "../src/PARSTRNGS.M"
 /*----------------------------------------------------------------------------*/
 # undef LINLEN
-   # define LINLEN 56
+   # define LINLEN 61
 /*============================================================================*/
 
 short rvise_par( void )
@@ -54,6 +54,16 @@ short rvise_par( void )
       par->s[3] = par->s[2];
 
 /* to be completed */
+
+   if ( par->s[6] < ZERO )
+      par->s[6] = ZERO;
+   else if ( ONE < par->s[6] )
+      par->s[6] = ONE;
+
+   if ( par->s[10] < ZERO )
+      par->s[10] = ZERO;
+   else if ( ONE < par->s[10] )
+      par->s[10] = ONE;
 
    if ( par->s[20] < ZERO )
       par->s[20] = ZERO;

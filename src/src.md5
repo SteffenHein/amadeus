@@ -1,31 +1,29 @@
 [file: src.md5]
-created: Sat Jun 18 19:36:56 2022
+created: Sun Jun 19 19:15:41 2022
 -------------------------------------------------------------------------------
 MD5( .directory ) = d41d8cd98f00b204e9800998ecf8427e
 MD5( EXTREMA.M ) = 5a06ca97d6434cf9d487d0d3e16c581b
-MD5( EXTREMA.PRV ) = 1aa3185124a54941cf64effad0b972fe
 MD5( GNUPLOT.M ) = 10915debb7ffff6e6476ce60889f2bfd
 MD5( OPRSTRNGS.M ) = d07e38f857a9eae32002f848b84966bd
-MD5( PARSTRNGS.M ) = 6cf8592f23d2e840972b0a7f2bbc9a1a
+MD5( PARSTRNGS.M ) = 4b1a13e180db02babd6c809752438d65
 MD5( PRNTCRS.M ) = ae70f560efcf41cc6b149a2fdeec6a1f
-MD5( STOREOPR.M ) = b5e61587f7304b3c7f31f95803606c1d
-MD5( STOREOPR.M.PRV ) = 6c39c0989003891bc551750b5e0032a0
-MD5( STOREPAR.M ) = fce77c1d6d8fd30449d0ec5987faf44a
-MD5( STOREVAL.M ) = 4e58d8827be7e79132a673f65987e83b
+MD5( STOREOPR.M ) = 1b12e321b2ab283eb7f49c3593c110f3
+MD5( STOREPAR.M ) = 1dfbfb62b11666b2cee7334e4c328724
+MD5( STOREVAL.M ) = 72cd99eaec92f5a0d8555cb4776c5a2a
 MD5( amadeus.c ) = 2f139340743ea454b21afbd73e43e224
 MD5( amddrv.c ) = 8b8c8716701f37ef6f7ce3c1fb0e2fe1
 MD5( amddrv.h ) = 0afdf28814aa83844cf33174f275e651
 MD5( amdmdl.c ) = 55615b03b57b43f553c39537dd6a5c8d
 MD5( amdrnd.c ) = f66b51d2b101bd954e11c32af70b4e6c
 MD5( amdwrk.c ) = 1efdb8246135a8b713556f3b570a1180
-MD5( amdwrk.h ) = 078edf85dc81b379837088a82500c7d6
+MD5( amdwrk.h ) = aa40859119d6c7bf1e3c2444b572544f
 MD5( init_opr.h ) = fa987e17643ed126a4ba0b6dcaf6b38a
 MD5( init_par.h ) = 8dde85f15be387f80e6c4a1a151507d6
 MD5( inputs.h ) = 9ed130f094f6eaf794f5daddc21e490e
 MD5( rread_opr.h ) = 92d25343100d015d0a9e61ca867f2df3
 MD5( rread_par.h ) = c588472353a60451b319c6f147b73325
 MD5( rvise_opr.h ) = 074a2c87dc7060896b444e1337e55e3c
-MD5( rvise_par.h ) = c9bc0daa2ba3c32be084360b68732e4b
+MD5( rvise_par.h ) = d5f11128b2c094bcd438425d6a78fe54
 MD5( store_opr.h ) = a4dc29c423853eaca3ec02407043db53
 MD5( store_par.h ) = f583bba4e646023a6563cc8b32e5030f
-MD5( types.h ) = ef5435132cda556e03746d6db9e825d5
+MD5( types.h ) = 11dd15eded5a3cd556801598e08284d9

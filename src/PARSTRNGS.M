@@ -30,7 +30,7 @@
       "Immunity_half-life_[days]", "0<T", ll ); \
  \
    cpylne( par->stx[6], \
-      "Immunization_ratio", "0<Ir<=1", ll ); \
+      "Immunization_efficacy", "ratio:_0<Ieff<=1", ll ); \
  \
    cpylne( par->stx[7], \
       "Initially_vaccinated_members", "0<=N" , ll ); \

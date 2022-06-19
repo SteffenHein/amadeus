@@ -5,6 +5,7 @@ REPR=".8600"
 RATE="150"
 #
 amadeus -n ${IDX} -f par.init${IDX}"r"
+mv par.log${IDX} par.log${IDX}"r"
 cp 7_days_incidence_R0=${REPR}_job_no_${IDX} Vr=${RATE}
 #
 gnuplot gpl_n_days_incidence_job_no_${IDX}

@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 17, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: June 19, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -119,8 +119,8 @@ typedef struct
       Repr,      /* initial reproduction number */
       Ithr,      /* incidence "threshold" [ stop computation when incidence  */
                                       /* lower than that number of persons ] */
-      Immc,      /* immunisation coefficient [ ratio; 0 < Immc <= 1 ] */
-      Veff,      /* vaccination efficiency [ ratio; 0 < Veff <= 1 ] */
+      Ieff,      /* immunisation efficacy [ ratio; 0 < Immc <= 1 ] */
+      Veff,      /* vaccination efficacy [ ratio; 0 < Veff <= 1 ] */
       Slnt,      /* percentage of "silent" [ asymptomatic ] cases */
       Ltlt,      /* lethality [ percent ] */
       Rmda,      /* R modulation amplitude [ 0 < Rmda; default: 1 ] */
@@ -183,9 +183,10 @@ typedef struct
       minlty,    /* initial lethality [= minimum] */
       maxlty,    /* maximum lethality */
 
-      mean_imm,  /* mean mmunity */
+      mean_imm,  /* mean effectively immune */
       mean_inc,  /* mean incidence */
-      mean_cic;  /* mean n days accumulated incidence */
+      mean_cic,  /* mean n days accumulated incidence */
+      mean_vac;  /* mean effectively vaccinated */
 
 } PARMTRS;
 /*----------------------------------------------------------------------------*/

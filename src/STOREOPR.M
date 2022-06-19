@@ -19,7 +19,7 @@
    { \
       for ( ii=ONE; ii<=operations; ii++ ) \
       { \
-         fprintf(( FN ), "\nn%03d=%s: %12ld", ii,\
+         fprintf(( FN ), "\nn%02d=%s:  %12ld", ii,\
             opr->ntx[ii], opr->n[ii] ); \
       }; \
    }; \

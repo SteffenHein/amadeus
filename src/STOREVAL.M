@@ -1,4 +1,4 @@
-/* Update: March 16, 2022 */
+/* Update: Jun 19, 2022 */
 # define STOREVAL( XX, YY )\
 { \
    if ((XX) == 1 ) \
@@ -57,45 +57,33 @@
  \
       }; \
  \
-      if ( ppt->minvac < ppt->maxvac ) \
-      { \
-         fprintf( pltptr_vac, \
-            "%12s     ", timestr ); \
+      fprintf( pltptr_vac, \
+         "%12s     ", timestr ); \
  \
-         if(( ppt->yunits == null ) \
-          ||( ppt->yunits == TWO )) \
-            strcpy( longstr, \
-               dotos( upd->vaccin, 7, "e" )); \
-         else \
-            strcpy( longstr, \
-               dotos( 1.0e+05*upd->vaccin, 7, "e" )); \
+      if(( ppt->yunits == null ) \
+       ||( ppt->yunits == TWO )) \
+         strcpy( longstr, \
+            dotos( upd->vaccin, 7, "e" )); \
+      else \
+         strcpy( longstr, \
+            dotos( 1.0e+05*upd->vaccin, 7, "e" )); \
  \
-         fprintf( pltptr_vac, \
-            "%12s\n", longstr ); \
-      } \
-      else if (( ppt->maxvac <= ppt->minvac ) \
-             &&( upd->tt < 1.0e-77 )) \
-         fprintf( pltptr_vac, "%s", "NO DATA" ); \
+      fprintf( pltptr_vac, \
+         "%12s\n", longstr ); \
  \
-      if ( ppt->minlty < ppt->maxlty ) \
-      { \
-         fprintf( pltptr_dcd, \
-            "%12s     ", timestr ); \
+      fprintf( pltptr_dcd, \
+         "%12s     ", timestr ); \
  \
-         if(( ppt->yunits == null ) \
-          ||( ppt->yunits == TWO )) \
-            strcpy( longstr, \
-               dotos( upd->lethal, 7, "e" )); \
-         else \
-            strcpy( longstr, \
-               dotos( ppt->Nhrd*( upd->lethal ), 7, "e" )); \
+      if(( ppt->yunits == null ) \
+       ||( ppt->yunits == TWO )) \
+         strcpy( longstr, \
+            dotos( upd->lethal, 7, "e" )); \
+      else \
+         strcpy( longstr, \
+            dotos( ppt->Nhrd*( upd->lethal ), 7, "e" )); \
  \
-         fprintf( pltptr_dcd, \
-            "%12s\n", longstr ); \
-      } \
-      else if (( ppt->maxlty <= ppt->minlty ) \
-             &&( upd->tt < 1.0e-77 )) \
-         fprintf( pltptr_dcd, "%s", "NO DATA" ); \
+      fprintf( pltptr_dcd, \
+         "%12s\n", longstr ); \
  \
       fprintf( pltptr_inc, \
          "%12s     ", timestr ); \
