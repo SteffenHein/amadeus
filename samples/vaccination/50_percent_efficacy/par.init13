@@ -10,7 +10,7 @@ s02=Initially_infective_[acutely_sick]_members_[Ninf]____[0<Ninf]:   2.58429e+02
 s03=Initially_infected_members_[Nifc]________________[Ninf<=Nifc]:   2.58429e+02
 s04=Initially_immune_members_______________________________[0<=N]:   7.60000e+04
 s05=Immunity_half-life_[days]_______________________________[0<T]:   1.56000e+02
-s06=Immunization_ratio__________________________________[0<Ir<=1]:   1.00000e+00
+s06=Immunization_efficacy______________________[ratio:_0<Ieff<=1]:   1.00000e+00
 s07=Initially_vaccinated_members___________________________[0<=N]:   0.00000e+00
 s08=Vaccination_half-life_[days]____________________________[0<T]:   1.60000e+02
 s09=Vaccination_rate______________[vaccinations_per_day;_0<=Nvac]:   2.00000e+02
@@ -51,5 +51,5 @@ n09=[0]_1:_[don't]_write_titles_on_graphics_________________[0/1]:             1
 n10=[0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:             0
 
 AMADEUS input parameter file par.log13 created:
-Sun Jun 19 15:08:56 2022
+Sun Jun 19 23:30:47 2022
 ÿ
