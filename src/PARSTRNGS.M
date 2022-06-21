@@ -1,5 +1,5 @@
 /* [ file: PARSTRNGS.M ] */
-/* Update: June 10, 2022 */
+/* Update: June 21, 2022 */
 /*============================================================================*/
 # define PARSTRNGS( ) \
 { \
@@ -24,7 +24,7 @@
       "Initially_infected_members_[Nifc]", "Ninf<=Nifc", ll ); \
  \
    cpylne( par->stx[4], \
-      "Initially_immune_members", "0<=N" , ll ); \
+      "Recovered_immune_members", "0<=N" , ll ); \
  \
    cpylne( par->stx[5], \
       "Immunity_half-life_[days]", "0<T", ll ); \
@@ -33,7 +33,7 @@
       "Immunization_efficacy", "ratio:_0<Ieff<=1", ll ); \
  \
    cpylne( par->stx[7], \
-      "Initially_vaccinated_members", "0<=N" , ll ); \
+      "Effectively_vaccinated_members", "0<=N" , ll ); \
  \
    cpylne( par->stx[8], \
       "Vaccination_half-life_[days]", "0<T" , ll ); \

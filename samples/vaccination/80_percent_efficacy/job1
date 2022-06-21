@@ -1,12 +1,14 @@
 #!/bin/sh
 #
 IDX="1"
+APX=""
 REPR=".8600"
 RATE="30"
 #
-amadeus -n ${IDX} -f par.init${IDX}
+amadeus -n ${IDX} -f par.init${IDX}${APX}
+cp par.log${IDX} par.init${IDX}${APX}
+# mv par.log${IDX} par.log${IDX}${APX}
 cp 7_days_incidence_R0=${REPR}_job_no_${IDX} VR=${RATE}
-cp inc_R0=${REPR}_job_no_${IDX} vr=${RATE}
 #
 gnuplot gpl_n_days_incidence_job_no_${IDX}
 gnuplot gpl_incidence_job_no_${IDX}

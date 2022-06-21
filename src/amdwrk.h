@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 19, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: June 21, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
@@ -424,7 +424,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       strcat( outpstr, dotos( ppt->Repr, 4, "e" ));
       fprintf( fleptr_par, outpstr );
 
-      scpt0 = 1. - ( ppt->rimn + ppt->rlty );
+      scpt0 = 1. - ( ppt->rimn + ppt->rvcd + ppt->rlty );
 
       cpylne( outpstr,
          "\nBasic_reproduction_factor_[estimate]","dimensionless", 60 );
@@ -678,7 +678,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    upd->nxtbst = ppt->tbps; /* next burst start */ 
    upd->stpbst = ppt->tbln; /* next burst stop */
 
-   hh = upd->immune + upd->lethal;
+   hh = upd->immune + upd->vaccin + upd->lethal;
    scpt0 = 1. - hh;
 
    if ( ppt->formula == null )      /* Repr is basic reproduction number */
@@ -734,7 +734,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          EXTREMA( null );
 /*...........................................................................*/
          hh = upd->immune + upd->vaccin + upd->lethal;
-         upd->suscpt = fmax(( 1. - hh ), SUSCPT_THR ); 
+         upd->suscpt = fmax(( 1. - hh ), SUSCPT_THR );
 
          if ( ppt->nmstop == ONE ) /* stop if no susceptible members remain */
 	 {
