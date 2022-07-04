@@ -9,7 +9,7 @@
 *  Reproduction factor modulation                                              *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 11, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 04, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 1 /* some headers of the POSIX.1 standard will be used */
@@ -47,9 +47,6 @@ AMDSTATE *amdmdl( AMDSTATE *state )
    double sin( double x );
    double fmax( double x, double y );
 
-   static OPERTNS
-     *opt = null;
-
    static PARMTRS
      *ppt = null;
 
@@ -62,13 +59,12 @@ AMDSTATE *amdmdl( AMDSTATE *state )
 
 /*----------------------------------------------------------------------------*/
    upd = state->upd;
-   opt = state->opr;
    ppt = state->par;
 
    if (( ppt->trrd < upd->tt )\
      &&( upd->tt < ( ppt->trrd + ppt->trml )))
    {
-      switch ( opt->n[4] )
+      switch ( ppt->rfmmde ) /* modulation mode */
       {
         case 0: /* rectangular */
 	default:

@@ -20,13 +20,14 @@
 *  option "parameters" whenever such dependencies exist.                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 15, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 04, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # include "../src/PARSTRNGS.M"
 /*----------------------------------------------------------------------------*/
-# undef LINLEN
-   # define LINLEN 61
+# ifndef LINELGTH 
+   # define LINELGTH 61
+# endif
 /*============================================================================*/
 
 short rvise_par( void )
@@ -35,7 +36,7 @@ short rvise_par( void )
      *par = &parmtrs;
 
    static short
-      ll = LINLEN;
+      lln = LINELGTH;
 
 /* prototypes: */
 
@@ -47,13 +48,11 @@ short rvise_par( void )
 /*----------------------------------------------------------------------------*/
    par = &parmtrs;
 
-   PARSTRNGS( ); /* copy number of parameters and parameter strings */
+   PARSTRNGS( ); /* copy parameter strings and parameters */
 /*............................................................................*/
 
    if ( par->s[3] < par->s[2] )
       par->s[3] = par->s[2];
-
-/* to be completed */
 
    if ( par->s[6] < ZERO )
       par->s[6] = ZERO;
@@ -68,8 +67,9 @@ short rvise_par( void )
    if ( par->s[20] < ZERO )
       par->s[20] = ZERO;
 
+/* [ to be completed ] */
+
    return null;
 }
 /*============================================================================*/
-# undef LINLEN
 /*********************** end of function rvise_par(*) *************************/

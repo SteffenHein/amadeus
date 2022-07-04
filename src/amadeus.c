@@ -10,7 +10,7 @@
 *  Main program amadeus(*)                                                     *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 10, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 01, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 1 /* some headers of the POSIX.1 standard will be used */
@@ -47,12 +47,12 @@
 # include "../src/PRNTCRS.M"
 /*----------------------------------------------------------------------------*/
 /* covid program release */
-# ifndef COVID_RELEASE
-   # define COVID_RELEASE "1.0r1"
+# ifndef AMADEUS_RELEASE
+   # define AMADEUS_RELEASE "v1.0r2"
 # endif
 /*----------------------------------------------------------------------------*/
-# ifndef COVID_UPDATE
-   # define COVID_UPDATE "2020-04-30"
+# ifndef AMADEUS_UPDATE
+   # define AMADEUS_UPDATE "2022-07-01"
 # endif
 /*----------------------------------------------------------------------------*/
 /* This may yet be defined in the general configuration header CONFIG.H: */
@@ -255,8 +255,8 @@ int main( int argc, char **argv )
            ||( null == strcmp( ptr, "V" ))
            ||( null == strcmp( ptr, "-V" )))
          {
-            fprintf( stdout, "\nCOVID program version %s", COVID_RELEASE );
-            fprintf( stdout, " %s\n", COVID_UPDATE );
+            fprintf( stdout, "\nAMADEUS program version %s", AMADEUS_RELEASE );
+            fprintf( stdout, " %s\n", AMADEUS_UPDATE );
 	    exit( EXIT_SUCCESS );
          }
          else if (( null == strcmp( ptr, "f" ))
@@ -405,7 +405,7 @@ int main( int argc, char **argv )
    PRNORMAL( "" );
 
    ( csp->clscr ) = 1; /* clear screen; scroll that number of lines */
-   strcpy(( csp->title ), "program " );
+   strcpy(( csp->title ), "Program " );
    strcat(( csp->title ), PROGRAM );
    strcat(( csp->title ), " started:\n " );
    strncat(( csp->title ), tmeptr, 24 );
@@ -414,10 +414,11 @@ int main( int argc, char **argv )
 /*......................*/
 /* the function should start writing something like that: */
 /*
-   fprintf( stdout, "GSC program %s started: ", PROGRAM );
+   fprintf( stdout, "XYZ program %s started: ", PROGRAM );
    PRNORMAL( "" );
-   fprintf( stdout, " %s ", tmeptr );
-   fprintf( stdout, "\n ======================================="
+   fprintf( stdout, " %s", tmeptr );
+   fprintf( stdout, "\n %s",\
+      "======================================="
       "=======================================" );
 */
 /*............................................................................*/

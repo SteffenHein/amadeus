@@ -10,7 +10,7 @@
 *  Reads operation modes from a file [ type opr.log<N> ]                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 01, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: July 04, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -35,9 +35,9 @@ short rread_opr( char *filename, char mode )
       operations;
 
    static char
-      ptr[STS_SIZE] = {null},
-      fleptr[STS_SIZE] = {null},
-      txtstr[STS_SIZE] = {null},
+      ptr[STS_SIZE+ONE] = {null},
+      fleptr[STS_SIZE+ONE] = {null},
+      txtstr[STS_SIZE+ONE] = {null},
     **endp = NULL;
 
    static const char

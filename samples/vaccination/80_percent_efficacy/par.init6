@@ -1,21 +1,22 @@
-PARAMETERS-21
+PARAMETERS-6
 AMADEUS
 Evolution_of_spreading_diseases
 
+Initial_values_and_constants
 Do_not_change_file_topology_!!!
 [Leave_contiguous_strings_contiguous.]
 
 s01=Herd_size_[Nhrd]_______________________________[0<Nhrd<=Nref]:   1.00000e+05
-s02=Initially_infective_[acutely_sick]_members_[Ninf]____[0<Ninf]:   2.58429e+02
-s03=Initially_infected_members_[Nifc]________________[Ninf<=Nifc]:   2.58429e+02
-s04=Recovered_immune_members_______________________________[0<=N]:   7.60000e+04
+s02=Initially_infective_[acutely_sick]___________________[0<Ninf]:   2.58429e+02
+s03=Initially_infected_[Nifc]________________________[Ninf<=Nifc]:   2.58429e+02
+s04=Recovered______________________________________________[0<=N]:   7.60000e+04
 s05=Immunity_half-life_[days]_______________________________[0<T]:   3.00000e+02
 s06=Immunization_efficacy______________________[ratio:_0<Ieff<=1]:   1.00000e+00
-s07=Effectively_vaccinated_members_________________________[0<=N]:   1.65007e+02
+s07=Vaccinated_____________________________________________[0<=N]:   1.65007e+02
 s08=Vaccination_half-life_[days]____________________________[0<T]:   3.00000e+02
 s09=Vaccination_rate______________[vaccinations_per_day;_0<=Nvac]:   5.40000e+01
 s10=Vaccination_efficacy_______________________[ratio;_0<Veff<=1]:   8.00000e-01
-s11=Initially_deceased_members_____________________________[0<=N]:   1.65007e+02
+s11=Deceased_______________________________________________[0<=N]:   1.65007e+02
 s12=Percentage_of_lethal_cases________________________[0<=P<=100]:   5.31593e-01
 s13=Initial_reproduction_factor_____________________________[0<R]:   8.60000e-01
 s14=Reproduction_factor_modulation_____________[amplitude:_-1<Rm]:   0.00000e+00
@@ -33,23 +34,25 @@ s25=Time_step_[Dt/days]____________________________________[0<Dt]:   2.00000e-02
 
 ================================================================================
 
-OPERATIONS-21
+OPERATIONS-6
 AMADEUS
 Evolution_of_spreading_diseases
 
 operation_parameters
 
-n01=maximum_number_of_outer_iterations_________________[<=100000]:        100000
-n02=number_of_inner_iterations____________________________[1-100]:            10
-n03=reproduction_factor___________[basic:0_|_current:1_|_fixed:2]:             1
-n04=reproduction_factor_modulation_mode________________[0,1,...4]:             0
-n05=random_burst_mode_________________________[shift:0_|_slats:1]:             0
-n06=x-units______________________[transmission_cycles:0_|_days:1]:             1
-n07=y-units___________________[normalized:0/2_|_conventional:1/3]:             1
-n08=y-scale____________________________[linear:0_|_logarithmic:1]:             0
-n09=[0]_1:_[don't]_write_titles_on_graphics_________________[0/1]:             1
-n10=[0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:             0
+n01=x-units______________________[transmission_cycles:0_|_days:1]:             1
+n02=y-units___________________[normalized:0/2_|_conventional:1/3]:             1
+n03=y-scale____________________________[linear:0_|_logarithmic:1]:             0
+n04=[0]_1:_[don't]_write_titles_on_graphics_________________[0/1]:             1
+n05=[0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:             0
+n06=[0]_1:_[don't]_weight_recovery_history__________________[0/1]:             0
+n07=[0]_1:_[don't]_weight_vaccination_history_______________[0/1]:             0
+n08=reproduction_factor___________[basic:0_|_current:1_|_fixed:2]:             1
+n09=reproduction_factor_modulation_mode________________[0,1,...4]:             0
+n10=random_burst_mode________________________[shifts:0_|_slats:1]:             0
+n11=maximum_number_of_outer_iterations_________________[<=100000]:        100000
+n12=number_of_inner_iterations____________________________[1-100]:            10
 
-AMADEUS input parameter file par.log21 created:
-Tue Jun 21 16:27:24 2022
+AMADEUS input parameter file par.log6 created:
+Mon Jul  4 18:52:46 2022
 ÿ

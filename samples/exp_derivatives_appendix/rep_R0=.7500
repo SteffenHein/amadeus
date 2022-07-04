@@ -1,5 +1,6 @@
 # Epidemic | reproduction number
 # [ x-unit: transmission cycles | y-unit: individuals infected by one sick member ]
+# ==============================================================================
   0.0000e+00     7.500000e-01
   1.4286e-02     7.500000e-01
   2.8571e-02     7.499999e-01

@@ -9,7 +9,7 @@
 *  The typedef header of program AMADEUS                                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 19, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 04, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 /* The type definition structure of the operation modes transfer functions    */
@@ -62,7 +62,7 @@ typedef struct
       opt[SHS_SIZE];
 
    char
-      ntx[OPERATIONS+ONE][STS_SIZE];
+      ntx[OPERATIONS+ONE][STS_SIZE+ONE];
 
    long
       n[OPERATIONS+ONE];
@@ -85,11 +85,14 @@ typedef struct
       yscale,
       nmstop, 
       titles,
+      rfmmde, /* reproduction factor modulation mode */
       bstmde, /* burst mode [ 0: shift, 1: slates ] */
+      wgtrec, /* operation mark [ 0/1: don't/do weight recovery history ] */ 
+      wgtvac, /* operation mark [ 0/1: don't/do weight vaccination history ] */
       rtn;
 
    char
-     stx[PARAMETERS+ONE][STS_SIZE];
+     stx[PARAMETERS+ONE][STS_SIZE+ONE];
 
    double
       s[100+ONE];
@@ -288,10 +291,10 @@ typedef struct
       act; /* actual program stage */
 
    char
-      name[STS_SIZE],
-      text[STS_SIZE],
-      logfle[STS_SIZE],
-      errfle[STS_SIZE];
+      name[STS_SIZE+ONE],
+      text[STS_SIZE+ONE],
+      logfle[STS_SIZE+ONE],
+      errfle[STS_SIZE+ONE];
 
    short
       job,   /* running job index */

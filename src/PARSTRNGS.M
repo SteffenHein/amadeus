@@ -1,5 +1,5 @@
 /* [ file: PARSTRNGS.M ] */
-/* Update: June 21, 2022 */
+/* Update: June 29, 2022 */
 /*============================================================================*/
 # define PARSTRNGS( ) \
 { \
@@ -15,78 +15,78 @@
    strcat( par->stx[0], "[Leave_contiguous_strings_contiguous.]" ); \
 /*.........................................................................*/ \
    cpylne( par->stx[1], \
-      "Herd_size_[Nhrd]", "0<Nhrd<=Nref", ll ); \
+      "Herd_size_[Nhrd]", "0<Nhrd<=Nref", lln ); \
  \
    cpylne( par->stx[2], \
-      "Initially_infective_[acutely_sick]_members_[Ninf]", "0<Ninf", ll ); \
+      "Initially_infective_[acutely_sick]", "0<Ninf", lln ); \
  \
    cpylne( par->stx[3], \
-      "Initially_infected_members_[Nifc]", "Ninf<=Nifc", ll ); \
+      "Initially_infected_[Nifc]", "Ninf<=Nifc", lln ); \
  \
    cpylne( par->stx[4], \
-      "Recovered_immune_members", "0<=N" , ll ); \
+      "Recovered", "0<=N" , lln ); \
  \
    cpylne( par->stx[5], \
-      "Immunity_half-life_[days]", "0<T", ll ); \
+      "Immunity_half-life_[days]", "0<T", lln ); \
  \
    cpylne( par->stx[6], \
-      "Immunization_efficacy", "ratio:_0<Ieff<=1", ll ); \
+      "Immunization_efficacy", "ratio:_0<Ieff<=1", lln ); \
  \
    cpylne( par->stx[7], \
-      "Effectively_vaccinated_members", "0<=N" , ll ); \
+      "Vaccinated", "0<=N" , lln ); \
  \
    cpylne( par->stx[8], \
-      "Vaccination_half-life_[days]", "0<T" , ll ); \
+      "Vaccination_half-life_[days]", "0<T" , lln ); \
  \
    cpylne( par->stx[9], \
-      "Vaccination_rate", "vaccinations_per_day;_0<=Nvac", ll ); \
+      "Vaccination_rate", "vaccinations_per_day;_0<=Nvac", lln ); \
  \
    cpylne( par->stx[10], \
-      "Vaccination_efficacy", "ratio;_0<Veff<=1", ll ); \
+      "Vaccination_efficacy", "ratio;_0<Veff<=1", lln ); \
  \
    cpylne( par->stx[11], \
-      "Initially_deceased_members", "0<=N", ll ); \
+      "Deceased", "0<=N", lln ); \
  \
    cpylne( par->stx[12], \
-      "Percentage_of_lethal_cases", "0<=P<=100", ll ); \
+      "Percentage_of_lethal_cases", "0<=P<=100", lln ); \
  \
    cpylne( par->stx[13], \
-      "Initial_reproduction_factor", "0<R", ll ); \
+      "Initial_reproduction_factor", "0<R", lln ); \
  \
    cpylne( par->stx[14], \
-      "Reproduction_factor_modulation", "amplitude:_-1<Rm", ll ); \
+      "Reproduction_factor_modulation", "amplitude:_-1<Rm", lln ); \
  \
    cpylne( par->stx[15], \
-      "If_Rm_!=_0:_Repr._factor_modulation_length_[days]", "0<T", ll ); \
+      "If_Rm_!=_0:_Repr._factor_modulation_length_[days]", "0<T", lln ); \
  \
    cpylne( par->stx[16], \
-      "If_Rm_!=_0:_Repr._factor_modulation_delay_[days]", "0<=T", ll ); \
+      "If_Rm_!=_0:_Repr._factor_modulation_delay_[days]", "0<=T", lln ); \
  \
    cpylne( par->stx[17], \
-      "Percentage_of_asymptomatic_cases", "0<=P<100", ll ); \
+      "Percentage_of_asymptomatic_cases", "0<=P<100", lln ); \
  \
    cpylne( par->stx[18], \
-      "Incidence_threshold", "stop_below_that_number_of_cases", ll ); \
+      "Incidence_threshold", "stop_below_that_number_of_cases", lln ); \
  \
    cpylne( par->stx[19], \
-      "Incidence_cumulation_time_[days]", "0<T", ll ); \
+      "Incidence_cumulation_time_[days]", "0<T", lln ); \
  \
    cpylne( par->stx[20], \
-      "Random_burst_factor_[average]", "0<=Bf", ll ); \
+      "Random_burst_factor_[average]", "0<=Bf", lln ); \
  \
    cpylne( par->stx[21], \
-      "If_0<Bf:_Average_burst_length_[T/days]", "0<=T", ll ); \
+      "If_0<Bf:_Average_burst_length_[T/days]", "0<=T", lln ); \
  \
    cpylne( par->stx[22], \
-      "If_0<Bf:_Average_burst_pause_[T/days]", "0<=T", ll ); \
+      "If_0<Bf:_Average_burst_pause_[T/days]", "0<=T", lln ); \
  \
    cpylne( par->stx[23], \
-      "Mean_transmission_time_[days]", "0<T", ll ); \
+      "Mean_transmission_time_[days]", "0<T", lln ); \
  \
    cpylne( par->stx[24], \
-      "Time_limit_[T/days]", "0<T", ll ); \
+      "Time_limit_[T/days]", "0<T", lln ); \
  \
    cpylne( par->stx[25], \
-      "Time_step_[Dt/days]", "0<Dt", ll ); \
+      "Time_step_[Dt/days]", "0<Dt", lln ); \
 }
 /*============================================================================*/

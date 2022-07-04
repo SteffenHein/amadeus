@@ -15,7 +15,7 @@ while ( $i <= ${final} )
 		gnuplot gpl_immunity_job_no_$i
 		gnuplot gpl_vaccination_job_no_$i
 		gnuplot gpl_reproduction_job_no_$i
-		gnuplot gpl_lethality_job_no_$i
+		gnuplot gpl_deceased_job_no_$i
 	endif
 	@ i ++
 end

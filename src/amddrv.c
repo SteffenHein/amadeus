@@ -12,7 +12,7 @@
 *  by subsequently calling the respective functions                            *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: March 16, 2022 ]                               <contact@sfenx.de> *
+*  [ Update: July 01, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 1 /* some headers of the POSIX.1 standard will be used */
@@ -33,6 +33,8 @@
 /*----------------------------------------------------------------------------*/
 /* Edit and customize this general configuration header: */
 # include "../CONFIG.H" 
+/*----------------------------------------------------------------------------*/
+# include "../src/NCURSES.M"
 /*----------------------------------------------------------------------------*/
 # ifndef OPERATIONS
    # define OPERATIONS 20
@@ -57,10 +59,6 @@
 # ifndef IPT_PARLOG
    # define IPT_PARLOG "par.log"
 # endif
-/*----------------------------------------------------------------------------*/
-# if USE_NCURSES == 1
-   # include <ncurses.h>
-# endif 
 /*----------------------------------------------------------------------------*/
 /* precision in heliosdrv: */
 # ifndef PRECISION

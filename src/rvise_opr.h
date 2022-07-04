@@ -20,13 +20,14 @@
 *  option "operation" whenever such dependencies exist.                        *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 10, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 04, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # include "../src/OPRSTRNGS.M"
 /*----------------------------------------------------------------------------*/
-# undef LINLEN
-   # define LINLEN 61
+# ifndef LINELGTH 
+   # define LINELGTH 61
+# endif
 /*============================================================================*/
 
 short rvise_opr( void )
@@ -38,7 +39,7 @@ short rvise_opr( void )
 
    static short
       ii = null,  
-      ll = LINLEN;
+      lln = LINELGTH;
 
 /* prototypes: */
 
@@ -52,64 +53,88 @@ short rvise_opr( void )
 
    OPRSTRNGS( ); /* copy number of operation parameters and parameter strings */
 /*............................................................................*/
-   if ( 100000 < opr->n[1] )
-      opr->n[1] = 100000;
-   else if ( opr->n[1] < ONE )
-      opr->n[1] = 100000;
+/* x-units [ transmission cycles ('natural'): 0, days: 1 ] */
 
-   if ( 100 < opr->n[2] )
-      opr->n[2] = 100;
-   else if ( opr->n[2] < ONE )
+   if ( opr->n[1] != null )
+      opr->n[1] = ONE;
+
+/* y-units [ normalized: 0 or 2, conventional: 1 or 3 ] */
+
+   if ( opr->n[2] != null )
       opr->n[2] = ONE;
 
-   ii = opr->n[3];
+/* y-scale [ linear:0 , logarithmic: 1 ] */
+
+   if ( opr->n[3] != null )
+      opr->n[3] = ONE;
+
+/* [don't] write titles on graphics */
+
+   if ( opr->n[4] != null )
+      opr->n[4] = ONE;
+      
+/* [don't] stop when no sick individuals remain */
+
+   if ( opr->n[5] != null )
+      opr->n[5] = ONE;
+
+/* [don't] weight recovery history */
+
+   if ( opr->n[6] != null )
+      opr->n[6] = ONE;
+
+/* [don't] weight vaccination history */
+
+   if ( opr->n[7] != null )
+      opr->n[7] = ONE;
+
+/* reproduction factor [ to be read as ... */
+/* ... basic: 0 /current: 1 /constant: 2 ] */
+
+   ii = opr->n[8];
    switch( ii )
    { 
      default:
-      opr->n[3] = null;
+      opr->n[8] = null;
       break;
      
      case 1: case 2:
       break;
    };
-     
-   ii = opr->n[4];
+
+/* reproduction factor modulation mode [ 0,...,4] */     
+
+   ii = opr->n[9];
    switch( ii )
    { 
      default:
-      opr->n[4] = null;
+      opr->n[9] = null;
       break;
      
      case 1: case 2: case 3: case 4:
       break;
    };
-     
-   if ( opr->n[5] != null )
-      opr->n[5] = ONE;
 
-   if ( opr->n[6] != null )
-      opr->n[6] = ONE;
+/* random burst mode [ shifts: 0, slats: 1 ] */
 
-   ii = opr->n[7];
-   switch( ii )
-   { 
-     default:
-      opr->n[7] = null;
-      break;
+   if ( opr->n[10] != null )
+      opr->n[10] = ONE;
 
-     case 1: case 2: case 3:
-      break;
-   };
+/* minimum/maximum number of outer iterations */
 
-   ii = 8; do
-   {
-      if ( opr->n[ii] != null )
-         opr->n[ii] = ONE;
-      ++ii;
-   } while ( ii < 11 );
+   if ( 100000 < opr->n[11] )
+      opr->n[11] = 100000;
+   else if ( opr->n[11] < ONE )
+      opr->n[11] = 100000;
+
+/* minimum/maximum number of inner iterations */ 
+
+   if ( 100 < opr->n[12] ) 
+      opr->n[12] = 100;
+   else if ( opr->n[12] < ONE )
+      opr->n[12] = ONE;
 
    return null;
 }
-# undef LINLEN
 /*============================================================================*/
 /*********************** end of function rvise_opr(*) *************************/

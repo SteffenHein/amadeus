@@ -25,7 +25,7 @@
 *  input file.                                                                 *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 31, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: July 01, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -57,11 +57,13 @@
 # endif
 /*----------------------------------------------------------------------------*/
 /* name of operations log file: */
+
 # ifndef IPT_OPRLOG
    # define IPT_OPRLOG "opr.log"
 # endif
 /*----------------------------------------------------------------------------*/
 /* name of parameter log file: */
+
 # ifndef IPT_PARLOG
    # define IPT_PARLOG "par.log"
 # endif
@@ -92,59 +94,7 @@
 # endif
 /*----------------------------------------------------------------------------*/
 # if USE_NCURSES == 1
-/* 'my_terminal' configuration: */
-
-   # include <termcap.h>     /* terminal type header */
    static char *term;        /* terminal type string */ 
-
-# ifndef CLSCREEN
-   # define CLSCREEN { \
-     fprintf( stdout, "%s", tgetstr( "cl", null )); \
-   }
-# endif
-# ifndef PRBLDCLR
-   # define PRBLDCLR(a) {\
-     fprintf( stdout, \
-        "%s%s", tgetstr( "md", null ), (a)); /* bold clear output */ \
-   }
-# endif
-# ifndef PRINVERS
-   # define PRINVERS(a) {\
-     fprintf( stdout, \
-        "%s%s", tgetstr( "mr", null ), (a)); /* inverse */ \
-   }
-# endif
-# ifndef PRNORMAL
-   # define PRNORMAL(a) {\
-     fprintf( stdout, \
-        "%s%s", tgetstr( "me", null ), (a)); /* back to normal output */ \
-   }
-# endif
-# else /* if USE_NCURSES != 1 */
-# ifndef CLSCREEN
-   # define CLSCREEN { \
-     fprintf( stdout, "\f" ); \
-   }
-# endif
-# ifndef PRBLDCLR
-   # define PRBLDCLR(a) {\
-     fprintf( stdout, "%s", (a));\
-   }
-# endif
-# ifndef PRINVERS
-   # define PRINVERS(a) {\
-     fprintf( stdout, "%s", (a));\
-   }
-# endif
-# ifndef PRNORMAL
-   # define PRNORMAL(a) {\
-     fprintf( stdout, "%s", (a));\
-   }
-# endif
-# endif /* USE_NCURSES != 1 */
-/*----------------------------------------------------------------------------*/
-# if IPT_SCRFLS == 1
-   # include <unistd.h>
 # endif
 /*----------------------------------------------------------------------------*/
 # include "../src/STOREPAR.M"
@@ -182,7 +132,7 @@ short input ( char *option )
    static short
       ii = null,
       ind = null,
-      parameters = null;
+      prmtrs = null;
 
    static char 
       ptr[2*STS_SIZE] = {null},
@@ -278,7 +228,7 @@ short input ( char *option )
    ind = setvbuf( stdin, null, _IONBF, null );
    ind = setvbuf( stdout, null, _IONBF, null ); 
 /*...........................................................................*/
-/* memory allocations; initializations [explicit]: */
+/* memory allocations; initializations [ explicit ]: */
 
    ii = null; do
    {
@@ -297,44 +247,48 @@ short input ( char *option )
 
    if ( *option == 'o' )
    {
-   /* operations = ( short ) opr->n[null]; */
-
 /*................................*/
-      ind = rvise_opr( );         /* revise/reconfigure default operations    */
+      ind = rvise_opr( );         /* revise/reconfigure stored opr parameters */
 /*..............................*/
 
       if ( ind == null )
       {
          if ( OPERATIONS < opr->n[null] )
          {
-            printf( "\n\n Message from function %s :", DO_INPUT );
-            printf( "\n\n Too many operation parameters !!!" );
-            printf( "\n [ Number %10ld exceeds maximum %d = macro OPERATIONS",
-               opr->n[null], OPERATIONS );
-            printf( "\n   in file 'model.h'. ]" );
-            printf( "\n   - Change macro in compliance with memory "
+            fprintf( stdout, "\n\n Message from function %s :", DO_INPUT );
+            fprintf( stdout, "\n\n Too many operation parameters !!!" );
+            fprintf( stdout, "\n [ Number %10ld exceeds maximum %d = "
+	       "macro OPERATIONS", opr->n[null], OPERATIONS );
+            fprintf( stdout, "\n   in file 'CONFIG.H'. ]" );
+            fprintf( stdout, "\n   - Change macro in compliance with memory "
                "resources.\n" );
 
             exit( EXIT_FAILURE );
          };
       };
 /*............................................................................*/
-/* store the actually charged operations: */
-# if defined ( IPT_OPRTMP )
+/* store the currently charged operation parameters on temporary file: */
+
+# if defined IPT_OPRTMP 
       strcpy( tmpfle, IPT_OPRTMP );
 # else
 /*............................................................................*/
 /* assign a temporary file name: */
-# if IPT_SCRFLS == 1
+
+   # if IPT_SCRFLS == 1
       mkstemp( tmpfle ); /* [ secure ] */
-# else
+   # else
       tmpnam( tmpfle ); /* [ insecure ] */
-# endif                                                        
+   # endif                                                        
 /*............................................................................*/
 # endif
+/*............................................................................*/
+
 /*..........................................*/
-      store_opr( tmpfle, 't' );             /* store divs on temporary file   */
+      store_opr( tmpfle, 't' );             /* store ops on temporary file   */
 /*.......................................,*/
+
+/*............................................................................*/
 # if IPT_OPRDEF == 1
       strcpy( ptr, AMD_PAGER );
       strcat( ptr, " " );
@@ -386,18 +340,16 @@ short input ( char *option )
 
       switch(csp->option )
       {
-        case 0:  /* end of program / escape */
-	case 'y':
-	case 'Y':
+/* end of program / escape: */
 
-         remove( tmpfle );
+        case 0: case 'y': case 'Y': case 'j': case 'J':
 
          PRBLDCLR( "" );
          PRNORMAL( "" );
 
+         remove( tmpfle );
          return -ONE;
         break;
-
 /*............................................................................*/
         case 1:  /* display the actual configuration [ on screen ] */
 
@@ -412,16 +364,15 @@ short input ( char *option )
 /*...................................*/
 
 # else
-         printf( "\n\n %s", ( state->name ));
-         printf( "\n %s", ( state->text ));
+         fprintf( stdout, "\n\n %s", state->name );
+         fprintf( stdout, "\n %s", state->text );
+         fprintf( stdout, "\n\n %-d  %s\n", opr->n[null], opr->ntx[null] );
 
-         printf( "\n\n %-d  %s\n", opr->n[null], opr->ntx[null] );
-
-	 ii = ONE;
-	 while( ii <= opr->n[null] )
+	 ii = null;
+	 while( ii < opr->n[null] )
 	 {
-            printf( "\n %-s:   %d", opr->ntx[ii], opr->n[ii] );
 	    ++ii;
+            fprintf( stdout, "\n %-s:   %d", opr->ntx[ii], opr->n[ii] );
          };
 # endif
 /*............................................................................*/
@@ -430,11 +381,10 @@ short input ( char *option )
 	 
          goto opr_menu;
         break;
-	
 /*............................................................................*/
         case 2: /* enter another configuration from file */
 
-         printf( "\n Please enter filename [ Continue/"
+         fprintf( stdout, "\n Please enter filename [ Continue/"
             "Escape: null ] >----> " );
          scanf( "%s", ptr );
 
@@ -443,23 +393,23 @@ short input ( char *option )
             remove( tmpfle );
 
             PRBLDCLR( "" );
-            printf( "\r%*s", 79, "INPUT" );
+            fprintf( stdout, "\r%*s", 79, "INPUT" );
             PRNORMAL( "" );
-            printf( "\n ======================================="
-                       "=======================================" );
+            fprintf( stdout, "\n %s",\
+	       "======================================="
+               "=======================================" );
             return -ONE;
          };
 /*......................................*/
          rread_opr( ptr, 'f' );         /* enter the new configuration file   */
          rvise_opr( );                 /*  revise/reconfigure ...             */
-         store_opr( tmpfle, 't' );    /*   restore on tmp file                */
+         store_opr( tmpfle, 't' );    /*   store on temporary file            */
 /*..................................*/
          csp->dfopt = 7; 
          csp->clscr = 1; /* 0 / N: clear screen / scroll N lines */
 
          goto opr_menu;
         break;
-
 /*............................................................................*/
         case 3:  /* edit and/or modify the actual configuration */
 
@@ -469,13 +419,13 @@ short input ( char *option )
 	 strcat( ptr, " " );
 	 strcat( ptr, tmpfle );
 /*.......................................*/
-	 system( ptr );                  /* edit [evtlly modify] tmp opr file */
-	 rread_opr( tmpfle, 't' );      /*  re-read temporary operations file */
-	 rvise_opr( );                 /*   revise/reconfigure ...            */
-	 store_opr( tmpfle, 't' );    /*    restore on tmp file               */
+	 system( ptr );                  /* edit operation parameters in tmp file  */
+	 rread_opr( tmpfle, 't' );      /*  re-read temporary operations from file */
+	 rvise_opr( );                 /*   revise/reconfigure ...                 */
+	 store_opr( tmpfle, 't' );    /*    restore on tmp file                    */
 /*..................................*/
 # else
-	 printf( "\n No editor defined for this option !" );
+	 fprintf( stdout, "\n No editor defined to perform this option !" );
 # endif
 /*............................................................................*/
          csp->dfopt = 7; 
@@ -483,21 +433,19 @@ short input ( char *option )
 
          goto opr_menu;
         break;
-
 /*............................................................................*/
         case 4:  /* reload the default configuration */
 
 /*......................................*/
          deflt_opr( );                  /* enter default divions              */
          rvise_opr( );                 /*  revise/reconfigure ...             */
-         store_opr( tmpfle, 't' );    /*   store on tmp file                  */
+         store_opr( tmpfle, 't' );    /*   store on temporary file            */
 /*..................................*/
          csp->dfopt = 7; 
          csp->clscr = 1; /* 0 / N: clear screen / scroll N lines */
 	 
          goto opr_menu;
         break;
-
 /*............................................................................*/
         case 5:
 
@@ -512,15 +460,14 @@ short input ( char *option )
 /*...................................*/
 # else
          fprintf( stdout,
-	    "\n No printer defined in file \"CONFIG.H\" !" );
+	    "\n No printer defined in file 'CONFIG.H' !" );
 # endif
 /*............................................................................*/
-         csp->dfopt = 7; 
+         csp->dfopt = 7;
          csp->clscr = 1; /* 0 / N: clear screen / scroll N lines */
 
          goto opr_menu;
         break;
-
 /*............................................................................*/
         case 6:  /* start computation */
 
@@ -534,7 +481,6 @@ short input ( char *option )
 /*............................................................................*/
 	case 7:
 
-         remove( tmpfle );
          PRBLDCLR( "" );
          fprintf( stdout, "\r%*s", 79, "INPUT" );
          PRNORMAL( "" );
@@ -543,61 +489,62 @@ short input ( char *option )
          csp->clscr = 1; /* 0 / N: clear screen / scroll N lines */
 	 
         break;
-
       }; /* end switch(*) */
 /*............................................................................*/
       remove( tmpfle );
 
       strcpy( fleptr, oprlog );
-      strcat( fleptr, lotos( state->job, null, " " ));
+      strcat( fleptr, lotos( state->job, null, "" ));
 
-      printf( "\n opened: Operation logfile %s ", fleptr );
+      fprintf( stdout, "\n opened: Operation logfile %s ", fleptr );
 
 /*..................................*/
-      store_opr( fleptr, 'o' );     /* save final configuration on log file   */
+      store_opr( fleptr, 'o' );     /* save final configuration on log file */
 /*................................*/
 
-      printf( CLEAR_LINE );
+      fprintf( stdout, CLEAR_LINE );
 
       nseconds = time( timer );
       strcpy( timeptr, ctime( &nseconds ));
-      printf( "\r Operation logfile %s ", fleptr );
-      printf( timefrm, timeptr );
-      printf( CLEAR_LINE );
+      fprintf( stdout, "\r Operation logfile %s ", fleptr );
+      fprintf( stdout, timefrm, timeptr );
+      fprintf( stdout, CLEAR_LINE );
 
    } /* end if *option == 'o'[perations] */
+/*............................................................................*/
    else if ( *option == 'p' )
 /*............................................................................*/
 /* option "parameters": */
    { 
-      parameters = ( short ) par->s[null];
-
+      prmtrs = ( short ) par->s[null];
 /*................................*/
       ind = rvise_par( );         /*                                          */
 /*..............................*/
 
       if ( ind == null )
       {
-         if ( PARAMETERS < parameters )
+         if ( PARAMETERS < prmtrs )
          {
-            printf( "\n\n Message from function %s :", DO_INPUT );
-            printf( "\n\n Too many parameters !!!" );
-            printf( "\n [ Number %d exceeds maximum %d ",
-               parameters, PARAMETERS );
-            printf( "\n   in file 'model.h'. ]" );
-            printf( "\n   - Change macro in compliance with memory "
+            fprintf( stdout, "\n\n Message from function %s :", DO_INPUT );
+            fprintf( stdout, "\n\n Too many parameters !!!" );
+            fprintf( stdout, "\n [ Number %d exceeds maximum %d ",
+               prmtrs, PARAMETERS );
+            fprintf( stdout, "\n   in file 'CONFIG.H'. ]" );
+            fprintf( stdout, "\n   - Change macro in compliance with memory "
                "resources.\n" );
 
             exit( EXIT_FAILURE );
          };
       };
 /*............................................................................*/
-/* store the actually charged parameters: */
-# if defined ( IPT_PARTMP )
-   strcpy( tmpfle, IPT_PARTMP );
+/* store the currently charged parameters on temporary file: */
+
+# if defined IPT_PARTMP
+      strcpy( tmpfle, IPT_PARTMP );
 # else
 /*............................................................................*/
 /* assign a temporary file name: */
+
    # if IPT_SCRFLS == 1
       mkstemp( tmpfle ); /* [ secure ] */
    # else
@@ -605,8 +552,10 @@ short input ( char *option )
    # endif                                                        
 /*............................................................................*/
 # endif
+/*............................................................................*/
+
 /*..........................................*/
-      store_par( tmpfle, 't' );             /* store prmtrs on temporary file */
+      store_par( tmpfle, 't' );             /* store params on temporary file */
 /*........................................*/
 
 # if IPT_PARDEF == 1
@@ -617,7 +566,7 @@ short input ( char *option )
       system( ptr );                   /* edit parameter file                 */
       rread_par( tmpfle, 't' );       /*  re-read parameters from tmp file    */
       rvise_par( );                  /*   revise/reconfigure ...              */
-      store_par( tmpfle, 't' );     /* restore revised paramters in tmp file  */
+      store_par( tmpfle, 't' );     /*    restore revised parmtr in tmp file  */
 /*................................*/
 # endif
 /*............................................................................*/
@@ -627,7 +576,7 @@ short input ( char *option )
 
    par_menu:
 
-      csp->items = 8;
+      csp->items = 7;
       csp->dflnf = csp->dfopt; /* set line feed before that option line */
 
       nseconds = time( timer );
@@ -646,7 +595,6 @@ short input ( char *option )
       strcpy( csp->mline[5], "* Reload the default parameters" );
       strcpy( csp->mline[6], "* Print the parameters" );
       strcpy( csp->mline[7], "* Start computation" );
-      strcpy( csp->mline[8], "* Continue" );
 
       strcpy( csp->escpe, "End of program / escape" );
 
@@ -661,57 +609,50 @@ short input ( char *option )
 
       switch(csp->option )
       {
-        default: /* continue program */
-	case 8:
-
-         PRBLDCLR( "" );
-         fprintf( stdout, "\r%*s", 79, "INPUT" );
-         PRNORMAL( "" );
-
-         return ONE;
-        break;
-
 /*............................................................................*/
-        case 0:  /* end of program / escape */
-	case 'y':
-	case 'Y':
+        case 0: case 'y': case 'Y': case 'j': case 'J':
 
-         remove( tmpfle );
+/* end of program / escape */
+
+         remove( tmpfle ); 
 
          PRBLDCLR( "" );
          PRNORMAL( "" );
 
          return -ONE;
         break;
-
 /*............................................................................*/
-        case 1:  /* display the actual configuration [ on screen ] */
+        case 1:  /* return to previous menu [ opr_menu ] */
+
+         remove( tmpfle );
          goto opr_menu;
 	break; 
-
 /*............................................................................*/
         case 2:  /* display the actual configuration [ on screen ] */
 
 /*............................................................................*/
 # if defined ( AMD_PAGER )
+
          strcpy( ptr, AMD_PAGER );
          strcat( ptr, " " );
          strcat( ptr, tmpfle );
+	 
 /*.....................................*/
-         system( ptr );                /* edit [evtlly modify] divisions file */
+         system( ptr );                /* edit [ evtlly modify ] params file */
 /*...................................*/
 # else
-         parameters = ( short ) par->s[null];
+         prmtrs = ( short ) par->s[null];
+	 
+         fprintf( stdout, "\n\n %s", ( state->name ));
+         fprintf( stdout, "\n %s", ( state->text ));
+         fprintf( stdout, "\n\n %-3d %s\n", 
+	    prmtrs, par->stx[null] );
 
-         printf( "\n\n %s", ( state->name ));
-         printf( "\n %s", ( state->text ));
-         printf( "\n\n %-3d %s\n", ( short ) par->s[null], par->stx[null] );
-
-	 ii = ONE;
-	 while( ii<= parameters )
+	 ii = null;
+	 while( ii < prmtrs )
 	 {
-            printf( "\n %-s:  % .12e ", par->stx[ii], par->s[ii] );
 	    ++ii;
+            fprintf( stdout, "\n %-s:  % .12e ", par->stx[ii], par->s[ii] );
          };
 # endif
 /*............................................................................*/
@@ -720,36 +661,35 @@ short input ( char *option )
 
          goto par_menu;
         break;
-
 /*............................................................................*/
         case 3: /* enter another configuration from file */
 
-         printf( "\n Please enter filename [ Continue/"
+         fprintf( stdout, "\n Please enter filename [ Continue/"
             "Escape: null ] >----> " );
          scanf( "%s", ptr );
 
          if( *ptr == '0' )
          { 
-            remove( tmpfle );
+            remove( tmpfle ); 
 
             PRBLDCLR( "" );
-            printf( "\r%*s", 79, "INPUT" );
+            fprintf( stdout, "\r%*s", 79, "INPUT" );
             PRNORMAL( "" );
-            printf( "\n ==================================="
-               "===========================================" );
+            fprintf( stdout, "\n %s",\
+	       "======================================="
+               "=======================================" );
             return -ONE; 
          };
 /*.......................................*/
          rread_par( ptr, 'f' );          /* read new parameters from file     */
          rvise_par( );                  /*  revise/reconfigure ...            */
-         store_par( tmpfle, 't' );     /*   restore parameters on tmp file    */
+         store_par( tmpfle, 't' );     /*   store parameters on temporary fle */
 /*...................................*/
          csp->clscr = 1; /* 0 / N: clear screen / scroll N lines */
          csp->dfopt = 7;
 
          goto par_menu;
         break;
-
 /*............................................................................*/
         case 4:  /* edit and/or modify the actual configuration */
 
@@ -759,13 +699,13 @@ short input ( char *option )
          strcat( ptr, " " );
          strcat( ptr, tmpfle );
 /*.......................................*/
-         system( ptr );                  /* edit temporary parameter file     */
-         rread_par( tmpfle, 't' );      /*  re-read parameters from tmp file  */
-         rvise_par( );                 /*   revise/reconfigure ...            */
-         store_par( tmpfle, 't' );    /*    restore on temporary file         */
+         system( ptr );                  /* edit parameters in temporarry file */
+         rread_par( tmpfle, 't' );      /*  re-read parameters from tmp file   */
+         rvise_par( );                 /*   revise/reconfigure ...             */
+         store_par( tmpfle, 't' );    /*    restore on temporary file          */
 /*..................................*/
 # else
-         printf( "\n No editor defined for this option !" );
+	 fprintf( stdout, "\n No editor defined in file 'CONFIG.H' !" );
 # endif
 /*............................................................................*/
          csp->clscr = 1; /* 0 / N: clear screen / scroll N lines */
@@ -791,6 +731,7 @@ short input ( char *option )
 
 /*............................................................................*/
 # if defined ( AMD_PRINTER )
+
          strcpy( ptr, AMD_PRINTER );
          strcat( ptr, " " );
          strcat( ptr, tmpfle );
@@ -799,7 +740,7 @@ short input ( char *option )
          system( ptr );                /* print file */
 /*...................................*/
 # else
-         printf( "\n No printer is defined for this option !" );
+         fprintf( stdout, "\n No printer defined for this option !" );
 # endif
 /*............................................................................*/
          csp->clscr = 1; /* 0 / N: clear screen / scroll N lines */
@@ -807,38 +748,36 @@ short input ( char *option )
 
          goto par_menu;
         break;
-
 /*............................................................................*/
-        case 7:  /* start computation */
+        default: case 7:  /* start computation */
 
          remove( tmpfle );
+
          PRBLDCLR( "" );
          PRNORMAL( "" );
 
          return ONE;
         break;
-
       }; /* end switch(*) */
 /*............................................................................*/
-      remove( tmpfle );
+      remove( tmpfle ); 
 
       strcpy( fleptr, parlog  );
       strcat( fleptr, lotos( state->job, null, " " ));
 
-      printf( "\n opened: Parameters logfile %s ", fleptr );
+      fprintf( stdout, "\n opened: Parameters logfile %s ", fleptr );
 
 /*..................................*/
-      store_par( fleptr, 'p' );     /* store final parameters on log file     */
+      store_par( fleptr, 'p' );     /* store final parameters in log file     */
 /*................................*/
 
-      printf( CLEAR_LINE );
+      fprintf( stdout, CLEAR_LINE );
 
       nseconds = time( timer );
       strcpy( timeptr, ctime( &nseconds ));
-      printf( "\r Parameters logfile %s ", fleptr );
-      printf( timefrm, timeptr );
+      fprintf( stdout, "\r Parameters logfile %s ", fleptr );
+      fprintf( stdout, timefrm, timeptr );
    }; 
-
    return null;
 }
 # undef IPT_OPRDEF

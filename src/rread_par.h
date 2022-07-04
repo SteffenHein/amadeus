@@ -10,7 +10,7 @@
 *  Reads parameter file [ type par.log<N> ]                                    *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: February 01, 2022 ]                            <contact@sfenx.de> *
+*  [ Update: July 01, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -27,7 +27,7 @@ short rread_par( char *filename, char mode )
      *par = &parmtrs;
 
    static FILE
-     *paramtrs = NULL;
+     *parfle = NULL;
 
    static short 
       ii = null,
@@ -35,9 +35,9 @@ short rread_par( char *filename, char mode )
       parameters;
 
    static char
-      ptr[STS_SIZE] = {null},
-      fleptr[STS_SIZE] = {null},
-      txtstr[STS_SIZE] = {null},
+      ptr[STS_SIZE+ONE] = {null},
+      fleptr[STS_SIZE+ONE] = {null},
+      txtstr[STS_SIZE+ONE] = {null},
     **endp = NULL;
 
    static const char 
@@ -50,15 +50,15 @@ short rread_par( char *filename, char mode )
 
    while( *fleptr != '0' )
    {
-      paramtrs = fopen( fleptr, "r+" );
+      parfle = fopen( fleptr, "r+" );
 
-      while ( paramtrs == null )
+      while ( parfle == null )
       {
-         if (( state->uif ) == 't' )
+         if ( state->uif == 't' )
          {
             if ( state->cpmrk < TWO )
 	    {
-               fprintf( stdout, "\n Parameter file \"%s\" "
+               fprintf( stdout, "\n Parameter file '%s' "
                   "not found in present directory:\n", fleptr );
 
                fprintf( stdout, "\n Please re-enter filename "
@@ -83,36 +83,39 @@ short rread_par( char *filename, char mode )
 	       return null;
             };
          }
-	 else
+	 else /* if ( state->uif != 't' ) */
          {
-            fprintf( stderr, "\nOperation parameters file \"%s\" "
+            fprintf( stderr, "\nParameters file '%s' "
 	       "not found in working directory\n", fleptr );
+
             exit( EXIT_FAILURE );
          };
-
-         paramtrs = fopen( fleptr, "r+" );
+         parfle = fopen( fleptr, "r+" );
       };
 
       ii = null;
       while ( ii < IPT_MAXLBL )
       {
-         fscanf( paramtrs, scformat, ptr );
+         fscanf( parfle, scformat, ptr );
 
          if ( null == strncmp( ptr, "PARAMETERS", 10 ))
          {
-            fscanf( paramtrs, scformat, ptr ); /* string: program name */
-            fscanf( paramtrs, scformat, ptr ); /* string: any comment */
+            fscanf( parfle, scformat, ptr ); /* string: program name */
+            fscanf( parfle, scformat, ptr ); /* string: any comment,  
+	                                        "Evolution of ...", e.g. */
+            fscanf( parfle, scformat, ptr ); /* string "Init._values_and..."*/
+            fscanf( parfle, scformat, ptr ); /* string "Do_not_change..." */
+            fscanf( parfle, scformat, ptr ); /* string "[Leave_contiguous..." */
 
             parameters = ( short ) par->s[null];
 
-            fscanf( paramtrs, scformat, ptr ); /* string "Parameters" */
-            fscanf( paramtrs, scformat, ptr ); /* string "anything" */
-
             if ( mode == 't' )
             {
-               for ( jj=ONE; jj<=parameters; jj++ )
+               jj = null;	
+	       while ( jj < parameters )
                {
-                  fscanf( paramtrs, scformat, ptr );
+		  ++jj;
+                  fscanf( parfle, scformat, ptr );
 
 		  if ( null == strncmp( ptr, "Inf", THREE ))
                      par->s[jj] = HUGE_VALF;
@@ -121,16 +124,18 @@ short rread_par( char *filename, char mode )
                   else
                      par->s[jj] = strtod( ptr, endp );
 
-                  fscanf( paramtrs, scformat, ptr ); /* string "<---" */
-                  fscanf( paramtrs, scformat, ptr ); /* text string */
+                  fscanf( parfle, scformat, ptr ); /* string "<---" */
+                  fscanf( parfle, scformat, ptr ); /* text string */
                };
             }
             else /* if mode != 't'emporary file */
             {
-               for ( jj=ONE; jj<=parameters; jj++ )
+               jj = null;	
+	       while ( jj < parameters )
                {
-                  fscanf( paramtrs, scformat, ptr ); /* text string */
-                  fscanf( paramtrs, scformat, ptr ); /* double string */
+		  ++jj;
+                  fscanf( parfle, scformat, ptr ); /* text string */
+                  fscanf( parfle, scformat, ptr ); /* double string */
 
                   if ( null == strncmp( ptr, "Inf", THREE ))
                      par->s[jj] = HUGE_VALF;
@@ -141,13 +146,13 @@ short rread_par( char *filename, char mode )
                };
             };
 
-            fclose( paramtrs );
+            fclose( parfle );
             return ONE;
             break;
          }
-         else
+         else /* if ( ptr != "PARAMETERS" ) */
          {
-            ii++;
+            ++ii;
             if ( ii == IPT_MAXLBL )
             {
                if ( state->uif == 't' )
@@ -189,11 +194,11 @@ short rread_par( char *filename, char mode )
                   exit( EXIT_FAILURE );
                };
             };
-         }; /* end if( ptr != "PARAMETERS" ) */
+         }; /* end if ( ptr != "PARAMETERS" ) */
       }; /* end while( ii < IPT_MAXLBL ) */
    }; /* end while( *flelbl == '0' ) */
 
-   fclose( paramtrs );
+   fclose( parfle );
    return ONE;
 }
 /*============================================================================*/

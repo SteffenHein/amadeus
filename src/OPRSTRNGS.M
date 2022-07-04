@@ -1,9 +1,9 @@
 /* [ file: OPRSTRNGS.M ] */
-/* Update: June 17, 2022 */
+/* Update: July 04, 2022 */
 /*============================================================================*/
 # define OPRSTRNGS( ) \
 { \
-   opr->n[null] = 10; /* the number of operation parameters */ \
+   opr->n[null] = 12; /* the number of operation parameters */ \
 /*..........................................................................*/ \
 /* the operation parameter strings, something like that: */ \
  \
@@ -17,33 +17,39 @@
       "operation_parameters" ); \
  \
    cpylne( opr->ntx[1], \
-      "maximum_number_of_outer_iterations", "<=100000", ll ); \
+    	  "x-units", "transmission_cycles:0_|_days:1", lln ); \
  \
    cpylne( opr->ntx[2], \
-      "number_of_inner_iterations", "1-100", ll ); \
+    	  "y-units", "normalized:0/2_|_conventional:1/3", lln ); \
  \
    cpylne( opr->ntx[3], \
-      "reproduction_factor", "basic:0_|_current:1_|_fixed:2", ll ); \
+    	  "y-scale", "linear:0_|_logarithmic:1", lln ); \
  \
    cpylne( opr->ntx[4], \
-      "reproduction_factor_modulation_mode", "0,1,...4", ll ); \
+      "[0]_1:_[don't]_write_titles_on_graphics", "0/1", lln ); \
  \
    cpylne( opr->ntx[5], \
-      "random_burst_mode", "shift:0_|_slats:1", ll ); \
+          "[0]_1:_[don't]_stop_when_no_sick_individuals_remain", "0/1", lln ); \
  \
    cpylne( opr->ntx[6], \
-    	  "x-units", "transmission_cycles:0_|_days:1", ll ); \
+      "[0]_1:_[don't]_weight_recovery_history", "0/1", lln ); \
  \
    cpylne( opr->ntx[7], \
-    	  "y-units", "normalized:0/2_|_conventional:1/3", ll ); \
+      "[0]_1:_[don't]_weight_vaccination_history", "0/1", lln ); \
  \
    cpylne( opr->ntx[8], \
-    	  "y-scale", "linear:0_|_logarithmic:1", ll ); \
+      "reproduction_factor", "basic:0_|_current:1_|_fixed:2", lln ); \
  \
    cpylne( opr->ntx[9], \
-      "[0]_1:_[don't]_write_titles_on_graphics", "0/1", ll ); \
+      "reproduction_factor_modulation_mode", "0,1,...4", lln ); \
  \
    cpylne( opr->ntx[10], \
-          "[0]_1:_[don't]_stop_when_no_sick_individuals_remain", "0/1", ll ); \
+      "random_burst_mode", "shifts:0_|_slats:1", lln ); \
+ \
+   cpylne( opr->ntx[11], \
+      "maximum_number_of_outer_iterations", "<=100000", lln ); \
+ \
+   cpylne( opr->ntx[12], \
+      "number_of_inner_iterations", "1-100", lln ); \
 }
 /*============================================================================*/

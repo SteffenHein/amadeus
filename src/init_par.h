@@ -23,7 +23,6 @@ void init_par( void )
       ii = null;
       while( ii <= PARAMETERS )
       {
-/*         par->stx[ii] = ( char *) calloc( STS_SIZE, ONE ); */
          par->s[ii] = ZERO;
 
 	 jj = null;

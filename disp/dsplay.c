@@ -6,7 +6,7 @@
 *   on screen.                                                                 *
 *                                                                              *
 *   (C) SHEIN; Munich, April 2020                             Steffen Hein     *
-*   [ Update: February 01, 2022 ]                          <contact@sfenx.de>  *
+*   [ Update: July 01, 2022 ]                              <contact@sfenx.de>  *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 0 /* set to 1: if POSIX.1 standard headers will be used*/
@@ -219,7 +219,6 @@ dsplay( DSPLAY *dsp )
          else if ( lc < crs )
             return rpt;
 /*............................................................................*/
-
          arrow = DSP_FLECHE;
 
 /* rotate helix: */
@@ -312,7 +311,6 @@ dsplay( DSPLAY *dsp )
          else if ( lc < crs )
             return rpt;
 /*............................................................................*/
-
          arrow = DSP_FLECHE;
 
 /* rotate helix: */
@@ -422,7 +420,6 @@ dsplay( DSPLAY *dsp )
          else if ( lc < crs )
             return rpt;
 /*............................................................................*/
-
          arrow = DSP_EQUAL_;
 
 /* rotate helix: */
@@ -525,7 +522,6 @@ dsplay( DSPLAY *dsp )
          else if ( lc < crs )
             return rpt;
 /*............................................................................*/
-
          arrow = DSP_EQUAL_;
 
 /* rotate helix: */
@@ -635,7 +631,6 @@ dsplay( DSPLAY *dsp )
          else if ( lc < crs ) 
             return rpt;
 /*............................................................................*/
-
          arrow = DSP_EQUAL_;
 
 /* rotate helix: */
@@ -756,7 +751,6 @@ dsplay( DSPLAY *dsp )
 
       break;
 /*............................................................................*/
-
      case null: /* clear display line */
 
       fprintf( dsp->display, "\r" );
@@ -788,7 +782,6 @@ dsplay( DSPLAY *dsp )
 
       break;
 /*............................................................................*/
-
      case 's': /* dsp->display start message, initialize struct dsp */
      case 'S':
 
@@ -811,7 +804,7 @@ dsplay( DSPLAY *dsp )
       arrow = DSP_TRACE_;
 
       break;
-
+/*............................................................................*/
      case 't': /* dsp->display termination message, initialize struct dsp */
      case 'T':
 
@@ -825,14 +818,13 @@ dsplay( DSPLAY *dsp )
       };
 
       PRBLDCLR( "" );
-      fprintf( dsp->display, "%s\n", ( dsp->messge ));
+      fprintf( dsp->display, "%s", ( dsp->messge )); 
       PRNORMAL( "" );
 
       arrow = DSP_TRACE_;
 
       break;
 /*............................................................................*/
-
      case 'm': /* dsp->display restart message, left to cursor  */
      case 'M': /* [ right from former text, which is retained ] */
 

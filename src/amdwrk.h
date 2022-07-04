@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 21, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 01, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
@@ -21,12 +21,24 @@
    # define AMD_INTRPL ONE /* [0] 1: [no] initial N-days incid. interpolation */
 # endif
 /*----------------------------------------------------------------------------*/
+/* graphics frame [ cf. GNUPLOT ] */
 # ifndef AMD_FRAME
-   # define AMD_FRAME ( 1.0e-01 ) /* frame of graphics [ cf. GNUPLOT ] */
+   # define AMD_FRAME (( double ) 1.0e-01 ) 
 # endif
 /*----------------------------------------------------------------------------*/
+/* least y range [ cf. GNUPLOT ] */
 # ifndef AMD_GNURNG
-   # define AMD_GNURNG ( 1.0e-14 ) /* least y range [ cf. GNUPLOT ] */
+   # define AMD_GNURNG (( double ) 1.0e-14 )
+# endif
+/*----------------------------------------------------------------------------*/
+/* [0] 1 : [don't] weight recovery history with decaying immunity */
+# ifndef AMD_CRRIMN
+   # define AMD_CRRIMN 1
+# endif
+/*----------------------------------------------------------------------------*/
+/* [0] N : [don't] weight vaccination history with decaying immunity */ 
+# ifndef AMD_CRRVAC
+   # define AMD_CRRVAC 1
 # endif
 /*----------------------------------------------------------------------------*/
 /* susceptibility threshold */
@@ -50,9 +62,9 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
 /*--- function prototypes --------------------------------------------------->*/
 
-   int rand( void );
-   double exp( double x );
    double log( double x );
+   double exp( double x );
+   double expm1( double x );
    double fmin( double x, double y );
    double fmod( double x, double y );
 
@@ -70,6 +82,12 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    AMDSTATE 
      *amdrnd( AMDSTATE *state );
+
+   AMDSTATE 
+     *amdrcs( AMDSTATE *state );
+
+   AMDSTATE 
+     *amdevs( AMDSTATE *state );
 /*............................................................................*/
    static time_t
       bufsize = null;
@@ -83,7 +101,6 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    static char
      timeptr[STS_SIZE] = {null};
 /*----------------------------------------------------------------------------*/
-
    AMDSTATE
      *stp = state;
 
@@ -104,14 +121,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    static FILE
      *logfle = null,
+     *fleptr_par = null,
      *pltptr_cic = null,
      *pltptr_ifc = null,
      *pltptr_imm = null,
      *pltptr_inc = null,
      *pltptr_dcd = null,
      *pltptr_rpd = null,
-     *pltptr_vac = null,
-     *fleptr_par = null;
+     *pltptr_vac = null;
 
    static FILE
      *gnuptr_cic = null,
@@ -122,40 +139,42 @@ AMDSTATE *amdwrk( AMDSTATE *state )
      *gnuptr_vac = null,
      *gnuptr_dcd = null;
 
-   static char   
-      inptstr[80] = {'\0'},
-      outpstr[80] = {'\0'},
-      optnstr[50] = {'\0'},
-      timestr[50] = {'\0'},
-      longstr[50] = {'\0'},
-
-      flname_cic[50] = {'\0'},
-      flname_ifc[50] = {'\0'},
-      flname_inc[50] = {'\0'},
-      flname_imm[50] = {'\0'},
-      flname_rpd[50] = {'\0'},
-      flname_vac[50] = {'\0'},
-      flname_dcd[50] = {'\0'},
-
-      pltfle_cic[50] = AMD_RESULTS,
-      pltfle_ifc[50] = AMD_RESULTS,
-      pltfle_inc[50] = AMD_RESULTS,
-      pltfle_imm[50] = AMD_RESULTS,
-      pltfle_rpd[50] = AMD_RESULTS,
-      pltfle_vac[50] = AMD_RESULTS,
-      pltfle_dcd[50] = AMD_RESULTS,
-
-      parmtr_fle[50] = AMD_RESULTS;
-
    static char
-      plot_cic[50] = AMD_RESULTS,
-      plot_ifc[50] = AMD_RESULTS,
-      plot_inc[50] = AMD_RESULTS,
-      plot_imm[50] = AMD_RESULTS,
-      plot_rpd[50] = AMD_RESULTS,
-      plot_vac[50] = AMD_RESULTS,
-      plot_dcd[50] = AMD_RESULTS;
+      inptstr[STS_SIZE] = {'\0'},
+      outpstr[STS_SIZE] = {'\0'},
+      optnstr[STS_SIZE] = {'\0'},
+      timestr[STS_SIZE] = {'\0'},
+      longstr[STS_SIZE] = {'\0'},
 
+      flname_cic[STS_SIZE] = {'\0'},
+      flname_ifc[STS_SIZE] = {'\0'},
+      flname_inc[STS_SIZE] = {'\0'},
+      flname_imm[STS_SIZE] = {'\0'},
+      flname_rpd[STS_SIZE] = {'\0'},
+      flname_vac[STS_SIZE] = {'\0'},
+      flname_dcd[STS_SIZE] = {'\0'},
+
+      parmtr_fle[STS_SIZE] = {'\0'},
+
+      pltfle_cic[STS_SIZE] = {'\0'},
+      pltfle_ifc[STS_SIZE] = {'\0'},
+      pltfle_inc[STS_SIZE] = {'\0'},
+      pltfle_imm[STS_SIZE] = {'\0'},
+      pltfle_rpd[STS_SIZE] = {'\0'},
+      pltfle_vac[STS_SIZE] = {'\0'},
+      pltfle_dcd[STS_SIZE] = {'\0'},
+
+      plot_cic[STS_SIZE] = {'\0'},
+      plot_ifc[STS_SIZE] = {'\0'},
+      plot_inc[STS_SIZE] = {'\0'},
+      plot_imm[STS_SIZE] = {'\0'},
+      plot_rpd[STS_SIZE] = {'\0'},
+      plot_vac[STS_SIZE] = {'\0'},
+      plot_dcd[STS_SIZE] = {'\0'};
+
+   static const char
+     *dline = "======================================="\
+              "=======================================";
    static long
      ii = null;
 
@@ -185,37 +204,92 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    dsp = dsplay( null );
 
-   logfle = fopen( stp->logfle, "r+" );
+   logfle = fopen( stp->logfle, "a+" );
    fseek( logfle, stp->fleps, SEEK_SET );
-/*
-   errfle = fopen( stp->errfle, "a+" );
-*/
+
+/* errfle = fopen( stp->errfle, "a+" ); */
+
    if ( stp->uif != 't' )
    {
-      /*kk = setvbuf( logfle, null, _IONBF, bufsize ); */
-      setvbuf( logfle, null, _IONBF, bufsize ); /* set unbuffered */
+    /* kk = setvbuf( logfle, null, _IONBF, bufsize ); */
+      setvbuf( logfle, null, _IONBF, bufsize ); 
       dsp->display = logfle;
    }
    else
       dsp->display = stdout;
 /*............................................................................*/
+/* initialize */
+
+   ii = null;   
+   while ( ii < STS_SIZE )
+   {
+      inptstr[ii] = '\0';
+      outpstr[ii] = '\0';
+      optnstr[ii] = '\0';
+      timestr[ii] = '\0';
+      longstr[ii] = '\0';
+
+      flname_cic[ii] = '\0';
+      flname_ifc[ii] = '\0';
+      flname_inc[ii] = '\0';
+      flname_imm[ii] = '\0';
+      flname_rpd[ii] = '\0';
+      flname_vac[ii] = '\0';
+      flname_dcd[ii] = '\0';
+
+      parmtr_fle[ii] = '\0';
+
+      pltfle_cic[ii] = '\0';
+      pltfle_ifc[ii] = '\0';
+      pltfle_inc[ii] = '\0';
+      pltfle_imm[ii] = '\0';
+      pltfle_rpd[ii] = '\0';
+      pltfle_vac[ii] = '\0';
+      pltfle_dcd[ii] = '\0';
+
+      plot_cic[ii] = '\0';
+      plot_ifc[ii] = '\0';
+      plot_inc[ii] = '\0';
+      plot_imm[ii] = '\0';
+      plot_rpd[ii] = '\0';
+      plot_vac[ii] = '\0';
+      plot_dcd[ii] = '\0';
+
+      ++ii;
+   };
+/*............................................................................*/
+   strcpy( parmtr_fle, AMD_RESULTS );
    strcat( parmtr_fle, "parameters" );
 
+   strcpy( plot_cic, AMD_RESULTS );
    strcat( plot_cic, "gpl_n_days_incidence" );
+
+   strcpy( plot_ifc, AMD_RESULTS );
    strcat( plot_ifc, "gpl_infection" );
+
+   strcpy( plot_inc, AMD_RESULTS );
    strcat( plot_inc, "gpl_incidence" );
+
+   strcpy( plot_imm, AMD_RESULTS );
    strcat( plot_imm, "gpl_immunity" );
+
+   strcpy( plot_rpd, AMD_RESULTS );
    strcat( plot_rpd, "gpl_reproduction" );
+
+   strcpy( plot_vac, AMD_RESULTS );
    strcat( plot_vac, "gpl_vaccination" );
-   strcat( plot_dcd, "gpl_lethality" );
+
+   strcpy( plot_dcd, AMD_RESULTS );
+   strcat( plot_dcd, "gpl_deceased" );
 /*............................................................................*/
-/* append job number to filenames */
+/* append job number at filenames */
 
 # if AMD_JOBLBL == 1
    strcpy( longstr, "_job_no_" );
-   strcat( longstr, lotos(( state->job ), null, " " ));
-
+   strcat( longstr, lotos( state->job, null, "" ));
+   
    strcat( parmtr_fle, longstr );
+
    strcat( plot_inc, longstr );
    strcat( plot_cic, longstr );
    strcat( plot_ifc, longstr );
@@ -251,7 +325,26 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /* LnRp = log( Repr )/Ttrm;  i.e. exp( LnRp ) = Repr[0]^(1./Ttrm) */ 
 /* rrpd = exp( LnRp ); = Repr[0]^(1./Ttrm), base of init. exp. incr. */
 /*...........................................................................*/
-/* copy the input parameters */
+/* copy operation parameters: */
+
+   ppt->xunits = ( char ) ( opt->n[1] ); /* 0: natural; 1: days */
+   ppt->yunits = ( char ) ( opt->n[2] ); /* 0: normalized; 1: conventional */
+   ppt->yscale = ( char ) ( opt->n[3] ); /* 0:linear; 1: logarithmic */
+
+   ppt->titles = ( char ) ( opt->n[4] ); /* 0: no titles; 1: titles on graphics */
+   
+   ppt->nmstop = ( char ) ( opt->n[5] ); /* 0/1: don't/do stop when ... */ 
+   ppt->wgtrec = ( char ) ( opt->n[6] ); /* 0/1: don't/do weight recovry hist */
+   ppt->wgtvac = ( char ) ( opt->n[7] ); /* 0/1: don't/do weight vaccntn hist */
+   
+   ppt->formula = ( char ) ( opt->n[8] ); /* integration formula */
+   ppt->rfmmde = ( char ) ( opt->n[9] );  /* reproduction factor modul. mode */
+   ppt->bstmde = ( char ) ( opt->n[10] ); /* burst mode [ 0: shift; 1:slats ] */
+
+   ppt->maxout = ( long ) opt->n[11]; /* null < maxout <= 100000 !!! */
+   ppt->maxinn = ( long ) opt->n[12]; /* null < maxinn <= 100 !!! */
+/*............................................................................*/
+/* copy initial values and constants */
 
    ppt->Nhrd = ppt->s[1];  /* herd size */
    ppt->Ninf = ppt->s[2];  /* initially infective [ acutely sick ] members */
@@ -286,7 +379,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->Tend = ppt->s[24]; /* time interval [ days ] */
    ppt->DltT = ppt->s[25]; /* time increment [ days ] */
 /*............................................................................*/
-/* normalized parameters: */
+/* normalize parameters: */
 
    upd->dt = ppt->DltT/ppt->Ttrm;   /* time step in natural units */
    
@@ -315,35 +408,55 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->rvcd = ppt->Nvac/ppt->Nhrd;
    ppt->rlty = ppt->Nlty/ppt->Nhrd;
    ppt->rthr = ppt->Ithr/ppt->Nhrd;
-   
-   ppt->vrpc = ppt->Vacr/ppt->Nhrd;
-   ppt->vrpc *= ppt->Ttrm;
-
-   ppt->wght_imm = ( 100.*ppt->Ieff - ppt->Ltlt )/( 100. - ppt->Slnt );
-   ppt->wght_ifc = ( 100./( 100. - ppt->Slnt ));
-   ppt->wght_lty = ppt->Ltlt/( 100. - ppt->Slnt );
-   ppt->wght_vac = ppt->Veff;
 /*............................................................................*/
-/* limits: */
+/* fix number of outer iterations */
 
-   ppt->maxout = ( long ) opt->n[1]; /* null < maxout <= 10000 !!! */
-   ppt->maxinn = ( long ) opt->n[2]; /* null < maxinn <= 10000 !!! */
-
-   if ( 100000 < ppt->maxinn )
-      ppt->maxinn = 100000;
+   if ( 100 < ppt->maxinn )
+      ppt->maxinn = 100;
    else if ( ppt->maxinn < ONE )
       ppt->maxinn = 1;
       
    ppt->maxout = \
    ( long ) fminl(( ppt->kend/ppt->maxinn ), 100000. );
+/*............................................................................*/
+/* weighting recovery and vaccination history */
 
-   ppt->formula = ( char ) ( opt->n[3] );
-   ppt->bstmde = ( char ) ( opt->n[5] ); /* burst mode [ 0: shift; 1:slats ] */
-   ppt->xunits = ( char ) ( opt->n[6] ); /* xunits [ 0: natural; 1: days ] */
-   ppt->yunits = ( char ) ( opt->n[7] );
-   ppt->yscale = ( char ) ( opt->n[8] );
-   ppt->titles = ( char ) ( opt->n[9] );
-   ppt->nmstop = ( char ) ( opt->n[10] );
+# if AMD_CRRIMN == 1
+   if (( ppt->wgtrec == ONE )
+     &&( TINY_VALF < ppt->Nimn ))
+      state = amdrcs( state );
+# endif
+
+# if AMD_CRRVAC == 1
+   if (( ppt->wgtvac == ONE )
+     &&( TINY_VALF < ppt->Nvac ))
+      state = amdevs( state );
+# endif
+/*............................................................................*/
+
+   if ( 1.0 <=  ( ppt->rimn + ppt->rvcd + ppt->rlty )) 
+   {
+      PRBLDCLR( "\n" );
+      fprintf( stdout, "\n Initial parameters yield 100 percent herd immunity" );
+      fprintf( stdout, "\n [ No epidemic propagation ]" );
+      PRNORMAL( "\n");
+
+      fprintf( logfle, "\n%s",\
+         "Initial_parameters yield 100 percent herd immunity" );
+      fprintf( logfle, "\n%s",\
+         "[ No epidemic propagation ]" );
+
+      fclose( logfle );
+      return stp;
+   };
+
+   ppt->vrpc = ppt->Vacr/ppt->Nhrd; /* normalized vaccination rate */
+   ppt->vrpc *= ppt->Ttrm;          /* vacc rate in natural nunits [ Ttrm scale ] */
+
+   ppt->wght_imm = ( 100.*ppt->Ieff - ppt->Ltlt )/( 100. - ppt->Slnt );
+   ppt->wght_ifc = ( 100./( 100. - ppt->Slnt ));
+   ppt->wght_lty = ppt->Ltlt/( 100. - ppt->Slnt );
+   ppt->wght_vac = ppt->Veff;
 /*............................................................................*/
 /* Repr^(1./Ttrm), base of initial exponential increase */
 /* exp( LnRp ) = Repr^(1./Ttrm) */ 
@@ -352,9 +465,9 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    lnrpd = log( ppt->Repr );
    rrpd = exp( lnrpd/ppt->Ttrm );
 /*............................................................................*/
-/* store initial parameters in file <parmtr_fle> */
+/* store essential parameters in file <parmtr_fle> */
 
-   fleptr_par = fopen( parmtr_fle, "w+" ); 
+   fleptr_par = fopen( parmtr_fle, "w" ); 
    fprintf( fleptr_par, "PARAMETERS [ overview ]\n" );
 
    cpylne( outpstr,
@@ -370,10 +483,32 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
-      "\nInitially_immune","members", 60 );
+      "\nInitially_recovered_immune","members", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos(( ppt->Nimn ), 4, "e" ));
    fprintf( fleptr_par, outpstr );
+
+# if AMD_CRRIMN == 1
+   cpylne( outpstr,
+      "\nInitially_effectively_immune","members", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos(( ppt->Nhrd*ppt->rimn ), 4, "e" ));
+   fprintf( fleptr_par, outpstr );
+# endif
+
+   cpylne( outpstr,
+      "\nInitially_vaccinated","members", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos(( ppt->Nvac ), 4, "e" ));
+   fprintf( fleptr_par, outpstr );
+
+# if AMD_CRRVAC == 1
+   cpylne( outpstr,
+      "\nInitially_effectively_vaccinated","members", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos(( ppt->Nhrd*ppt->rvcd ), 4, "e" ));
+   fprintf( fleptr_par, outpstr );
+# endif
 
    fprintf( fleptr_par, "\n" );
 
@@ -515,8 +650,6 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( upd->dt, 4, "e" ));
    fprintf( fleptr_par, outpstr );
-
-   fclose( fleptr_par );
 /*............................................................................*/
    strcpy( longstr, "R0" );
    strcat( longstr, "=" );
@@ -570,8 +703,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       strcpy ( timestr, "transmission cycles" );
    else
       strcpy ( timestr, "days" );
-
-   fprintf( pltptr_cic, "%s", "# Epidemic | " );
+/*............................................................................*/
+   fprintf( pltptr_cic, "# %s", "Epidemic | " );
     
    strcpy( optnstr, lotos(( long ) ppt->Tcic, null, " " ));
    strcat( optnstr, " days incidence " );
@@ -585,8 +718,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    else
       fprintf( pltptr_cic, "%s", " | y-unit: per 100000 ]\n" );
 
-   fprintf( pltptr_ifc, "%s",\
-      "# Epidemic | infected members [ x-unit: " );
+   fprintf( pltptr_cic, "# %s\n", dline );
+/*............................................................................*/
+   fprintf( pltptr_ifc, "# %s",\
+      "Epidemic | infected members [ x-unit: " );
    fprintf( pltptr_ifc, "%s", timestr );
 
    if (( ppt->yunits == null )
@@ -595,8 +730,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    else
       fprintf( pltptr_ifc, "%s", " | y-unit: percent ]\n" );
 
-   fprintf( pltptr_imm, "%s",\
-      "# Epidemic | recovered immune members [ x-unit: " );
+   fprintf( pltptr_ifc, "# %s\n", dline );
+/*............................................................................*/
+   fprintf( pltptr_imm, "# %s",\
+      "Epidemic | recovered immune members [ x-unit: " );
    fprintf( pltptr_imm, "%s", timestr );
 
    if (( ppt->yunits == null )
@@ -605,12 +742,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    else
       fprintf( pltptr_imm, "%s", " | y-unit: percent ]\n" );
       
+   fprintf( pltptr_imm, "# %s\n", dline );
+/*............................................................................*/
    if ( ppt->xunits == null )
-      fprintf( pltptr_inc, "%s",\
-         "# Epidemic | incidence [ x-unit: " );
+      fprintf( pltptr_inc, "# %s",\
+         "Epidemic | incidence [ x-unit: " );
    else
-      fprintf( pltptr_inc, "%s",\
-         "# Epidemic | daily incidence [ x-unit: " );
+      fprintf( pltptr_inc, "# %s",\
+         "Epidemic | daily incidence [ x-unit: " );
 
    fprintf( pltptr_inc, "%s", timestr );
 
@@ -619,16 +758,20 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    else
       fprintf( pltptr_inc, "%s", " | y-unit: per 100000 ]\n" );
 
-   fprintf( pltptr_rpd, "%s",\
-      "# Epidemic | reproduction number\n"
+   fprintf( pltptr_inc, "# %s\n", dline );
+/*............................................................................*/
+   fprintf( pltptr_rpd, "# %s",\
+      "Epidemic | reproduction number\n"
       "# [ x-unit: " );
    fprintf( pltptr_rpd, "%s", timestr );
 
    fprintf( pltptr_rpd, "%s", \
       " | y-unit: individuals infected by one sick member ]\n");
 
-   fprintf( pltptr_vac, "%s",\
-      "# Epidemic | Effectively vaccinated [ x-unit: " );
+   fprintf( pltptr_rpd, "# %s\n", dline );
+/*............................................................................*/
+   fprintf( pltptr_vac, "# %s",\
+      "Epidemic | Effectively vaccinated [ x-unit: " );
    fprintf( pltptr_vac, "%s", timestr );
 
    if (( ppt->yunits == null )||( ppt->yunits == 2 ))
@@ -636,14 +779,18 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    else
       fprintf( pltptr_vac, "%s", " | y-unit: per 100000 ]\n" );
 
-   fprintf( pltptr_dcd, "%s",\
-      "# Epidemic | deceased members [ x-unit: " );
+   fprintf( pltptr_vac, "# %s\n", dline );
+/*............................................................................*/
+   fprintf( pltptr_dcd, "# %s",\
+      "Epidemic | deceased members [ x-unit: " );
    fprintf( pltptr_dcd, "%s", timestr );
 
    if (( ppt->yunits == null )||( ppt->yunits == 2))
       fprintf( pltptr_dcd, "%s", " | y-unit: ]\n" );
    else
       fprintf( pltptr_dcd, "%s", " | y-unit: percent ]\n" );
+
+   fprintf( pltptr_dcd, "# %s\n", dline );
 /*............................................................................*/
 /* initialize iteration */
 
@@ -706,8 +853,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    upd->kk = null;
    upd->tt = ZERO;
-   upd->kout = null;
    upd->kinn = null;
+   upd->kout = null;
    
    while ( upd->kout < ppt->maxout )
    {
@@ -885,8 +1032,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
 /*............................................................................*/
 /* store maxima: */ 
-      
-   fleptr_par = fopen( parmtr_fle, "a+" );
+
+
    fprintf( fleptr_par, "\n" );
       
    cpylne( outpstr,
@@ -997,6 +1144,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "\nMean_vaccinated", "percent", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( 100.*ppt->mean_vac, 4, "e" ));
+   
    fclose( fleptr_par );
 /*............................................................................*/
 /* store gnuplot headers
@@ -1053,7 +1201,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
         " ", lwbnd, upbnd );
 
       if ( ppt->titles == ONE )
-         strcpy( optnstr, "Immune recovered" );
+         strcpy( optnstr, "Recovered immune" );
       else
          strcpy( optnstr, " " );
 
@@ -1131,8 +1279,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       lwbnd = fmax( ppt->mincic - frm, ZERO );
       upbnd = ppt->maxcic + frm;
 
+      lwbnd *= 1.0e+05;
+      upbnd *= 1.0e+05;
+
       GNUPLOT( gnuptr_cic, plot_cic, flname_cic, optnstr, timestr,
-        "per 100000", 1.0e+05*lwbnd, 1.0e+05*upbnd );
+        "per 100000", lwbnd, upbnd );
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, \
@@ -1149,11 +1300,14 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       lwbnd = fmax( ppt->minifc - frm, ZERO );
       upbnd = ppt->maxifc + frm;
 
+      lwbnd *= 1.0e+02;
+      upbnd *= 1.0e+02;
+
       GNUPLOT( gnuptr_ifc, plot_ifc, flname_ifc, optnstr, timestr,
-        "percent", 1.0e+02*lwbnd, 1.02e+02*upbnd );
+        "percent", lwbnd, upbnd );
 
       if ( ppt->titles == ONE )
-         strcpy( optnstr, "Immune recovered" );
+         strcpy( optnstr, "Recovered immune" );
       else
          strcpy( optnstr, " " );
 
@@ -1165,8 +1319,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       lwbnd = fmax( ppt->minimn - frm, ZERO );
       upbnd = ppt->maximn + frm;
 
+      lwbnd *= 1.0e+02;
+      upbnd *= 1.0e+02;
+
       GNUPLOT( gnuptr_imm, plot_imm, flname_imm, optnstr, timestr,
-        "percent", 1.0e+02*lwbnd, 1.0e+02*upbnd );
+        "percent", lwbnd, upbnd );
 
       if ( ppt->titles == ONE )
       {
@@ -1186,8 +1343,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       lwbnd = fmax( ppt->mininc - frm, ZERO );
       upbnd = ppt->maxinc + frm;
 
+      lwbnd *= 1.0e+05;
+      upbnd *= 1.0e+05;
+
       GNUPLOT( gnuptr_inc, plot_inc, flname_inc, optnstr, timestr,
-        "per 100000", 1.0e+05*lwbnd, 1.0e+05*upbnd );
+        "per 100000", lwbnd, upbnd );
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Effectively vaccinated" );
@@ -1202,8 +1362,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       lwbnd = fmax( ppt->minvac - frm, ZERO );
       upbnd = ppt->maxvac + frm;
       
+      lwbnd *= 1.0e+05;
+      upbnd *= 1.0e+05;
+
       GNUPLOT( gnuptr_vac, plot_vac, flname_vac, optnstr, timestr,
-        "per 100000", 1.0e+05*lwbnd, 1.0e+05*upbnd );
+        "per 100000", lwbnd, upbnd );
 
       if ( ppt->titles == ONE )
          strcpy( optnstr, "Deceased" );
@@ -1218,8 +1381,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       lwbnd = fmax( ppt->minlty - frm, ZERO );
       upbnd = ppt->maxlty + frm;
 
+      lwbnd *= ppt->Nhrd;
+      upbnd *= ppt->Nhrd;
+
       GNUPLOT( gnuptr_dcd, plot_dcd, flname_dcd, optnstr, timestr,
-        "individuals", ppt->Nhrd*lwbnd, ppt->Nhrd*upbnd );
+        "individuals", lwbnd, upbnd );
    };
 
    if ( ppt->titles == ONE )
@@ -1256,7 +1422,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       dsplay( dsp );
    };
 
-   return state;
+   return stp;
 }
 /*============================================================================*/
 /****************************** end of amdwrk(*) ******************************/

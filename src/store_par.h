@@ -10,7 +10,7 @@
 *  Stores the model parameters                                                 *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 14, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: June 29, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 
@@ -52,8 +52,8 @@ short store_par( char *filename, char mode )
 
    static char
      *timeptr = NULL,
-      ptr[STS_SIZE] = {null},
-      fleptr[STS_SIZE] = {null};
+      ptr[STS_SIZE+ONE] = {null},
+      fleptr[STS_SIZE+ONE] = {null};
 
    static const char /* dsplay(*) options */
      *scformat = "%80s",

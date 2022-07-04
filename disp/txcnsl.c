@@ -6,7 +6,7 @@
 *   console.                                                                   *
 *                                                                              *
 *   (C) SHEIN; Munich, April 2020                             Steffen Hein     *
-*   [ Update: January 27, 2022 ]                           <contact@sfenx.de>  *
+*   [ Update: June 29, 2022 ]                              <contact@sfenx.de>  *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 0 /* set to 1: if POSIX.1 standard headers will be used*/
@@ -49,16 +49,16 @@
 # define CNS_DEFLT  "active"   
                      
 # ifndef CNS_ITEMS
-   # define CNS_ITEMS 10 /* maximum number of menu items                     */
+   # define CNS_ITEMS 10 /* maximum number of menu items                      */
 # endif
 # ifndef CNS_POSIT
    # define CNS_POSIT 67 /* position of menu labels [indices] in line         */
 # endif
 # ifndef CNS_LNLEN
-   # define CNS_LNLEN 79 /* number of characters in menu line                */
+   # define CNS_LNLEN 79 /* number of characters in menu line                 */
 # endif
 # ifndef CNS_LNINT
-   # define CNS_LNINT  2 /* first non-space character in line                */
+   # define CNS_LNINT  2 /* first non-space character in line                 */
 # endif
 # ifndef HUGE_VALF
    # define HUGE_VALF (( double ) 1.0e+299 )
@@ -170,14 +170,14 @@ TXCNSL *clcnsl( TXCNSL *cxp )
    while( ii < SHS_SIZE )
    {
       ( cpt->rqfrm[ii] ) = null;
-      ii++ ;
+      ++ii;
    };
 
    ii = null;
    while( ii < LGS_SIZE )
    {
       ( cpt->title[ii] ) = null;
-      ii++ ;
+      ++ii;
    };
 
    ii = null;
@@ -187,10 +187,10 @@ TXCNSL *clcnsl( TXCNSL *cxp )
       while( jj < CNS_LNLEN )
       {
          ( cpt->mline[ii][jj] ) = null;
-         jj++ ;
+         ++jj;
       };
       ( cpt->mflag[ii] ) = null;
-      ii++ ;
+      ++ii;
    };
 
    ii = null;
@@ -206,7 +206,7 @@ TXCNSL *clcnsl( TXCNSL *cxp )
       ( cpt->rqlng[ii] ) = null; /* clear any long integer request */
       ( cpt->rqdbl[ii] ) = null; /* clear any floating point / double request */
       ( cpt->rqstr[ii] ) = null; /* clear any char string request */
-      ii++ ;
+      ++ii;
    };
 
 /* reset: */
@@ -239,7 +239,7 @@ TXCNSL *clcnsl( TXCNSL *cxp )
    while(( ptr[ii] != '\n' ) \
        &&( ii < (MM) )) \
    { \
-      ii++ ; \
+      ++ii; \
       ptr[ii] = fgetc( stdin ); \
    }; \
 }
@@ -250,39 +250,42 @@ TXCNSL *clcnsl( TXCNSL *cxp )
    while ( ii < (NN) ) \
    { \
       ptr[ii] = 0; \
-      ii++ ; \
+      ++ii; \
    }; \
 }
+
 # define CNS_BLANCS(MM,NN) \
 { \
    ii = (MM); \
    while( ii < (NN) ) \
    { \
       ptr[ii] = ' '; \
-      ii++ ; \
+      ++ii; \
    }; \
 }
+
 # define CNS_POINTS(MM,NN) \
 { \
    ii = (MM); \
    while( ii < (NN) ) \
    { \
       ptr[ii] = '.'; \
-      ii++ ; \
+      ++ii; \
    }; \
 }
+
 # define CNS_ARROW(MM,NN) \
 { \
    ii = (MM); \
    ptr[ii] = '>'; \
-   ii++ ; \
+   ++ii; \
    while( ii < (NN) ) \
    { \
       ptr[ii] = '-'; \
-      ii++ ; \
+      ++ii; \
    }; \
    ptr[ii] = '>'; \
-   ii++ ; \
+   ++ii; \
 }
 /*============================================================================*/
 
@@ -301,7 +304,7 @@ TXCNSL *txcnsl( TXCNSL *csp )
       mm = null;
 
    static char
-      ptr[STS_SIZE] = {null},
+      ptr[STS_SIZE+ONE] = {null},
     **endp = null;
 
 /* prototypes: */
@@ -385,7 +388,6 @@ TXCNSL *txcnsl( TXCNSL *csp )
          if(( null == cpt->mflag[null] )
 	  &&( null != cpt->mflag[ii] ))
             csp->mflag[null] = ii;
-
          ++ii;
       };
    };
@@ -402,7 +404,7 @@ TXCNSL *txcnsl( TXCNSL *csp )
       while( ii < ( csp->clscr ))
       {
          printf( "\n" );
-         ii++ ;
+         ++ii;
       };
    };
 /*...........................................................................*/
@@ -416,7 +418,7 @@ TXCNSL *txcnsl( TXCNSL *csp )
       while( ii < ll )
       {
          printf( "%c", ' ' );
-         ii++;
+         ++ii;
       };
       printf( "%s", csp->title );
    };
@@ -431,13 +433,13 @@ TXCNSL *txcnsl( TXCNSL *csp )
       while ( ii < ll )
       {
          printf( "%c", ' ' );
-         ii++ ;
+         ++ii ;
       };
       ll = ( csp->lnlen );
       while ( ii < ll )
       {
          printf( "%c", '=' );
-         ii++ ;
+         ++ii ;
       };
 
       CNS_CLSTR( null, STS_SIZE ); /* clear string ptr[] */
@@ -537,19 +539,19 @@ TXCNSL *txcnsl( TXCNSL *csp )
          while( kk < ll )
          {
             ptr[ii] = csp->mline[jj][kk];
-            ii++ ;
-            kk++ ;
+            ++ii;
+            ++kk;
          };
          ptr[ii] = ' ';
-         ii++ ;
+         ++ii;
          ll = CNS_POSIT - FOUR;
 
          CNS_ARROW( ii, ll ); /* draw arrow >---...---> */
 
          ptr[ii] = ' ';
-         ii++ ;
+         ++ii;
          ptr[ii] = '[';
-         ii++ ;
+         ++ii;
 
          if(( csp->dflnf ) == jj )
             printf( "\n" );
@@ -589,8 +591,7 @@ TXCNSL *txcnsl( TXCNSL *csp )
                PRNORMAL( "] " );
             };
          };
-
-         jj++ ;
+         ++jj;
       }; /* end while ( jj <= csp->items ) */
 
 /*............................................................................*/
@@ -607,19 +608,19 @@ TXCNSL *txcnsl( TXCNSL *csp )
          while( kk < ll )
          {
             ptr[ii] = csp->escpe[kk];
-            ii++ ;
-            kk++ ;
+            ++ii;
+            ++kk;
          };
          ptr[ii] = ' ';
-         ii++ ;
+         ++ii;
          ll = ( csp->posit ) - FOUR;
 
          CNS_ARROW( ii, ll ); /* draw arrow >---...---> */
 
          ptr[ii] = ' ';
-         ii++ ;
+         ++ii;
          ptr[ii] = '[';
-         ii++ ;
+         ++ii;
 
          printf( "\n\n%s", ptr );
 
@@ -632,7 +633,7 @@ TXCNSL *txcnsl( TXCNSL *csp )
          }
          else
             printf( "%c%s", 48, "]" ); /* 48: ASCII char <null> */
-         ii++ ;
+         ++ii;
       }; /* end if ( null != strlen( csp->escpe )) */
 /*............................................................................*/
 /* position the cursor: */
@@ -642,7 +643,7 @@ TXCNSL *txcnsl( TXCNSL *csp )
       CNS_BLANCS( null, ll ); /* fill with blancs */
 
       ptr[ii] = ']';
-      ii++ ;
+      ++ii;
       strcat( ptr, " <- ?" );
       printf( "\n\n%s", ptr );
 
@@ -689,7 +690,7 @@ TXCNSL *txcnsl( TXCNSL *csp )
          CNS_BLANCS( null, ll ); /* fill with blancs */
 
          ptr[ii] = ']';
-         ii++ ;
+         ++ii;
          strcat( ptr, " <- ?" );
          printf( "\r%s", ptr );
 
@@ -702,7 +703,7 @@ TXCNSL *txcnsl( TXCNSL *csp )
          strcat( ptr, csp->cnfrm );
          ii = strlen( ptr );
          ptr[ii] = ' ';
-         ii++;
+         ++ii;
 
          ll = csp->posit - strlen( " [ enter y/n ] >-> [" ) - TWO;
          CNS_ARROW( ii, ll ); /* draw arrow >---...---> */
@@ -829,7 +830,7 @@ TXCNSL *txcnsl( TXCNSL *csp )
       strcat( ptr, csp->rqlng );
       ii = strlen( ptr );
       ptr[ii] = ' ';
-      ii++;
+      ++ii;
 
       if( LONG_MIN == ( csp->dflng ))
       {
@@ -952,7 +953,7 @@ TXCNSL *txcnsl( TXCNSL *csp )
       strcat( ptr, csp->rqdbl );
       ii = strlen( ptr );
       ptr[ii] = ' ';
-      ii++;
+      ++ii;
 
       if(( - HUGE_VALF ) == ( csp->dfdbl ))
       {
@@ -1076,7 +1077,7 @@ TXCNSL *txcnsl( TXCNSL *csp )
       strcat( ptr, csp->rqstr );
       ii = strlen( ptr );
       ptr[ii] = ' ';
-      ii++;
+      ++ii;
 
       if( null == strlen ( csp->dfstr ))
       {

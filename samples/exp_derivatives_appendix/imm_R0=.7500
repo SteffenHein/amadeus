@@ -1,4 +1,5 @@
-# Epidemic | immune members [ x-unit: transmission cycles | y-unit: ]
+# Epidemic | recovered immune members [ x-unit: transmission cycles | y-unit: ]
+# ==============================================================================
   0.0000e+00     0.000000e+00
   1.4286e-02     1.774834e-07
   2.8571e-02     3.542388e-07

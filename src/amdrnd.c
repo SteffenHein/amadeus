@@ -9,7 +9,7 @@
 *  Random bursts                                                               *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 17, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 04, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 1 /* some headers of the POSIX.1 standard will be used */
@@ -63,13 +63,15 @@
 
 AMDSTATE *amdrnd( AMDSTATE *state )
 {
-/*--- user function prototypes ---------------------------------------------->*/
+/*--- function prototypes --------------------------------------------------->*/
 
    int rand( void );
    double exp( double x );
    double log( double x );
    double fmin( double x, double y );
    double fmod( double x, double y );
+
+/* --- declarations --------------------------------------------------------->*/
 
    static PARMTRS
      *ppt = null;
@@ -153,7 +155,7 @@ AMDSTATE *amdrnd( AMDSTATE *state )
             rndbst = BSTPLT + 2.*nrr*ppt->Bstf;
 /*.................................................................................*/
          };
-      }; /*end if bst == ONE */
+      }; /* end if bst == ONE */
       upd->incidc *= rndbst;
    }; /* end if ZERO < Bstf */
    return state;

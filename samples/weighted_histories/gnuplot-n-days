@@ -1,0 +1,3 @@
+#!/bin/sh
+gnuplot 7_days_inc_360_days
+

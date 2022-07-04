@@ -1,4 +1,4 @@
-/* Update: March 16, 2022 */
+/* Update: June 23, 2022 */
 # define GNUPLOT( STREAM, FLNAME, PLTFLE, OPTION, XUNIT, YUNIT, YMIN, YMAX ) \
 { \
 /* gnuplot headers */ \
@@ -41,6 +41,36 @@
    strcpy( longstr, dotos( YMAX, 7, "e" )); \
    fprintf( STREAM, "%s", longstr ); \
    fprintf( STREAM, "%s", " ]\n" ); \
+ \
+   fprintf( STREAM, "%s", "#\n" ); \
+   fprintf( STREAM, "# set label '*****'%c\n", 92 ); \
+   strcpy( longstr, "# at " ); \
+   strcat( longstr, dotos(( 1.0e-01*upd->tt ), 7, "e" )); \
+   strcat( longstr, ", "); \
+   strcat( longstr, dotos(( YMIN + .95*( YMAX -YMIN )), 7, "e" )); \
+   fprintf( STREAM, "%s\n", longstr ); \
+ \
+   fprintf( STREAM, "# set label '*****'%c\n", 92 ); \
+   strcpy( longstr, "# at " ); \
+   strcat( longstr, dotos(( 1.0e-01*upd->tt ), 7, "e" )); \
+   strcat( longstr, ", "); \
+   strcat( longstr, dotos(( YMIN + .9*( YMAX -YMIN )), 7, "e" )); \
+   fprintf( STREAM, "%s\n", longstr ); \
+ \
+   fprintf( STREAM, "# set label '*****'%c\n", 92 ); \
+   strcpy( longstr, "# at " ); \
+   strcat( longstr, dotos(( 1.0e-01*upd->tt ), 7, "e" )); \
+   strcat( longstr, ", "); \
+   strcat( longstr, dotos(( YMIN + .85*( YMAX -YMIN )), 7, "e" )); \
+   fprintf( STREAM, "%s\n", longstr ); \
+ \
+   fprintf( STREAM, "# set label '*****'%c\n", 92 ); \
+   strcpy( longstr, "# at " ); \
+   strcat( longstr, dotos(( 1.0e-01*upd->tt ), 7, "e" )); \
+   strcat( longstr, ", "); \
+   strcat( longstr, dotos(( YMIN + .8*( YMAX -YMIN )), 7, "e" )); \
+   fprintf( STREAM, "%s\n", longstr ); \
+   fprintf( STREAM, "%s", "#\n" ); \
  \
    fprintf( STREAM, "%s", "set grid\n" ); \
    fprintf( STREAM, "%s", "set border\n" ); \

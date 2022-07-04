@@ -8,7 +8,7 @@
 *  text by points ) at the line end.                                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: January 24, 2022 ]                             <contact@sfenx.de> *
+*  [ Update: June 29, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # include <stdio.h>
@@ -18,7 +18,7 @@
 # include "../math/consts.h"
 /*----------------------------------------------------------------------------*/
 # ifndef LINLEN
-   # define LINLEN 50
+   # define LINLEN 90
 # endif
 /*============================================================================*/
 
@@ -33,16 +33,21 @@ void cpylne( char txlne[], const char *ltext, const char *bracket, short ll )
    char *strcpy( char *tgt, const char *src );
    char *strcat( char *tgt, const char *src );
 /*----------------------------------------------------------------------------*/
-   if ( ll <= null )
+/* initialize: */
+
+   ii = null;
+   while( ii <= nn )
+   {
+      txlne[ii] = '\0';
+      ++ii;
+   };
+/*............................................................................*/
+   if (( ll <= null )
+     ||( LINLEN < ll ))
       nn = LINLEN;
    else
       nn = ll;
 /*............................................................................*/
-
-   ii = null;
-   while( ii <= nn )
-      txlne[(ii++)] = null;
-
    ii = ( short ) strlen( ltext );
    strcpy( txlne, ltext );
 
@@ -52,13 +57,18 @@ void cpylne( char txlne[], const char *ltext, const char *bracket, short ll )
       jj += TWO;
 
    while( ii < ( nn-jj ))
-      txlne[(ii++)] = 95; /* ASCII: '_' */
-
-   if ( null < jj  )
    {
-      txlne[(ii++)] = 91; /* ASCII: '[' */
+      txlne[ii] = 95; /* ASCII: '_' */
+      ++ii;
+   };
+
+   if ( null < jj )
+   {
+      txlne[ii] = 91; /* ASCII: '[' */
       strcat( txlne, bracket );
-      txlne[(nn-ONE)] = 93; /* ASCII ']' */
+
+      txlne[nn-ONE] = 93; /* ASCII ']' */
+      txlne[nn] = '\0';
    };
 } 
 /*============================================================================*/

@@ -1,5 +1,5 @@
 # [ file: mk.unx ]
-# Update: June 09, 2022
+# Update: June 24, 2022
 #------------------------------------------------------------------------------
 setup: perm install
 	@echo "===> Cleaning for ${AMD_BIN}"
@@ -29,6 +29,8 @@ ${AMD_OBJ}dsplay.o \
 ${AMD_OBJ}txcnsl.o \
 ${AMD_OBJ}amdmdl.o \
 ${AMD_OBJ}amdrnd.o \
+${AMD_OBJ}amdrcs.o \
+${AMD_OBJ}amdevs.o \
 ${AMD_OBJ}amdwrk.o \
 ${AMD_OBJ}amddrv.o \
 ${AMD_OBJ}amadeus.o
@@ -41,6 +43,8 @@ ${AMD_OBJ}dsplay.o \
 ${AMD_OBJ}txcnsl.o \
 ${AMD_OBJ}amdmdl.o \
 ${AMD_OBJ}amdrnd.o \
+${AMD_OBJ}amdrcs.o \
+${AMD_OBJ}amdevs.o \
 ${AMD_OBJ}amdwrk.o \
 ${AMD_OBJ}amddrv.o \
 ${AMD_OBJ}amadeus.o \
@@ -85,6 +89,16 @@ ${AMD_OBJ}amdrnd.o: ${AMD_SRC}amdrnd.c
 	@echo "===> Building amdrnd(*)"
 	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}amdrnd.c \
 -o ${AMD_OBJ}amdrnd.o
+
+${AMD_OBJ}amdrcs.o: ${AMD_SRC}amdrcs.c
+	@echo "===> Building amdrcs(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}amdrcs.c \
+-o ${AMD_OBJ}amdrcs.o
+
+${AMD_OBJ}amdevs.o: ${AMD_SRC}amdevs.c
+	@echo "===> Building amdevs(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}amdevs.c \
+-o ${AMD_OBJ}amdevs.o
 
 ${AMD_OBJ}amdwrk.o: ${AMD_SRC}amdwrk.c
 	@echo "===> Building amdwrk(*)"
