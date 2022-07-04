@@ -1,2 +1,0 @@
-   logfle = fopen( state->logfle, "a+" );
-   fseek( logfle, state->fleps, SEEK_SET );
