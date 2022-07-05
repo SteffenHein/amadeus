@@ -6,10 +6,10 @@
 *  A numerical Model Approximating the Development of Epidemics                *
 *  Under homogeneous conditions of Spread                                      *
 *                                                                              *
-*  Weight initial effectively vaccinated state                                 *
+*  Reweights vaccination history                                               *
 *                                                                              *
 *  (C) SHEIN; Munich, June 2022                                Steffen Hein    *
-*  [ Update: July 01, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 05, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 1 /* some headers of the POSIX.1 standard will be used */
@@ -191,7 +191,7 @@ AMDSTATE *amdevs( AMDSTATE *state )
    }
    else 
    {
-      strcpy( longstr, "Weighting past vaccinations" );
+      strcpy( longstr, "Reweighting past vaccinations" );
       fprintf( logfle, "\n%s", longstr );
 /*............................................................................*/
 # if REWRITE_VAC == 1
@@ -240,13 +240,13 @@ AMDSTATE *amdevs( AMDSTATE *state )
 /*............................................................................*/
 	 tt1 = tt;
       };
-      fprintf( logfle, "\nNumber of vaccinations weighted: %le", intvac );
+      fprintf( logfle, "\nNumber of vaccinations reweighted: %le", intvac );
 /*............................................................................*/
 # if REWRITE_VAC == 1
       fclose( wrt_hist );
 # endif
 /*............................................................................*/
-/* weight vaccinatons by decaying immunity and integrate */
+/* reweight vaccinatons by decaying immunity and integrate */
 
       fseek( vac_hist, ll, SEEK_SET );
       fscanf( vac_hist, "%s", xxptr );

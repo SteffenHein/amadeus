@@ -6,10 +6,10 @@
 *  A numerical Model Approximating the Development of Epidemics                *
 *  Under homogeneous conditions of Spread                                      *
 *                                                                              *
-*  Weight initial recovered immune state                                       *
+*  Reweights recovery history                                                  *
 *                                                                              *
 *  (C) SHEIN; Munich, June 2022                                Steffen Hein    *
-*  [ Update: July 01, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 05, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # define _POSIX_SOURCE 1 /* some headers of the POSIX.1 standard will be used */
@@ -187,7 +187,7 @@ AMDSTATE *amdrcs( AMDSTATE *state )
    }
    else 
    {
-      strcpy( longstr, "Weighting recovered cases" );
+      strcpy( longstr, "Reweighting recovered cases" );
       fprintf( logfle, "\n%s", longstr );
 /*............................................................................*/
 # if REWRITE_REC == 1
@@ -236,13 +236,13 @@ AMDSTATE *amdrcs( AMDSTATE *state )
 /*............................................................................*/
 	 tt1 = tt;
       };
-      fprintf( logfle, "\nNumber of cases weighted: %le", intrec );
+      fprintf( logfle, "\nNumber of cases reweighted: %le", intrec );
 /*............................................................................*/
 # if REWRITE_REC == 1
       fclose( wrt_hist );
 # endif
 /*............................................................................*/
-/* integrate recovered with decaying immunity */
+/* reweight recovered cases by decaying immunity and integrate */
 
       intfmd = ZERO;
 
@@ -286,4 +286,4 @@ AMDSTATE *amdrcs( AMDSTATE *state )
    return state;
 }
 /*============================================================================*/
-/****************************** end of amdrnd(*) ******************************/
+/****************************** end of amdrcs(*) ******************************/

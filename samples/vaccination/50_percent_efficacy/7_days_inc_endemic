@@ -2,9 +2,9 @@ set title '7 days incidence [ endemic state ]
 #
 set xlabel 'Almost constant incidence throughout the year'
 set xrange [ 9.640000e+03 : 1.000000e+04 ]
+set format x ''
 set ylabel 'per 100000'
 set yrange [ 5.0e+01 : 2.2000e+03 ]
-set format x ''
 set format y '%10.2e'
 #
 set label 'Vaccination efficacy: 50 percent'\

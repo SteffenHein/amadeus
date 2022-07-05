@@ -1,5 +1,5 @@
 /* [ file: deflt_opr.h ] */
-/* Update: July 04, 2022 */
+/* Update: July 05, 2022 */
 /*----------------------------------------------------------------------------*/
 # ifndef LINELGTH
    # define LINELGTH 61
@@ -44,8 +44,8 @@ void deflt_opr( void ) /* default operation modes */
    
    opr->n[4] = 1 ; /* [0] 1: [don't] write titles on graphics */
    opr->n[5] = 0 ; /* [0] 1: [don't] stop when no sick persons remain */
-   opr->n[6] = 1 ; /* [0] 1: [don't] weight recovery history */
-   opr->n[7] = 1 ; /* [0] 1: [don't] weigt vaccination history */
+   opr->n[6] = 1 ; /* [0] 1: [don't] reweight recovery history */
+   opr->n[7] = 1 ; /* [0] 1: [don't] reweight vaccination history */
 
    opr->n[8] = 0 ; /* processing mode 0,1,2 [ 0: input is BASIC (else: INITIAL)
                                                         reproduction number ] */

@@ -1,0 +1,13 @@
+#!/bin/sh
+#----------------------------------------------------
+REPR="1.000"
+APX=""
+#----------------------------------------------------
+#
+IDX="10"
+RATE="0"
+#
+amadeus -n ${IDX} -f par.init${IDX}${APX}
+#mv par.log${IDX} par.log${IDX}${APX}
+cp 7_days_incidence_R0=${REPR}_job_no_${IDX} Vr=${RATE}
+#

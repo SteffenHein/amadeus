@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: July 01, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 05, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
@@ -31,12 +31,12 @@
    # define AMD_GNURNG (( double ) 1.0e-14 )
 # endif
 /*----------------------------------------------------------------------------*/
-/* [0] 1 : [don't] weight recovery history with decaying immunity */
+/* [0] 1 : [don't] reweight recovery history with decaying immunity */
 # ifndef AMD_CRRIMN
    # define AMD_CRRIMN 1
 # endif
 /*----------------------------------------------------------------------------*/
-/* [0] N : [don't] weight vaccination history with decaying immunity */ 
+/* [0] N : [don't] reweight vaccination history with decaying immunity */ 
 # ifndef AMD_CRRVAC
    # define AMD_CRRVAC 1
 # endif
@@ -334,8 +334,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->titles = ( char ) ( opt->n[4] ); /* 0: no titles; 1: titles on graphics */
    
    ppt->nmstop = ( char ) ( opt->n[5] ); /* 0/1: don't/do stop when ... */ 
-   ppt->wgtrec = ( char ) ( opt->n[6] ); /* 0/1: don't/do weight recovry hist */
-   ppt->wgtvac = ( char ) ( opt->n[7] ); /* 0/1: don't/do weight vaccntn hist */
+   ppt->wgtrec = ( char ) ( opt->n[6] ); /* 0/1: don't/do reweight recv. hist */
+   ppt->wgtvac = ( char ) ( opt->n[7] ); /* 0/1: don't/do reweight vacc. hist */
    
    ppt->formula = ( char ) ( opt->n[8] ); /* integration formula */
    ppt->rfmmde = ( char ) ( opt->n[9] );  /* reproduction factor modul. mode */

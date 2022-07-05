@@ -1,5 +1,5 @@
 /* [ file: OPRSTRNGS.M ] */
-/* Update: July 04, 2022 */
+/* Update: July 05, 2022 */
 /*============================================================================*/
 # define OPRSTRNGS( ) \
 { \
@@ -32,10 +32,10 @@
           "[0]_1:_[don't]_stop_when_no_sick_individuals_remain", "0/1", lln ); \
  \
    cpylne( opr->ntx[6], \
-      "[0]_1:_[don't]_weight_recovery_history", "0/1", lln ); \
+      "[0]_1:_[don't]_reweight_recovery_history", "0/1", lln ); \
  \
    cpylne( opr->ntx[7], \
-      "[0]_1:_[don't]_weight_vaccination_history", "0/1", lln ); \
+      "[0]_1:_[don't]_reweight_vaccination_history", "0/1", lln ); \
  \
    cpylne( opr->ntx[8], \
       "reproduction_factor", "basic:0_|_current:1_|_fixed:2", lln ); \
@@ -50,6 +50,6 @@
       "maximum_number_of_outer_iterations", "<=100000", lln ); \
  \
    cpylne( opr->ntx[12], \
-      "number_of_inner_iterations", "1-100", lln ); \
+      "number_of_inner_iterations", "<=100", lln ); \
 }
 /*============================================================================*/
