@@ -1,4 +1,16 @@
 [file: objects.md5]
-created: Mon Jul  4 20:54:37 2022
+created: Tue Jul 12 12:29:55 2022
 -------------------------------------------------------------------------------
 MD5( .directory ) = d41d8cd98f00b204e9800998ecf8427e
+MD5( amadeus.o ) = e296d6047525a2a53551c44a27669c86
+MD5( amddrv.o ) = d0ee41d27764c47929354865ea41092f
+MD5( amdevs.o ) = 49e94ac30d7717f389dff42900edef21
+MD5( amdmdl.o ) = 150664b5283fe9084cd4136b943e1cdf
+MD5( amdrcs.o ) = 34cc7ce1a967cc933767f4a6b5b63e68
+MD5( amdrnd.o ) = 9b1dda1523ad41975ff350ac55286bdf
+MD5( amdwrk.o ) = 6773aa531b042ad4b12eb124754dea7d
+MD5( cpylne.o ) = 05bf795821da40c68f9a28369279862b
+MD5( dotos.o ) = 32329be804592ab6c0be6bd1df61fc78
+MD5( dsplay.o ) = 43afb2f204016fdaaccc9269282452b4
+MD5( lotos.o ) = 086f38436c2e1116b84b0857320ee953
+MD5( txcnsl.o ) = 3287efe18cca981925d11b171b12d5d4

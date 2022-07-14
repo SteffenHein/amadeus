@@ -20,10 +20,11 @@
 *  option "parameters" whenever such dependencies exist.                       *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: July 04, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 11, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # include "../src/PARSTRNGS.M"
+# include "../src/FIXPARMTR.M"
 /*----------------------------------------------------------------------------*/
 # ifndef LINELGTH 
    # define LINELGTH 61
@@ -68,6 +69,10 @@ short rvise_par( void )
       par->s[20] = ZERO;
 
 /* [ to be completed ] */
+
+/* some parameters may be fixed with this macro: */
+   
+   FIXPARMTR( );
 
    return null;
 }

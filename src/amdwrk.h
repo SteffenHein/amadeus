@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: July 05, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 12, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
@@ -218,7 +218,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    else
       dsp->display = stdout;
 /*............................................................................*/
-/* initialize */
+/* initialize: */
 
    ii = null;   
    while ( ii < STS_SIZE )
@@ -317,19 +317,16 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* disease features [ parameter examples ]: */
 
-/* Repr = 1.000;  initial reproduction number */
-/* Tend = 365.0;  computed time intervall [ days ] */
-/* Tcic =    7.;  incidence cumulated over time [ days ] */
-/* Ttrm =    5.;  mean transmission time [ days ] */
+/* Repr = 1.000; initial reproduction number [ basic or effective ] */
+/* Tend = 365.0; computed time intervall [ days ] */
+/* Tcic =    7.; incidence cumulated over time [ days ] */
+/* Ttrm =    5.; mean transmission time [ days ] */
 /*............................................................................*/
-/* LnRp = log( Repr )/Ttrm;  i.e. exp( LnRp ) = Repr[0]^(1./Ttrm) */ 
-/* rrpd = exp( LnRp ); = Repr[0]^(1./Ttrm), base of init. exp. incr. */
-/*...........................................................................*/
 /* copy operation parameters: */
 
    ppt->xunits = ( char ) ( opt->n[1] ); /* 0: natural; 1: days */
    ppt->yunits = ( char ) ( opt->n[2] ); /* 0: normalized; 1: conventional */
-   ppt->yscale = ( char ) ( opt->n[3] ); /* 0:linear; 1: logarithmic */
+   ppt->yscale = ( char ) ( opt->n[3] ); /* 0: linear; 1: logarithmic */
 
    ppt->titles = ( char ) ( opt->n[4] ); /* 0: no titles; 1: titles on graphics */
    
@@ -344,7 +341,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->maxout = ( long ) opt->n[11]; /* null < maxout <= 100000 !!! */
    ppt->maxinn = ( long ) opt->n[12]; /* null < maxinn <= 100 !!! */
 /*............................................................................*/
-/* copy initial values and constants */
+/* copy initial values and constants: */
 
    ppt->Nhrd = ppt->s[1];  /* herd size */
    ppt->Ninf = ppt->s[2];  /* initially infective [ acutely sick ] members */
@@ -362,7 +359,8 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->Nlty = ppt->s[11]; /* initially deceased members */
    ppt->Ltlt = ppt->s[12]; /* percentage of lethal cases */
 
-   ppt->Repr = ppt->s[13]; /* initial reproduction factor */
+   ppt->Repr = ppt->s[13]; /* initial reproduction factor [ basic or effective,
+                              depending on ppt->formula, cf. above  ] */
    ppt->Rmda = ppt->s[14]; /* R modulation amplitude [ 0<Rmda; default: 1 ] */
    ppt->Trml = ppt->s[15]; /* R modulation length [ days ] */
    ppt->Trrd = ppt->s[16]; /* R modulation delay [ days ] */
@@ -381,8 +379,6 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* normalize parameters: */
 
-   upd->dt = ppt->DltT/ppt->Ttrm;   /* time step in natural units */
-   
    ppt->tcin = ppt->Tcic/ppt->Ttrm; /* tcin: Tcic in natural units */
    ppt->trml = ppt->Trml/ppt->Ttrm; /* trml: Trml in natural units */
    ppt->trrd = ppt->Trrd/ppt->Ttrm; /* trrd: Trrd in natural units */
@@ -391,7 +387,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->timn = ppt->Timu/ppt->Ttrm; /* immunity half-life; natural units */
    ppt->timn /= LN2; /* immunity decay time; natural units [ LN2 = log(2) ] */
    ppt->tvcn = ppt->Tvac/ppt->Ttrm; /* vaccination half-life; natural units */
-   ppt->tvcn /= LN2; /* vaccination decay time; natural units [ LN2 = log(2) ] */
+   ppt->tvcn /= LN2; /* vaccination decay time; natural units [ LN2 = log(2) ]*/
 
    ppt->kend = ( long )( ppt->Tend/ppt->DltT );
    ppt->kcic = ( long )( ppt->Tcic/ppt->DltT );
@@ -402,14 +398,25 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    if ( ppt->mxictm < ppt->kcic )
       ppt->mxictm = ppt->kcic;
 
+   ppt->repr = ppt->Repr;
+
    ppt->rifc = ppt->Nifc/ppt->Nhrd;
    ppt->rinf = ppt->Ninf/ppt->Nhrd;
    ppt->rimn = ppt->Nimn/ppt->Nhrd;
    ppt->rvcd = ppt->Nvac/ppt->Nhrd;
    ppt->rlty = ppt->Nlty/ppt->Nhrd;
    ppt->rthr = ppt->Ithr/ppt->Nhrd;
+   ppt->vrpc = ppt->Vacr/ppt->Nhrd; /* normalized vaccination rate */
+   ppt->vrpc *= ppt->Ttrm;          /* vacc rate in natural nunits [ Ttrm scale ] */
 /*............................................................................*/
-/* fix number of outer iterations */
+/* weighting factors: */
+
+   ppt->wght_imm = ( 100.*ppt->Ieff - ppt->Ltlt )/( 100. - ppt->Slnt );
+   ppt->wght_ifc = ( 100./( 100. - ppt->Slnt ));
+   ppt->wght_lty = ppt->Ltlt/( 100. - ppt->Slnt );
+   ppt->wght_vac = ppt->Veff;
+/*............................................................................*/
+/* fix number of outer iterations: */
 
    if ( 100 < ppt->maxinn )
       ppt->maxinn = 100;
@@ -419,7 +426,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->maxout = \
    ( long ) fminl(( ppt->kend/ppt->maxinn ), 100000. );
 /*............................................................................*/
-/* weighting recovery and vaccination history */
+/* reweight recovery and vaccination history: */
 
 # if AMD_CRRIMN == 1
    if (( ppt->wgtrec == ONE )
@@ -433,37 +440,34 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       state = amdevs( state );
 # endif
 /*............................................................................*/
-
-   if ( 1.0 <=  ( ppt->rimn + ppt->rvcd + ppt->rlty )) 
+   hh = ppt->rimn + ppt->rvcd + ppt->rlty;
+   scpt0 = 1. - hh;
+/*............................................................................*/
+   if ( scpt0 < SUSCPT_THR ) 
    {
       PRBLDCLR( "\n" );
-      fprintf( stdout, "\n Initial parameters yield 100 percent herd immunity" );
-      fprintf( stdout, "\n [ No epidemic propagation ]" );
+      fprintf( stdout, "\n Initial parameters yield 100 percent "\
+         "herd immunity\n [ No epidemic propagation ]" );
       PRNORMAL( "\n");
 
       fprintf( logfle, "\n%s",\
-         "Initial_parameters yield 100 percent herd immunity" );
-      fprintf( logfle, "\n%s",\
-         "[ No epidemic propagation ]" );
+         "Initial_parameters yield 100 percent herd immunity"\
+         "\n[ No epidemic propagation ]" );
 
       fclose( logfle );
       return stp;
    };
-
-   ppt->vrpc = ppt->Vacr/ppt->Nhrd; /* normalized vaccination rate */
-   ppt->vrpc *= ppt->Ttrm;          /* vacc rate in natural nunits [ Ttrm scale ] */
-
-   ppt->wght_imm = ( 100.*ppt->Ieff - ppt->Ltlt )/( 100. - ppt->Slnt );
-   ppt->wght_ifc = ( 100./( 100. - ppt->Slnt ));
-   ppt->wght_lty = ppt->Ltlt/( 100. - ppt->Slnt );
-   ppt->wght_vac = ppt->Veff;
 /*............................................................................*/
-/* Repr^(1./Ttrm), base of initial exponential increase */
-/* exp( LnRp ) = Repr^(1./Ttrm) */ 
-   ppt->repr = ppt->Repr;
- 
-   lnrpd = log( ppt->Repr );
-   rrpd = exp( lnrpd/ppt->Ttrm );
+/* initial effective reproduction factor [ reff ] and initial base of         */
+/* exponential increase [ in natural time scale: rrpd = reff^( 1./Ttrm ) ]    */
+
+   if ( ppt->formula == null )    /* if Repr is basic reproduction number     */
+      ppt->reff = scpt0*ppt->repr;
+   else                           /* if Repr is effective reproduction number */
+      ppt->reff = ppt->repr;      /* [ depending on ppt->formula; cf. above ] */
+
+   lnrpd= log( ppt->reff );
+   rrpd = exp( lnrpd/ppt->Ttrm ); /* = reff^( 1 / Ttrm ) */
 /*............................................................................*/
 /* store essential parameters in file <parmtr_fle> */
 
@@ -550,26 +554,34 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       strcat( outpstr, ": ");
       strcat( outpstr, dotos( ppt->Repr, 4, "e" ));
       fprintf( fleptr_par, outpstr );
+
+      cpylne( outpstr,
+         "\nEffective_reproduction_factor_[estimate]",
+	     "dimensionless", 60 );
+      strcat( outpstr, ": ");
+      strcat( outpstr, dotos( scpt0*ppt->Repr, 4, "e" ));
+      fprintf( fleptr_par, outpstr );
    }
    else
    {
       cpylne( outpstr,
-         "\nInitial_reproduction_factor","dimensionless", 60 );
+         "\nInitial_reproduction_factor", "dimensionless", 60 );
       strcat( outpstr, ": ");
       strcat( outpstr, dotos( ppt->Repr, 4, "e" ));
       fprintf( fleptr_par, outpstr );
 
-      scpt0 = 1. - ( ppt->rimn + ppt->rvcd + ppt->rlty );
-
-      cpylne( outpstr,
-         "\nBasic_reproduction_factor_[estimate]","dimensionless", 60 );
-      strcat( outpstr, ": ");
-      strcat( outpstr, dotos( ppt->Repr/scpt0, 4, "e" ));
-      fprintf( fleptr_par, outpstr );
+      if ( TINY_VALF < scpt0 )
+      {
+         cpylne( outpstr,
+            "\nBasic_reproduction_factor_[estimate]", "dimensionless", 60 );
+         strcat( outpstr, ": ");
+         strcat( outpstr, dotos( ppt->Repr/scpt0, 4, "e" ));
+         fprintf( fleptr_par, outpstr );
+      };
    };
 
    cpylne( outpstr,
-      "\nInitial_base_of_exponential_increase","dimensionless", 60 );
+      "\nInitial_base_of_exponential_increase", "dimensionless", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( rrpd, 4, "e" ));
    fprintf( fleptr_par, outpstr );
@@ -577,19 +589,19 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( fleptr_par, "\n" );
 
    cpylne( outpstr,
-      "\nR_modulation_amplitude","dimensionless", 60 );
+      "\nR_modulation_amplitude", "dimensionless", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( ppt->Rmda, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
-      "\nR_modulation_length","days", 60 );
+      "\nR_modulation_length", "days", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( ppt->Trml, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
-      "\nR_modulation_delay","days", 60 );
+      "\nR_modulation_delay", "days", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( ppt->Trrd, 4, "e" ));
    fprintf( fleptr_par, outpstr );
@@ -597,13 +609,13 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( fleptr_par, "\n" );
 
    cpylne( outpstr,
-      "\nVaccination_rate","number_of_vaccinations_per_day", 60 );
+      "\nVaccination_rate", "number_of_vaccinations_per_day", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( ppt->Nvac, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
-      "\nVaccination_efficacy","percent", 60 );
+      "\nVaccination_efficacy", "percent", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( 100.*ppt->Veff, 4, "e" ));
    fprintf( fleptr_par, outpstr );
@@ -613,19 +625,19 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       fprintf( fleptr_par, "\n" );
 
       cpylne( outpstr,
-         "\nRandom_burst_level","dimensionless", 60 );
+         "\nRandom_burst_level", "dimensionless", 60 );
       strcat( outpstr, ": ");
       strcat( outpstr, dotos( ppt->Bstf, 4, "e" ));
       fprintf( fleptr_par, outpstr );
 
       cpylne( outpstr,
-         "\nAverage_burst_length","days", 60 );
+         "\nAverage_burst_length", "days", 60 );
       strcat( outpstr, ": ");
       strcat( outpstr, dotos( ppt->Tbln, 4, "e" ));
       fprintf( fleptr_par, outpstr );
 
       cpylne( outpstr,
-         "\nAverage_burst_pause","days", 60 );
+         "\nAverage_burst_pause", "days", 60 );
       strcat( outpstr, ": ");
       strcat( outpstr, dotos( ppt->Tbps, 4, "e" ));
       fprintf( fleptr_par, outpstr );
@@ -634,21 +646,21 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( fleptr_par, "\n" );
 
    cpylne( outpstr,
-      "\nTime_limit","days", 60 );
+      "\nTime_limit", "days", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( ppt->Tend, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
-      "\nTime_step","days", 60 );
+      "\nTime_step", "days", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( ppt->DltT, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
-      "\nInternal_time_step","transmission_cycles", 60 );
+      "\nInternal_time_step", "transmission_cycles", 60 );
    strcat( outpstr, ": ");
-   strcat( outpstr, dotos( upd->dt, 4, "e" ));
+   strcat( outpstr, dotos(( ppt->DltT/ppt->Ttrm ), 4, "e" ));
    fprintf( fleptr_par, outpstr );
 /*............................................................................*/
    strcpy( longstr, "R0" );
@@ -792,7 +804,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
    fprintf( pltptr_dcd, "# %s\n", dline );
 /*............................................................................*/
-/* initialize iteration */
+/* initialize extrem values and averages: */
 
    ppt->mincic =  1.00e+77;
    ppt->maxcic = -1.00e+77;
@@ -814,32 +826,24 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    ppt->mean_cic = ZERO;
    ppt->mean_vac = ZERO;
 /*............................................................................*/
-/* start outer loop */
+/* initialize updated values: */
 
    upd->infctd = ppt->rifc;
    upd->incdnc = ppt->rinf;
    upd->immune = ppt->rimn;
    upd->vaccin = ppt->rvcd;
    upd->lethal = ppt->rlty;
+   upd->reprod = ppt->reff;
 
    upd->nxtbst = ppt->tbps; /* next burst start */ 
    upd->stpbst = ppt->tbln; /* next burst stop */
 
-   hh = upd->immune + upd->vaccin + upd->lethal;
-   scpt0 = 1. - hh;
-
-   if ( ppt->formula == null )      /* Repr is basic reproduction number */
-      upd->reprod = scpt0*ppt->repr;
-   else                             /* Repr is initial reproduction number */
-      upd->reprod = ppt->repr;
-
-   lnrpd= log( upd->reprod );
    upd->dhdt[null] = upd->incdnc;
    
    ii = null;
    while( ii < ppt->mxictm )
    {
-      ii++;
+      ++ii;
       upd->dhdt[ii] = ZERO;
    };
 
@@ -848,11 +852,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    upd->incidc = upd->incdnc;
    upd->cmlinc = upd->incidc*ppt->Tcic/ppt->Ttrm;
 /*...........................................................................*/
-/* here start the iterations */
-/* outer loop */
+/* initialize time step and indices: */
 
-   upd->kk = null;
    upd->tt = ZERO;
+   upd->dt = ppt->DltT/ppt->Ttrm;   /* time step in natural units */
+   upd->kk = null;
    upd->kinn = null;
    upd->kout = null;
    
@@ -866,7 +870,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
       STOREVAL( ONE, AMD_INTRPL );
 /*...........................................................................*/
-/* compute extrema in outer loop: set EXTREMA(1)  */
+/* update extrema in outer loop: set EXTREMA(1)  */
 
       EXTREMA( ONE );
 /*...........................................................................*/
@@ -876,7 +880,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       while ( upd->kinn < ppt->maxinn )
       {
 /*...........................................................................*/
-/* compute extrema in inner loop: set EXTREMA(1) */
+/* update extrema in inner loop: set EXTREMA(1) */
 
          EXTREMA( null );
 /*...........................................................................*/
@@ -1032,7 +1036,6 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
 /*............................................................................*/
 /* store maxima: */ 
-
 
    fprintf( fleptr_par, "\n" );
       

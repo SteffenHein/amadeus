@@ -24,6 +24,7 @@
 *                                                                              *
 *******************************************************************************/
 # include "../src/OPRSTRNGS.M"
+# include "../src/FIXOPERTN.M"
 /*----------------------------------------------------------------------------*/
 # ifndef LINELGTH 
    # define LINELGTH 61
@@ -133,6 +134,10 @@ short rvise_opr( void )
       opr->n[12] = 100;
    else if ( opr->n[12] < ONE )
       opr->n[12] = ONE;
+
+/* some operation parameters may be fixed with this macro: */
+
+   FIXOPERTN( );
 
    return null;
 }
