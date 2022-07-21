@@ -10,7 +10,7 @@
 *  Stores the model parameters                                                 *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: June 29, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 21, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 

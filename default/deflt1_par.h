@@ -1,5 +1,5 @@
 /* [ file: deflt_par.h ] */
-/* Update: June 29, 2022 */
+/* Update: July 21, 2022 */
 /*----------------------------------------------------------------------------*/
 # ifndef LINLEN
    # define LINLEN 61
@@ -28,13 +28,13 @@ void deflt_par( void ) /* default model parameters */
 /* s001:Herd_size_[Nhrd]__________________________[0<Nhrd<=Nref]: */  par->s[1]  = 1.00000e+05;
 /* s002=Initially_infective_[acutely_sick]______________[0<Ninf]: */  par->s[2]  = 1.00000e+00;
 /* s003=Initially_infected_[Nifc]___________________[Ninf<=Nifc]: */  par->s[3]  = 1.00000e+00;
-/* s004=Recovered_________________________________________[0<=N]: */  par->s[4]  = 0.00000e+00;
-/* s005=Immunity_half-life_[days]__________________________[0<T]: */  par->s[5]  = 1.80000e+02;
-/* s006=Immunization_efficacy_________________[ratio:_0<Ieff<=1]: */  par->s[6]  = 1.00000e+00;
-/* s007=Vaccinated________________________________________[0<=N]: */  par->s[7]  = 0.00000e+00;
-/* s008=Vaccination_half-life_[days]_______________________[0<T]: */  par->s[8]  = 3.60000e+02;
-/* s009=Vaccination_rate_________[vaccinations_per_day;_0<=Nvac]: */  par->s[9]  = 5.00000e+01;
-/* s010=Vaccination_efficacy__________________[ratio;_0<Veff<=1]: */  par->s[10] = 8.00000e-01;
+/* s004=Initially_recovered_______________________________[0<=N]: */  par->s[4]  = 0.00000e+00;
+/* s005=Immunization_efficacy_________________[ratio:_0<Ieff<=1]: */  par->s[6]  = 1.00000e+00;
+/* s006=Immunity_half-life_[days]__________________________[0<T]: */  par->s[5]  = 1.80000e+02;
+/* s007=Initially_vaccinated______________________________[0<=N]: */  par->s[7]  = 0.00000e+00;
+/* s008=Vaccination_rate_________[vaccinations_per_day;_0<=Nvac]: */  par->s[9]  = 5.00000e+01;
+/* s009=Vaccination_efficacy__________________[ratio;_0<Veff<=1]: */  par->s[10] = 8.00000e-01;
+/* s010=Vaccination_half-life_[days]_______________________[0<T]: */  par->s[8]  = 3.60000e+02;
 /* s011=Deceased__________________________________________[0<=N]: */  par->s[11] = 0.00000e+00;
 /* s012=Percentage_of_lethal_cases___________________[0<=P<=100]: */  par->s[12] = 2.00000e-03;
 /* s013=Initial_reproduction_factor________________________[0<R]: */  par->s[13] = 2.00000e+00;

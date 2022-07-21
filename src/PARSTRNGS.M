@@ -1,5 +1,5 @@
 /* [ file: PARSTRNGS.M ] */
-/* Update: June 29, 2022 */
+/* Update: July 21, 2022 */
 /*============================================================================*/
 # define PARSTRNGS( ) \
 { \
@@ -24,25 +24,25 @@
       "Initially_infected_[Nifc]", "Ninf<=Nifc", lln ); \
  \
    cpylne( par->stx[4], \
-      "Recovered", "0<=N" , lln ); \
+      "Initially_recovered", "0<=N" , lln ); \
  \
    cpylne( par->stx[5], \
-      "Immunity_half-life_[days]", "0<T", lln ); \
+      "Immunization_efficacy", "ratio:_0<Ieff<=1", lln ); \
  \
    cpylne( par->stx[6], \
-      "Immunization_efficacy", "ratio:_0<Ieff<=1", lln ); \
+      "Immunity_half-life_[days]", "0<T", lln ); \
  \
    cpylne( par->stx[7], \
       "Vaccinated", "0<=N" , lln ); \
  \
    cpylne( par->stx[8], \
-      "Vaccination_half-life_[days]", "0<T" , lln ); \
- \
-   cpylne( par->stx[9], \
       "Vaccination_rate", "vaccinations_per_day;_0<=Nvac", lln ); \
  \
-   cpylne( par->stx[10], \
+   cpylne( par->stx[9], \
       "Vaccination_efficacy", "ratio;_0<Veff<=1", lln ); \
+ \
+   cpylne( par->stx[10], \
+      "Vaccination_half-life_[days]", "0<T" , lln ); \
  \
    cpylne( par->stx[11], \
       "Deceased", "0<=N", lln ); \

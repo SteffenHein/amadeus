@@ -1,5 +1,5 @@
 /* [ file: OPRSTRNGS.M ] */
-/* Update: July 05, 2022 */
+/* Update: July 21, 2022 */
 /*============================================================================*/
 # define OPRSTRNGS( ) \
 { \
@@ -38,7 +38,7 @@
       "[0]_1:_[don't]_reweight_vaccination_history", "0/1", lln ); \
  \
    cpylne( opr->ntx[8], \
-      "reproduction_factor", "basic:0_|_current:1_|_fixed:2", lln ); \
+      "reproduction_factor", "basic:0_|_effective:1_|_fixed:2", lln ); \
  \
    cpylne( opr->ntx[9], \
       "reproduction_factor_modulation_mode", "0,1,...4", lln ); \

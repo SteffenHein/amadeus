@@ -55,15 +55,21 @@ short rvise_par( void )
    if ( par->s[3] < par->s[2] )
       par->s[3] = par->s[2];
 
-   if ( par->s[6] < ZERO )
-      par->s[6] = ZERO;
-   else if ( ONE < par->s[6] )
-      par->s[6] = ONE;
+   if ( par->s[5] < ZERO )
+      par->s[5] = ZERO;
+   else if ( ONE < par->s[5] )
+      par->s[5] = ONE;
 
-   if ( par->s[10] < ZERO )
-      par->s[10] = ZERO;
-   else if ( ONE < par->s[10] )
-      par->s[10] = ONE;
+   if ( par->s[6] <= ZERO )
+      par->s[6] = 1.0e+99;
+
+   if ( par->s[9] < ZERO )
+      par->s[9] = ZERO;
+   else if ( ONE < par->s[9] )
+      par->s[9] = ONE;
+
+   if ( par->s[10] <= ZERO ) 
+      par->s[10] = 1.0e+99;
 
    if ( par->s[20] < ZERO )
       par->s[20] = ZERO;

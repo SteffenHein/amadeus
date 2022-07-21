@@ -10,7 +10,7 @@
 *  Here is where the numerical computations are done                           *
 *                                                                              *
 *  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
-*  [ Update: July 12, 2022 ]                                <contact@sfenx.de> *
+*  [ Update: July 21, 2022 ]                                <contact@sfenx.de> *
 *                                                                              *
 *******************************************************************************/
 # ifndef AMD_JOBLBL
@@ -301,12 +301,12 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /*............................................................................*/
 /* dictionary: */
       
-/* Nhrd = 8.20e+07;  herd size [ number of members ] */
-/* Ninf = 3.40e+04;  initial number of infective [acutely sick] members */
-/* Nifc = 1.60e+05;  number of initially infected members Ninf <= Nifc */
-/* Nimn = 1.60e+05;  initially immune members */
-/* Nvac = 0.00e+00;  initially vaccinated members */
-/* Nlty = 2.40e+03;  initially already of deceased members */
+/* Nhrd = 8.20e+07;  herd size [ number of individuals ] */
+/* Ninf = 3.40e+04;  initial number of infective [acutely sick] individuals */
+/* Nifc = 1.60e+05;  number of initially infected individuals Ninf <= Nifc */
+/* Nimn = 1.60e+05;  initially immune individuals */
+/* Nvac = 0.00e+00;  initially vaccinated individuals */
+/* Nlty = 2.40e+03;  initially already of deceased individuals */
 /* Bstf = 0.000+00;  random burst level [0<=Bstf] */
 
 /* rinf = Ninf/Nhrd; initially infective fraction */
@@ -344,19 +344,19 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 /* copy initial values and constants: */
 
    ppt->Nhrd = ppt->s[1];  /* herd size */
-   ppt->Ninf = ppt->s[2];  /* initially infective [ acutely sick ] members */
-   ppt->Nifc = ppt->s[3];  /* initially infected members */
+   ppt->Ninf = ppt->s[2];  /* initially infective [ acutely sick ] individuals */
+   ppt->Nifc = ppt->s[3];  /* initially infected individuals */
 
-   ppt->Nimn = ppt->s[4];  /* initially immune members */
-   ppt->Timu = ppt->s[5];  /* immunity half-life [ days ] */
-   ppt->Ieff = ppt->s[6];  /* immunization efficay [ ratio: 0<Ieff<=1 ] */
+   ppt->Nimn = ppt->s[4];  /* initially immune individuals */
+   ppt->Ieff = ppt->s[5];  /* immunization efficay [ ratio: 0<Ieff<=1 ] */
+   ppt->Timu = ppt->s[6];  /* immunity half-life [ days ] */
    
-   ppt->Nvac = ppt->s[7];  /* initially vaccinated members */
-   ppt->Tvac = ppt->s[8];  /* vaccination half-life [ days ] */
-   ppt->Vacr = ppt->s[9];  /* vaccination rate [ vaccinations per day ] */
-   ppt->Veff = ppt->s[10]; /* vaccination efficacy [ ratio: 0<Veff<=1 ] */
+   ppt->Nvac = ppt->s[7];  /* initially vaccinated individuals */
+   ppt->Vacr = ppt->s[8];  /* vaccination rate [ vaccinations per day ] */
+   ppt->Veff = ppt->s[9];  /* vaccination efficacy [ ratio: 0<Veff<=1 ] */
+   ppt->Tvac = ppt->s[10]; /* vaccination half-life [ days ] */
    
-   ppt->Nlty = ppt->s[11]; /* initially deceased members */
+   ppt->Nlty = ppt->s[11]; /* initially deceased individuals */
    ppt->Ltlt = ppt->s[12]; /* percentage of lethal cases */
 
    ppt->Repr = ppt->s[13]; /* initial reproduction factor [ basic or effective,
@@ -475,40 +475,40 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( fleptr_par, "PARAMETERS [ overview ]\n" );
 
    cpylne( outpstr,
-      "\nHerd_size","members", 60 );
+      "\nHerd_size", "individuals", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( ppt->Nhrd, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
-      "\nInitially_infected","members", 60 );
+      "\nInitially_infected", "individuals", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( ppt->Nifc, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
-      "\nInitially_recovered_immune","members", 60 );
+      "\nInitially_recovered", "individuals", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos(( ppt->Nimn ), 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
 # if AMD_CRRIMN == 1
    cpylne( outpstr,
-      "\nInitially_effectively_immune","members", 60 );
+      "\nInitially_recovered_immune_(re-weighted)", "individuals", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos(( ppt->Nhrd*ppt->rimn ), 4, "e" ));
    fprintf( fleptr_par, outpstr );
 # endif
 
    cpylne( outpstr,
-      "\nInitially_vaccinated","members", 60 );
+      "\nInitially_vaccinated", "individuals", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos(( ppt->Nvac ), 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
 # if AMD_CRRVAC == 1
    cpylne( outpstr,
-      "\nInitially_effectively_vaccinated","members", 60 );
+      "\nInitially_effectively_vaccinated_(re-weighted)", "individuals", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos(( ppt->Nhrd*ppt->rvcd ), 4, "e" ));
    fprintf( fleptr_par, outpstr );
@@ -522,8 +522,10 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    strcat( outpstr, dotos( ppt->Ttrm, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
+   fprintf( fleptr_par, "\n" );
+
    cpylne( outpstr,
-      "\nImmunity_half-life_time","days", 60 );
+      "\nImmunity_half-life","days", 60 );
    strcat( outpstr, ": ");
 
    if ( ppt->Timu < 1.00e+05 )
@@ -532,6 +534,15 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       strcat( outpstr, "Infinite" );
 
    fprintf( fleptr_par, outpstr );
+
+   cpylne( outpstr,
+      "\nImmunisation_efficacy", "percent", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( 100.*ppt->Ieff, 4, "e" ));
+   
+   fprintf( fleptr_par, outpstr );
+
+   fprintf( fleptr_par, "\n" );
 
    cpylne( outpstr,
       "\nCumulative_incidence,_integrated_over","days", 60 );
@@ -612,6 +623,12 @@ AMDSTATE *amdwrk( AMDSTATE *state )
       "\nVaccination_rate", "number_of_vaccinations_per_day", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos( ppt->Nvac, 4, "e" ));
+   fprintf( fleptr_par, outpstr );
+
+   cpylne( outpstr,
+      "\nVaccination_half-life", "days", 60 );
+   strcat( outpstr, ": ");
+   strcat( outpstr, dotos( ppt->Tvac, 4, "e" ));
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
@@ -733,7 +750,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( pltptr_cic, "# %s\n", dline );
 /*............................................................................*/
    fprintf( pltptr_ifc, "# %s",\
-      "Epidemic | infected members [ x-unit: " );
+      "Epidemic | infected individuals [ x-unit: " );
    fprintf( pltptr_ifc, "%s", timestr );
 
    if (( ppt->yunits == null )
@@ -745,7 +762,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( pltptr_ifc, "# %s\n", dline );
 /*............................................................................*/
    fprintf( pltptr_imm, "# %s",\
-      "Epidemic | recovered immune members [ x-unit: " );
+      "Epidemic | recovered immune individuals [ x-unit: " );
    fprintf( pltptr_imm, "%s", timestr );
 
    if (( ppt->yunits == null )
@@ -794,7 +811,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( pltptr_vac, "# %s\n", dline );
 /*............................................................................*/
    fprintf( pltptr_dcd, "# %s",\
-      "Epidemic | deceased members [ x-unit: " );
+      "Epidemic | deceased individuals [ x-unit: " );
    fprintf( pltptr_dcd, "%s", timestr );
 
    if (( ppt->yunits == null )||( ppt->yunits == 2))
@@ -887,11 +904,11 @@ AMDSTATE *amdwrk( AMDSTATE *state )
          hh = upd->immune + upd->vaccin + upd->lethal;
          upd->suscpt = fmax(( 1. - hh ), SUSCPT_THR );
 
-         if ( ppt->nmstop == ONE ) /* stop if no susceptible members remain */
+         if ( ppt->nmstop == ONE ) /* stop if no susceptible individuals remain */
 	 {
 	    if ( upd->suscpt < ppt->rthr )
             { 
-/* susceptible fraction smaller than N = ppt->Tthr herd members */
+/* susceptible fraction smaller than N = ppt->Tthr herd individuals */
 
 	       upd->dhdt[null] = ZERO;
        	       ppt->timmun = upd->tt;
@@ -1114,7 +1131,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
    fprintf( fleptr_par, outpstr );
 
    cpylne( outpstr,
-      "\nTotal_herd_incidence_(sum_t=0->Tend)", "members", 60 );
+      "\nTotal_herd_incidence_(sum_t=0->Tend)", "individuals", 60 );
    strcat( outpstr, ": ");
    strcat( outpstr, dotos(( upd->incsum*ppt->Nhrd ), 4, "e" ));
    fprintf( fleptr_par, outpstr );

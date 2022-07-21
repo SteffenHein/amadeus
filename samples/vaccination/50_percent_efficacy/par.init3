@@ -9,13 +9,13 @@ Do_not_change_file_topology_!!!
 s01=Herd_size_[Nhrd]_______________________________[0<Nhrd<=Nref]:   1.00000e+05
 s02=Initially_infective_[acutely_sick]___________________[0<Ninf]:   2.58429e+02
 s03=Initially_infected_[Nifc]________________________[Ninf<=Nifc]:   2.58429e+02
-s04=Recovered______________________________________________[0<=N]:   7.60000e+04
-s05=Immunity_half-life_[days]_______________________________[0<T]:   1.56000e+02
-s06=Immunization_efficacy______________________[ratio:_0<Ieff<=1]:   1.00000e+00
+s04=Initially_recovered____________________________________[0<=N]:   7.60000e+04
+s05=Immunization_efficacy______________________[ratio:_0<Ieff<=1]:   1.00000e+00
+s06=Immunity_half-life_[days]_______________________________[0<T]:   1.56000e+02
 s07=Vaccinated_____________________________________________[0<=N]:   0.00000e+00
-s08=Vaccination_half-life_[days]____________________________[0<T]:   1.60000e+02
-s09=Vaccination_rate______________[vaccinations_per_day;_0<=Nvac]:   3.00000e+02
-s10=Vaccination_efficacy_______________________[ratio;_0<Veff<=1]:   5.00000e-01
+s08=Vaccination_rate______________[vaccinations_per_day;_0<=Nvac]:   3.00000e+02
+s09=Vaccination_efficacy_______________________[ratio;_0<Veff<=1]:   5.00000e-01
+s10=Vaccination_half-life_[days]____________________________[0<T]:   1.60000e+02
 s11=Deceased_______________________________________________[0<=N]:   1.65007e+02
 s12=Percentage_of_lethal_cases________________________[0<=P<=100]:   5.31593e-01
 s13=Initial_reproduction_factor_____________________________[0<R]:   8.60000e-01
@@ -47,12 +47,12 @@ n04=[0]_1:_[don't]_write_titles_on_graphics_________________[0/1]:             1
 n05=[0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:             0
 n06=[0]_1:_[don't]_reweight_recovery_history________________[0/1]:             0
 n07=[0]_1:_[don't]_reweight_vaccination_history_____________[0/1]:             0
-n08=reproduction_factor___________[basic:0_|_current:1_|_fixed:2]:             1
+n08=reproduction_factor_________[basic:0_|_effective:1_|_fixed:2]:             1
 n09=reproduction_factor_modulation_mode________________[0,1,...4]:             0
 n10=random_burst_mode________________________[shifts:0_|_slats:1]:             0
 n11=maximum_number_of_outer_iterations_________________[<=100000]:        100000
 n12=number_of_inner_iterations____________________________[<=100]:            10
 
 AMADEUS input parameter file par.log3 created:
-Tue Jul  5 12:33:56 2022
+Thu Jul 21 20:19:59 2022
 ÿ

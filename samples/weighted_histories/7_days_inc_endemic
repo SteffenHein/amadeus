@@ -13,7 +13,7 @@ set label 'Vaccination efficacy: 80 percent'\
 at 9.65e+03, 1.43e+03
 set label 'Immunity half-life: 300 days'\
 at 9.65e+03, 1.35e+03
-set label 'Vr: daily vaccinations per 100000'\
+set label 'Vr: daily vaccinations'\
 at 9.65e+03, 1.27e+03
 set label 'Line 2: current vaccination rate [ July 01, 2022 ]'\
 at 9.65e+03, 1.19e+03
