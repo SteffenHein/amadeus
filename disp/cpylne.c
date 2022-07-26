@@ -1,0 +1,76 @@
+/* [ file: cpylne.c ] */
+/*******************************************************************************
+*                                                                              *
+*  Function cpylne(*)                                                          *
+*                                                                              *
+*  This function copies a text string and a comment into a line of fixed       *
+*  length nn, the comment appearing in brackets ( and separated from the       *
+*  text by points ) at the line end.                                           *
+*                                                                              *
+*  (C) SHEIN; Munich, April 2020                               Steffen Hein    *
+*  [ Update: June 29, 2022 ]                                <contact@sfenx.de> *
+*                                                                              *
+*******************************************************************************/
+# include <stdio.h>
+# include <string.h>
+/*----------------------------------------------------------------------------*/
+# include "../math/maths.h"
+# include "../math/consts.h"
+/*----------------------------------------------------------------------------*/
+# ifndef LINLEN
+   # define LINLEN 90
+# endif
+/*============================================================================*/
+
+void cpylne( char txlne[], const char *ltext, const char *bracket, short ll )
+{
+   static short
+      ii = null,
+      jj = null,
+      nn = null;
+
+   size_t strlen ( const char *ptr );  
+   char *strcpy( char *tgt, const char *src );
+   char *strcat( char *tgt, const char *src );
+/*----------------------------------------------------------------------------*/
+/* initialize: */
+
+   ii = null;
+   while( ii <= nn )
+   {
+      txlne[ii] = '\0';
+      ++ii;
+   };
+/*............................................................................*/
+   if (( ll <= null )
+     ||( LINLEN < ll ))
+      nn = LINLEN;
+   else
+      nn = ll;
+/*............................................................................*/
+   ii = ( short ) strlen( ltext );
+   strcpy( txlne, ltext );
+
+   jj = ( short ) strlen( bracket );
+
+   if ( null < jj )
+      jj += TWO;
+
+   while( ii < ( nn-jj ))
+   {
+      txlne[ii] = 95; /* ASCII: '_' */
+      ++ii;
+   };
+
+   if ( null < jj )
+   {
+      txlne[ii] = 91; /* ASCII: '[' */
+      strcat( txlne, bracket );
+
+      txlne[nn-ONE] = 93; /* ASCII ']' */
+      txlne[nn] = '\0';
+   };
+} 
+/*============================================================================*/
+# undef LINLEN
+/************************* end of function cpylne(*) **************************/

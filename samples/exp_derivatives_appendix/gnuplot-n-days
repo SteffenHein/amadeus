@@ -1,0 +1,2 @@
+#!/bin/sh
+gnuplot n_days.gpl

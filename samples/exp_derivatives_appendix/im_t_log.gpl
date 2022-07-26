@@ -1,0 +1,53 @@
+#set title 'Immunity'
+set xlabel 'transmission cycles'
+set xrange [ 0.000000e+00 : 6.000000e+01 ]
+set ylabel ' '
+set format y '%10.1e'
+set logscale y 10
+set yrange [ 7.700000e-06 : 1.300000e+00 ]
+set grid
+set border
+set key box
+set pointsize 0.2
+plot \
+'imm_R0=3.000' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'imm_R0=2.750' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'imm_R0=2.500' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'imm_R0=2.250' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'imm_R0=2.000' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'imm_R0=1.750' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'imm_R0=1.500' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'imm_R0=1.375' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'imm_R0=1.250' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'imm_R0=1.125' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'imm_R0=1.000' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'imm_R0=.8750' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'imm_R0=.7500' with lines
+pause -1 '[ hit return to continue ]'
+replot \
+'imm_R0=.5000' with lines
+pause -1 '[ hit return to continue ]'

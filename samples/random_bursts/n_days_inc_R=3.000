@@ -1,0 +1,47 @@
+set title 'Cumulative incidence ( 7 days )'
+set xlabel 'days'
+set xrange [ 0.000000e+00 : 7.300000e+02 ]
+set ylabel ' '
+set format y '%10.2e'
+set yrange [ 0.000000e+00 : 3.300000e-01 ]
+set grid
+set border
+set key box
+set pointsize 0.2
+plot \
+'no_bursts' with lp lw 0.9 lt 8
+pause -1 '[ hit return to continue ]'
+replot \
+'shift_25%' with lp lw 0.9 lt 2
+pause -1 '[ hit return to continue ]'
+replot \
+'shift_50%' with lp lw 0.7 lt 7
+pause -1 '[ hit return to continue ]'
+replot \
+'shift_75%' with lp lw 0.5 lt 9
+pause -1 '[ hit return to continue ]'
+replot \
+'shift_100%' with lp lw 0.9 lt 6
+pause -1 '[ hit return to continue ]'
+replot \
+'shift_125%' with lp lw 0.9 lt 4
+pause -1 '[ hit return to continue ]'
+#
+plot \
+'no_bursts' with lp lw 0.9 lt 8
+pause -1 '[ hit return to continue ]'
+replot \
+'slats_25%' with lp lw 0.9 lt 2
+pause -1 '[ hit return to continue ]'
+replot \
+'slats_50%' with lp lw 0.7 lt 7
+pause -1 '[ hit return to continue ]'
+replot \
+'slats_75%' with lp lw 0.5 lt 9
+pause -1 '[ hit return to continue ]'
+replot \
+'slats_100%' with lp lw 0.9 lt 6
+pause -1 '[ hit return to continue ]'
+replot \
+'slats_125%' with lp lw 0.9 lt 4
+pause -1 '[ hit return to continue ]'

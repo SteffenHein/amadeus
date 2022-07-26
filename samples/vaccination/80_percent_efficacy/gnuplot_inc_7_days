@@ -1,0 +1,6 @@
+#!/bin/sh
+# Transmission time = 5 days
+# parameters cf. par.init21-29
+#---------------------------
+gnuplot 7_days_inc_360_days
+gnuplot 7_days_inc_endemic

@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+IDX="10"
+REPR="3.000"
+BRST="slats_125%"
+#
+amadeus -n 0 -f par.init0
+amadeus -n ${IDX} -f par.init${IDX}
+#
+cp 7_days_incidence_R0=${REPR}_job_no_${IDX} ${BRST}
+cp inc_R0=${REPR}_job_no_${IDX} inc_${BRST}
+cp imm_R0=${REPR}_job_no_${IDX} imm_${BRST}
+#
+gnuplot gpl_n_days_incidence_job_no_${IDX}
+gnuplot gpl_incidence_job_no_${IDX}

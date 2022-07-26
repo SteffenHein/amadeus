@@ -1,0 +1,87 @@
+# amadeus 
+INSTALL 
+Installation instructions for the AMADEUS program package
+--------------------------------------------------------------------------------
+AMADEUS, release v1.0r2
+
+A numerical Model Approximating the Development of Epidemics 
+Under homogeneous conditions of Spread
+
+(C) SHEIN; Munich, April 2020                               Steffen Hein
+[ Update: June 09, 2022 ]                                <contact@sfenx.de>
+--------------------------------------------------------------------------------
+1. Copy the package file amadeus-<version>.tgz into your home directory 
+   [ or whereever you want to create the initial installation directory ~/amadeus ].
+   In the following, that directory is referred to as 'build directory'.
+--------------------------------------------------------------------------------
+2. Unpack the amadeus package, using the tar command
+
+	tar -xvzf amadeus-<version>.tgz
+--------------------------------------------------------------------------------
+3. Edit your [ operating system dependent ] makefile and define your  
+   preferred program installation path [ viz. the directory /~ wherein the
+   executable program amadeus.do shall reside ].
+   Write that directory into Makefile as macro AMD_INST=/~. Take care that
+   the directory lies on the default search path of your user environment
+   [ usually defined in the .login, .profile, or the .bash_profile script ],
+   or include that directory into your search path.
+   Within Makefile, you may also configure your preferred C compiler options
+   by modifying AMD_CC and the pertinent flag, AMD_FLAG, in the 
+   desired fashion [ usually it is recommended to use optimization options, 
+   in particular for computationally expensive subroutines and functions ].
+   Copy your configured makefile into the file named 'Makefile' or
+   set a symbolic link, for instance [ if your makefile is makefile.unx in a 
+   UNIX type operating system ], by entering the command:
+
+         ln -s makefile.unx Makefile
+
+   Note that the pre-configured makefiles [ makefile.gnu, makefile.unx ]
+   added to this package use GNU Make [ or CMake ] syntax.
+--------------------------------------------------------------------------------
+4. Edit the CONFIG.H header file and reconfigure, if necessary or wanted, the
+   pertinent array dimensions [ macros ], always complying with the needs of
+   your application. The CONFIG.H file usually resides in the directory
+
+                            ~/amadeus/.. 
+
+   where ~/ denotes the build directory. With the default makefiles
+   CONFIG.H is expected to reside in this directory at compilation time.
+--------------------------------------------------------------------------------
+5. Before compiling the sources, you should in addition specify your preferred 
+   editor and line printer options at the top of the CONFIG.H script.
+--------------------------------------------------------------------------------
+6. Compile and install the executable program directly into an indicated
+   directory [ AMADEUS_INST in Makefile ] by entering the command
+
+        make install
+
+   or into any intermediate directory AMADEUS_PATH [ specified in
+   Makefile ] by doing a
+
+        make amadeus.do
+
+   In the latter case, you may individually move the compiled executable
+   program [ amadeus.do ] into any other directory, where you like to 
+   install it.
+--------------------------------------------------------------------------------
+7. Finally you can do a
+
+	make clean
+
+   in order to remove all binary objects from the build directory.
+--------------------------------------------------------------------------------
+8. Change into your home directory or wherever you want to run your 
+   applications [ for instance ~/amadeus/work ] and start the 
+   executable program with the command
+
+        amadeus.do
+
+   If your installation is OK, a text console opens asking your running options
+--------------------------------------------------------------------------------
+9. Note that the numerical output is saved in GNUPLOT compatible format.
+
+--------------------------------------------------------------------------------
+Thanks for using AMADEUS
+						Steffen Hein
+                                                Munich, Germany
+                                                contact@sfenx.de

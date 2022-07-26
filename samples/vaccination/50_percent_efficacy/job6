@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+IDX="6"
+APX=""
+REPR=".8600"
+RATE="54"
+#
+amadeus -n ${IDX} -f par.init${IDX}${APX}
+cp par.log${IDX} par.init${IDX}${APX}
+# mv par.log${IDX} par.log${IDX}${APX}
+cp 7_days_incidence_R0=${REPR}_job_no_${IDX} Vr=${RATE}
+#
+gnuplot gpl_n_days_incidence_job_no_${IDX}
+gnuplot gpl_incidence_job_no_${IDX}
+gnuplot gpl_immunity_job_no_${IDX}
+gnuplot gpl_reproduction_job_no_${IDX}
+gnuplot gpl_vaccination_job_no_${IDX}
+gnuplot gpl_infection_job_no_${IDX}
+gnuplot gpl_lethality_job_no_${IDX}

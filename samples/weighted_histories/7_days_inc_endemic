@@ -1,0 +1,50 @@
+set title '7 days incidence [ endemic state ]
+#[ dependence on vaccination rate ]'
+#
+set xlabel 'Almost constant incidence throughout the year'
+set xrange [ 9.640000e+03 : 1.000000e+04 ]
+set format x ''
+#
+set ylabel 'per 100000'
+set yrange [ 1.0e+02 : 1.5000e+03 ]
+set format y '%10.2e'
+#
+set label 'Vaccination efficacy: 80 percent'\
+at 9.647e+03, 1.43e+03
+set label 'Immunity half-life: 300 days'\
+at 9.647e+03, 1.34e+03
+set label 'Vr: daily vaccinations'\
+at 9.647e+03, 1.25e+03
+set label 'Line 2: current vaccination rate [ July 08, 2022 ]'\
+at 9.647e+03, 1.16e+03
+#
+set label 'January'\
+at 9.64e+03, 3.0e+01
+set label 'December'\
+at 9.953e+03, 3.0e+01
+#
+set grid
+set border
+set key box
+set pointsize 2
+set pointinterval 1
+set pointintervalbox 1
+#
+plot \
+'Vr=0' with lp lt 9 pt "0" pi -151
+pause -1 '[ hit return to continue ]'
+replot \
+'Vr=16000' with lp lt 6 pt "1" pi -151
+pause -1 '[ hit return to continue ]'
+replot \
+'Vr=32000' with lp lw 3 lt 7 pt "2" pi -151
+pause -1 '[ hit return to continue ]'
+replot \
+'Vr=50000' with lp lt 4 pt "3" pi -151
+pause -1 '[ hit return to continue ]'
+replot \
+'Vr=70000' with lp lt 8 pt "5" pi -151
+pause -1 '[ hit return to continue ]'
+replot \
+'Vr=100000' with lp lt 9 pt "6" pi -151
+pause -1 '[ hit return to continue ]'

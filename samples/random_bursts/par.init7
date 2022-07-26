@@ -1,0 +1,58 @@
+PARAMETERS-7
+AMADEUS
+Evolution_of_spreading_diseases
+
+Initial_values_and_constants
+Do_not_change_file_topology_!!!
+[Leave_contiguous_strings_contiguous.]
+
+s01=Herd_size_[Nhrd]_______________________________[0<Nhrd<=Nref]:   1.00000e+05
+s02=Initially_infective_[acutely_sick]___________________[0<Ninf]:   1.00000e+00
+s03=Initially_infected_[Nifc]________________________[Ninf<=Nifc]:   1.00000e+00
+s04=Initially_recovered____________________________________[0<=N]:   1.00000e+00
+s05=Immunization_efficacy______________________[ratio:_0<Ieff<=1]:   1.00000e+00
+s06=Immunity_half-life_[days]_______________________________[0<T]:   9.00000e+01
+s07=Vaccinated_____________________________________________[0<=N]:   0.00000e+00
+s08=Vaccination_rate______________[vaccinations_per_day;_0<=Nvac]:   0.00000e+00
+s09=Vaccination_efficacy_______________________[ratio;_0<Veff<=1]:   0.00000e+00
+s10=Vaccination_half-life_[days]____________________________[0<T]:   9.00000e+01
+s11=Deceased_______________________________________________[0<=N]:   0.00000e+00
+s12=Percentage_of_lethal_cases________________________[0<=P<=100]:   2.00000e-02
+s13=Initial_reproduction_factor_____________________________[0<R]:   3.00000e+00
+s14=Reproduction_factor_modulation_____________[amplitude:_-1<Rm]:   0.00000e+00
+s15=If_Rm_!=_0:_Repr._factor_modulation_length_[days]_______[0<T]:   0.00000e+00
+s16=If_Rm_!=_0:_Repr._factor_modulation_delay_[days]_______[0<=T]:   0.00000e+00
+s17=Percentage_of_asymptomatic_cases___________________[0<=P<100]:   2.00000e+01
+s18=Incidence_threshold_________[stop_below_that_number_of_cases]:   0.00000e+00
+s19=Incidence_cumulation_time_[days]________________________[0<T]:   7.00000e+00
+s20=Random_burst_factor_[average]_________________________[0<=Bf]:   5.00000e-01
+s21=If_0<Bf:_Average_burst_length_[T/days]_________________[0<=T]:   1.00000e+01
+s22=If_0<Bf:_Average_burst_pause_[T/days]__________________[0<=T]:   1.50000e+02
+s23=Mean_transmission_time_[days]___________________________[0<T]:   1.40000e+01
+s24=Time_limit_[T/days]_____________________________________[0<T]:   7.30000e+02
+s25=Time_step_[Dt/days]____________________________________[0<Dt]:   1.00000e-01
+
+================================================================================
+
+OPERATIONS-7
+AMADEUS
+Evolution_of_spreading_diseases
+
+operation_parameters
+
+n01=x-units______________________[transmission_cycles:0_|_days:1]:             1
+n02=y-units___________________[normalized:0/2_|_conventional:1/3]:             0
+n03=y-scale____________________________[linear:0_|_logarithmic:1]:             0
+n04=[0]_1:_[don't]_write_titles_on_graphics_________________[0/1]:             1
+n05=[0]_1:_[don't]_stop_when_no_sick_individuals_remain_____[0/1]:             0
+n06=[0]_1:_[don't]_reweight_recovery_history________________[0/1]:             0
+n07=[0]_1:_[don't]_reweight_vaccination_history_____________[0/1]:             0
+n08=reproduction_factor_________[basic:0_|_effective:1_|_fixed:2]:             0
+n09=reproduction_factor_modulation_mode________________[0,1,...4]:             0
+n10=random_burst_mode________________________[shifts:0_|_slats:1]:             1
+n11=maximum_number_of_outer_iterations_________________[<=100000]:        100000
+n12=number_of_inner_iterations____________________________[<=100]:            20
+
+AMADEUS input parameter file par.log7 created:
+Thu Jul 21 20:18:16 2022
+ÿ

@@ -1,0 +1,27 @@
+# amadeus
+LICENSE
+License agreement for the AMADEUS program package
+--------------------------------------------------------------------------------
+AMADEUS, release v1.0r2
+
+A numerical Model Approximating the Development of Epidemics 
+Under homogeneous conditions of Spread
+
+(C) SHEIN; Munich, April 2020                               Steffen Hein
+[ Update: June 09, 2022 ]                                <contact@sfenx.de>
+--------------------------------------------------------------------------------
+THIS SOFTWARE STANDS UNDER THE GNU PUBLIC LICENSE. IT IS PROVIDED BY THE 
+DEVELOPER "AS IS". ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COMPANY OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+CAUSED ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+--------------------------------------------------------------------------------
+Thanks for using AMADEUS
+						Steffen Hein
+                                                Munich, Germany
+                                                contact@sfenx.de

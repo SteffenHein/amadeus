@@ -1,0 +1,138 @@
+# [ file: mk.unx ]
+# Update: June 24, 2022
+#------------------------------------------------------------------------------
+setup: perm install
+	@echo "===> Cleaning for ${AMD_BIN}"
+	rm -f ${AMD_BIN}${AMD_EXEC}
+	@echo "===> ${DONE}"
+
+install: ${AMD_INST}${AMD_EXEC}
+
+all: setup
+
+${AMD_EXEC}: ${AMD_BIN}${AMD_EXEC}
+
+${AMD_INST}${AMD_EXEC}: ${AMD_BIN}${AMD_EXEC}
+	mv ${AMD_BIN}${AMD_EXEC} ${AMD_INST}${AMD_EXEC}
+	@echo "===> S-Linking amadeus to "${AMD_EXEC}
+	rm -f ${AMD_INST}amadeus
+	ln -s ${AMD_INST}${AMD_EXEC} ${AMD_INST}amadeus
+	@echo "===> ${DONE}"
+
+${AMD_BIN}${AMD_EXEC}: \
+${AMD_CONF}CONFIG.H \
+${AMD_MATH}consts.h \
+${AMD_OBJ}lotos.o \
+${AMD_OBJ}dotos.o \
+${AMD_OBJ}cpylne.o \
+${AMD_OBJ}dsplay.o \
+${AMD_OBJ}txcnsl.o \
+${AMD_OBJ}amdmdl.o \
+${AMD_OBJ}amdrnd.o \
+${AMD_OBJ}amdrcs.o \
+${AMD_OBJ}amdevs.o \
+${AMD_OBJ}amdwrk.o \
+${AMD_OBJ}amddrv.o \
+${AMD_OBJ}amadeus.o
+	@echo "===> Building ${AMD_EXEC} ..."
+	${AMD_CC} \
+${AMD_OBJ}lotos.o \
+${AMD_OBJ}dotos.o \
+${AMD_OBJ}cpylne.o \
+${AMD_OBJ}dsplay.o \
+${AMD_OBJ}txcnsl.o \
+${AMD_OBJ}amdmdl.o \
+${AMD_OBJ}amdrnd.o \
+${AMD_OBJ}amdrcs.o \
+${AMD_OBJ}amdevs.o \
+${AMD_OBJ}amdwrk.o \
+${AMD_OBJ}amddrv.o \
+${AMD_OBJ}amadeus.o \
+-o ${AMD_BIN}${AMD_EXEC} ${AMD_LIB}
+
+${AMD_OBJ}lotos.o: ${AMD_MATH}lotos.c
+	@echo "===> Building lotos(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_MATH}lotos.c \
+-o ${AMD_OBJ}lotos.o
+
+${AMD_OBJ}dotos.o: ${AMD_MATH}dotos.c
+	@echo "===> Building dotos(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_MATH}dotos.c \
+-o ${AMD_OBJ}dotos.o
+
+${AMD_OBJ}cpylne.o: ${AMD_DISP}cpylne.c
+	@echo "===> Building cpylne(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_DISP}cpylne.c \
+-o ${AMD_OBJ}cpylne.o
+
+${AMD_OBJ}dsplay.o: ${AMD_DISP}dsplay.c
+	@echo "===> Building dsplay(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_DISP}dsplay.c \
+-o ${AMD_OBJ}dsplay.o
+
+${AMD_OBJ}txcnsl.o: ${AMD_DISP}txcnsl.c
+	@echo "===> Building txcnsl(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_DISP}txcnsl.c \
+-o ${AMD_OBJ}txcnsl.o
+
+${AMD_OBJ}amddrv.o: ${AMD_SRC}amddrv.c
+	@echo "===> Building amddrv(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}amddrv.c \
+-o ${AMD_OBJ}amddrv.o
+
+${AMD_OBJ}amdmdl.o: ${AMD_SRC}amdmdl.c
+	@echo "===> Building amdmdl(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}amdmdl.c \
+-o ${AMD_OBJ}amdmdl.o
+
+${AMD_OBJ}amdrnd.o: ${AMD_SRC}amdrnd.c
+	@echo "===> Building amdrnd(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}amdrnd.c \
+-o ${AMD_OBJ}amdrnd.o
+
+${AMD_OBJ}amdrcs.o: ${AMD_SRC}amdrcs.c
+	@echo "===> Building amdrcs(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}amdrcs.c \
+-o ${AMD_OBJ}amdrcs.o
+
+${AMD_OBJ}amdevs.o: ${AMD_SRC}amdevs.c
+	@echo "===> Building amdevs(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}amdevs.c \
+-o ${AMD_OBJ}amdevs.o
+
+${AMD_OBJ}amdwrk.o: ${AMD_SRC}amdwrk.c
+	@echo "===> Building amdwrk(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}amdwrk.c \
+-o ${AMD_OBJ}amdwrk.o
+
+${AMD_OBJ}amadeus.o: \
+${AMD_CONF}CONFIG.H \
+${AMD_SRC}amadeus.c
+	@echo "===> Building amadeus(*)"
+	${AMD_CC} ${AMD_CFLG} -c ${AMD_SRC}amadeus.c \
+-o ${AMD_OBJ}amadeus.o
+
+# clean binary programs [ in directores ..._BIN ] and all object files:
+clean: perm
+	@echo "===> Cleaning for ${AMD_BIN}"
+	rm -f ${AMD_BIN}${AMD_EXEC}
+	@echo "===> Cleaning objects"
+	rm -f ${AMD_OBJ}*.o
+	@echo "===> ${DONE}"
+
+# Deinstall executable
+deinstall: perm
+	@echo "===> Deinstalling ${AMD_EXEC}"
+	rm -f ${AMD_INST}${AMD_EXEC}
+
+# Reinstall executable
+reinstall: install
+	@echo "===> Reinstalling ${AMD_EXEC}"
+	@echo "===> ${DONE}"
+
+# Give write permissions to objects dir
+perm:
+	-@chmod -f u+wx,g+wx,o+wx ${AMD_OBJ}
+	-@chmod -f u+wx,g+wx,o+wx ${AMD_BIN}
+#------------------------------------------------------------------------------
+DONE=OK, done !

@@ -1,0 +1,47 @@
+set title 'Daily incidence [ R0 = 3.0 ]'
+set xlabel 'days'
+set xrange [ 0.000000e+00 : 7.300000e+02 ]
+set ylabel ' '
+set format y '%10.2e'
+set yrange [ 0.000000e+00 : 5.000000e-02 ]
+set grid
+set border
+set key box
+set pointsize 0.2
+plot \
+'inc_no_bursts' with lp lw 0.9 lt 8
+pause -1 '[ hit return to continue ]'
+replot \
+'inc_shift_25%' with lp lw 0.9 lt 2
+pause -1 '[ hit return to continue ]'
+replot \
+'inc_shift_50%' with lp lw 0.7 lt 7
+pause -1 '[ hit return to continue ]'
+replot \
+'inc_shift_75%' with lp lw 0.5 lt 9
+pause -1 '[ hit return to continue ]'
+replot \
+'inc_shift_100%' with lp lw 0.9 lt 6
+pause -1 '[ hit return to continue ]'
+replot \
+'inc_shift_125%' with lp lw 0.9 lt 4
+pause -1 '[ hit return to continue ]'
+#
+plot \
+'inc_no_bursts' with lp lw 0.9 lt 8
+pause -1 '[ hit return to continue ]'
+replot \
+'inc_slats_25%' with lp lw 0.9 lt 2
+pause -1 '[ hit return to continue ]'
+replot \
+'inc_slats_50%' with lp lw 0.7 lt 7
+pause -1 '[ hit return to continue ]'
+replot \
+'inc_slats_75%' with lp lw 0.5 lt 9
+pause -1 '[ hit return to continue ]'
+replot \
+'inc_slats_100%' with lp lw 0.9 lt 6
+pause -1 '[ hit return to continue ]'
+replot \
+'inc_slats_125%' with lp lw 0.9 lt 4
+pause -1 '[ hit return to continue ]'
