@@ -7,16 +7,16 @@ Do_not_change_file_topology_!!!
 [Leave_contiguous_strings_contiguous.]
 
 s01=Herd_size_[Nhrd]_______________________________[0<Nhrd<=Nref]:   8.32400e+07
-s02=Initially_infective_[acutely_sick]___________________[0<Ninf]:   5.81636e+05
-s03=Initially_infected_[Nifc]________________________[Ninf<=Nifc]:   5.81636e+05
-s04=Initially_recovered____________________________________[0<=N]:   2.89263e+07
+s02=Initially_infective_[acutely_sick]___________________[0<Ninf]:   4.05479e+05
+s03=Initially_infected_[Nifc]________________________[Ninf<=Nifc]:   4.05479e+05
+s04=Initially_recovered____________________________________[0<=N]:   2.82940e+07
 s05=Immunization_efficacy______________________[ratio:_0<Ieff<=1]:   8.00000e-01
 s06=Immunity_half-life_[days]_______________________________[0<T]:   3.00000e+02
 s07=Vaccinated_____________________________________________[0<=N]:   6.34289e+07
 s08=Vaccination_rate______________[vaccinations_per_day;_0<=Nvac]:   0.00000e+00
 s09=Vaccination_efficacy_______________________[ratio;_0<Veff<=1]:   8.00000e-01
 s10=Vaccination_half-life_[days]____________________________[0<T]:   3.00000e+02
-s11=Deceased_______________________________________________[0<=N]:   1.41758e+05
+s11=Deceased_______________________________________________[0<=N]:   1.41189e+05
 s12=Percentage_of_lethal_cases________________________[0<=P<=100]:   0.00000e+00
 s13=Initial_reproduction_factor_____________________________[0<R]:   1.06000e+00
 s14=Reproduction_factor_modulation_____________[amplitude:_-1<Rm]:   0.00000e+00
@@ -25,10 +25,10 @@ s16=If_Rm_!=_0:_Repr._factor_modulation_delay_[days]_______[0<=T]:   0.00000e+00
 s17=Percentage_of_asymptomatic_cases___________________[0<=P<100]:   2.00000e+01
 s18=Incidence_threshold_________[stop_below_that_number_of_cases]:   1.00000e-03
 s19=Incidence_cumulation_time_[days]________________________[0<T]:   7.00000e+00
-s20=Random_burst_factor_[average]_________________________[0<=Bf]:   2.00000e-02
+s20=Random_burst_factor_[average]_________________________[0<=Bf]:   4.00000e-02
 s21=If_0<Bf:_Average_burst_length_[T/days]_________________[0<=T]:   4.82100e+00
 s22=If_0<Bf:_Average_burst_pause_[T/days]__________________[0<=T]:   1.10000e+01
-s23=Mean_transmission_time_[days]___________________________[0<T]:   7.00000e+00
+s23=Mean_transmission_time_[days]___________________________[0<T]:   5.00000e+00
 s24=Time_limit_[T/days]_____________________________________[0<T]:   1.00000e+04
 s25=Time_step_[Dt/days]____________________________________[0<Dt]:   2.00000e-02
 
@@ -54,5 +54,5 @@ n11=maximum_number_of_outer_iterations_________________[<=100000]:        100000
 n12=number_of_inner_iterations____________________________[<=100]:            10
 
 AMADEUS input parameter file par.log0 created:
-Sun Jul 24 16:11:50 2022
+Sat Aug  6 20:55:53 2022
 ÿ

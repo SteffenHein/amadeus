@@ -1,34 +1,31 @@
-[file: src.md5]
-created: Sun Jul 24 17:13:58 2022
--------------------------------------------------------------------------------
-MD5( .directory ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( EXTREMA.M ) = 5a06ca97d6434cf9d487d0d3e16c581b
-MD5( FIXOPERTN.M ) = 672bee1acf8332d07d76d501c6d8da70
-MD5( FIXPARMTR.M ) = e29c7ec25fdbd386b18f6936969e2e66
-MD5( GNUPLOT.M ) = 1f5331a76f4db43f2985dad5c13d5524
-MD5( NCURSES.M ) = caa32bf748dcdb45c9c5c2b9a092dbe7
-MD5( OPRSTRNGS.M ) = 70d7c7b2e7186e104a9f8e86df1ed3af
-MD5( PARSTRNGS.M ) = ab89a0dbf398d073f5178d5290a153b2
-MD5( PRNTCRS.M ) = ae70f560efcf41cc6b149a2fdeec6a1f
-MD5( STOREOPR.M ) = 1b12e321b2ab283eb7f49c3593c110f3
-MD5( STOREPAR.M ) = 2367286b85c2af370f413ddd3d69e960
-MD5( STOREVAL.M ) = 72cd99eaec92f5a0d8555cb4776c5a2a
-MD5( amadeus.c ) = 5e7389e5b61c36847922c683204cefe5
-MD5( amddrv.c ) = 95fa9ee007ab4d34b5bf820e9b32d0e9
-MD5( amddrv.h ) = bd8a1fef7561746781e6a331d10ac620
-MD5( amdevs.c ) = c8d4905a03ebc9376d2e16fde2e9bb60
-MD5( amdmdl.c ) = 839acbf614b91f96807409f7887825c0
-MD5( amdrcs.c ) = 2b72121d78a3314e05ecff0e15456498
-MD5( amdrnd.c ) = 9f220e9b9302fd3a1e45352afcda3b6d
-MD5( amdwrk.c ) = e202ae165000dd1bc8b96f1785be0979
-MD5( amdwrk.h ) = c77eaee71ed7dbf2aab32a080416c463
-MD5( init_opr.h ) = fa987e17643ed126a4ba0b6dcaf6b38a
-MD5( init_par.h ) = 376ce6e7de40a55f817a7ec568ba8073
-MD5( inputs.h ) = 5874d201325f89d740381f4c21e858c6
-MD5( rread_opr.h ) = 504f8569b457bcbcd77da88d8d93c1be
-MD5( rread_par.h ) = 113444036aa752154927c2980bef8971
-MD5( rvise_opr.h ) = 85aeff865f2b03f70257d9690b7ddfd5
-MD5( rvise_par.h ) = 4d39b0856c3f4ef3d32758e5e6d85841
-MD5( store_opr.h ) = 8bad4ab6fc91c50a9b367d0faf111262
-MD5( store_par.h ) = b6726ba8e82c45be7aaea7e866b19d51
-MD5( types.h ) = 26f8676197ed54835e8ad43696ae567f
+5a06ca97d6434cf9d487d0d3e16c581b  EXTREMA.M
+672bee1acf8332d07d76d501c6d8da70  FIXOPERTN.M
+e29c7ec25fdbd386b18f6936969e2e66  FIXPARMTR.M
+1f5331a76f4db43f2985dad5c13d5524  GNUPLOT.M
+caa32bf748dcdb45c9c5c2b9a092dbe7  NCURSES.M
+70d7c7b2e7186e104a9f8e86df1ed3af  OPRSTRNGS.M
+ab89a0dbf398d073f5178d5290a153b2  PARSTRNGS.M
+ae70f560efcf41cc6b149a2fdeec6a1f  PRNTCRS.M
+1b12e321b2ab283eb7f49c3593c110f3  STOREOPR.M
+2367286b85c2af370f413ddd3d69e960  STOREPAR.M
+72cd99eaec92f5a0d8555cb4776c5a2a  STOREVAL.M
+5e7389e5b61c36847922c683204cefe5  amadeus.c
+95fa9ee007ab4d34b5bf820e9b32d0e9  amddrv.c
+bd8a1fef7561746781e6a331d10ac620  amddrv.h
+c8d4905a03ebc9376d2e16fde2e9bb60  amdevs.c
+839acbf614b91f96807409f7887825c0  amdmdl.c
+2b72121d78a3314e05ecff0e15456498  amdrcs.c
+9f220e9b9302fd3a1e45352afcda3b6d  amdrnd.c
+e202ae165000dd1bc8b96f1785be0979  amdwrk.c
+c77eaee71ed7dbf2aab32a080416c463  amdwrk.h
+fa987e17643ed126a4ba0b6dcaf6b38a  init_opr.h
+376ce6e7de40a55f817a7ec568ba8073  init_par.h
+5874d201325f89d740381f4c21e858c6  inputs.h
+504f8569b457bcbcd77da88d8d93c1be  rread_opr.h
+113444036aa752154927c2980bef8971  rread_par.h
+85aeff865f2b03f70257d9690b7ddfd5  rvise_opr.h
+4d39b0856c3f4ef3d32758e5e6d85841  rvise_par.h
+15e5d3175792b354db32bff2f259c089  src.sha256
+8bad4ab6fc91c50a9b367d0faf111262  store_opr.h
+b6726ba8e82c45be7aaea7e866b19d51  store_par.h
+26f8676197ed54835e8ad43696ae567f  types.h

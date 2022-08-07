@@ -1,9 +1,6 @@
-[file: math.md5]
-created: Sun Jul 24 17:13:58 2022
--------------------------------------------------------------------------------
-MD5( .directory ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( consts.h ) = 22fde6c7a9a35abf80393d1f7643287e
-MD5( dotos.c ) = 4dfadef2b4659ba8c18830101989590d
-MD5( lotos.c ) = bead0a01e2ccc691735438613237bb09
-MD5( maths.h ) = c8818f1cd07406e273d24aeaaf8844ec
-MD5( rndoff.c ) = 3247ba7f5cee0bfc76a5218a14b70703
+22fde6c7a9a35abf80393d1f7643287e  consts.h
+4dfadef2b4659ba8c18830101989590d  dotos.c
+bead0a01e2ccc691735438613237bb09  lotos.c
+19df3c786e513d00ca7866e2e8e2c551  math.sha256
+c8818f1cd07406e273d24aeaaf8844ec  maths.h
+3247ba7f5cee0bfc76a5218a14b70703  rndoff.c

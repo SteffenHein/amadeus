@@ -1,23 +1,10 @@
-[file: amadeus-v1.0r2.md5]
-created: Sun Jul 24 17:13:58 2022
--------------------------------------------------------------------------------
-MD5( .gitignore ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( CONFIG.H ) = dec5e04c2a91e028c8a9cf3718ea5ed3
-MD5( INSTALL ) = 02fe7e9494450a8ba4b8c1dfbc0075c4
-MD5( LICENSE ) = 6c4282bb51b5208c6aed41d71f4c2084
-MD5( Makefile ) = 3b87d9a4968f9a180385e68303bee82e
-MD5( README ) = cf95dfc536c6e5cfd2bb33f477348de8
-MD5( SETUP ) = 174f54e8b9041ac6ec177ad55a919c64
-MD5( bin ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( cc-messages ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( default ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( disp ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( doc ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( makefile.unx ) = 3b87d9a4968f9a180385e68303bee82e
-MD5( math ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( mk.unx ) = ad72204e55d7569bb386408218c398e3
-MD5( objects ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( samples ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( scripts ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( src ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( work ) = d41d8cd98f00b204e9800998ecf8427e
+dec5e04c2a91e028c8a9cf3718ea5ed3  CONFIG.H
+02fe7e9494450a8ba4b8c1dfbc0075c4  INSTALL
+6c4282bb51b5208c6aed41d71f4c2084  LICENSE
+3b87d9a4968f9a180385e68303bee82e  Makefile
+cf95dfc536c6e5cfd2bb33f477348de8  README
+174f54e8b9041ac6ec177ad55a919c64  SETUP
+cd5ddecbdc7231f81b039e01ae99e54e  amadeus-v1.0r2.sha256
+d41d8cd98f00b204e9800998ecf8427e  cc-messages
+3b87d9a4968f9a180385e68303bee82e  makefile.unx
+ad72204e55d7569bb386408218c398e3  mk.unx

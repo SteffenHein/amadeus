@@ -1,8 +1,1 @@
-[file: samples.md5]
-created: Thu Jul 21 21:15:01 2022
--------------------------------------------------------------------------------
-MD5( .directory ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( exp_derivatives_appendix ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( random_bursts ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( vaccination ) = d41d8cd98f00b204e9800998ecf8427e
-MD5( weighted_histories ) = d41d8cd98f00b204e9800998ecf8427e
+671c342722cdb28c0edce593507dba94  samples.sha256

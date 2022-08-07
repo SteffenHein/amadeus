@@ -1,7 +1,7 @@
 set title '7 days incidence, next 360 days [ dependence on vaccination rate ]'
 set xrange [ 0.000000e+00 : 3.65000e+02 ]
-set xlabel 'Days since July 08, 2022'
-set format x '%3.0f'
+set xlabel 'Days since July 01, 2022'
+set format x '%10.0f'
 #
 set ylabel 'per 100000'
 set format y '%10.2e'
@@ -10,11 +10,11 @@ set yrange [ 0.000000e+02 : 2.00000e+03 ]
 set label 'Vaccination efficacy: 80 percent'\
 at 6.2e+00, 1.900e+03
 set label 'VR: daily vaccinations'\
-at 6.2e+00, 1.7800e+03
+at 6.2e+00, 1.8000e+03
 set label 'Immunity half-life: 300 days'\
-at 6.2e+00, 1.6600e+03
-set label 'Line 2: current vaccination rate [ July 08, 2022 ]'\
-at 6.2e+00, 1.5400e+03
+at 6.2e+00, 1.7000e+03
+set label 'Line 2: current vaccination rate [ July 01, 2022 ]'\
+at 6.2e+00, 1.6000e+03
 #
 set grid
 set border
@@ -24,16 +24,16 @@ plot \
 'VR=0' with lp lt 9 pt "0" pi -205
 pause -1 '[ hit return to continue ]'
 replot \
-'VR=16000' with lp lt 6 pt "1" pi -205
+'VR=18000' with lp lt 6 pt "1" pi -205
 pause -1 '[ hit return to continue ]'
 replot \
-'VR=32000' with lp lw 3 lt 7 pt "2" pi -205
+'VR=36162' with lp lw 3 lt 7 pt "2" pi -205
 pause -1 '[ hit return to continue ]'
 replot \
-'VR=50000' with lp lt 6 pt "3" pi -205
+'VR=60000' with lp lt 6 pt "3" pi -205
 pause -1 '[ hit return to continue ]'
 replot \
-'VR=70000' with lp lt 4 pt "4" pi -205
+'VR=80000' with lp lt 4 pt "4" pi -205
 pause -1 '[ hit return to continue ]'
 replot \
 'VR=100000' with lp lt 3 pt "5" pi -205

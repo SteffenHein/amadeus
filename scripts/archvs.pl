@@ -4,21 +4,21 @@
 #  AMADEUS archive creation perl script                                        #
 #                                                                              #
 #  (C) SHEIN; Munich, April 2020                             Steffen Hein      #
-#  [ Update: June 08, 2022 ]                              <contact@sfenx.de>   #
+#  [ Update: August 04, 2022 ]                            <contact@sfenx.de>   #
 #                                                                              #
 #------------------------------------------------------------------------------#
 BEGIN { push @INC, './'}
 use warnings 'all';
 use Env;
 use strict;
-use cksmd5;
 $ENV{OSTYPE}="linux";
 
 #------------------------------------------------------------------------------#
 my ( @dirtree,  @path,    @files,    @args );
-my ( @srclist, @ziplist,  @tgzlist, @modlist, @text );
-my ( $portname, $release, $distname, $directory, $infile, $outfile, $cksmd5 );
-my ( $srcarch, $tararch, $tgzarch, $modarch, $gzarch, $bz2arch, $i, $j, $md5 );
+my ( @srclist, @z7list,  @tgzlist, @modlist, @text );
+my ( $portname, $release, $distname, $directory, $infile, $outfile );
+my ( $srcarch, $tararch, $tgzarch, $modarch, $gzarch, $bz2arch );
+my ( $i, $j, $cks );
 
 #------------------------------------------------------------------------------#
 $portname = "amadeus";
@@ -29,12 +29,10 @@ $tararch  = $distname . ".tar";
 $tgzarch  = $distname . ".tgz";
 $gzarch   = $srcarch . ".gz";
 $bz2arch  = $srcarch . ".bz2";
-$outfile  = "CHECKSUM.MD5";
+$outfile  = ".sha256";
 
-# $md5=0/1/2: [ don't use / use only / use also ]
-# FreeBSD's implementation of checksum function md5 for OSTYPE=freebsd
-# GNU/Linux implementation of checksum function md5sum else
-$md5=0;
+# $cks=[0]1: [ don't] compute sha256 checksums
+$cks=1;
 
 #------------------------------------------------------------------------------#
 # the directory tree of $distname 
@@ -77,26 +75,25 @@ $tgzlist[ $i++ ] = $distname . "/SETUP";
 # The Z-compressed archive of the following [ essential ] sources; $tararch:
 #
 $i = 0;
-$ziplist[ $i++ ] = $distname . "/LICENSE";
-$ziplist[ $i++ ] = $distname . "/README";
-$ziplist[ $i++ ] = $distname . "/INSTALL";
-$ziplist[ $i++ ] = $distname . "/CONFIG.H";
-$ziplist[ $i++ ] = $distname . "/bin";
-$ziplist[ $i++ ] = $distname . "/default";
-$ziplist[ $i++ ] = $distname . "/disp";
-$ziplist[ $i++ ] = $distname . "/doc";
-$ziplist[ $i++ ] = $distname . "/math";
-$ziplist[ $i++ ] = $distname . "/objects";
-$ziplist[ $i++ ] = $distname . "/samples";
-$ziplist[ $i++ ] = $distname . "/scripts";
-$ziplist[ $i++ ] = $distname . "/src";
-$ziplist[ $i++ ] = $distname . "/work";
-$ziplist[ $i++ ] = $distname . "/Makefile";
-$ziplist[ $i++ ] = $distname . "/makefile.unx";
-$ziplist[ $i++ ] = $distname . "/mk.unx";
-$ziplist[ $i++ ] = $distname . "/SETUP";
+$z7list[ $i++ ] = $distname . "/LICENSE";
+$z7list[ $i++ ] = $distname . "/README";
+$z7list[ $i++ ] = $distname . "/INSTALL";
+$z7list[ $i++ ] = $distname . "/CONFIG.H";
+$z7list[ $i++ ] = $distname . "/bin";
+$z7list[ $i++ ] = $distname . "/default";
+$z7list[ $i++ ] = $distname . "/disp";
+$z7list[ $i++ ] = $distname . "/doc";
+$z7list[ $i++ ] = $distname . "/math";
+$z7list[ $i++ ] = $distname . "/objects";
+$z7list[ $i++ ] = $distname . "/samples";
+$z7list[ $i++ ] = $distname . "/scripts";
+$z7list[ $i++ ] = $distname . "/src";
+$z7list[ $i++ ] = $distname . "/work";
+$z7list[ $i++ ] = $distname . "/Makefile";
+$z7list[ $i++ ] = $distname . "/makefile.unx";
+$z7list[ $i++ ] = $distname . "/mk.unx";
+$z7list[ $i++ ] = $distname . "/SETUP";
 #------------------------------------------------------------------------------#
-# Create a new tar archive for FreeBSD port building system:
 #
 $i = 0;
 $srclist[ $i++ ] = $distname;
@@ -108,161 +105,66 @@ $srclist[ $i++ ] = "INSTALL";
 # Writing special directory checksums:
 #
 print "\n\nwriting directory checksums";
-if ( $md5 ) {
 
-    $outfile = "CHECKSUM.MD5";
-
-    if ( ($md5) && ( $ENV{OSTYPE} =~ m/freebsd/ ) ) {
-       @args = ("./cksmd5.pl $outfile");
-    } else {
-       @args = ("./md5sum.sh $outfile");
-    }
+if ( $cks ) {
+    $outfile = ".sha256";
+    @args = ("./sha256sum.sh $outfile");
     system(@args);
-}    # end if
+
+    $outfile = ".md5";
+    @args = ("./md5sum.sh $outfile");
+    system(@args);
+} # end if
 
 # switch back to package directory, then write directory [ tree ] checksums:
 #
 chdir "../../";
-if ( $md5 != 1 )
-{
-    $i = 0;
-    while ( $dirtree[$i] ) {
-
-        # check / open  directory :
-        $directory = $dirtree[$i];
-
-        if ( opendir( DIR, $directory ) ) {
-            @files = grep -T, readdir(DIR);
-            close(DIR);
-
-            @path = split ( /\//, $directory );
-
-            $j = 0;
-            until ( !$path[$j] ) {
-                $outfile = $path[$j] . ".md5";
-                $j++;
-            }
-
-            #         unlink $directory ."/". $outfile;
-            #         unlink $directory ."/*.MD5";
-            #         unlink $directory ."/*.md5";
-
-            $cksmd5 = &cksmd5( $directory, $outfile );
-
-            open( FILE, ">" . $directory . "/" . $outfile );
-            print FILE ($cksmd5);
-            close(FILE);
-        }
-        else {
-            print "\ncan't open directory " . $directory;
-        }
-        $i++;
-    }    # end while
-}    # end if $ENV ...
-
 #------------------------------------------------------------------------------#
-# Creating achive for selected files: 
+# Create tgz archive:
 #
-# switch to script directory then create archive:
-#
-print "\ncreating archives:";
-chdir $distname . "/scripts";
-print "\ntar -cvf spcf-" . $release . ".tgz\n";
-@args = ("./new-spcf.sh");
-system(@args);
-
-#------------------------------------------------------------------------------#
-# Create a new tgz archive [ program package ], $tgzarch:
-#
-# switch back to package directory, then create archives:
-#
-chdir "../../";
-
-#print "\ncreating tgz-archive:";
-print "\ntar -czf " . $tgzarch . "\n";
+print "\ncreating tgz-archive:";
 @args = ("tar -czf $tgzarch @tgzlist");
 system(@args);
-
-#print "\narchive ".$tgzarch." ready !";
 #------------------------------------------------------------------------------#
-# Create a new Z-compressed archive of essential sources [ $tararch.".Z" ]:
-#
-# switch into package directory, then create archive:
-#print "\ncreating archive ".$tararch.".Z:";
-print "\ntar -cf " . $tararch . "\n";
-@args = ("tar -cf $tararch @ziplist");
+# Create a new p7zip-compressed archive of essential sources:
+print "\ncreating archive $tararch";
+@args = ("tar -cf $tararch @z7list");
 system(@args);
+
 print "\ncompressing to ~.7z";
-@args = ("p7zip $tararch");
+@args = ("p7zip -k $tararch");
 system(@args);
-
-#print "\narchive ".$tararch.".7z ready !";
 #------------------------------------------------------------------------------#
-# Create a new tar archive for FreeBSD port building system:
-#
-#print "\ncreating tar archives ".$srcarch;
-#print "\ncreating src.tar archives:";
-print "\ntar -cf " . $srcarch . "\n";
+print "\ncreating tar archive:";
 @args = ("tar -cf $srcarch @srclist");
 system(@args);
+
 print "\ngzipping into ~.gz file";
 @args = ("gzip -cf $srcarch > $gzarch");
 system(@args);
 
-#print "\narchive ".$gzarch." ready !";
 print "\nbzipping into ~.bz2 file";
-@args = ("bzip2 -f $srcarch");
+@args = ("bzip2 -f $srcarch > $bz2arch");
 system(@args);
-
-#print "\narchive ".$srcarch.".bz2 ready !";
 #------------------------------------------------------------------------------#
 # Writing new final package checksum:
 #
-$directory = "./";
+$directory = "../../";
 print "\n\nwriting final package checksum";
 
-if ( $md5 )
+if ( $cks )
 {
-    $outfile = "CHECKSUM.MD5";
+    $outfile = "SHA256SUMS";
     @args = ("rm -f $outfile");
     system(@args);
+    @args = ("openssl sha256 * > $outfile");
+    system(@args);
 
-    if ( $ENV{OSTYPE} =~ m/freebsd/ ) {
-       @args = ("md5 * > $outfile");
-    } else {
-       @args = ("md5sum * > $outfile");
-    }
+    $outfile = "MD5SUMS";
+    @args = ("rm -f $outfile");
+    system(@args);
+    @args = ("md5sum * > $outfile");
     system(@args);
 }
-
-# check / open  directory :
-#
-# outcommented 05.09.2002:
-# if ( ( ( $md5 != 1 ) && ( $ENV{OSTYPE} =~ m/freebsd/ ) )
-#   || ( $ENV{OSTYPE} =~ m/linux/ ) )
-
-if ( $md5 != 1 ) # since 05.09.2002
-{
-    $outfile = $directory . ".md5";
-
-    #  unlink $directory ."/". $outfile;
-    #  unlink $directory ."/*.MD5";
-    #  unlink $directory ."/*.md5";
-
-    if ( opendir( DIR, $directory ) ) {
-        @files = grep -T, readdir(DIR);
-        close(DIR);
-
-        $cksmd5 = &cksmd5( $directory, $outfile );
-
-        open( FILE, ">" . $directory . "/" . $outfile );
-        print FILE ($cksmd5);
-        close(FILE);
-    }
-    else {
-        print "\ncan't open directory " . $directory;
-    }    # end if ( opendir )
-}    # end if $ENV...
-
 #------------------------------------------------------------------------------#
 print "\nterminated !\n";

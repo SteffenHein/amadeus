@@ -3,7 +3,7 @@ set title '7 days incidence next 360 days \
 #
 set xlabel 'Days since May 20th, 2022'
 set xrange [ 0.000000e+00 : 3.600000e+02 ]
-set format x '%3.0f'
+set format x '%10.0f'
 #
 set ylabel 'per 100000'
 set yrange [ 0.0e+00 : 3.000000e+03 ]
