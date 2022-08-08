@@ -1,0 +1,22 @@
+#------------------------------------------------------------------------------#
+# Writing new final package checksum:
+#
+$directory = "../../";
+print "\n\nwriting final package checksum";
+
+if ( $cks )
+{
+    $outfile = "SHA256SUMS";
+    @args = ("rm -f $outfile");
+    system(@args);
+    @args = ("openssl sha256 * > $outfile");
+    system(@args);
+
+    $outfile = "MD5SUMS";
+    @args = ("rm -f $outfile");
+    system(@args);
+    @args = ("md5sum * > $outfile");
+    system(@args);
+}
+#------------------------------------------------------------------------------#
+print "\nterminated !\n";
