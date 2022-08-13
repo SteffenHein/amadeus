@@ -10,6 +10,9 @@
    fprintf( STREAM, "%s", OPTION ); \
    fprintf( STREAM, "%s", "'\n" ); \
  \
+   fprintf( STREAM, "%s", \
+      "set term x11\n" ); \
+ \
    fprintf( STREAM, "%s", "set xlabel '" ); \
    fprintf( STREAM, "%s", XUNIT ); \
    fprintf( STREAM, "%s", "'\n" ); \

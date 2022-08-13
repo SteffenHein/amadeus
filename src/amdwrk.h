@@ -1432,7 +1432,7 @@ AMDSTATE *amdwrk( AMDSTATE *state )
 
       nseconds = time( timer );
       strcpy( timeptr, ctime( &nseconds ) + 11 );
-      strncat(( dsp->messge ), " at ", 4 );
+      strncat(( dsp->messge ), " at ", 5 );
       strncat(( dsp->messge ), timeptr, 8 );
       strcat(( dsp->messge ), "\r" );
 /*............................................................................*/

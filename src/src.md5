@@ -1,7 +1,7 @@
 5a06ca97d6434cf9d487d0d3e16c581b  EXTREMA.M
 672bee1acf8332d07d76d501c6d8da70  FIXOPERTN.M
 e29c7ec25fdbd386b18f6936969e2e66  FIXPARMTR.M
-1f5331a76f4db43f2985dad5c13d5524  GNUPLOT.M
+7a315c3aa72c798eb1deea104f99f936  GNUPLOT.M
 caa32bf748dcdb45c9c5c2b9a092dbe7  NCURSES.M
 70d7c7b2e7186e104a9f8e86df1ed3af  OPRSTRNGS.M
 ab89a0dbf398d073f5178d5290a153b2  PARSTRNGS.M
@@ -17,7 +17,7 @@ c8d4905a03ebc9376d2e16fde2e9bb60  amdevs.c
 2b72121d78a3314e05ecff0e15456498  amdrcs.c
 9f220e9b9302fd3a1e45352afcda3b6d  amdrnd.c
 e202ae165000dd1bc8b96f1785be0979  amdwrk.c
-c77eaee71ed7dbf2aab32a080416c463  amdwrk.h
+c2160730bdfd0419ce67f60566955f13  amdwrk.h
 fa987e17643ed126a4ba0b6dcaf6b38a  init_opr.h
 376ce6e7de40a55f817a7ec568ba8073  init_par.h
 5874d201325f89d740381f4c21e858c6  inputs.h
@@ -25,7 +25,7 @@ fa987e17643ed126a4ba0b6dcaf6b38a  init_opr.h
 113444036aa752154927c2980bef8971  rread_par.h
 85aeff865f2b03f70257d9690b7ddfd5  rvise_opr.h
 4d39b0856c3f4ef3d32758e5e6d85841  rvise_par.h
-15e5d3175792b354db32bff2f259c089  src.sha256
+faf17e7b27decb35192cd2ee8b3eb49c  src.sha256
 8bad4ab6fc91c50a9b367d0faf111262  store_opr.h
 b6726ba8e82c45be7aaea7e866b19d51  store_par.h
 26f8676197ed54835e8ad43696ae567f  types.h
